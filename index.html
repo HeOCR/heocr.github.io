@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HeOCR</title>
+<meta name="description" content="HeOCR: open, rights-clean data, tools and models for reading printed and handwritten Hebrew.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --text: #1d1b18;
+    --muted: #6b665e;
+    --line: #e7e3da;
+    --accent: #1f5f8b;
+    --accent-soft: #e6eff6;
+    --tag: #f2efe8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141414;
+      --surface: #1c1c1c;
+      --text: #ecebe8;
+      --muted: #a29d94;
+      --line: #2e2d2b;
+      --accent: #7fb6dd;
+      --accent-soft: #1d2a33;
+      --tag: #262523;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141414;
+    --surface: #1c1c1c;
+    --text: #ecebe8;
+    --muted: #a29d94;
+    --line: #2e2d2b;
+    --accent: #7fb6dd;
+    --accent-soft: #1d2a33;
+    --tag: #262523;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
+  .he { font-family: "Frank Ruhl Libre", serif; direction: rtl; text-align: left; color: var(--muted); font-size: 1.15rem; margin: 0 0 8px; }
+  h1 { font-family: "Frank Ruhl Libre", serif; font-size: clamp(2.6rem, 7vw, 3.6rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.01em; }
+  .lede { font-size: 1.15rem; max-width: 640px; margin: 0 0 24px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-block; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font-weight: 500; font-size: 0.95rem; }
+  .btn:hover { border-color: var(--accent); text-decoration: none; }
+
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 36px 0 0; font-size: 0.9rem; color: var(--muted); }
+  .flow span.step { background: var(--accent-soft); color: var(--text); padding: 4px 10px; border-radius: 999px; font-weight: 500; }
+
+  section { padding: 48px 0 8px; }
+  h2 { font-family: "Frank Ruhl Libre", serif; font-size: 1.7rem; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 22px; max-width: 680px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: flex; flex-direction: column; }
+  .card h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 600; }
+  .card h3 a { color: var(--text); }
+  .card p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; flex: 1; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.8rem; }
+  .meta span { background: var(--tag); padding: 2px 8px; border-radius: 6px; color: var(--muted); }
+  .meta a { font-weight: 500; }
+  .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
+  .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
+
+  footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+  footer p { margin: 0 0 6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="he">זיהוי טקסט עברי, פתוח לכולם</p>
+    <h1>HeOCR</h1>
+    <p class="lede">Open data, tools and models for reading Hebrew documents, both printed and handwritten. Every dataset item has its own rights record, and everything is published under open licences.</p>
+    <div class="links">
+      <a class="btn" href="https://github.com/HeOCR">GitHub</a>
+      <a class="btn" href="https://huggingface.co/HeOCR">Hugging Face</a>
+      <a class="btn" href="https://zenodo.org/communities/heocr">Zenodo</a>
+    </div>
+    <div class="flow" aria-label="How the parts fit together">
+      <span class="step">Public-domain scans &amp; text</span> →
+      <span class="step">Generators</span> →
+      <span class="step">Datasets</span> →
+      <span class="step">Trained models</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="models">
+    <h2>Models</h2>
+    <p class="sub">A three-step <a href="https://kraken.re">kraken</a> pipeline for modern Hebrew document pages: find the lines, put them in reading order, then read them. These are research baselines trained only on synthetic pages, and they have not yet been evaluated on real scans.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>R4d · Segmentation</h3>
+        <p>Finds text-line baselines and polygons, plus eight region types such as title, body, stamp, signature and table cells.</p>
+        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r4d-segmentation">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24023070">Zenodo DOI</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>A1 · Reading order</h3>
+        <p>Orders a page's lines using each line's position and region type.</p>
+        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-a1-reading-order">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24023072">Zenodo DOI</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>R3h · Recognition</h3>
+        <p>Reads printed and handwriting-style Hebrew lines, including digits, Latin letters and punctuation.</p>
+        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r3h-recognition">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24023074">Zenodo DOI</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="datasets">
+    <h2>Datasets</h2>
+    <p class="sub">Each dataset is built only from material that can be redistributed and reused, including for machine learning. Rights are recorded for each item, not assumed for a whole collection.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hash">HASH</a></h3>
+        <p>Hebrew Archive of Scanned Handwriting: scanned handwritten Hebrew-script documents from the 18th century onward, including letters, notebooks, drafts and forms.</p>
+        <div class="meta"><span>198 scans</span><span>48 sources</span><span>metadata CC0</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/htext">htext</a></h3>
+        <p>Public-domain Hebrew text for training, starting with lines from <a href="https://benyehuda.org">Project Ben-Yehuda</a> works, plain and with niqqud. Each work is flagged as public domain in Israel and/or the US.</p>
+        <div class="meta"><span>CC0</span><a href="https://github.com/HeOCR/htext/releases/tag/pby-v1">release pby-v1</a></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hletterscript">hletterscript</a></h3>
+        <p>Cropped handwritten Hebrew letters, grouped by writer and taken from public-domain scans. Used to make synthetic handwriting.</p>
+        <div class="meta"><span>seed set</span><span>metadata CC0</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/HeOCR">HeOCR</a> &amp; <a href="https://github.com/HeOCR/HeOCRsynth">HeOCRsynth</a></h3>
+        <p>The main OCR/HTR datasets: one mixing real and synthetic pages, and one synthetic only. Both are exported by hocrgen once its release checks pass.</p>
+        <div class="meta"><span>in preparation</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tools">
+    <h2>Generators &amp; pipelines</h2>
+    <p class="sub">The code that builds the datasets and trains the models. All of it is MIT-licensed.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a></h3>
+        <p>Synthetic Hebrew page generator. It renders printed and handwriting-style pages, with line annotations and right-to-left metadata, from CC0 training text and open fonts.</p>
+        <div class="meta"><span>Python</span><span>MIT</span><span>text CC0</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hletterscriptgen">hletterscriptgen</a></h3>
+        <p>Extracts per-writer letter sets from HASH scans and human-reviewed glyph annotations.</p>
+        <div class="meta"><span>Python</span><span>MIT</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hocrgen">hocrgen</a></h3>
+        <p>Dataset operations and release checks: acquisition, rights, review, deduplication, splits, benchmarks and export to the public datasets.</p>
+        <div class="meta"><span>Python</span><span>MIT</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/heocr-engine">heocr-engine</a></h3>
+        <p>Training, evaluation and release code for the models above, plus a local Tesseract baseline with a reproducible prediction format.</p>
+        <div class="meta"><span>Python</span><span>kraken</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Created by <a href="http://www.shaypalachy.com/">Shay Palachy Affek</a> and the HeOCR maintainers.</p>
+    <p>Code under MIT, models under Apache-2.0, and HeOCR-written data under CC0. Third-party items keep their own per-item rights.</p>
+    <p>Hebrew text credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>
