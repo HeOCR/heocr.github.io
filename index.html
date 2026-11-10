@@ -112,8 +112,12 @@
     <div class="grid">
       <div class="card">
         <h3>R6 · Tesseract fine-tune</h3>
-        <p>Google's open <code>tessdata_best</code> Hebrew model, fine-tuned on 13.6k real lines from National Library of Israel scans. We scored it on 38 real book pages with human-checked text (Hebrew Wikisource): 20.9% character error, against 22.6% for stock Tesseract, and 40.7% word error against 47.3%. That is a real gain, but a small one. R7, which adds many more books including older prints, is in progress.</p>
-        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span><span>not yet released</span></div>
+        <p>Google's open <code>tessdata_best</code> Hebrew model, fine-tuned on 13.6k real lines from National Library of Israel scans. We scored it on 38 real book pages with human-checked text (Hebrew Wikisource): 20.9% character error, against 22.6% for stock Tesseract, and 40.7% word error against 47.3%. That is a real gain, but a small one. Use it as a drop-in replacement for Tesseract's <code>heb</code>: <code>-l heocr_r6</code>. R7, which adds many more books including older prints, is in progress.</p>
+        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24109989">Zenodo DOI</a>
+        </div>
       </div>
       <div class="card">
         <h3>Real-scan line data</h3>
