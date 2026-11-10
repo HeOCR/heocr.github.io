@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HeOCR rights</title>
+<meta name="description" content="How HeOCR checks the rights of every scan, line and model it publishes, and how to ask for an item to be removed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --text: #1d1b18;
+    --muted: #6b665e;
+    --line: #e7e3da;
+    --accent: #1f5f8b;
+    --accent-soft: #e6eff6;
+    --tag: #f2efe8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141414;
+      --surface: #1c1c1c;
+      --text: #ecebe8;
+      --muted: #a29d94;
+      --line: #2e2d2b;
+      --accent: #7fb6dd;
+      --accent-soft: #1d2a33;
+      --tag: #262523;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141414;
+    --surface: #1c1c1c;
+    --text: #ecebe8;
+    --muted: #a29d94;
+    --line: #2e2d2b;
+    --accent: #7fb6dd;
+    --accent-soft: #1d2a33;
+    --tag: #262523;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
+  .he { font-family: "Frank Ruhl Libre", serif; direction: rtl; text-align: left; color: var(--muted); font-size: 1.15rem; margin: 0 0 8px; }
+  h1 { font-family: "Frank Ruhl Libre", serif; font-size: clamp(2.6rem, 7vw, 3.6rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.01em; }
+  .lede { font-size: 1.15rem; max-width: 640px; margin: 0 0 24px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-block; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font-weight: 500; font-size: 0.95rem; }
+  .btn:hover { border-color: var(--accent); text-decoration: none; }
+
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 36px 0 0; font-size: 0.9rem; color: var(--muted); }
+  .flow span.step { background: var(--accent-soft); color: var(--text); padding: 4px 10px; border-radius: 999px; font-weight: 500; }
+
+  section { padding: 48px 0 8px; }
+  h2 { font-family: "Frank Ruhl Libre", serif; font-size: 1.7rem; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 22px; max-width: 680px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: flex; flex-direction: column; }
+  .card h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 600; }
+  .card h3 a { color: var(--text); }
+  .card p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; flex: 1; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.8rem; }
+  .meta span { background: var(--tag); padding: 2px 8px; border-radius: 6px; color: var(--muted); }
+  .meta a { font-weight: 500; }
+  .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
+  .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
+
+  footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+  footer p { margin: 0 0 6px; }
+  .doc > section { max-width: 720px; }
+  .doc h2 { margin-top: 0; }
+  .doc ul, .doc ol { padding-left: 22px; }
+  .doc li { margin: 0 0 8px; }
+  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
+  .back { display: inline-block; margin-bottom: 18px; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="back" href="./">← HeOCR</a>
+    <h1>Rights &amp; takedown</h1>
+    <p class="lede">Everything HeOCR publishes is meant to be usable by anyone, for any purpose, permanently. This page sets out how we check that, and what to do if you think we got something wrong.</p>
+  </div>
+</header>
+
+<main class="wrap doc">
+
+  <section>
+    <h2>What we use</h2>
+    <ul>
+      <li><b>Public-domain works only.</b> A book is used only if every author, translator and editor whose work is on the page died more than 70 years ago, which makes it public domain in Israel. Books printed in or before 1855 with no known death year are presumed public domain. US status is recorded for each item too (it is not required), so a release limited to items that are also public domain in the US can be built.</li>
+      <li><b>Faithful scans.</b> A faithful photographic or mechanical scan of a printed page creates no new copyright in Israel or the US, so the scan is as free as the book.</li>
+      <li><b>Sources we have no restrictive agreement with.</b>
+        <ul>
+          <li>National Library of Israel scans marked "public domain, free use";</li>
+          <li>public-domain scans fetched from the Internet Archive or Wikimedia Commons;</li>
+          <li>texts from Project Ben-Yehuda;</li>
+          <li>fonts under the SIL Open Font License.</li>
+        </ul>
+      </li>
+      <li><b>What we leave out.</b> Anything under non-commercial or no-derivatives terms, or with unknown terms. That includes National Library of Israel scans marked "public domain, non-commercial use" when fetched from the library's own site or API, unless the library allows otherwise in writing.</li>
+      <li><b>One copy per edition, from an open route.</b> If the same edition is also on the Internet Archive or Wikimedia Commons, we take it from there and record that file as the source. This covers scans made by Google or by the National Library of Israel, because we have no agreement with either of them for files fetched that way.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>A record for every item</h2>
+    <p>Before anything is published, every scan gets a rights record generated from evidence, and every line, letter or page cut from it points back to that record. The record gives:</p>
+    <ul>
+      <li>where the file came from, with its exact URL and checksum;</li>
+      <li>who wrote the work and when they died, when and where it was printed, and the sources for each of these;</li>
+      <li>who made the scan, such as a library or Google, and any conditions the original holder attached;</li>
+      <li>why the item is free to reuse, with a one-line summary.</li>
+    </ul>
+    <p>If a required fact is missing, the item is left out. We credit the National Library of Israel on every item from its collection, and we remove Google's cover pages and watermarks from Google-digitized scans while keeping that fact in the record.</p>
+  </section>
+
+  <section>
+    <h2>Licences</h2>
+    <ul>
+      <li><b>Scans, line images and letter images:</b> public domain, marked CC0 1.0. HeOCR claims no copyright in them.</li>
+      <li><b>HeOCR's own data</b> (alignments, annotations, synthetic pages): CC0 1.0.</li>
+      <li><b>Models:</b> Apache-2.0.</li>
+      <li><b>Code:</b> MIT.</li>
+      <li><b>Hebrew Wikisource text</b>, used for evaluation, keeps its CC BY-SA licence.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Takedown</h2>
+    <p>If you believe an item is under copyright or under a binding restriction, please tell us:</p>
+    <ol>
+      <li>Open an issue at <a href="https://github.com/HeOCR/hocrgen/issues/new">github.com/HeOCR/hocrgen/issues</a> with the title <code>Takedown: &lt;item or book id&gt;</code>, and the legal basis if you know it.</li>
+      <li>While we look into it, we stop using the affected book and take it out of anything we publish next.</li>
+      <li>If it has to go, we publish new versions of the datasets without it and list the removal in a public changelog. Where a platform keeps old versions, such as Zenodo, we ask it to restrict them. Because each item keeps its own record, the rest of the data is unaffected.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>The full policy</h2>
+    <p>The policy and its reasoning are public:</p>
+    <ul>
+      <li><a href="https://github.com/HeOCR/hocrgen/blob/main/planning/decisions/2026-11-10-legal-strategy.md">legal strategy decision</a>;</li>
+      <li><a href="https://github.com/HeOCR/hocrgen/blob/main/docs/legal/2026-11-10_legal_strategy.md">full analysis</a>;</li>
+      <li><a href="https://github.com/HeOCR/hocrgen/blob/main/planning/decisions/2026-11-10-open-release-and-clean-inputs.md">open-release decision</a>.</li>
+    </ul>
+    <p>The analysis is not legal advice.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="./">HeOCR</a> · Created by <a href="http://www.shaypalachy.com/">Shay Palachy Affek</a> and the HeOCR maintainers.</p>
+  </div>
+</footer>
+
+</body>
+</html>

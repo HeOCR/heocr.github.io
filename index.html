@@ -76,6 +76,7 @@
   .meta a { font-weight: 500; }
   .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
   .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
+  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
 
   footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
   footer p { margin: 0 0 6px; }
@@ -92,6 +93,7 @@
       <a class="btn" href="https://github.com/HeOCR">GitHub</a>
       <a class="btn" href="https://huggingface.co/HeOCR">Hugging Face</a>
       <a class="btn" href="https://zenodo.org/communities/heocr">Zenodo</a>
+      <a class="btn" href="rights.html">Rights &amp; takedown</a>
     </div>
     <div class="flow" aria-label="How the parts fit together">
       <span class="step">Public-domain scans &amp; text</span> →
@@ -104,9 +106,26 @@
 
 <main class="wrap">
 
+  <section id="real-print">
+    <h2>Reading real printed books</h2>
+    <p class="sub">Old printed Hebrew is where open OCR is weakest. We pair public-domain scans of a book with <a href="https://benyehuda.org">Project Ben-Yehuda</a>'s typed text of the same edition. That gives exact line-level training examples from real pages. Scans come from the <a href="https://www.nli.org.il">National Library of Israel</a>'s free-use collection and from public-domain scans on the <a href="https://archive.org">Internet Archive</a> and <a href="https://commons.wikimedia.org">Wikimedia Commons</a>. Every published line will keep its source record and its rights justification.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>R6 · Tesseract fine-tune</h3>
+        <p>Google's open <code>tessdata_best</code> Hebrew model, fine-tuned on 13.6k real lines from National Library of Israel scans. We scored it on 38 real book pages with human-checked text (Hebrew Wikisource): 20.9% character error, against 22.6% for stock Tesseract, and 40.7% word error against 47.3%. That is a real gain, but a small one. R7, which adds many more books including older prints, is in progress.</p>
+        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span><span>not yet released</span></div>
+      </div>
+      <div class="card">
+        <h3>Real-scan line data</h3>
+        <p>Line images from real scans, each paired with its edition text. Each line records its book, scan record, source library and rights justification, so any item can be traced or removed.</p>
+        <div class="meta"><span>CC0</span><span>in preparation</span></div>
+      </div>
+    </div>
+  </section>
+
   <section id="models">
     <h2>Models</h2>
-    <p class="sub">A three-step <a href="https://kraken.re">kraken</a> pipeline for modern Hebrew document pages: find the lines, put them in reading order, then read them. These are research baselines trained only on synthetic pages, and they have not yet been evaluated on real scans.</p>
+    <p class="sub">A three-step <a href="https://kraken.re">kraken</a> pipeline for modern Hebrew document pages: find the lines, put them in reading order, then read them. These are research baselines trained only on synthetic pages. On real scanned print they are much weaker; the real-book work above addresses this.</p>
     <div class="grid">
       <div class="card">
         <h3>R4d · Segmentation</h3>
@@ -165,6 +184,29 @@
     </div>
   </section>
 
+  <section id="sources">
+    <h2>Sources &amp; credit</h2>
+    <p class="sub">We use public-domain works only, and each item keeps its source and credit. See <a href="rights.html">rights &amp; takedown</a> for how rights are checked.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://www.nli.org.il">National Library of Israel</a></h3>
+        <p>Scans of public-domain books from its "public domain, free use" collection. Credited on every item as "From the collections of the National Library of Israel / <span dir="rtl" lang="he">מאוסף הספרייה הלאומית</span>", with the record number.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://archive.org">Internet Archive</a> &amp; <a href="https://commons.wikimedia.org">Wikimedia Commons</a></h3>
+        <p>Public-domain book scans made by university libraries, such as the University of Toronto, and by Google for libraries. Each item keeps its identifier, who scanned it and its rights evidence. Google's cover pages and watermarks are removed.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://benyehuda.org">Project Ben-Yehuda</a></h3>
+        <p>Volunteer-typed, public-domain texts of the same editions. They supply the exact text for each scanned line, and the training text for synthetic pages.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://he.wikisource.org">Hebrew Wikisource</a></h3>
+        <p>Proofread transcriptions of scanned pages. We use them for evaluation, with each page checked by a human. Their text is CC BY-SA.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="tools">
     <h2>Generators &amp; pipelines</h2>
     <p class="sub">The code that builds the datasets and trains the models. All of it is MIT-licensed.</p>
@@ -198,7 +240,8 @@
   <div class="wrap">
     <p>Created by <a href="http://www.shaypalachy.com/">Shay Palachy Affek</a> and the HeOCR maintainers.</p>
     <p>Code under MIT, models under Apache-2.0, and HeOCR-written data under CC0. Third-party items keep their own per-item rights.</p>
-    <p>Hebrew text credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a>.</p>
+    <p>Hebrew text credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a>. Scans: the <a href="https://www.nli.org.il">National Library of Israel</a> and the libraries whose scans are on the <a href="https://archive.org">Internet Archive</a>.</p>
+    <p><a href="rights.html">Rights &amp; takedown</a></p>
   </div>
 </footer>
 
