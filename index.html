@@ -108,11 +108,11 @@
 
   <section id="real-print">
     <h2>Reading real printed books</h2>
-    <p class="sub">Old printed Hebrew is where open OCR is weakest. We pair public-domain scans of a book with <a href="https://benyehuda.org">Project Ben-Yehuda</a>'s typed text of the same edition. That gives exact line-level training examples from real pages. Scans come from the <a href="https://www.nli.org.il">National Library of Israel</a>'s free-use collection and from university library scans on the <a href="https://archive.org">Internet Archive</a>. Every line keeps its source record and its rights justification.</p>
+    <p class="sub">Old printed Hebrew is where open OCR is weakest. We pair public-domain scans of a book with <a href="https://benyehuda.org">Project Ben-Yehuda</a>'s typed text of the same edition. That gives exact line-level training examples from real pages. Scans come from the <a href="https://www.nli.org.il">National Library of Israel</a>'s free-use collection and from public-domain scans on the <a href="https://archive.org">Internet Archive</a> and <a href="https://commons.wikimedia.org">Wikimedia Commons</a>. Every published line will keep its source record and its rights justification.</p>
     <div class="grid">
       <div class="card">
         <h3>R6 · Tesseract fine-tune</h3>
-        <p>Google's open <code>tessdata_best</code> Hebrew model, fine-tuned on 13.6k real lines from National Library of Israel scans. We scored it on 38 real book pages with human-checked text (Hebrew Wikisource): 20.9% character error, against 22.6% for stock Tesseract, and 40.7% word error against 47.3%. That is a real gain, but a small one. The next model, R7, adds many more books, including older prints, and is released when its scores are in.</p>
+        <p>Google's open <code>tessdata_best</code> Hebrew model, fine-tuned on 13.6k real lines from National Library of Israel scans. We scored it on 38 real book pages with human-checked text (Hebrew Wikisource): 20.9% character error, against 22.6% for stock Tesseract, and 40.7% word error against 47.3%. That is a real gain, but a small one. R7, which adds many more books including older prints, is in progress.</p>
         <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span><span>not yet released</span></div>
       </div>
       <div class="card">
@@ -193,8 +193,8 @@
         <p>Scans of public-domain books from its "public domain, free use" collection. Credited on every item as "From the collections of the National Library of Israel / <span dir="rtl" lang="he">מאוסף הספרייה הלאומית</span>", with the record number.</p>
       </div>
       <div class="card">
-        <h3><a href="https://archive.org">Internet Archive</a></h3>
-        <p>Public-domain book scans made by university libraries, for example the University of Toronto. Each item keeps its identifier, contributing library and rights evidence.</p>
+        <h3><a href="https://archive.org">Internet Archive</a> &amp; <a href="https://commons.wikimedia.org">Wikimedia Commons</a></h3>
+        <p>Public-domain book scans made by university libraries, such as the University of Toronto, and by Google for libraries. Each item keeps its identifier, who scanned it and its rights evidence. Google's cover pages and watermarks are removed.</p>
       </div>
       <div class="card">
         <h3><a href="https://benyehuda.org">Project Ben-Yehuda</a></h3>

@@ -102,7 +102,7 @@
   <section>
     <h2>What we use</h2>
     <ul>
-      <li><b>Public-domain works only.</b> A book is used only if every author, translator and editor whose work is on the page died more than 70 years ago, which makes it public domain in Israel. Books printed in or before 1855 with no known death year are presumed public domain. US status is recorded for each item as well, so a US-only release can be built.</li>
+      <li><b>Public-domain works only.</b> A book is used only if every author, translator and editor whose work is on the page died more than 70 years ago, which makes it public domain in Israel. Books printed in or before 1855 with no known death year are presumed public domain. US status is recorded for each item too (it is not required), so a release limited to items that are also public domain in the US can be built.</li>
       <li><b>Faithful scans.</b> A faithful photographic or mechanical scan of a printed page creates no new copyright in Israel or the US, so the scan is as free as the book.</li>
       <li><b>Sources we have no restrictive agreement with.</b>
         <ul>
@@ -112,13 +112,14 @@
           <li>fonts under the SIL Open Font License.</li>
         </ul>
       </li>
-      <li><b>What we leave out.</b> Anything under non-commercial or no-derivatives terms, or with unknown terms. That includes National Library of Israel scans marked "public domain, non-commercial use", unless the library allows otherwise in writing.</li>
+      <li><b>What we leave out.</b> Anything under non-commercial or no-derivatives terms, or with unknown terms. That includes National Library of Israel scans marked "public domain, non-commercial use" when fetched from the library's own site or API, unless the library allows otherwise in writing.</li>
+      <li><b>One copy per edition, from an open route.</b> If the same edition is also on the Internet Archive or Wikimedia Commons, we take it from there and record that file as the source. This covers scans made by Google or by the National Library of Israel, because we have no agreement with either of them for files fetched that way.</li>
     </ul>
   </section>
 
   <section>
     <h2>A record for every item</h2>
-    <p>Every scan we use carries a rights record, generated from evidence. Every line, letter or page cut from that scan points back to it. The record gives:</p>
+    <p>Before anything is published, every scan gets a rights record generated from evidence, and every line, letter or page cut from it points back to that record. The record gives:</p>
     <ul>
       <li>where the file came from, with its exact URL and checksum;</li>
       <li>who wrote the work and when they died, when and where it was printed, and the sources for each of these;</li>
@@ -144,8 +145,8 @@
     <p>If you believe an item is under copyright or under a binding restriction, please tell us:</p>
     <ol>
       <li>Open an issue at <a href="https://github.com/HeOCR/hocrgen/issues/new">github.com/HeOCR/hocrgen/issues</a> with the title <code>Takedown: &lt;item or book id&gt;</code>, and the legal basis if you know it.</li>
-      <li>We withdraw the affected book from public downloads straight away, while we look into it.</li>
-      <li>If it has to go, it is removed from every dataset and listed in a public changelog. Because each item keeps its own record, this takes minutes and leaves the rest of the data untouched.</li>
+      <li>While we look into it, we stop using the affected book and take it out of anything we publish next.</li>
+      <li>If it has to go, we publish new versions of the datasets without it and list the removal in a public changelog. Where a platform keeps old versions, such as Zenodo, we ask it to restrict them. Because each item keeps its own record, the rest of the data is unaffected.</li>
     </ol>
   </section>
 
