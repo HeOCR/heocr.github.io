@@ -80,12 +80,26 @@
 
   footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
   footer p { margin: 0 0 6px; }
+  header { padding-top: 20px; }
+  .langbar { display: flex; justify-content: flex-end; margin: 0 0 44px; }
+  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); overflow: hidden; font-size: 0.95rem; font-weight: 600; }
+  .lang-toggle a, .lang-toggle span { padding: 7px 16px; color: var(--muted); line-height: 1.3; }
+  .lang-toggle a:hover { background: var(--accent-soft); color: var(--text); text-decoration: none; }
+  .lang-toggle [aria-current] { background: var(--accent); color: var(--surface); }
 </style>
+<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/">
+<link rel="alternate" hreflang="en" href="https://heocr.github.io/">
 </head>
 <body>
 
 <header>
   <div class="wrap">
+    <nav class="langbar" aria-label="Language / שפה">
+      <div class="lang-toggle">
+        <span aria-current="page" lang="en">English</span>
+        <a href="he/" lang="he" hreflang="he">עברית</a>
+      </div>
+    </nav>
     <p class="he">זיהוי טקסט עברי, פתוח לכולם</p>
     <h1>HeOCR</h1>
     <p class="lede">Open data, tools and models for reading Hebrew documents, both printed and handwritten. Every dataset item has its own rights record, and everything is published under open licences.</p>

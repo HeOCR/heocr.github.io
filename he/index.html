@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HeOCR בעברית</title>
+<meta name="description" content="HeOCR: נתונים, כלים ומודלים פתוחים ונקיים מבחינת זכויות לקריאת עברית מודפסת וכתובה ביד.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --text: #1d1b18;
+    --muted: #6b665e;
+    --line: #e7e3da;
+    --accent: #1f5f8b;
+    --accent-soft: #e6eff6;
+    --tag: #f2efe8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141414;
+      --surface: #1c1c1c;
+      --text: #ecebe8;
+      --muted: #a29d94;
+      --line: #2e2d2b;
+      --accent: #7fb6dd;
+      --accent-soft: #1d2a33;
+      --tag: #262523;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141414;
+    --surface: #1c1c1c;
+    --text: #ecebe8;
+    --muted: #a29d94;
+    --line: #2e2d2b;
+    --accent: #7fb6dd;
+    --accent-soft: #1d2a33;
+    --tag: #262523;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
+  .he { font-family: "Frank Ruhl Libre", serif; direction: rtl; text-align: left; color: var(--muted); font-size: 1.15rem; margin: 0 0 8px; }
+  h1 { font-family: "Frank Ruhl Libre", serif; font-size: clamp(2.6rem, 7vw, 3.6rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.01em; }
+  .lede { font-size: 1.15rem; max-width: 640px; margin: 0 0 24px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-block; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font-weight: 500; font-size: 0.95rem; }
+  .btn:hover { border-color: var(--accent); text-decoration: none; }
+
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 36px 0 0; font-size: 0.9rem; color: var(--muted); }
+  .flow span.step { background: var(--accent-soft); color: var(--text); padding: 4px 10px; border-radius: 999px; font-weight: 500; }
+
+  section { padding: 48px 0 8px; }
+  h2 { font-family: "Frank Ruhl Libre", serif; font-size: 1.7rem; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 22px; max-width: 680px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: flex; flex-direction: column; }
+  .card h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 600; }
+  .card h3 a { color: var(--text); }
+  .card p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; flex: 1; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.8rem; }
+  .meta span { background: var(--tag); padding: 2px 8px; border-radius: 6px; color: var(--muted); }
+  .meta a { font-weight: 500; }
+  .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
+  .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
+  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
+
+  footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+  footer p { margin: 0 0 6px; }
+  header { padding-top: 20px; }
+  .langbar { display: flex; justify-content: flex-end; margin: 0 0 44px; }
+  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); overflow: hidden; font-size: 0.95rem; font-weight: 600; }
+  .lang-toggle a, .lang-toggle span { padding: 7px 16px; color: var(--muted); line-height: 1.3; }
+  .lang-toggle a:hover { background: var(--accent-soft); color: var(--text); text-decoration: none; }
+  .lang-toggle [aria-current] { background: var(--accent); color: var(--surface); }
+  body { font-family: Heebo, "Segoe UI", system-ui, -apple-system, sans-serif; }
+  .tag { color: var(--muted); font-size: 1.05rem; margin: 0 0 8px; text-align: right; }
+  .doc ul, .doc ol { padding-left: 0; padding-right: 22px; }
+  code, bdi, [dir="ltr"] { unicode-bidi: isolate; }
+  code { direction: ltr; display: inline-block; }
+</style>
+<link rel="alternate" hreflang="en" href="https://heocr.github.io/">
+<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="langbar" aria-label="שפה / Language">
+      <div class="lang-toggle">
+        <span aria-current="page" lang="he">עברית</span>
+        <a href="../" lang="en" hreflang="en">English</a>
+      </div>
+    </nav>
+    <p class="tag" lang="en" dir="ltr">Hebrew OCR, open to all</p>
+    <h1>HeOCR</h1>
+    <p class="lede">נתונים, כלים ומודלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו, והכול מתפרסם ברישיונות פתוחים.</p>
+    <div class="links">
+      <a class="btn" href="https://github.com/HeOCR">GitHub</a>
+      <a class="btn" href="https://huggingface.co/HeOCR">Hugging Face</a>
+      <a class="btn" href="https://zenodo.org/communities/heocr">Zenodo</a>
+      <a class="btn" href="rights.html">זכויות והסרה</a>
+    </div>
+    <div class="flow" aria-label="איך החלקים מתחברים">
+      <span class="step">סריקות וטקסטים בנחלת הכלל</span> ←
+      <span class="step">מחוללים</span> ←
+      <span class="step">מאגרי נתונים</span> ←
+      <span class="step">מודלים מאומנים</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="real-print">
+    <h2>קריאת ספרים מודפסים אמיתיים</h2>
+    <p class="sub">דפוס עברי ישן הוא המקום שבו OCR פתוח חלש במיוחד. אנחנו מצמידים סריקות של ספרים בנחלת הכלל לטקסט המוקלד של אותה מהדורה מ<a href="https://benyehuda.org">פרויקט בן־יהודה</a>, וכך מקבלים דוגמאות אימון מדויקות ברמת השורה מעמודים אמיתיים. הסריקות מגיעות מאוסף "שימוש חופשי" של <a href="https://www.nli.org.il">הספרייה הלאומית</a>, ומסריקות בנחלת הכלל ב־<a href="https://archive.org">Internet Archive</a> וב־<a href="https://commons.wikimedia.org">Wikimedia Commons</a>. כל שורה שתתפרסם תשמור את רשומת המקור שלה ואת הצדקת הזכויות שלה.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><bdi>R6</bdi> · כוונון של <bdi>Tesseract</bdi></h3>
+        <p>מודל העברית הפתוח של Google, <code>tessdata_best</code>, אחרי כוונון על 13.6 אלף שורות אמיתיות מסריקות של הספרייה הלאומית. בדקנו אותו על 38 עמודי ספרים אמיתיים, עם טקסט שנבדק בידי אדם (ויקיטקסט העברי): 20.9% שגיאת תווים לעומת 22.6% ב־Tesseract הרגיל, ו־40.7% שגיאת מילים לעומת 47.3%. זה שיפור אמיתי, אבל קטן. אפשר להשתמש בו במקום <code>heb</code> של Tesseract, עם <code>-l heocr_r6</code>. העבודה על <bdi>R7</bdi>, שמוסיף עוד ספרים רבים, ובהם דפוסים ישנים יותר, נמשכת.</p>
+        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24109989">DOI ב־Zenodo</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>נתוני שורות מסריקות אמיתיות</h3>
+        <p>תמונות שורה מסריקות אמיתיות, כל אחת עם טקסט המהדורה שלה. כל שורה מתעדת את הספר, את רשומת הסריקה, את הספרייה שממנה הגיעה ואת הצדקת הזכויות, כך שאפשר להתחקות אחרי כל פריט או להסיר אותו.</p>
+        <div class="meta"><span>CC0</span><span>בהכנה</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="models">
+    <h2>מודלים</h2>
+    <p class="sub">צינור עבודה בן שלושה שלבים ב־<a href="https://kraken.re">kraken</a> לעמודי מסמכים בעברית מודרנית: מציאת השורות, סידורן בסדר הקריאה, וקריאתן. אלה מודלי בסיס למחקר שאומנו רק על עמודים סינתטיים. על דפוס סרוק אמיתי הם חלשים בהרבה, ועל זה בדיוק עונה העבודה על ספרים אמיתיים שלמעלה.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><bdi>R4d</bdi> · פילוח</h3>
+        <p>מוצא את קווי הבסיס והמצולעים של שורות הטקסט, ושמונה סוגי אזורים, כמו כותרת, גוף, חותמת, חתימה ותאי טבלה.</p>
+        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r4d-segmentation">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24023070">DOI ב־Zenodo</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3><bdi>A1</bdi> · סדר קריאה</h3>
+        <p>מסדר את שורות העמוד לפי המיקום וסוג האזור של כל שורה.</p>
+        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-a1-reading-order">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24023072">DOI ב־Zenodo</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3><bdi>R3h</bdi> · זיהוי</h3>
+        <p>קורא שורות עברית מודפסות ובסגנון כתב יד, כולל ספרות, אותיות לטיניות ופיסוק.</p>
+        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r3h-recognition">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24023074">DOI ב־Zenodo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="datasets">
+    <h2>מאגרי נתונים</h2>
+    <p class="sub">כל מאגר בנוי רק מחומר שמותר להפיץ ולהשתמש בו מחדש, גם ללמידת מכונה. הזכויות מתועדות לכל פריט, ולא מניחים אותן לגבי אוסף שלם.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hash">HASH</a></h3>
+        <p>ארכיון עברי של כתב יד סרוק (Hebrew Archive of Scanned Handwriting): מסמכים סרוקים בכתב יד עברי מהמאה ה־18 ואילך, ובהם מכתבים, מחברות, טיוטות וטפסים.</p>
+        <div class="meta"><span>198 סריקות</span><span>48 מקורות</span><span>מטא־דאטה CC0</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/htext">htext</a></h3>
+        <p>טקסט עברי בנחלת הכלל לאימון, החל משורות מיצירות <a href="https://benyehuda.org">פרויקט בן־יהודה</a>, עם ניקוד ובלעדיו. כל יצירה מסומנת כנחלת הכלל בישראל, בארה"ב או בשתיהן.</p>
+        <div class="meta"><span>CC0</span><a href="https://github.com/HeOCR/htext/releases/tag/pby-v1">גרסה pby-v1</a></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hletterscript">hletterscript</a></h3>
+        <p>אותיות עבריות בכתב יד, חתוכות וממוינות לפי כותב, מתוך סריקות בנחלת הכלל. משמשות ליצירת כתב יד סינתטי.</p>
+        <div class="meta"><span>מערך התחלתי</span><span>מטא־דאטה CC0</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/HeOCR">HeOCR</a> ו־<a href="https://github.com/HeOCR/HeOCRsynth">HeOCRsynth</a></h3>
+        <p>מאגרי ה־OCR/HTR המרכזיים: אחד משלב עמודים אמיתיים וסינתטיים, והשני סינתטי בלבד. hocrgen מייצא את שניהם אחרי שבדיקות השחרור שלו עוברות.</p>
+        <div class="meta"><span>בהכנה</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sources">
+    <h2>מקורות וקרדיט</h2>
+    <p class="sub">אנחנו משתמשים רק ביצירות בנחלת הכלל, וכל פריט שומר את המקור ואת הקרדיט שלו. איך אנחנו בודקים זכויות: <a href="rights.html">זכויות והסרה</a>.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://www.nli.org.il">הספרייה הלאומית</a></h3>
+        <p>סריקות של ספרים בנחלת הכלל מהאוסף "נחלת הכלל, שימוש חופשי". כל פריט נושא את הקרדיט "מאוסף הספרייה הלאומית" (<span lang="en" dir="ltr">From the collections of the National Library of Israel</span>), עם מספר הרשומה.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://archive.org">Internet Archive</a> ו־<a href="https://commons.wikimedia.org">Wikimedia Commons</a></h3>
+        <p>סריקות של ספרים בנחלת הכלל שנעשו בידי ספריות אוניברסיטאיות, כמו אוניברסיטת טורונטו, ובידי Google עבור ספריות. כל פריט שומר את המזהה שלו, את זהות הסורק ואת ראיות הזכויות. דפי השער וסימני המים של Google מוסרים.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://benyehuda.org">פרויקט בן־יהודה</a></h3>
+        <p>טקסטים בנחלת הכלל שהקלידו מתנדבים, של אותן מהדורות. הם מספקים את הטקסט המדויק לכל שורה סרוקה, ואת טקסט האימון לעמודים סינתטיים.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://he.wikisource.org">ויקיטקסט העברי</a></h3>
+        <p>תעתיקים מוגהים של עמודים סרוקים. אנחנו משתמשים בהם להערכה בלבד, וכל עמוד נבדק בידי אדם. הטקסט שלהם ברישיון CC BY-SA.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tools">
+    <h2>מחוללים וצינורות עבודה</h2>
+    <p class="sub">הקוד שבונה את מאגרי הנתונים ומאמן את המודלים. כולו ברישיון MIT.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a></h3>
+        <p>מחולל עמודים סינתטיים בעברית. מפיק עמודים מודפסים ובסגנון כתב יד, עם תיוג שורות ומטא־דאטה של כיווניות מימין לשמאל, מטקסט אימון ב־CC0 ומגופנים פתוחים.</p>
+        <div class="meta"><span>Python</span><span>MIT</span><span>טקסט CC0</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hletterscriptgen">hletterscriptgen</a></h3>
+        <p>מחלץ ערכות אותיות לכל כותב מסריקות HASH ומתיוגי אותיות שנבדקו בידי אדם.</p>
+        <div class="meta"><span>Python</span><span>MIT</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hocrgen">hocrgen</a></h3>
+        <p>ניהול מאגרי הנתונים ובדיקות השחרור: איסוף, זכויות, בדיקה ידנית, הסרת כפילויות, חלוקות, מבחני השוואה וייצוא למאגרים הציבוריים.</p>
+        <div class="meta"><span>Python</span><span>MIT</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/heocr-engine">heocr-engine</a></h3>
+        <p>קוד האימון, ההערכה והשחרור של המודלים שלמעלה, וגם בסיס השוואה מקומי של Tesseract עם פורמט תחזיות שאפשר לשחזר.</p>
+        <div class="meta"><span>Python</span><span>kraken</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>נוצר בידי <a href="http://www.shaypalachy.com/">שי פלצ'י אפק</a> ומתחזקי HeOCR.</p>
+    <p>הקוד ברישיון MIT, המודלים ב־Apache-2.0, והנתונים ש־HeOCR כתב ב־CC0. פריטים של צד שלישי שומרים על הזכויות שלהם, לכל פריט בנפרד.</p>
+    <p>קרדיט לטקסט העברי: <a href="https://benyehuda.org">מתנדבי פרויקט בן־יהודה</a>. סריקות: <a href="https://www.nli.org.il">הספרייה הלאומית</a> והספריות שהסריקות שלהן נמצאות ב־<a href="https://archive.org">Internet Archive</a>.</p>
+    <p><a href="rights.html">זכויות והסרה</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HeOCR זכויות</title>
+<meta name="description" content="איך HeOCR בודק את הזכויות של כל סריקה, שורה ומודל שהוא מפרסם, ואיך לבקש להסיר פריט.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --text: #1d1b18;
+    --muted: #6b665e;
+    --line: #e7e3da;
+    --accent: #1f5f8b;
+    --accent-soft: #e6eff6;
+    --tag: #f2efe8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141414;
+      --surface: #1c1c1c;
+      --text: #ecebe8;
+      --muted: #a29d94;
+      --line: #2e2d2b;
+      --accent: #7fb6dd;
+      --accent-soft: #1d2a33;
+      --tag: #262523;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141414;
+    --surface: #1c1c1c;
+    --text: #ecebe8;
+    --muted: #a29d94;
+    --line: #2e2d2b;
+    --accent: #7fb6dd;
+    --accent-soft: #1d2a33;
+    --tag: #262523;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
+  .he { font-family: "Frank Ruhl Libre", serif; direction: rtl; text-align: left; color: var(--muted); font-size: 1.15rem; margin: 0 0 8px; }
+  h1 { font-family: "Frank Ruhl Libre", serif; font-size: clamp(2.6rem, 7vw, 3.6rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.01em; }
+  .lede { font-size: 1.15rem; max-width: 640px; margin: 0 0 24px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-block; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font-weight: 500; font-size: 0.95rem; }
+  .btn:hover { border-color: var(--accent); text-decoration: none; }
+
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 36px 0 0; font-size: 0.9rem; color: var(--muted); }
+  .flow span.step { background: var(--accent-soft); color: var(--text); padding: 4px 10px; border-radius: 999px; font-weight: 500; }
+
+  section { padding: 48px 0 8px; }
+  h2 { font-family: "Frank Ruhl Libre", serif; font-size: 1.7rem; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 22px; max-width: 680px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: flex; flex-direction: column; }
+  .card h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 600; }
+  .card h3 a { color: var(--text); }
+  .card p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; flex: 1; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.8rem; }
+  .meta span { background: var(--tag); padding: 2px 8px; border-radius: 6px; color: var(--muted); }
+  .meta a { font-weight: 500; }
+  .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
+  .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
+
+  footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+  footer p { margin: 0 0 6px; }
+  .doc > section { max-width: 720px; }
+  .doc h2 { margin-top: 0; }
+  .doc ul, .doc ol { padding-left: 22px; }
+  .doc li { margin: 0 0 8px; }
+  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
+  .back { display: inline-block; margin-bottom: 18px; font-size: 0.95rem; }
+  header { padding-top: 20px; }
+  .langbar { display: flex; justify-content: flex-end; margin: 0 0 44px; }
+  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); overflow: hidden; font-size: 0.95rem; font-weight: 600; }
+  .lang-toggle a, .lang-toggle span { padding: 7px 16px; color: var(--muted); line-height: 1.3; }
+  .lang-toggle a:hover { background: var(--accent-soft); color: var(--text); text-decoration: none; }
+  .lang-toggle [aria-current] { background: var(--accent); color: var(--surface); }
+  body { font-family: Heebo, "Segoe UI", system-ui, -apple-system, sans-serif; }
+  .tag { color: var(--muted); font-size: 1.05rem; margin: 0 0 8px; text-align: right; }
+  .doc ul, .doc ol { padding-left: 0; padding-right: 22px; }
+  code, bdi, [dir="ltr"] { unicode-bidi: isolate; }
+  code { direction: ltr; display: inline-block; }
+</style>
+<link rel="alternate" hreflang="en" href="https://heocr.github.io/rights.html">
+<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/rights.html">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="langbar" aria-label="שפה / Language">
+      <div class="lang-toggle">
+        <span aria-current="page" lang="he">עברית</span>
+        <a href="../rights.html" lang="en" hreflang="en">English</a>
+      </div>
+    </nav>
+    <a class="back" href="./">→ HeOCR</a>
+    <h1>זכויות והסרה</h1>
+    <p class="lede">כל מה ש־HeOCR מפרסם נועד להיות זמין לכל אחד, לכל מטרה, לתמיד. כאן מוסבר איך אנחנו מוודאים את זה, ומה לעשות אם לדעתכם טעינו.</p>
+  </div>
+</header>
+
+<main class="wrap doc">
+
+  <section>
+    <h2>במה אנחנו משתמשים</h2>
+    <ul>
+      <li><b>רק יצירות בנחלת הכלל.</b> אנחנו משתמשים בספר רק אם כל מחבר, מתרגם ועורך שעבודתו מופיעה בעמוד נפטר לפני יותר מ־70 שנה, כך שהספר בנחלת הכלל בישראל. ספרים שנדפסו ב־1855 או לפני כן, ושלא ידועה שנת פטירה של מחבריהם, נחשבים לנחלת הכלל. גם המעמד בארה"ב מתועד לכל פריט (זו לא דרישה), כדי שאפשר יהיה לבנות גרסה שמכילה רק פריטים שהם נחלת הכלל גם בארה"ב.</li>
+      <li><b>סריקות נאמנות.</b> סריקה צילומית או מכנית נאמנה של עמוד מודפס לא יוצרת זכות יוצרים חדשה, לא בישראל ולא בארה"ב, ולכן הסריקה חופשית בדיוק כמו הספר.</li>
+      <li><b>מקורות שאין לנו איתם הסכם מגביל:</b>
+        <ul>
+          <li>סריקות של הספרייה הלאומית שמסומנות "נחלת הכלל, שימוש חופשי";</li>
+          <li>סריקות בנחלת הכלל שנלקחו מ־Internet Archive או מ־Wikimedia Commons;</li>
+          <li>טקסטים מפרויקט בן־יהודה;</li>
+          <li>גופנים ברישיון SIL Open Font License.</li>
+        </ul>
+      </li>
+      <li><b>מה אנחנו משאירים בחוץ.</b> כל מה שכפוף לתנאים של שימוש לא מסחרי, של איסור יצירות נגזרות, או לתנאים לא ידועים. זה כולל סריקות של הספרייה הלאומית שמסומנות "נחלת הכלל, שימוש לא מסחרי", כשהן נלקחות מהאתר או מה־API של הספרייה, אלא אם הספרייה מתירה אחרת בכתב.</li>
+      <li><b>עותק אחד לכל מהדורה, ממקור פתוח.</b> אם אותה מהדורה נמצאת גם ב־Internet Archive או ב־Wikimedia Commons, אנחנו לוקחים אותה משם ומתעדים את הקובץ הזה כמקור. זה חל גם על סריקות שנעשו בידי Google או בידי הספרייה הלאומית, כי אין לנו הסכם עם אף אחת מהן לגבי קבצים שנלקחים בדרך הזו.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>רשומה לכל פריט</h2>
+    <p>לפני שמשהו מתפרסם, כל סריקה מקבלת רשומת זכויות שנבנית מתוך ראיות, וכל שורה, אות או עמוד שנחתכו ממנה מצביעים על הרשומה הזו. הרשומה מתעדת:</p>
+    <ul>
+      <li>מאיפה הגיע הקובץ, עם הכתובת המדויקת וסכום הביקורת שלו;</li>
+      <li>מי כתב את היצירה ומתי נפטר, מתי ואיפה היא נדפסה, ומאיזה מקור נלקח כל פרט;</li>
+      <li>מי סרק אותה, למשל ספרייה או Google, ואילו תנאים צירף המחזיק המקורי;</li>
+      <li>למה מותר להשתמש בפריט מחדש, עם תקציר בשורה אחת.</li>
+    </ul>
+    <p>אם חסר פרט נדרש, הפריט לא נכנס. אנחנו נותנים קרדיט לספרייה הלאומית על כל פריט מהאוסף שלה, ומסירים את דפי השער ואת סימני המים של Google מסריקות ש־Google ביצעה, תוך שמירת העובדה הזו ברשומה.</p>
+  </section>
+
+  <section>
+    <h2>רישיונות</h2>
+    <ul>
+      <li><b>סריקות, תמונות שורה ותמונות אותיות:</b> נחלת הכלל, מסומנות CC0 1.0. HeOCR לא טוען לזכות יוצרים בהן.</li>
+      <li><b>הנתונים ש־HeOCR יצר</b> (יישורים, תיוגים, עמודים סינתטיים): CC0 1.0.</li>
+      <li><b>מודלים:</b> Apache-2.0.</li>
+      <li><b>קוד:</b> MIT.</li>
+      <li><b>הטקסט מוויקיטקסט העברי</b>, שמשמש להערכה, נשאר ברישיון CC BY-SA שלו.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>הסרה</h2>
+    <p>אם לדעתכם פריט מוגן בזכויות יוצרים או כפוף להגבלה מחייבת, ספרו לנו:</p>
+    <ol>
+      <li>כתבו ל־<a href="mailto:heocrproject@gmail.com?subject=Takedown">heocrproject@gmail.com</a>, או פתחו issue ב־<a href="https://github.com/HeOCR/hocrgen/issues/new">github.com/HeOCR/hocrgen/issues</a>. כותרת: <code>Takedown: &lt;item or book id&gt;</code>, ואם אתם יודעים, ציינו את הבסיס המשפטי.</li>
+      <li>בזמן הבירור אנחנו מפסיקים להשתמש בספר, ומוציאים אותו מכל מה שנפרסם בהמשך.</li>
+      <li>אם צריך להסיר אותו, נפרסם גרסאות חדשות של מאגרי הנתונים בלעדיו, ונתעד את ההסרה ביומן שינויים ציבורי. בפלטפורמות ששומרות גרסאות ישנות, כמו Zenodo, נבקש להגביל את הגישה אליהן. כל פריט שומר רשומה משלו, ולכן שאר הנתונים לא מושפעים.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>המדיניות המלאה</h2>
+    <p>המדיניות והנימוקים שלה פומביים (באנגלית):</p>
+    <ul>
+      <li><a href="https://github.com/HeOCR/hocrgen/blob/main/planning/decisions/2026-11-10-legal-strategy.md">ההחלטה על האסטרטגיה המשפטית</a>;</li>
+      <li><a href="https://github.com/HeOCR/hocrgen/blob/main/docs/legal/2026-11-10_legal_strategy.md">הניתוח המלא</a>;</li>
+      <li><a href="https://github.com/HeOCR/hocrgen/blob/main/planning/decisions/2026-11-10-open-release-and-clean-inputs.md">ההחלטה על פרסום פתוח</a>.</li>
+    </ul>
+    <p>הניתוח אינו ייעוץ משפטי.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="./">HeOCR</a> · נוצר בידי <a href="http://www.shaypalachy.com/">שי פלצ'י אפק</a> ומתחזקי HeOCR.</p>
+  </div>
+</footer>
+
+</body>
+</html>
