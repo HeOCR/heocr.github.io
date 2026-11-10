@@ -85,12 +85,26 @@
   .doc li { margin: 0 0 8px; }
   code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
   .back { display: inline-block; margin-bottom: 18px; font-size: 0.95rem; }
+  header { padding-top: 20px; }
+  .langbar { display: flex; justify-content: flex-end; margin: 0 0 44px; }
+  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); overflow: hidden; font-size: 0.95rem; font-weight: 600; }
+  .lang-toggle a, .lang-toggle span { padding: 7px 16px; color: var(--muted); line-height: 1.3; }
+  .lang-toggle a:hover { background: var(--accent-soft); color: var(--text); text-decoration: none; }
+  .lang-toggle [aria-current] { background: var(--accent); color: var(--surface); }
 </style>
+<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/rights.html">
+<link rel="alternate" hreflang="en" href="https://heocr.github.io/rights.html">
 </head>
 <body>
 
 <header>
   <div class="wrap">
+    <nav class="langbar" aria-label="Language / שפה">
+      <div class="lang-toggle">
+        <span aria-current="page" lang="en">English</span>
+        <a href="he/rights.html" lang="he" hreflang="he">עברית</a>
+      </div>
+    </nav>
     <a class="back" href="./">← HeOCR</a>
     <h1>Rights &amp; takedown</h1>
     <p class="lede">Everything HeOCR publishes is meant to be usable by anyone, for any purpose, permanently. This page sets out how we check that, and what to do if you think we got something wrong.</p>
