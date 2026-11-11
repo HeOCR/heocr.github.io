@@ -125,8 +125,17 @@
     <p class="sub">Old printed Hebrew is where open OCR is weakest. We pair public-domain scans of a book with <a href="https://benyehuda.org">Project Ben-Yehuda</a>'s typed text of the same edition. That gives exact line-level training examples from real pages. Scans come from the <a href="https://www.nli.org.il">National Library of Israel</a>'s free-use collection and from public-domain scans on the <a href="https://archive.org">Internet Archive</a> and <a href="https://commons.wikimedia.org">Wikimedia Commons</a>. Every published line will keep its source record and its rights justification.</p>
     <div class="grid">
       <div class="card">
+        <h3>R7 · Tesseract fine-tune, more books</h3>
+        <p>Same recipe as R6, on 95k real lines from 30 public-domain books: 7 National Library of Israel scans and 23 university-library scans on the Internet Archive. It reads single lines better than R6, with about a quarter fewer character errors on held-out books. On the same 38 pages, page-level error is a tie with R6: 20.9% character error and 39.3% word error, against 22.6% and 47.3% for stock Tesseract. R6 remains valid. Use <code>-l heocr_r7</code>.</p>
+        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24126449">Zenodo DOI</a>
+        </div>
+      </div>
+      <div class="card">
         <h3>R6 · Tesseract fine-tune</h3>
-        <p>Google's open <code>tessdata_best</code> Hebrew model, fine-tuned on 13.6k real lines from National Library of Israel scans. We scored it on 38 real book pages with human-checked text (Hebrew Wikisource): 20.9% character error, against 22.6% for stock Tesseract, and 40.7% word error against 47.3%. That is a real gain, but a small one. Use it as a drop-in replacement for Tesseract's <code>heb</code>: <code>-l heocr_r6</code>. R7, which adds many more books including older prints, is in progress.</p>
+        <p>Google's open <code>tessdata_best</code> Hebrew model, fine-tuned on 13.6k real lines from National Library of Israel scans. We scored it on 38 real book pages with human-checked text (Hebrew Wikisource): 20.9% character error, against 22.6% for stock Tesseract, and 40.7% word error against 47.3%. That is a real gain, but a small one. Use it as a drop-in replacement for Tesseract's <code>heb</code>: <code>-l heocr_r6</code>.</p>
         <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
         <div class="row">
           <a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">Hugging Face</a>

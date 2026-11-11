@@ -130,8 +130,17 @@
     <p class="sub">דפוס עברי ישן הוא המקום שבו OCR פתוח חלש במיוחד. אנחנו מצמידים סריקות של ספרים בנחלת הכלל לטקסט המוקלד של אותה מהדורה מ<a href="https://benyehuda.org">פרויקט בן־יהודה</a>, וכך מקבלים דוגמאות אימון מדויקות ברמת השורה מעמודים אמיתיים. הסריקות מגיעות מאוסף "שימוש חופשי" של <a href="https://www.nli.org.il">הספרייה הלאומית</a>, ומסריקות בנחלת הכלל ב־<a href="https://archive.org">Internet Archive</a> וב־<a href="https://commons.wikimedia.org">Wikimedia Commons</a>. כל שורה שתתפרסם תשמור את רשומת המקור שלה ואת הצדקת הזכויות שלה.</p>
     <div class="grid">
       <div class="card">
+        <h3><bdi>R7</bdi> · כוונון של <bdi>Tesseract</bdi>, יותר ספרים</h3>
+        <p>אותו מתכון כמו <bdi>R6</bdi>, על 95 אלף שורות אמיתיות מ־30 ספרים בנחלת הכלל: 7 סריקות של הספרייה הלאומית ו־23 סריקות של ספריות אוניברסיטאיות ב־Internet Archive. הוא קורא שורות בודדות טוב יותר מ־<bdi>R6</bdi>, עם כרבע פחות שגיאות תווים על ספרים שלא שימשו לאימון. על אותם 38 עמודים, ברמת העמוד השלם הוא בתיקו עם <bdi>R6</bdi>: 20.9% שגיאת תווים ו־39.3% שגיאת מילים, לעומת 22.6% ו־47.3% ב־Tesseract הרגיל. <bdi>R6</bdi> עדיין תקף. השימוש: <code>-l heocr_r7</code>.</p>
+        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24126449">DOI ב־Zenodo</a>
+        </div>
+      </div>
+      <div class="card">
         <h3><bdi>R6</bdi> · כוונון של <bdi>Tesseract</bdi></h3>
-        <p>מודל העברית הפתוח של Google, <code>tessdata_best</code>, אחרי כוונון על 13.6 אלף שורות אמיתיות מסריקות של הספרייה הלאומית. בדקנו אותו על 38 עמודי ספרים אמיתיים, עם טקסט שנבדק בידי אדם (ויקיטקסט העברי): 20.9% שגיאת תווים לעומת 22.6% ב־Tesseract הרגיל, ו־40.7% שגיאת מילים לעומת 47.3%. זה שיפור אמיתי, אבל קטן. אפשר להשתמש בו במקום <code>heb</code> של Tesseract, עם <code>-l heocr_r6</code>. העבודה על <bdi>R7</bdi>, שמוסיף עוד ספרים רבים, ובהם דפוסים ישנים יותר, נמשכת.</p>
+        <p>מודל העברית הפתוח של Google, <code>tessdata_best</code>, אחרי כוונון על 13.6 אלף שורות אמיתיות מסריקות של הספרייה הלאומית. בדקנו אותו על 38 עמודי ספרים אמיתיים, עם טקסט שנבדק בידי אדם (ויקיטקסט העברי): 20.9% שגיאת תווים לעומת 22.6% ב־Tesseract הרגיל, ו־40.7% שגיאת מילים לעומת 47.3%. זה שיפור אמיתי, אבל קטן. אפשר להשתמש בו במקום <code>heb</code> של Tesseract, עם <code>-l heocr_r6</code>.</p>
         <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
         <div class="row">
           <a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">Hugging Face</a>
