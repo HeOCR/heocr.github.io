@@ -82,6 +82,8 @@ T = {
         "readers": {"heocr": "heocr", "stock": "Tesseract (tessdata_best heb)", "docling": "Docling",
                     "markitdown": "MarkItDown", "pymupdf4llm": "PyMuPDF4LLM"},
         "reader_note": "Each table lists the readers that handle that format. Tesseract reads images only, so it appears on scans; on PDF T6 it is scored on the image regions only.",
+        "cell_note": {"PDF T4": "T4 and T5 use the same scanned pages; heocr and Tesseract read both by OCR, so their figures match. T4 adds a wrong text layer, which the other readers use."},
+        "wer_note": "Word error counts inserted words as well as wrong and missing ones, so it can exceed 100%.",
         "footer": "Created by <a href=\"http://www.shaypalachy.com/\">Shay Palachy Affek</a> and the HeOCR maintainers.",
     },
     "he": {
@@ -135,6 +137,8 @@ T = {
         "x_doc_interval": "bootstrap של 95% על פני המסמכים (2000 דגימות, seed 0)",
         "x_doc_ref": "קבוצות D-bench מחוללות A, B ו־C: מסמכים שנוצרו עם טקסט נכון מדויק; הטקסט מתוך רשומות (העיתון הרשמי), נחלת הכלל",
         "x_ws": "ויקיטקסט העברי",
+        "cell_note": {"PDF T4": "T4 ו־T5 משתמשים באותם עמודים סרוקים; heocr ו־Tesseract קוראים את שניהם ב־OCR, ולכן התוצאות שלהם זהות. ב־T4 נוספת שכבת טקסט שגויה, שבה משתמשים הקוראים האחרים."},
+        "wer_note": "שגיאת מילים סופרת גם מילים שנוספו, לא רק מילים שגויות או חסרות, ולכן היא יכולה לעלות על 100%.",
         "footer": "נוצר בידי <a href=\"http://www.shaypalachy.com/\">שי פלצ'י אפק</a> ומתחזקי HeOCR.",
     },
 }
@@ -248,11 +252,14 @@ def page(lang: str, R: dict) -> str:
             tds = "".join(cell_html(x[m]["value"], x[m]["ci95"]) if x and m in x else '<td class="num">–</td>' for m in ms)
             w(f'<tr{" class=\"ours\"" if r == "heocr" else ""}><td>{e(t["readers"][r])}</td>{tds}</tr>\n')
         w("</tbody></table></div>\n")
+        if cell in t["cell_note"]:
+            w(f'<p class="note">{e(t["cell_note"][cell])}</p>\n')
     commit = re.search(r"[0-9a-f]{40}", D["heocr"])
     commit = commit.group(0)[:7] if commit else D["heocr"]
     ref = D["reference"]
     vers = "; ".join(f'{e(t["readers"][k])} {e(v.get("version") or v.get("ocr", ""))}' for k, v in D["baselines"].items())
     w(f'<p class="note">{e(t["reader_note"])}</p>\n')
+    w(f'<p class="note">{e(t["wer_note"])}</p>\n')
     w(facts([
         (t["f_measure"], f'<code>{e(D["measure"])}</code> (text normalised the same way for every reader; ratios of sums over documents)'
          if lang == "en" else f'<code>{e(D["measure"])}</code> (הטקסט מנורמל באותו אופן לכל הקוראים; יחס של סכומים על פני המסמכים)'),
