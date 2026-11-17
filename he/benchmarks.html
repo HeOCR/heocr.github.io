@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מדדי ביצועים של HeOCR</title>
+<meta name="description" content="איך המודלים וקורא המסמכים של HeOCR משתווים לכלים פתוחים אחרים, לפי סוג המסמך העברי.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --text: #1d1b18;
+    --muted: #6b665e;
+    --line: #e7e3da;
+    --accent: #1f5f8b;
+    --accent-soft: #e6eff6;
+    --tag: #f2efe8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141414;
+      --surface: #1c1c1c;
+      --text: #ecebe8;
+      --muted: #a29d94;
+      --line: #2e2d2b;
+      --accent: #7fb6dd;
+      --accent-soft: #1d2a33;
+      --tag: #262523;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141414;
+    --surface: #1c1c1c;
+    --text: #ecebe8;
+    --muted: #a29d94;
+    --line: #2e2d2b;
+    --accent: #7fb6dd;
+    --accent-soft: #1d2a33;
+    --tag: #262523;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
+  .he { font-family: "Frank Ruhl Libre", serif; direction: rtl; text-align: left; color: var(--muted); font-size: 1.15rem; margin: 0 0 8px; }
+  h1 { font-family: "Frank Ruhl Libre", serif; font-size: clamp(2.6rem, 7vw, 3.6rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.01em; }
+  .lede { font-size: 1.15rem; max-width: 640px; margin: 0 0 24px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-block; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font-weight: 500; font-size: 0.95rem; }
+  .btn:hover { border-color: var(--accent); text-decoration: none; }
+
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 36px 0 0; font-size: 0.9rem; color: var(--muted); }
+  .flow span.step { background: var(--accent-soft); color: var(--text); padding: 4px 10px; border-radius: 999px; font-weight: 500; }
+
+  section { padding: 48px 0 8px; }
+  h2 { font-family: "Frank Ruhl Libre", serif; font-size: 1.7rem; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 22px; max-width: 680px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: flex; flex-direction: column; }
+  .card h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 600; }
+  .card h3 a { color: var(--text); }
+  .card p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; flex: 1; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.8rem; }
+  .meta span { background: var(--tag); padding: 2px 8px; border-radius: 6px; color: var(--muted); }
+  .meta a { font-weight: 500; }
+  .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
+  .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
+
+  footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+  footer p { margin: 0 0 6px; }
+  .doc > section { max-width: 720px; }
+  .doc h2 { margin-top: 0; }
+  .doc ul, .doc ol { padding-left: 22px; }
+  .doc li { margin: 0 0 8px; }
+  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
+  .back { display: inline-block; margin-bottom: 18px; font-size: 0.95rem; }
+  header { padding-top: 20px; }
+  .langbar { display: flex; justify-content: flex-end; margin: 0 0 44px; }
+  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); overflow: hidden; font-size: 0.95rem; font-weight: 600; }
+  .lang-toggle a, .lang-toggle span { padding: 7px 16px; color: var(--muted); line-height: 1.3; }
+  .lang-toggle a:hover { background: var(--accent-soft); color: var(--text); text-decoration: none; }
+  .lang-toggle [aria-current] { background: var(--accent); color: var(--surface); }
+  body { font-family: Heebo, "Segoe UI", system-ui, -apple-system, sans-serif; }
+  .tag { color: var(--muted); font-size: 1.05rem; margin: 0 0 8px; text-align: right; }
+  .doc ul, .doc ol { padding-left: 0; padding-right: 22px; }
+  code, bdi, [dir="ltr"] { unicode-bidi: isolate; }
+  code { direction: ltr; display: inline-block; }
+
+  .bench section { max-width: none; }
+  .bench h2 { margin-top: 0; }
+  .bench h3 { font-size: 1.05rem; margin: 26px 0 4px; }
+  .status { display: inline-block; background: var(--tag); color: var(--muted); padding: 2px 10px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; margin: 0 0 10px; }
+  .empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; padding: 18px; color: var(--muted); }
+  .tablewrap { overflow-x: auto; margin: 8px 0 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+  th, td { padding: 8px 12px; text-align: start; border-bottom: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-weight: 600; color: var(--muted); font-size: 0.82rem; }
+  td.num { font-variant-numeric: tabular-nums; }
+  .ci { display: block; color: var(--muted); font-size: 0.78rem; }
+  tr.ours td { background: var(--accent-soft); }
+  tr.ours td:first-child { font-weight: 600; }
+  .facts { font-size: 0.85rem; color: var(--muted); margin: 6px 0 0; }
+  .facts li { margin: 0 0 3px; }
+  .warn { border-inline-start: 3px solid var(--accent); padding: 2px 0 2px 12px; padding-inline-start: 12px; margin: 10px 0; }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
+  .toc a { font-size: 0.9rem; }
+</style>
+<link rel="alternate" hreflang="en" href="https://heocr.github.io/benchmarks.html">
+<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/benchmarks.html">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="langbar" aria-label="שפה / Language">
+      <div class="lang-toggle">
+        <span aria-current="page" lang="he">עברית</span>
+        <a href="../benchmarks.html" lang="en" hreflang="en">English</a>
+      </div>
+    </nav>
+    <a class="back" href="./">→ HeOCR</a>
+    <h1>מדדי ביצועים של HeOCR</h1>
+    <p class="lede">איך HeOCR משתווה לכלים פתוחים אחרים, לפי סוג המסמך. לכל מספר מצוינים גודל המדגם, רווח בר־סמך של 95%, המדד, מקור הטקסט הנכון וההרצה שממנה הוא בא. הדף נבנה מקובץ אחד, <a href="../benchmarks/results.json">results.json</a>, שמתעדכן אחרי כל הרצה.</p>
+    <p class="note">עודכן 2026-11-17.</p>
+  </div>
+</header>
+
+<main class="wrap doc bench">
+<nav class="toc"><a href="#p-mod">דפוס עברי מודרני</a> · <a href="#p-hist">דפוס עברי היסטורי ורבני</a> · <a href="#handwriting">כתב יד</a> · <a href="#documents">מסמכים לפי פורמט</a> · <a href="#vendors">ספקי OCR מסחריים</a></nav>
+<section id="p-mod">
+<h2>דפוס עברי מודרני</h2>
+<span class="status">אין עדיין נתונים</span>
+<div class="empty">אין עדיין נתונים: דפי הייחוס נמצאים בבדיקה אנושית. לא יוצג מספר עד שתיבדק ותוערך קבוצה.</div>
+</section>
+<section id="p-hist">
+<h2>דפוס עברי היסטורי ורבני</h2>
+<p class="warn">הקבוצה קטנה: 38 עמודים מ־14 ספרים. רווחי הסמך רחבים ורובם חופפים, ולכן יש לקרוא את ההבדלים בין המנועים כסימנים, לא כדירוג.</p>
+<h3>כל 38 העמודים <span class="note">· 38 עמודים, 14 ספרים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>מנוע</th><th>שגיאת תווים (CER) <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים (WER) <span class="ci">נמוך יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr><td>Tesseract heb (stock, Homebrew)</td><td class="num"><bdi dir="ltr">22.6%</bdi><span class="ci"><bdi dir="ltr">[13.6–36.7%]</bdi></span></td><td class="num"><bdi dir="ltr">47.3%</bdi><span class="ci"><bdi dir="ltr">[29.3–68.7%]</bdi></span></td></tr>
+<tr><td>Tesseract tessdata_best heb</td><td class="num"><bdi dir="ltr">22.5%</bdi><span class="ci"><bdi dir="ltr">[14.0–36.0%]</bdi></span></td><td class="num"><bdi dir="ltr">48.1%</bdi><span class="ci"><bdi dir="ltr">[30.0–70.2%]</bdi></span></td></tr>
+<tr class="ours"><td><a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">HeOCR R6</a></td><td class="num"><bdi dir="ltr">20.9%</bdi><span class="ci"><bdi dir="ltr">[11.8–36.0%]</bdi></span></td><td class="num"><bdi dir="ltr">40.7%</bdi><span class="ci"><bdi dir="ltr">[23.9–65.0%]</bdi></span></td></tr>
+<tr class="ours"><td><a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">HeOCR R7</a></td><td class="num"><bdi dir="ltr">20.9%</bdi><span class="ci"><bdi dir="ltr">[11.3–37.1%]</bdi></span></td><td class="num"><bdi dir="ltr">39.3%</bdi><span class="ci"><bdi dir="ltr">[22.9–65.0%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>בלי עמודים מנוקדים <span class="note">· 36 עמודים, 13 ספרים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>מנוע</th><th>שגיאת תווים (CER) <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים (WER) <span class="ci">נמוך יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr><td>Tesseract heb (stock, Homebrew)</td><td class="num"><bdi dir="ltr">20.1%</bdi><span class="ci"><bdi dir="ltr">[11.7–32.8%]</bdi></span></td><td class="num"><bdi dir="ltr">45.1%</bdi><span class="ci"><bdi dir="ltr">[27.3–67.3%]</bdi></span></td></tr>
+<tr><td>Tesseract tessdata_best heb</td><td class="num"><bdi dir="ltr">20.1%</bdi><span class="ci"><bdi dir="ltr">[12.0–32.3%]</bdi></span></td><td class="num"><bdi dir="ltr">45.9%</bdi><span class="ci"><bdi dir="ltr">[27.5–68.5%]</bdi></span></td></tr>
+<tr class="ours"><td><a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">HeOCR R6</a></td><td class="num"><bdi dir="ltr">18.4%</bdi><span class="ci"><bdi dir="ltr">[10.1–31.9%]</bdi></span></td><td class="num"><bdi dir="ltr">38.2%</bdi><span class="ci"><bdi dir="ltr">[21.0–62.7%]</bdi></span></td></tr>
+<tr class="ours"><td><a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">HeOCR R7</a></td><td class="num"><bdi dir="ltr">18.1%</bdi><span class="ci"><bdi dir="ltr">[9.8–32.9%]</bdi></span></td><td class="num"><bdi dir="ltr">36.8%</bdi><span class="ci"><bdi dir="ltr">[20.4–63.3%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>דפוס רבני, בלי ניקוד <span class="note">· 21 עמודים, 8 ספרים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>מנוע</th><th>שגיאת תווים (CER) <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים (WER) <span class="ci">נמוך יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr><td>Tesseract heb (stock, Homebrew)</td><td class="num"><bdi dir="ltr">24.9%</bdi><span class="ci"><bdi dir="ltr">[16.5–41.0%]</bdi></span></td><td class="num"><bdi dir="ltr">53.6%</bdi><span class="ci"><bdi dir="ltr">[40.1–84.9%]</bdi></span></td></tr>
+<tr><td>Tesseract tessdata_best heb</td><td class="num"><bdi dir="ltr">24.5%</bdi><span class="ci"><bdi dir="ltr">[16.3–40.1%]</bdi></span></td><td class="num"><bdi dir="ltr">54.2%</bdi><span class="ci"><bdi dir="ltr">[40.3–86.5%]</bdi></span></td></tr>
+<tr class="ours"><td><a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">HeOCR R6</a></td><td class="num"><bdi dir="ltr">22.9%</bdi><span class="ci"><bdi dir="ltr">[13.7–40.6%]</bdi></span></td><td class="num"><bdi dir="ltr">46.2%</bdi><span class="ci"><bdi dir="ltr">[30.3–81.8%]</bdi></span></td></tr>
+<tr class="ours"><td><a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">HeOCR R7</a></td><td class="num"><bdi dir="ltr">22.7%</bdi><span class="ci"><bdi dir="ltr">[12.4–42.1%]</bdi></span></td><td class="num"><bdi dir="ltr">44.3%</bdi><span class="ci"><bdi dir="ltr">[26.9–83.1%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>אותיות מרובעות רגילות <span class="note">· 15 עמודים, 5 ספרים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>מנוע</th><th>שגיאת תווים (CER) <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים (WER) <span class="ci">נמוך יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr><td>Tesseract heb (stock, Homebrew)</td><td class="num"><bdi dir="ltr">9.8%</bdi><span class="ci"><bdi dir="ltr">[5.4–16.5%]</bdi></span></td><td class="num"><bdi dir="ltr">25.4%</bdi><span class="ci"><bdi dir="ltr">[12.7–45.8%]</bdi></span></td></tr>
+<tr><td>Tesseract tessdata_best heb</td><td class="num"><bdi dir="ltr">10.8%</bdi><span class="ci"><bdi dir="ltr">[5.8–17.5%]</bdi></span></td><td class="num"><bdi dir="ltr">26.8%</bdi><span class="ci"><bdi dir="ltr">[11.1–50.0%]</bdi></span></td></tr>
+<tr class="ours"><td><a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">HeOCR R6</a></td><td class="num"><bdi dir="ltr">8.6%</bdi><span class="ci"><bdi dir="ltr">[4.5–14.5%]</bdi></span></td><td class="num"><bdi dir="ltr">19.8%</bdi><span class="ci"><bdi dir="ltr">[8.3–37.0%]</bdi></span></td></tr>
+<tr class="ours"><td><a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">HeOCR R7</a></td><td class="num"><bdi dir="ltr">8.3%</bdi><span class="ci"><bdi dir="ltr">[4.7–14.0%]</bdi></span></td><td class="num"><bdi dir="ltr">19.5%</bdi><span class="ci"><bdi dir="ltr">[9.5–35.4%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>טקסט מנוקד בלבד <span class="note">· 2 עמודים, 1 ספרים</span></h3>
+<p class="note">רק 2 עמודים מספר אחד: בלי רווח סמך, מוצג לשלמות התמונה. כל המנועים נכשלים כאן.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>מנוע</th><th>שגיאת תווים (CER) <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים (WER) <span class="ci">נמוך יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr><td>Tesseract heb (stock, Homebrew)</td><td class="num"><bdi dir="ltr">56.7%</bdi></td><td class="num"><bdi dir="ltr">99.2%</bdi></td></tr>
+<tr><td>Tesseract tessdata_best heb</td><td class="num"><bdi dir="ltr">54.6%</bdi></td><td class="num"><bdi dir="ltr">100.0%</bdi></td></tr>
+<tr class="ours"><td><a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">HeOCR R6</a></td><td class="num"><bdi dir="ltr">56.7%</bdi></td><td class="num"><bdi dir="ltr">99.5%</bdi></td></tr>
+<tr class="ours"><td><a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">HeOCR R7</a></td><td class="num"><bdi dir="ltr">59.1%</bdi></td><td class="num"><bdi dir="ltr">99.0%</bdi></td></tr>
+</tbody></table></div>
+<ul class="facts"><li><strong>מדד:</strong> hocrgen evaluate-references, פרופיל primary.v1 (טקסט העמוד, יחס של סכומים על פני העמודים)</li><li><strong>טקסט ייחוס:</strong> audit2: ‏38 עמודים מוגהים מ־14 ספרים בוויקיטקסט העברי, עם טקסט ייחוס שנבדק בידי אדם; <a href="https://he.wikisource.org">ויקיטקסט העברי</a> (<code>e2d4c_wikisource_printed_v7</code>)</li><li><strong>רישיון:</strong> CC BY-SA 4.0</li><li><strong>רווח סמך:</strong> bootstrap של 95% באשכולות לפי ספר בוויקיטקסט (2000 דגימות, seed 20261106); בלי רווח סמך מתחת ל־3 ספרים</li><li><strong>הרצה:</strong> הוערך ב־2026-11-11; כלי ההערכה HeOCR/hocrgen בגרסה d4a3414</li><li><strong>קוד ההערכה:</strong> <a href="https://github.com/HeOCR/hocrgen">HeOCR/hocrgen</a> <code>evaluate-references</code></li></ul><p class="note">R8b עוד לא הוערך על העמודים האלה.</p>
+</section>
+<section id="handwriting">
+<h2>כתב יד</h2>
+<span class="status">אין עדיין נתונים</span>
+<div class="empty">אין עדיין נתונים: אין קבוצת כתב יד מוערכת עם טקסט ייחוס אמיתי שנבדק בידי אדם.</div>
+</section>
+<section id="documents">
+<h2>מסמכים לפי פורמט</h2>
+<p class="sub">מסמכים מחוללים עם טקסט נכון מדויק: קובצי Word וקובצי PDF מכל הסוגים שקורא המסמכים של HeOCR מטפל בהם, שנוצרו במחוללים שלנו כך שהטקסט הנכון ידוע במדויק. כל טבלה היא סוג מסמך אחד. heocr מפותח מול הקבוצות האלה, ולכן הן אינן מוחזקות בצד ומחמיאות לו; שער השחרור יעריך קבוצה חדשה שתיווצר אחרי שהקוד יוקפא. שער השחרור עוד לא הורץ: אלה מדידות, לא החלטות שחרור.</p>
+<h3>Word ‏(‎.docx‏) <span class="note">· DOCX · 80 מסמכים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>קורא</th><th>שגיאת תווים <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים <span class="ci">נמוך יותר עדיף</span></th><th>מספרים שנמצאו <span class="ci">גבוה יותר עדיף</span></th><th>מספרי סעיפים נכונים <span class="ci">גבוה יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr class="ours"><td>heocr</td><td class="num"><bdi dir="ltr">0.27%</bdi><span class="ci"><bdi dir="ltr">[0.19–0.35%]</bdi></span></td><td class="num"><bdi dir="ltr">0.33%</bdi><span class="ci"><bdi dir="ltr">[0.23–0.42%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td></tr>
+<tr><td>Docling</td><td class="num"><bdi dir="ltr">3.2%</bdi><span class="ci"><bdi dir="ltr">[2.8–3.6%]</bdi></span></td><td class="num"><bdi dir="ltr">8.0%</bdi><span class="ci"><bdi dir="ltr">[7.3–8.8%]</bdi></span></td><td class="num"><bdi dir="ltr">94.0%</bdi><span class="ci"><bdi dir="ltr">[92.2–95.5%]</bdi></span></td><td class="num"><bdi dir="ltr">8.3%</bdi><span class="ci"><bdi dir="ltr">[6.5–10.2%]</bdi></span></td></tr>
+<tr><td>MarkItDown</td><td class="num"><bdi dir="ltr">3.9%</bdi><span class="ci"><bdi dir="ltr">[3.4–4.3%]</bdi></span></td><td class="num"><bdi dir="ltr">7.4%</bdi><span class="ci"><bdi dir="ltr">[6.9–7.8%]</bdi></span></td><td class="num"><bdi dir="ltr">78.0%</bdi><span class="ci"><bdi dir="ltr">[74.4–81.2%]</bdi></span></td><td class="num"><bdi dir="ltr">2.9%</bdi><span class="ci"><bdi dir="ltr">[2.2–3.6%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>Word ישן ‏(‎.doc‏) <span class="note">· DOC · 40 מסמכים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>קורא</th><th>שגיאת תווים <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים <span class="ci">נמוך יותר עדיף</span></th><th>מספרים שנמצאו <span class="ci">גבוה יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr class="ours"><td>heocr</td><td class="num"><bdi dir="ltr">0.73%</bdi><span class="ci"><bdi dir="ltr">[0.59–0.87%]</bdi></span></td><td class="num"><bdi dir="ltr">2.0%</bdi><span class="ci"><bdi dir="ltr">[1.5–2.4%]</bdi></span></td><td class="num"><bdi dir="ltr">91.5%</bdi><span class="ci"><bdi dir="ltr">[89.3–93.7%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>PDF עם שכבת טקסט תקינה <span class="note">· PDF T1 · 318 מסמכים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>קורא</th><th>שגיאת תווים <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים <span class="ci">נמוך יותר עדיף</span></th><th>מספרים שנמצאו <span class="ci">גבוה יותר עדיף</span></th><th>טקסט שאבד בלי אזהרה <span class="ci">נמוך יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr class="ours"><td>heocr</td><td class="num"><bdi dir="ltr">0.13%</bdi><span class="ci"><bdi dir="ltr">[0.11–0.14%]</bdi></span></td><td class="num"><bdi dir="ltr">0.24%</bdi><span class="ci"><bdi dir="ltr">[0.21–0.27%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">0.09%</bdi><span class="ci"><bdi dir="ltr">[0.07–0.10%]</bdi></span></td></tr>
+<tr><td>Tesseract ‏(tessdata_best heb)</td><td class="num"><bdi dir="ltr">9.8%</bdi><span class="ci"><bdi dir="ltr">[9.0–10.5%]</bdi></span></td><td class="num"><bdi dir="ltr">18.2%</bdi><span class="ci"><bdi dir="ltr">[17.0–19.4%]</bdi></span></td><td class="num"><bdi dir="ltr">45.4%</bdi><span class="ci"><bdi dir="ltr">[44.0–46.9%]</bdi></span></td><td class="num"><bdi dir="ltr">8.8%</bdi><span class="ci"><bdi dir="ltr">[8.1–9.4%]</bdi></span></td></tr>
+<tr><td>Docling</td><td class="num"><bdi dir="ltr">22.1%</bdi><span class="ci"><bdi dir="ltr">[19.8–24.6%]</bdi></span></td><td class="num"><bdi dir="ltr">72.5%</bdi><span class="ci"><bdi dir="ltr">[71.4–73.6%]</bdi></span></td><td class="num"><bdi dir="ltr">96.7%</bdi><span class="ci"><bdi dir="ltr">[95.8–97.6%]</bdi></span></td><td class="num"><bdi dir="ltr">13.8%</bdi><span class="ci"><bdi dir="ltr">[11.3–16.5%]</bdi></span></td></tr>
+<tr><td>MarkItDown</td><td class="num"><bdi dir="ltr">63.6%</bdi><span class="ci"><bdi dir="ltr">[60.9–66.2%]</bdi></span></td><td class="num"><bdi dir="ltr">81.9%</bdi><span class="ci"><bdi dir="ltr">[78.6–85.0%]</bdi></span></td><td class="num"><bdi dir="ltr">99.0%</bdi><span class="ci"><bdi dir="ltr">[98.8–99.3%]</bdi></span></td><td class="num"><bdi dir="ltr">44.8%</bdi><span class="ci"><bdi dir="ltr">[42.8–46.8%]</bdi></span></td></tr>
+<tr><td>PyMuPDF4LLM</td><td class="num"><bdi dir="ltr">31.7%</bdi><span class="ci"><bdi dir="ltr">[31.2–32.2%]</bdi></span></td><td class="num"><bdi dir="ltr">45.6%</bdi><span class="ci"><bdi dir="ltr">[44.7–46.4%]</bdi></span></td><td class="num"><bdi dir="ltr">92.3%</bdi><span class="ci"><bdi dir="ltr">[91.9–92.7%]</bdi></span></td><td class="num"><bdi dir="ltr">20.8%</bdi><span class="ci"><bdi dir="ltr">[20.4–21.1%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>PDF ששכבת הטקסט שלו בסדר חזותי (הפוך) <span class="note">· PDF T2 · 40 מסמכים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>קורא</th><th>שגיאת תווים <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים <span class="ci">נמוך יותר עדיף</span></th><th>מספרים שנמצאו <span class="ci">גבוה יותר עדיף</span></th><th>טקסט שאבד בלי אזהרה <span class="ci">נמוך יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr class="ours"><td>heocr</td><td class="num"><bdi dir="ltr">0.12%</bdi><span class="ci"><bdi dir="ltr">[0.08–0.17%]</bdi></span></td><td class="num"><bdi dir="ltr">0.23%</bdi><span class="ci"><bdi dir="ltr">[0.14–0.32%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">0.10%</bdi><span class="ci"><bdi dir="ltr">[0.06–0.13%]</bdi></span></td></tr>
+<tr><td>Docling</td><td class="num"><bdi dir="ltr">11.6%</bdi><span class="ci"><bdi dir="ltr">[10.6–12.6%]</bdi></span></td><td class="num"><bdi dir="ltr">19.9%</bdi><span class="ci"><bdi dir="ltr">[18.7–21.1%]</bdi></span></td><td class="num"><bdi dir="ltr">95.7%</bdi><span class="ci"><bdi dir="ltr">[94.9–96.5%]</bdi></span></td><td class="num"><bdi dir="ltr">7.5%</bdi><span class="ci"><bdi dir="ltr">[6.8–8.2%]</bdi></span></td></tr>
+<tr><td>MarkItDown</td><td class="num"><bdi dir="ltr">78.0%</bdi><span class="ci"><bdi dir="ltr">[77.7–78.3%]</bdi></span></td><td class="num"><bdi dir="ltr">98.4%</bdi><span class="ci"><bdi dir="ltr">[98.1–98.6%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">57.9%</bdi><span class="ci"><bdi dir="ltr">[55.1–60.7%]</bdi></span></td></tr>
+<tr><td>PyMuPDF4LLM</td><td class="num"><bdi dir="ltr">70.4%</bdi><span class="ci"><bdi dir="ltr">[70.0–70.7%]</bdi></span></td><td class="num"><bdi dir="ltr">90.8%</bdi><span class="ci"><bdi dir="ltr">[90.5–91.1%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">49.8%</bdi><span class="ci"><bdi dir="ltr">[48.6–51.2%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>PDF עם מפת תווים שבורה אך ניתנת לשחזור <span class="note">· PDF T3 · 151 מסמכים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>קורא</th><th>שגיאת תווים <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים <span class="ci">נמוך יותר עדיף</span></th><th>מספרים שנמצאו <span class="ci">גבוה יותר עדיף</span></th><th>טקסט שאבד בלי אזהרה <span class="ci">נמוך יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr class="ours"><td>heocr</td><td class="num"><bdi dir="ltr">0.68%</bdi><span class="ci"><bdi dir="ltr">[0.46–0.95%]</bdi></span></td><td class="num"><bdi dir="ltr">2.0%</bdi><span class="ci"><bdi dir="ltr">[1.3–2.7%]</bdi></span></td><td class="num"><bdi dir="ltr">97.8%</bdi><span class="ci"><bdi dir="ltr">[96.7–98.8%]</bdi></span></td><td class="num"><bdi dir="ltr">0.53%</bdi><span class="ci"><bdi dir="ltr">[0.36–0.73%]</bdi></span></td></tr>
+<tr><td>Tesseract ‏(tessdata_best heb)</td><td class="num"><bdi dir="ltr">10.2%</bdi><span class="ci"><bdi dir="ltr">[9.4–11.0%]</bdi></span></td><td class="num"><bdi dir="ltr">20.5%</bdi><span class="ci"><bdi dir="ltr">[19.4–21.6%]</bdi></span></td><td class="num"><bdi dir="ltr">45.0%</bdi><span class="ci"><bdi dir="ltr">[43.5–46.5%]</bdi></span></td><td class="num"><bdi dir="ltr">9.3%</bdi><span class="ci"><bdi dir="ltr">[8.6–9.9%]</bdi></span></td></tr>
+<tr><td>Docling</td><td class="num"><bdi dir="ltr">77.1%</bdi><span class="ci"><bdi dir="ltr">[68.6–85.2%]</bdi></span></td><td class="num"><bdi dir="ltr">271.4%</bdi><span class="ci"><bdi dir="ltr">[245.3–296.2%]</bdi></span></td><td class="num"><bdi dir="ltr">99.6%</bdi><span class="ci"><bdi dir="ltr">[99.4–99.7%]</bdi></span></td><td class="num"><bdi dir="ltr">39.9%</bdi><span class="ci"><bdi dir="ltr">[35.0–44.6%]</bdi></span></td></tr>
+<tr><td>MarkItDown</td><td class="num"><bdi dir="ltr">74.0%</bdi><span class="ci"><bdi dir="ltr">[70.8–77.1%]</bdi></span></td><td class="num"><bdi dir="ltr">90.9%</bdi><span class="ci"><bdi dir="ltr">[87.5–94.1%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">60.4%</bdi><span class="ci"><bdi dir="ltr">[57.2–63.5%]</bdi></span></td></tr>
+<tr><td>PyMuPDF4LLM</td><td class="num"><bdi dir="ltr">64.6%</bdi><span class="ci"><bdi dir="ltr">[60.4–68.6%]</bdi></span></td><td class="num"><bdi dir="ltr">85.2%</bdi><span class="ci"><bdi dir="ltr">[79.7–90.9%]</bdi></span></td><td class="num"><bdi dir="ltr">95.6%</bdi><span class="ci"><bdi dir="ltr">[95.0–96.3%]</bdi></span></td><td class="num"><bdi dir="ltr">52.5%</bdi><span class="ci"><bdi dir="ltr">[48.4–56.4%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>סריקה עם שכבת OCR שגויה <span class="note">· PDF T4 · 40 מסמכים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>קורא</th><th>שגיאת תווים <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים <span class="ci">נמוך יותר עדיף</span></th><th>מספרים שנמצאו <span class="ci">גבוה יותר עדיף</span></th><th>טקסט שאבד בלי אזהרה <span class="ci">נמוך יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr class="ours"><td>heocr</td><td class="num"><bdi dir="ltr">6.0%</bdi><span class="ci"><bdi dir="ltr">[5.0–7.2%]</bdi></span></td><td class="num"><bdi dir="ltr">12.9%</bdi><span class="ci"><bdi dir="ltr">[11.3–14.7%]</bdi></span></td><td class="num"><bdi dir="ltr">68.6%</bdi><span class="ci"><bdi dir="ltr">[66.5–70.5%]</bdi></span></td><td class="num"><bdi dir="ltr">2.1%</bdi><span class="ci"><bdi dir="ltr">[1.7–2.6%]</bdi></span></td></tr>
+<tr><td>Tesseract ‏(tessdata_best heb)</td><td class="num"><bdi dir="ltr">9.1%</bdi><span class="ci"><bdi dir="ltr">[8.0–10.2%]</bdi></span></td><td class="num"><bdi dir="ltr">15.8%</bdi><span class="ci"><bdi dir="ltr">[14.3–17.3%]</bdi></span></td><td class="num"><bdi dir="ltr">45.8%</bdi><span class="ci"><bdi dir="ltr">[43.7–47.7%]</bdi></span></td><td class="num"><bdi dir="ltr">8.0%</bdi><span class="ci"><bdi dir="ltr">[7.2–8.9%]</bdi></span></td></tr>
+<tr><td>Docling</td><td class="num"><bdi dir="ltr">81.5%</bdi><span class="ci"><bdi dir="ltr">[81.1–81.8%]</bdi></span></td><td class="num"><bdi dir="ltr">97.2%</bdi><span class="ci"><bdi dir="ltr">[97.0–97.4%]</bdi></span></td><td class="num"><bdi dir="ltr">70.4%</bdi><span class="ci"><bdi dir="ltr">[67.7–72.8%]</bdi></span></td><td class="num"><bdi dir="ltr">77.8%</bdi><span class="ci"><bdi dir="ltr">[76.8–78.9%]</bdi></span></td></tr>
+<tr><td>MarkItDown</td><td class="num"><bdi dir="ltr">82.3%</bdi><span class="ci"><bdi dir="ltr">[81.3–83.2%]</bdi></span></td><td class="num"><bdi dir="ltr">101.4%</bdi><span class="ci"><bdi dir="ltr">[100.6–102.3%]</bdi></span></td><td class="num"><bdi dir="ltr">13.8%</bdi><span class="ci"><bdi dir="ltr">[11.7–16.1%]</bdi></span></td><td class="num"><bdi dir="ltr">63.6%</bdi><span class="ci"><bdi dir="ltr">[61.3–65.8%]</bdi></span></td></tr>
+<tr><td>PyMuPDF4LLM</td><td class="num"><bdi dir="ltr">80.1%</bdi><span class="ci"><bdi dir="ltr">[79.1–81.0%]</bdi></span></td><td class="num"><bdi dir="ltr">99.6%</bdi><span class="ci"><bdi dir="ltr">[99.4–99.9%]</bdi></span></td><td class="num"><bdi dir="ltr">12.2%</bdi><span class="ci"><bdi dir="ltr">[10.3–14.2%]</bdi></span></td><td class="num"><bdi dir="ltr">60.4%</bdi><span class="ci"><bdi dir="ltr">[59.0–61.9%]</bdi></span></td></tr>
+</tbody></table></div>
+<p class="note">T4 ו־T5 משתמשים באותם עמודים סרוקים; heocr ו־Tesseract קוראים את שניהם ב־OCR, ולכן התוצאות שלהם זהות. ב־T4 נוספת שכבת טקסט שגויה, שבה משתמשים הקוראים האחרים.</p>
+<h3>סריקה, תמונה בלבד <span class="note">· PDF T5 · 40 מסמכים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>קורא</th><th>שגיאת תווים <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים <span class="ci">נמוך יותר עדיף</span></th><th>מספרים שנמצאו <span class="ci">גבוה יותר עדיף</span></th><th>טקסט שאבד בלי אזהרה <span class="ci">נמוך יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr class="ours"><td>heocr</td><td class="num"><bdi dir="ltr">6.0%</bdi><span class="ci"><bdi dir="ltr">[5.0–7.2%]</bdi></span></td><td class="num"><bdi dir="ltr">12.9%</bdi><span class="ci"><bdi dir="ltr">[11.3–14.7%]</bdi></span></td><td class="num"><bdi dir="ltr">68.6%</bdi><span class="ci"><bdi dir="ltr">[66.5–70.5%]</bdi></span></td><td class="num"><bdi dir="ltr">2.1%</bdi><span class="ci"><bdi dir="ltr">[1.7–2.6%]</bdi></span></td></tr>
+<tr><td>Tesseract ‏(tessdata_best heb)</td><td class="num"><bdi dir="ltr">9.1%</bdi><span class="ci"><bdi dir="ltr">[8.0–10.2%]</bdi></span></td><td class="num"><bdi dir="ltr">15.8%</bdi><span class="ci"><bdi dir="ltr">[14.3–17.3%]</bdi></span></td><td class="num"><bdi dir="ltr">45.8%</bdi><span class="ci"><bdi dir="ltr">[43.7–47.7%]</bdi></span></td><td class="num"><bdi dir="ltr">8.0%</bdi><span class="ci"><bdi dir="ltr">[7.2–8.9%]</bdi></span></td></tr>
+<tr><td>Docling</td><td class="num"><bdi dir="ltr">84.0%</bdi><span class="ci"><bdi dir="ltr">[83.4–84.6%]</bdi></span></td><td class="num"><bdi dir="ltr">97.0%</bdi><span class="ci"><bdi dir="ltr">[96.8–97.2%]</bdi></span></td><td class="num"><bdi dir="ltr">69.5%</bdi><span class="ci"><bdi dir="ltr">[66.7–72.0%]</bdi></span></td><td class="num"><bdi dir="ltr">81.5%</bdi><span class="ci"><bdi dir="ltr">[80.4–82.5%]</bdi></span></td></tr>
+<tr><td>MarkItDown</td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">0.00%</bdi><span class="ci"><bdi dir="ltr">[0.00–0.00%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td></tr>
+<tr><td>PyMuPDF4LLM</td><td class="num"><bdi dir="ltr">83.0%</bdi><span class="ci"><bdi dir="ltr">[82.8–83.2%]</bdi></span></td><td class="num"><bdi dir="ltr">99.3%</bdi><span class="ci"><bdi dir="ltr">[98.9–100.1%]</bdi></span></td><td class="num"><bdi dir="ltr">69.4%</bdi><span class="ci"><bdi dir="ltr">[66.3–72.6%]</bdi></span></td><td class="num"><bdi dir="ltr">78.1%</bdi><span class="ci"><bdi dir="ltr">[77.4–78.8%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>שכבת טקסט ועוד טקסט שמצויר כתמונה <span class="note">· PDF T6 · 40 מסמכים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>קורא</th><th>שגיאת תווים <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים <span class="ci">נמוך יותר עדיף</span></th><th>מספרים שנמצאו <span class="ci">גבוה יותר עדיף</span></th><th>טקסט שאבד בלי אזהרה <span class="ci">נמוך יותר עדיף</span></th><th>מילים שנמצאו באזורי תמונה <span class="ci">גבוה יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr class="ours"><td>heocr</td><td class="num"><bdi dir="ltr">6.7%</bdi><span class="ci"><bdi dir="ltr">[5.5–8.0%]</bdi></span></td><td class="num"><bdi dir="ltr">6.4%</bdi><span class="ci"><bdi dir="ltr">[5.3–7.6%]</bdi></span></td><td class="num"><bdi dir="ltr">96.0%</bdi><span class="ci"><bdi dir="ltr">[94.7–97.3%]</bdi></span></td><td class="num"><bdi dir="ltr">4.0%</bdi><span class="ci"><bdi dir="ltr">[3.4–4.5%]</bdi></span></td><td class="num"><bdi dir="ltr">74.7%</bdi><span class="ci"><bdi dir="ltr">[65.6–82.5%]</bdi></span></td></tr>
+<tr><td>Tesseract ‏(tessdata_best heb)</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num"><bdi dir="ltr">57.5%</bdi><span class="ci"><bdi dir="ltr">[54.2–61.4%]</bdi></span></td></tr>
+<tr><td>Docling</td><td class="num"><bdi dir="ltr">13.7%</bdi><span class="ci"><bdi dir="ltr">[12.8–14.6%]</bdi></span></td><td class="num"><bdi dir="ltr">68.2%</bdi><span class="ci"><bdi dir="ltr">[66.4–69.9%]</bdi></span></td><td class="num"><bdi dir="ltr">99.8%</bdi><span class="ci"><bdi dir="ltr">[99.6–99.9%]</bdi></span></td><td class="num"><bdi dir="ltr">5.1%</bdi><span class="ci"><bdi dir="ltr">[4.4–5.7%]</bdi></span></td><td class="num"><bdi dir="ltr">72.6%</bdi><span class="ci"><bdi dir="ltr">[67.2–77.9%]</bdi></span></td></tr>
+<tr><td>MarkItDown</td><td class="num"><bdi dir="ltr">55.2%</bdi><span class="ci"><bdi dir="ltr">[46.6–63.8%]</bdi></span></td><td class="num"><bdi dir="ltr">71.2%</bdi><span class="ci"><bdi dir="ltr">[60.9–81.7%]</bdi></span></td><td class="num"><bdi dir="ltr">89.0%</bdi><span class="ci"><bdi dir="ltr">[87.7–90.2%]</bdi></span></td><td class="num"><bdi dir="ltr">38.5%</bdi><span class="ci"><bdi dir="ltr">[32.9–44.4%]</bdi></span></td><td class="num"><bdi dir="ltr">12.6%</bdi><span class="ci"><bdi dir="ltr">[7.6–17.8%]</bdi></span></td></tr>
+<tr><td>PyMuPDF4LLM</td><td class="num"><bdi dir="ltr">32.7%</bdi><span class="ci"><bdi dir="ltr">[31.4–33.9%]</bdi></span></td><td class="num"><bdi dir="ltr">44.2%</bdi><span class="ci"><bdi dir="ltr">[42.6–45.7%]</bdi></span></td><td class="num"><bdi dir="ltr">81.3%</bdi><span class="ci"><bdi dir="ltr">[79.7–82.9%]</bdi></span></td><td class="num"><bdi dir="ltr">23.4%</bdi><span class="ci"><bdi dir="ltr">[22.0–24.6%]</bdi></span></td><td class="num"><bdi dir="ltr">29.4%</bdi><span class="ci"><bdi dir="ltr">[24.0–34.8%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>שני עמודים בגיליון אחד <span class="note">· PDF spread · 40 מסמכים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>קורא</th><th>שגיאת תווים <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת מילים <span class="ci">נמוך יותר עדיף</span></th><th>מספרים שנמצאו <span class="ci">גבוה יותר עדיף</span></th><th>טקסט שאבד בלי אזהרה <span class="ci">נמוך יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr class="ours"><td>heocr</td><td class="num"><bdi dir="ltr">0.12%</bdi><span class="ci"><bdi dir="ltr">[0.08–0.17%]</bdi></span></td><td class="num"><bdi dir="ltr">0.23%</bdi><span class="ci"><bdi dir="ltr">[0.14–0.32%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">0.10%</bdi><span class="ci"><bdi dir="ltr">[0.06–0.13%]</bdi></span></td></tr>
+<tr><td>Docling</td><td class="num"><bdi dir="ltr">71.7%</bdi><span class="ci"><bdi dir="ltr">[67.3–75.6%]</bdi></span></td><td class="num"><bdi dir="ltr">121.2%</bdi><span class="ci"><bdi dir="ltr">[116.8–125.1%]</bdi></span></td><td class="num"><bdi dir="ltr">99.7%</bdi><span class="ci"><bdi dir="ltr">[99.4–99.9%]</bdi></span></td><td class="num"><bdi dir="ltr">5.1%</bdi><span class="ci"><bdi dir="ltr">[4.3–5.9%]</bdi></span></td></tr>
+<tr><td>MarkItDown</td><td class="num"><bdi dir="ltr">75.9%</bdi><span class="ci"><bdi dir="ltr">[72.4–79.0%]</bdi></span></td><td class="num"><bdi dir="ltr">93.3%</bdi><span class="ci"><bdi dir="ltr">[88.9–97.3%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">32.4%</bdi><span class="ci"><bdi dir="ltr">[26.8–38.5%]</bdi></span></td></tr>
+<tr><td>PyMuPDF4LLM</td><td class="num"><bdi dir="ltr">73.0%</bdi><span class="ci"><bdi dir="ltr">[69.9–75.7%]</bdi></span></td><td class="num"><bdi dir="ltr">89.6%</bdi><span class="ci"><bdi dir="ltr">[85.9–92.9%]</bdi></span></td><td class="num"><bdi dir="ltr">92.3%</bdi><span class="ci"><bdi dir="ltr">[91.0–93.5%]</bdi></span></td><td class="num"><bdi dir="ltr">19.8%</bdi><span class="ci"><bdi dir="ltr">[18.6–21.0%]</bdi></span></td></tr>
+</tbody></table></div>
+<h3>עמודים סרוקים עם טבלה <span class="note">· Scanned tables · 120 מסמכים</span></h3>
+<div class="tablewrap"><table>
+<thead><tr><th>קורא</th><th>שורות טבלה שנקראו <span class="ci">גבוה יותר עדיף</span></th><th>שורות שאבדו בלי אזהרה <span class="ci">נמוך יותר עדיף</span></th><th>שגיאת תווים <span class="ci">נמוך יותר עדיף</span></th><th>מספרים שנמצאו <span class="ci">גבוה יותר עדיף</span></th></tr></thead>
+<tbody>
+<tr class="ours"><td>heocr</td><td class="num"><bdi dir="ltr">66.9%</bdi><span class="ci"><bdi dir="ltr">[60.4–73.3%]</bdi></span></td><td class="num"><bdi dir="ltr">2.8%</bdi><span class="ci"><bdi dir="ltr">[0.85–5.2%]</bdi></span></td><td class="num"><bdi dir="ltr">18.1%</bdi><span class="ci"><bdi dir="ltr">[14.1–22.3%]</bdi></span></td><td class="num"><bdi dir="ltr">87.0%</bdi><span class="ci"><bdi dir="ltr">[85.0–88.9%]</bdi></span></td></tr>
+<tr><td>Tesseract ‏(tessdata_best heb)</td><td class="num"><bdi dir="ltr">3.7%</bdi><span class="ci"><bdi dir="ltr">[2.7–4.6%]</bdi></span></td><td class="num"><bdi dir="ltr">96.3%</bdi><span class="ci"><bdi dir="ltr">[95.4–97.3%]</bdi></span></td><td class="num"><bdi dir="ltr">54.5%</bdi><span class="ci"><bdi dir="ltr">[51.7–57.3%]</bdi></span></td><td class="num"><bdi dir="ltr">14.1%</bdi><span class="ci"><bdi dir="ltr">[13.1–15.2%]</bdi></span></td></tr>
+<tr><td>Docling</td><td class="num"><bdi dir="ltr">2.5%</bdi><span class="ci"><bdi dir="ltr">[1.9–3.2%]</bdi></span></td><td class="num"><bdi dir="ltr">97.5%</bdi><span class="ci"><bdi dir="ltr">[96.8–98.1%]</bdi></span></td><td class="num"><bdi dir="ltr">70.0%</bdi><span class="ci"><bdi dir="ltr">[69.6–70.4%]</bdi></span></td><td class="num"><bdi dir="ltr">95.0%</bdi><span class="ci"><bdi dir="ltr">[94.4–95.7%]</bdi></span></td></tr>
+<tr><td>MarkItDown</td><td class="num"><bdi dir="ltr">0.00%</bdi><span class="ci"><bdi dir="ltr">[0.00–0.00%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">0.00%</bdi><span class="ci"><bdi dir="ltr">[0.00–0.00%]</bdi></span></td></tr>
+<tr><td>PyMuPDF4LLM</td><td class="num"><bdi dir="ltr">0.00%</bdi><span class="ci"><bdi dir="ltr">[0.00–0.00%]</bdi></span></td><td class="num"><bdi dir="ltr">100.0%</bdi><span class="ci"><bdi dir="ltr">[100.0–100.0%]</bdi></span></td><td class="num"><bdi dir="ltr">90.6%</bdi><span class="ci"><bdi dir="ltr">[90.2–91.0%]</bdi></span></td><td class="num"><bdi dir="ltr">4.5%</bdi><span class="ci"><bdi dir="ltr">[3.9–5.3%]</bdi></span></td></tr>
+</tbody></table></div>
+<p class="note">בכל טבלה מופיעים הקוראים שמטפלים בפורמט שלה. Tesseract קורא תמונות בלבד, ולכן הוא מופיע בסריקות; ב־PDF T6 הוא מוערך על אזורי התמונה בלבד.</p>
+<p class="note">שגיאת מילים סופרת גם מילים שנוספו, לא רק מילים שגויות או חסרות, ולכן היא יכולה לעלות על 100%.</p>
+<ul class="facts"><li><strong>מדד:</strong> <code>line_fold_v1</code> (הטקסט מנורמל באותו אופן לכל הקוראים; יחס של סכומים על פני המסמכים)</li><li><strong>טקסט ייחוס:</strong> קבוצות D-bench מחוללות A, B ו־C: מסמכים שנוצרו עם טקסט נכון מדויק; הטקסט מתוך רשומות (העיתון הרשמי), נחלת הכלל</li><li><strong>רישיון:</strong> PD-IL (text)</li><li><strong>רווח סמך:</strong> bootstrap של 95% על פני המסמכים (2000 דגימות, seed 0)</li><li><strong>הרצה:</strong> synth-2026-11-17-main; heocr בגרסה 7f5e99e</li><li><strong>גרסאות הקוראים:</strong> Tesseract ‏(tessdata_best heb) tesseract 5.5, heb tessdata_best e12c65a (sha256 dbaa827a), psm 3, pages at 300 dpi gray (pdftoppm); Docling 2.150.1; MarkItDown 0.1.9 [pdf,docx]; PyMuPDF4LLM 2.1 (AGPL; benchmark baseline only, decision 0020 item 2)</li><li><strong>הושמטו:</strong> שני מקרים של סריקות משרדיות שנוצרו בגופן קנייני (אי אפשר לפרסם את הציונים שלהם), ומקרה מספור הסעיפים הזמני ממדד מספרי הסעיפים</li><li><strong>קוד ההערכה:</strong> מאגר ההערכה של HeOCR (עדיין לא פומבי; יפורסם עם שער השחרור)</li></ul></section>
+<section id="vendors">
+<h2>ספקי OCR מסחריים</h2>
+<span class="status">ממתין</span>
+<div class="empty">הציונים ממתינים לבדיקה אנושית של דפי הייחוס.</div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>נוצר בידי <a href="http://www.shaypalachy.com/">שי פלצ'י אפק</a> ומתחזקי HeOCR.</p>
+    <p><a href="../benchmarks/results.json">results.json</a> · <a href="./">HeOCR</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
