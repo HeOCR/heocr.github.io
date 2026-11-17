@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>htext</title>
+<meta name="description" content="htext: public-domain Hebrew text for training Hebrew OCR, with a rights record for every entry. CC0.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --text: #1d1b18;
+    --muted: #6b665e;
+    --line: #e7e3da;
+    --accent: #1f5f8b;
+    --accent-soft: #e6eff6;
+    --tag: #f2efe8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141414;
+      --surface: #1c1c1c;
+      --text: #ecebe8;
+      --muted: #a29d94;
+      --line: #2e2d2b;
+      --accent: #7fb6dd;
+      --accent-soft: #1d2a33;
+      --tag: #262523;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141414;
+    --surface: #1c1c1c;
+    --text: #ecebe8;
+    --muted: #a29d94;
+    --line: #2e2d2b;
+    --accent: #7fb6dd;
+    --accent-soft: #1d2a33;
+    --tag: #262523;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
+  .he { font-family: "Frank Ruhl Libre", serif; direction: rtl; text-align: left; color: var(--muted); font-size: 1.15rem; margin: 0 0 8px; }
+  h1 { font-family: "Frank Ruhl Libre", serif; font-size: clamp(2.6rem, 7vw, 3.6rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.01em; }
+  .lede { font-size: 1.15rem; max-width: 640px; margin: 0 0 24px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-block; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font-weight: 500; font-size: 0.95rem; }
+  .btn:hover { border-color: var(--accent); text-decoration: none; }
+
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 36px 0 0; font-size: 0.9rem; color: var(--muted); }
+  .flow span.step { background: var(--accent-soft); color: var(--text); padding: 4px 10px; border-radius: 999px; font-weight: 500; }
+
+  section { padding: 48px 0 8px; }
+  h2 { font-family: "Frank Ruhl Libre", serif; font-size: 1.7rem; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 22px; max-width: 680px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: flex; flex-direction: column; }
+  .card h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 600; }
+  .card h3 a { color: var(--text); }
+  .card p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; flex: 1; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.8rem; }
+  .meta span { background: var(--tag); padding: 2px 8px; border-radius: 6px; color: var(--muted); }
+  .meta a { font-weight: 500; }
+  .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
+  .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
+
+  footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+  footer p { margin: 0 0 6px; }
+  .doc > section { max-width: 720px; }
+  .doc h2 { margin-top: 0; }
+  .doc ul, .doc ol { padding-left: 22px; }
+  .doc li { margin: 0 0 8px; }
+  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
+  .back { display: inline-block; margin-bottom: 18px; font-size: 0.95rem; }
+  header { padding-top: 20px; }
+  .langbar { display: flex; justify-content: flex-end; margin: 0 0 44px; }
+  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); overflow: hidden; font-size: 0.95rem; font-weight: 600; }
+  .lang-toggle a, .lang-toggle span { padding: 7px 16px; color: var(--muted); line-height: 1.3; }
+  .lang-toggle a:hover { background: var(--accent-soft); color: var(--text); text-decoration: none; }
+  .lang-toggle [aria-current] { background: var(--accent); color: var(--surface); }
+
+  .ht section { max-width: none; }
+  .ht h2 { margin-top: 0; }
+  .ht h3 { font-size: 1.05rem; margin: 26px 0 4px; }
+  .status { display: inline-block; background: var(--tag); color: var(--muted); padding: 2px 10px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; margin: 0 6px 10px 0; margin-inline-end: 6px; }
+  .tablewrap { overflow-x: auto; margin: 8px 0 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+  th, td { padding: 8px 12px; text-align: start; border-bottom: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  tr.total td { font-weight: 600; }
+  th { font-weight: 600; color: var(--muted); font-size: 0.82rem; }
+  td.num { font-variant-numeric: tabular-nums; }
+  td code, li code, p code { font-size: 0.85em; }
+  .facts { font-size: 0.9rem; margin: 6px 0 0; }
+  .facts li { margin: 0 0 4px; }
+  .credit { border-inline-start: 3px solid var(--accent); padding: 2px 0; padding-inline-start: 12px; margin: 10px 0; }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
+  .toc a { font-size: 0.9rem; }
+  pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; direction: ltr; text-align: left; }
+  .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0 4px; }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; min-width: 140px; }
+  .stat b { display: block; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--muted); font-size: 0.85rem; }
+</style>
+<link rel="alternate" hreflang="en" href="https://heocr.github.io/htext.html">
+<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/htext.html">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="langbar" aria-label="Language / שפה">
+      <div class="lang-toggle">
+        <span aria-current="page" lang="en">English</span>
+        <a href="he/htext.html" lang="he" hreflang="he">עברית</a>
+      </div>
+    </nav>
+    <a class="back" href="./">← HeOCR</a>
+    <h1>htext</h1>
+    <p class="lede">Public-domain Hebrew text for training HeOCR's recognizers, cut into lines, plain and with niqqud. Every work or document carries its own rights record: public domain in Israel, and its US status. All of it is released under CC0, so it can be used without conditions.</p>
+    <p class="note">Updated 2026-11-17. Figures come from each corpus card and are rebuilt from <a href="htext/corpora.json">corpora.json</a>.</p>
+  </div>
+</header>
+
+<main class="wrap doc ht">
+<nav class="toc"><a href="#what">What htext is</a> · <a href="#corpora">Corpora</a> · <a href="#rights">Rights</a> · <a href="#use">Download and use</a> · <a href="#credit">Credit</a> · <a href="#licence">Licence</a></nav>
+<section id="what">
+<h2>What htext is</h2>
+<p>htext collects Hebrew text whose rights are clear enough to publish openly, and turns it into training lines for <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, HeOCR's synthetic page generator. The generator renders each line onto synthetic pages, so the recognizers learn real Hebrew vocabulary, spelling and punctuation, not only made-up text.</p>
+<p>Each source has its own builder, its own corpus and its own card. A build reads a pinned copy of the source, computes rights per entry, cleans and cuts the text, and checks that no line overlaps HeOCR's evaluation text. Only the files a card lists are published.</p>
+<div class="stats"><div class="stat"><b>2,028,962</b><span>lines</span></div><div class="stat"><b>21,799</b><span>works</span></div><div class="stat"><b><span dir="ltr">105.2 MB</span></b><span>of text</span></div><div class="stat"><b>1</b><span>corpus</span></div></div>
+</section>
+<section id="corpora">
+<h2>Corpora</h2>
+<h3 id="pby">Project Ben-Yehuda public-domain lines</h3>
+<span class="status">pby-v1</span><span class="status">CC0</span>
+<p>Prose, articles, memoirs, letters, fables and poetry transcribed by Project Ben-Yehuda volunteers, cut into lines, plain and with niqqud.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Variant</th><th>Subset</th><th>Lines</th><th>Works</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>pby_lines_il_plain_v1.txt</code></td><td>Israel</td><td>plain</td><td class="num">1,627,470</td><td class="num">13,857</td><td class="num"><span dir="ltr">74.4 MB</span></td></tr>
+<tr><td><code>pby_lines_il_niqqud_v1.txt</code></td><td>Israel</td><td>niqqud</td><td class="num">401,492</td><td class="num">12,911</td><td class="num"><span dir="ltr">30.8 MB</span></td></tr>
+<tr><td><code>pby_lines_il_us_plain_v1.txt</code></td><td>Israel + US</td><td>plain</td><td class="num">70,251</td><td class="num">559</td><td class="num"><span dir="ltr">3.3 MB</span></td></tr>
+<tr><td><code>pby_lines_il_us_niqqud_v1.txt</code></td><td>Israel + US</td><td>niqqud</td><td class="num">10,050</td><td class="num">290</td><td class="num"><span dir="ltr">0.7 MB</span></td></tr>
+</tbody></table></div>
+<p class="note"><b>Israel</b>: every line comes from a work that is public domain in Israel. <b>Israel + US</b>: the subset that is also public domain in the US. <b>niqqud</b> lines are pointed; <b>plain</b> lines carry no points.</p>
+<ul class="facts">
+<li>Source: <a href="https://benyehuda.org">Project Ben-Yehuda</a> (Public domain (PBY&#x27;s dump licence))</li>
+<li>Release: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v1">pby-v1</a>, 2026-11-06</li>
+<li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>21,799 of 26,455 catalogue works have lines in this corpus; 668 also in the Israel + US variant.</li>
+</ul>
+</section>
+<section id="rights">
+<h2>Rights</h2>
+<p>Every entry has a rights record with two fields, <code>pd_israel</code> and <code>pd_us</code>, each with the basis it was computed from and the year it holds for. A corpus variant includes an entry only if its record passes that variant's rule. The records are published with each corpus.</p>
+<p>A translation counts as public domain only if both its author and its translator are. htext takes no text under a licence with conditions (no NC, ND or share-alike text), so nothing in it limits how the data can be used.</p>
+<p>The rights fields are the project's reading of the law, not legal advice.</p>
+<ul class="facts">
+<li><b>Project Ben-Yehuda</b>: Public domain in Israel: every author and every translator died at least 71 years before the build year (2026), with death years sourced from Wikidata. US status is recorded per work: public domain in the US when the transcribed edition appeared before 1931.</li>
+</ul>
+</section>
+<section id="use">
+<h2>Download and use</h2>
+<p>The corpus files are assets of each corpus's GitHub release, and the card, checksums and rights index are in the repository. Every file is UTF-8 with one line per row, NFC normalised, with no blank lines.</p>
+<p>Download the files and check them against the published checksums:</p>
+<pre><code>gh release download pby-v1 -R HeOCR/htext
+curl -LO https://raw.githubusercontent.com/HeOCR/htext/main/data/pby/v1/SHA256SUMS
+grep -E &#x27;_v1\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
+<p>Use a file as training text for hocrsyngen, which records it as <code>external:sha256:&lt;hex&gt;</code>:</p>
+<pre><code>hocrsyngen ... --text-corpus pby_lines_il_plain_v1.txt</code></pre>
+<p>Or rebuild a corpus from its source: each corpus has a build guide in the repository, for example <a href="https://github.com/HeOCR/htext/blob/main/docs/pby_corpus.md">the PBY guide</a>.</p>
+</section>
+<section id="credit">
+<h2>Credit</h2>
+<p>Credit is not required by the licence, but some sources ask for it, and HeOCR gives it. Please carry these lines into any dataset or model card that uses a corpus:</p>
+<p class="credit">Credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a></p>
+</section>
+<section id="licence">
+<h2>Licence</h2>
+<p>The data, meaning the text files, rights and line indexes, exclusion lists, cards and checksums, is dedicated to the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. The builder code is under the <a href="https://github.com/HeOCR/htext/blob/main/LICENSE">MIT licence</a>.</p>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Created by <a href="http://www.shaypalachy.com/">Shay Palachy Affek</a> and the HeOCR maintainers.</p>
+    <p><a href="https://github.com/HeOCR/htext">HeOCR/htext</a> · <a href="htext/corpora.json">corpora.json</a> · <a href="./">HeOCR</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
