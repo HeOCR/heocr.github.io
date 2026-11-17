@@ -1,0 +1,1905 @@
+{
+ "schema": "heocr_site_benchmarks.v0",
+ "updated": "2026-11-17",
+ "p_mod": {
+  "status": "no_data"
+ },
+ "handwriting": {
+  "status": "no_data"
+ },
+ "p_hist": {
+  "status": "scored",
+  "scored": "2026-11-11",
+  "set": "audit2: 38 proofread pages from 14 Hebrew Wikisource Indexes (books), human-audited references",
+  "reference": {
+   "name": "e2d4c_wikisource_printed_v7",
+   "source": "Hebrew Wikisource proofread transcriptions",
+   "source_url": "https://he.wikisource.org",
+   "licence": "CC BY-SA 4.0"
+  },
+  "measure": "hocrgen evaluate-references, profile primary.v1 (page text, ratio of sums over pages)",
+  "scorer": {
+   "repo": "HeOCR/hocrgen",
+   "commit": "d4a3414",
+   "url": "https://github.com/HeOCR/hocrgen"
+  },
+  "interval": "95% cluster bootstrap over Wikisource Indexes (2000 resamples, seed 20261106); none under 3 clusters",
+  "engines": {
+   "stock": {
+    "name": "Tesseract heb (stock, Homebrew)",
+    "ours": false
+   },
+   "tessdata_best": {
+    "name": "Tesseract tessdata_best heb",
+    "ours": false
+   },
+   "R6": {
+    "name": "HeOCR R6",
+    "ours": true,
+    "url": "https://huggingface.co/HeOCR/heocr-r6-tesseract-heb"
+   },
+   "R7": {
+    "name": "HeOCR R7",
+    "ours": true,
+    "url": "https://huggingface.co/HeOCR/heocr-r7-tesseract-heb"
+   }
+  },
+  "not_scored": [
+   "R8b"
+  ],
+  "slices": [
+   {
+    "id": "all",
+    "pages": 38,
+    "clusters": 14,
+    "reference_chars": 50714,
+    "too_small": false,
+    "engines": {
+     "stock": {
+      "cer": 0.2257,
+      "cer_ci95": [
+       0.1364,
+       0.3673
+      ],
+      "wer": 0.4731,
+      "wer_ci95": [
+       0.2931,
+       0.6872
+      ]
+     },
+     "tessdata_best": {
+      "cer": 0.2246,
+      "cer_ci95": [
+       0.1396,
+       0.3598
+      ],
+      "wer": 0.481,
+      "wer_ci95": [
+       0.3005,
+       0.7025
+      ]
+     },
+     "R6": {
+      "cer": 0.2094,
+      "cer_ci95": [
+       0.1179,
+       0.3605
+      ],
+      "wer": 0.4068,
+      "wer_ci95": [
+       0.2386,
+       0.6502
+      ]
+     },
+     "R7": {
+      "cer": 0.2089,
+      "cer_ci95": [
+       0.1129,
+       0.3706
+      ],
+      "wer": 0.3933,
+      "wer_ci95": [
+       0.2287,
+       0.6505
+      ]
+     }
+    }
+   },
+   {
+    "id": "unpointed",
+    "pages": 36,
+    "clusters": 13,
+    "reference_chars": 47301,
+    "too_small": false,
+    "engines": {
+     "stock": {
+      "cer": 0.2011,
+      "cer_ci95": [
+       0.1169,
+       0.3277
+      ],
+      "wer": 0.4509,
+      "wer_ci95": [
+       0.2725,
+       0.6728
+      ]
+     },
+     "tessdata_best": {
+      "cer": 0.2014,
+      "cer_ci95": [
+       0.12,
+       0.3228
+      ],
+      "wer": 0.4588,
+      "wer_ci95": [
+       0.2746,
+       0.6847
+      ]
+     },
+     "R6": {
+      "cer": 0.1836,
+      "cer_ci95": [
+       0.101,
+       0.3195
+      ],
+      "wer": 0.3817,
+      "wer_ci95": [
+       0.2101,
+       0.6266
+      ]
+     },
+     "R7": {
+      "cer": 0.1813,
+      "cer_ci95": [
+       0.0984,
+       0.329
+      ],
+      "wer": 0.3678,
+      "wer_ci95": [
+       0.2038,
+       0.6332
+      ]
+     }
+    }
+   },
+   {
+    "id": "rabbinic",
+    "pages": 21,
+    "clusters": 8,
+    "reference_chars": 32329,
+    "too_small": false,
+    "engines": {
+     "stock": {
+      "cer": 0.2486,
+      "cer_ci95": [
+       0.1646,
+       0.41
+      ],
+      "wer": 0.5361,
+      "wer_ci95": [
+       0.4014,
+       0.8494
+      ]
+     },
+     "tessdata_best": {
+      "cer": 0.2448,
+      "cer_ci95": [
+       0.1633,
+       0.4005
+      ],
+      "wer": 0.5419,
+      "wer_ci95": [
+       0.403,
+       0.865
+      ]
+     },
+     "R6": {
+      "cer": 0.229,
+      "cer_ci95": [
+       0.1365,
+       0.4057
+      ],
+      "wer": 0.4615,
+      "wer_ci95": [
+       0.3033,
+       0.8175
+      ]
+     },
+     "R7": {
+      "cer": 0.2268,
+      "cer_ci95": [
+       0.1244,
+       0.4215
+      ],
+      "wer": 0.443,
+      "wer_ci95": [
+       0.2691,
+       0.8308
+      ]
+     }
+    }
+   },
+   {
+    "id": "square",
+    "pages": 15,
+    "clusters": 5,
+    "reference_chars": 14972,
+    "too_small": false,
+    "engines": {
+     "stock": {
+      "cer": 0.0985,
+      "cer_ci95": [
+       0.0539,
+       0.165
+      ],
+      "wer": 0.2545,
+      "wer_ci95": [
+       0.1268,
+       0.4582
+      ]
+     },
+     "tessdata_best": {
+      "cer": 0.1076,
+      "cer_ci95": [
+       0.0575,
+       0.1751
+      ],
+      "wer": 0.2675,
+      "wer_ci95": [
+       0.1112,
+       0.4998
+      ]
+     },
+     "R6": {
+      "cer": 0.0856,
+      "cer_ci95": [
+       0.0455,
+       0.1455
+      ],
+      "wer": 0.1978,
+      "wer_ci95": [
+       0.0832,
+       0.3699
+      ]
+     },
+     "R7": {
+      "cer": 0.0832,
+      "cer_ci95": [
+       0.0473,
+       0.1404
+      ],
+      "wer": 0.1946,
+      "wer_ci95": [
+       0.0951,
+       0.3538
+      ]
+     }
+    }
+   },
+   {
+    "id": "pointed",
+    "pages": 2,
+    "clusters": 1,
+    "reference_chars": 3413,
+    "too_small": true,
+    "engines": {
+     "stock": {
+      "cer": 0.5672,
+      "cer_ci95": null,
+      "wer": 0.9923,
+      "wer_ci95": null
+     },
+     "tessdata_best": {
+      "cer": 0.5461,
+      "cer_ci95": null,
+      "wer": 1.0,
+      "wer_ci95": null
+     },
+     "R6": {
+      "cer": 0.5669,
+      "cer_ci95": null,
+      "wer": 0.9949,
+      "wer_ci95": null
+     },
+     "R7": {
+      "cer": 0.591,
+      "cer_ci95": null,
+      "wer": 0.9898,
+      "wer_ci95": null
+     }
+    }
+   }
+  ]
+ },
+ "documents": {
+  "status": "scored",
+  "gate": "not_run",
+  "run": "synth-2026-11-17-main",
+  "heocr": "heocr @ HeOCR/heocr 7f5e99ee70827f1dc080f3a5471d2307e8a548fd (main after #64; synthetic run for the public benchmarks page, 2026-11-17)",
+  "baselines": {
+   "stock": {
+    "ocr": "tesseract 5.5, heb tessdata_best e12c65a (sha256 dbaa827a), psm 3, pages at 300 dpi gray (pdftoppm)"
+   },
+   "docling": {
+    "version": "2.150.1",
+    "options": "DocumentConverter() defaults"
+   },
+   "markitdown": {
+    "version": "0.1.9 [pdf,docx]",
+    "options": "MarkItDown(enable_plugins=False)"
+   },
+   "pymupdf4llm": {
+    "version": "2.1 (AGPL; benchmark baseline only, decision 0020 item 2)",
+    "options": "to_markdown(path)"
+   }
+  },
+  "measure": "line_fold_v1",
+  "interval": "95% percentile bootstrap over documents, 2000 resamples, seed 0",
+  "excluded_cases": [
+   "C/pdf_t5_office",
+   "C/pdf_t5_office_numbers"
+  ],
+  "reference": {
+   "name": "D-bench synthetic sets A, B and C",
+   "source": "generated documents with exact gold; text from the public-domain Israeli official gazette (Reshumot)",
+   "licence": "PD-IL (text)"
+  },
+  "cells": {
+   "DOCX": {
+    "documents": 80,
+    "readers": {
+     "heocr": {
+      "documents": 80,
+      "cer": {
+       "value": 0.0027,
+       "ci95": [
+        0.0019,
+        0.0035
+       ],
+       "n": 80
+      },
+      "wer": {
+       "value": 0.0033,
+       "ci95": [
+        0.0023,
+        0.0042
+       ],
+       "n": 80
+      },
+      "number_recall": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 80
+      },
+      "labels": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 60
+      }
+     },
+     "docling": {
+      "documents": 80,
+      "cer": {
+       "value": 0.032,
+       "ci95": [
+        0.028,
+        0.036
+       ],
+       "n": 80
+      },
+      "wer": {
+       "value": 0.0804,
+       "ci95": [
+        0.0726,
+        0.0875
+       ],
+       "n": 80
+      },
+      "number_recall": {
+       "value": 0.9397,
+       "ci95": [
+        0.9222,
+        0.9553
+       ],
+       "n": 80
+      },
+      "labels": {
+       "value": 0.0832,
+       "ci95": [
+        0.065,
+        0.102
+       ],
+       "n": 60
+      }
+     },
+     "markitdown": {
+      "documents": 80,
+      "cer": {
+       "value": 0.0386,
+       "ci95": [
+        0.0341,
+        0.0428
+       ],
+       "n": 80
+      },
+      "wer": {
+       "value": 0.0739,
+       "ci95": [
+        0.069,
+        0.0784
+       ],
+       "n": 80
+      },
+      "number_recall": {
+       "value": 0.7799,
+       "ci95": [
+        0.7436,
+        0.8124
+       ],
+       "n": 80
+      },
+      "labels": {
+       "value": 0.0285,
+       "ci95": [
+        0.0223,
+        0.0356
+       ],
+       "n": 60
+      }
+     }
+    }
+   },
+   "DOC": {
+    "documents": 40,
+    "readers": {
+     "heocr": {
+      "documents": 40,
+      "cer": {
+       "value": 0.0073,
+       "ci95": [
+        0.0059,
+        0.0087
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.0197,
+       "ci95": [
+        0.0151,
+        0.0242
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.9149,
+       "ci95": [
+        0.8927,
+        0.9374
+       ],
+       "n": 40
+      }
+     }
+    }
+   },
+   "PDF T1": {
+    "documents": 318,
+    "readers": {
+     "heocr": {
+      "documents": 318,
+      "cer": {
+       "value": 0.0013,
+       "ci95": [
+        0.0011,
+        0.0014
+       ],
+       "n": 318
+      },
+      "wer": {
+       "value": 0.0024,
+       "ci95": [
+        0.0021,
+        0.0027
+       ],
+       "n": 318
+      },
+      "number_recall": {
+       "value": 0.9998,
+       "ci95": [
+        0.9996,
+        1.0
+       ],
+       "n": 318
+      },
+      "silent_loss": {
+       "value": 0.0009,
+       "ci95": [
+        0.0007,
+        0.001
+       ],
+       "n": 318
+      }
+     },
+     "stock": {
+      "documents": 80,
+      "cer": {
+       "value": 0.0976,
+       "ci95": [
+        0.0896,
+        0.1054
+       ],
+       "n": 80
+      },
+      "wer": {
+       "value": 0.1821,
+       "ci95": [
+        0.1703,
+        0.1942
+       ],
+       "n": 80
+      },
+      "number_recall": {
+       "value": 0.4543,
+       "ci95": [
+        0.4403,
+        0.4688
+       ],
+       "n": 80
+      },
+      "silent_loss": {
+       "value": 0.0875,
+       "ci95": [
+        0.0807,
+        0.0941
+       ],
+       "n": 80
+      }
+     },
+     "docling": {
+      "documents": 318,
+      "cer": {
+       "value": 0.2209,
+       "ci95": [
+        0.1983,
+        0.2458
+       ],
+       "n": 318
+      },
+      "wer": {
+       "value": 0.7247,
+       "ci95": [
+        0.7144,
+        0.7356
+       ],
+       "n": 318
+      },
+      "number_recall": {
+       "value": 0.9674,
+       "ci95": [
+        0.9577,
+        0.9762
+       ],
+       "n": 318
+      },
+      "silent_loss": {
+       "value": 0.1379,
+       "ci95": [
+        0.1131,
+        0.1652
+       ],
+       "n": 318
+      }
+     },
+     "markitdown": {
+      "documents": 318,
+      "cer": {
+       "value": 0.6364,
+       "ci95": [
+        0.6091,
+        0.6621
+       ],
+       "n": 318
+      },
+      "wer": {
+       "value": 0.8188,
+       "ci95": [
+        0.7864,
+        0.8503
+       ],
+       "n": 318
+      },
+      "number_recall": {
+       "value": 0.9904,
+       "ci95": [
+        0.9875,
+        0.993
+       ],
+       "n": 318
+      },
+      "silent_loss": {
+       "value": 0.4483,
+       "ci95": [
+        0.4283,
+        0.4677
+       ],
+       "n": 318
+      }
+     },
+     "pymupdf4llm": {
+      "documents": 318,
+      "cer": {
+       "value": 0.3174,
+       "ci95": [
+        0.3125,
+        0.3222
+       ],
+       "n": 318
+      },
+      "wer": {
+       "value": 0.4555,
+       "ci95": [
+        0.447,
+        0.4643
+       ],
+       "n": 318
+      },
+      "number_recall": {
+       "value": 0.9228,
+       "ci95": [
+        0.9187,
+        0.9267
+       ],
+       "n": 318
+      },
+      "silent_loss": {
+       "value": 0.2076,
+       "ci95": [
+        0.204,
+        0.2111
+       ],
+       "n": 318
+      }
+     }
+    }
+   },
+   "PDF T2": {
+    "documents": 40,
+    "readers": {
+     "heocr": {
+      "documents": 40,
+      "cer": {
+       "value": 0.0012,
+       "ci95": [
+        0.0008,
+        0.0017
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.0023,
+       "ci95": [
+        0.0014,
+        0.0032
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.001,
+       "ci95": [
+        0.0006,
+        0.0013
+       ],
+       "n": 40
+      }
+     },
+     "docling": {
+      "documents": 40,
+      "cer": {
+       "value": 0.1156,
+       "ci95": [
+        0.106,
+        0.1258
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.199,
+       "ci95": [
+        0.1874,
+        0.2111
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.9572,
+       "ci95": [
+        0.9486,
+        0.965
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.0747,
+       "ci95": [
+        0.0676,
+        0.0822
+       ],
+       "n": 40
+      }
+     },
+     "markitdown": {
+      "documents": 40,
+      "cer": {
+       "value": 0.78,
+       "ci95": [
+        0.7773,
+        0.7827
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.9839,
+       "ci95": [
+        0.9812,
+        0.9864
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.5794,
+       "ci95": [
+        0.5514,
+        0.6066
+       ],
+       "n": 40
+      }
+     },
+     "pymupdf4llm": {
+      "documents": 40,
+      "cer": {
+       "value": 0.7036,
+       "ci95": [
+        0.7,
+        0.7068
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.908,
+       "ci95": [
+        0.9049,
+        0.9106
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.4984,
+       "ci95": [
+        0.486,
+        0.5118
+       ],
+       "n": 40
+      }
+     }
+    }
+   },
+   "PDF T3": {
+    "documents": 151,
+    "readers": {
+     "heocr": {
+      "documents": 151,
+      "cer": {
+       "value": 0.0068,
+       "ci95": [
+        0.0046,
+        0.0095
+       ],
+       "n": 151
+      },
+      "wer": {
+       "value": 0.0196,
+       "ci95": [
+        0.0131,
+        0.0271
+       ],
+       "n": 151
+      },
+      "number_recall": {
+       "value": 0.9781,
+       "ci95": [
+        0.9667,
+        0.9877
+       ],
+       "n": 151
+      },
+      "silent_loss": {
+       "value": 0.0053,
+       "ci95": [
+        0.0036,
+        0.0073
+       ],
+       "n": 151
+      }
+     },
+     "stock": {
+      "documents": 71,
+      "cer": {
+       "value": 0.1023,
+       "ci95": [
+        0.0944,
+        0.1101
+       ],
+       "n": 71
+      },
+      "wer": {
+       "value": 0.2055,
+       "ci95": [
+        0.1938,
+        0.2162
+       ],
+       "n": 71
+      },
+      "number_recall": {
+       "value": 0.4495,
+       "ci95": [
+        0.4351,
+        0.4645
+       ],
+       "n": 71
+      },
+      "silent_loss": {
+       "value": 0.0929,
+       "ci95": [
+        0.0864,
+        0.0994
+       ],
+       "n": 71
+      }
+     },
+     "docling": {
+      "documents": 151,
+      "cer": {
+       "value": 0.7708,
+       "ci95": [
+        0.6863,
+        0.8515
+       ],
+       "n": 151
+      },
+      "wer": {
+       "value": 2.7142,
+       "ci95": [
+        2.4526,
+        2.9625
+       ],
+       "n": 151
+      },
+      "number_recall": {
+       "value": 0.9956,
+       "ci95": [
+        0.994,
+        0.997
+       ],
+       "n": 151
+      },
+      "silent_loss": {
+       "value": 0.3991,
+       "ci95": [
+        0.3505,
+        0.4459
+       ],
+       "n": 151
+      }
+     },
+     "markitdown": {
+      "documents": 151,
+      "cer": {
+       "value": 0.7404,
+       "ci95": [
+        0.7079,
+        0.7711
+       ],
+       "n": 151
+      },
+      "wer": {
+       "value": 0.909,
+       "ci95": [
+        0.8752,
+        0.9413
+       ],
+       "n": 151
+      },
+      "number_recall": {
+       "value": 0.9999,
+       "ci95": [
+        0.9996,
+        1.0
+       ],
+       "n": 151
+      },
+      "silent_loss": {
+       "value": 0.6041,
+       "ci95": [
+        0.5723,
+        0.6347
+       ],
+       "n": 151
+      }
+     },
+     "pymupdf4llm": {
+      "documents": 151,
+      "cer": {
+       "value": 0.6458,
+       "ci95": [
+        0.6036,
+        0.6862
+       ],
+       "n": 151
+      },
+      "wer": {
+       "value": 0.8523,
+       "ci95": [
+        0.7972,
+        0.9087
+       ],
+       "n": 151
+      },
+      "number_recall": {
+       "value": 0.9564,
+       "ci95": [
+        0.9495,
+        0.9629
+       ],
+       "n": 151
+      },
+      "silent_loss": {
+       "value": 0.5247,
+       "ci95": [
+        0.4836,
+        0.564
+       ],
+       "n": 151
+      }
+     }
+    }
+   },
+   "PDF T4": {
+    "documents": 40,
+    "readers": {
+     "heocr": {
+      "documents": 40,
+      "cer": {
+       "value": 0.0601,
+       "ci95": [
+        0.0498,
+        0.0724
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.129,
+       "ci95": [
+        0.1126,
+        0.1468
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.686,
+       "ci95": [
+        0.6648,
+        0.7055
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.0214,
+       "ci95": [
+        0.0173,
+        0.0259
+       ],
+       "n": 40
+      }
+     },
+     "stock": {
+      "documents": 40,
+      "cer": {
+       "value": 0.0907,
+       "ci95": [
+        0.08,
+        0.1025
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.1578,
+       "ci95": [
+        0.1433,
+        0.1732
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.4575,
+       "ci95": [
+        0.4368,
+        0.4766
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.0802,
+       "ci95": [
+        0.0718,
+        0.0889
+       ],
+       "n": 40
+      }
+     },
+     "docling": {
+      "documents": 40,
+      "cer": {
+       "value": 0.8147,
+       "ci95": [
+        0.8113,
+        0.8182
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.972,
+       "ci95": [
+        0.9696,
+        0.9743
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.7044,
+       "ci95": [
+        0.6771,
+        0.7279
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.7783,
+       "ci95": [
+        0.7677,
+        0.789
+       ],
+       "n": 40
+      }
+     },
+     "markitdown": {
+      "documents": 40,
+      "cer": {
+       "value": 0.8228,
+       "ci95": [
+        0.8132,
+        0.8321
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 1.0142,
+       "ci95": [
+        1.0059,
+        1.0227
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.1379,
+       "ci95": [
+        0.1172,
+        0.1609
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.6357,
+       "ci95": [
+        0.6134,
+        0.6578
+       ],
+       "n": 40
+      }
+     },
+     "pymupdf4llm": {
+      "documents": 40,
+      "cer": {
+       "value": 0.8009,
+       "ci95": [
+        0.7912,
+        0.8097
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.9961,
+       "ci95": [
+        0.9942,
+        0.9985
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.1215,
+       "ci95": [
+        0.1031,
+        0.142
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.6043,
+       "ci95": [
+        0.5899,
+        0.6193
+       ],
+       "n": 40
+      }
+     }
+    }
+   },
+   "PDF T5": {
+    "documents": 40,
+    "readers": {
+     "heocr": {
+      "documents": 40,
+      "cer": {
+       "value": 0.0601,
+       "ci95": [
+        0.0498,
+        0.0724
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.129,
+       "ci95": [
+        0.1126,
+        0.1468
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.686,
+       "ci95": [
+        0.6648,
+        0.7055
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.0214,
+       "ci95": [
+        0.0173,
+        0.0259
+       ],
+       "n": 40
+      }
+     },
+     "stock": {
+      "documents": 40,
+      "cer": {
+       "value": 0.0907,
+       "ci95": [
+        0.08,
+        0.1025
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.1578,
+       "ci95": [
+        0.1433,
+        0.1732
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.4575,
+       "ci95": [
+        0.4368,
+        0.4766
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.0802,
+       "ci95": [
+        0.0718,
+        0.0889
+       ],
+       "n": 40
+      }
+     },
+     "docling": {
+      "documents": 40,
+      "cer": {
+       "value": 0.84,
+       "ci95": [
+        0.8341,
+        0.8461
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.9701,
+       "ci95": [
+        0.9677,
+        0.9723
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.6952,
+       "ci95": [
+        0.6673,
+        0.7199
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.8146,
+       "ci95": [
+        0.8038,
+        0.8255
+       ],
+       "n": 40
+      }
+     },
+     "markitdown": {
+      "documents": 40,
+      "cer": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.0,
+       "ci95": [
+        0.0,
+        0.0
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 40
+      }
+     },
+     "pymupdf4llm": {
+      "documents": 40,
+      "cer": {
+       "value": 0.8299,
+       "ci95": [
+        0.828,
+        0.8321
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.993,
+       "ci95": [
+        0.9886,
+        1.0008
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.6944,
+       "ci95": [
+        0.663,
+        0.7258
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.7806,
+       "ci95": [
+        0.7737,
+        0.7883
+       ],
+       "n": 40
+      }
+     }
+    }
+   },
+   "PDF T6": {
+    "documents": 40,
+    "readers": {
+     "heocr": {
+      "documents": 40,
+      "cer": {
+       "value": 0.0666,
+       "ci95": [
+        0.0545,
+        0.0799
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.0639,
+       "ci95": [
+        0.0529,
+        0.0761
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.9605,
+       "ci95": [
+        0.9472,
+        0.9729
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.0395,
+       "ci95": [
+        0.034,
+        0.0453
+       ],
+       "n": 40
+      },
+      "image_word_recall": {
+       "value": 0.7469,
+       "ci95": [
+        0.6561,
+        0.8254
+       ],
+       "n": 40
+      }
+     },
+     "stock": {
+      "documents": 40,
+      "cer": {
+       "value": 0.9616,
+       "ci95": [
+        0.9561,
+        0.9661
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.9778,
+       "ci95": [
+        0.9753,
+        0.9798
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.0498,
+       "ci95": [
+        0.044,
+        0.0559
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.9638,
+       "ci95": [
+        0.9583,
+        0.9683
+       ],
+       "n": 40
+      },
+      "image_word_recall": {
+       "value": 0.5753,
+       "ci95": [
+        0.5417,
+        0.614
+       ],
+       "n": 40
+      }
+     },
+     "docling": {
+      "documents": 40,
+      "cer": {
+       "value": 0.137,
+       "ci95": [
+        0.1282,
+        0.1458
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.6819,
+       "ci95": [
+        0.6636,
+        0.6987
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.9978,
+       "ci95": [
+        0.9957,
+        0.9992
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.0505,
+       "ci95": [
+        0.0437,
+        0.0574
+       ],
+       "n": 40
+      },
+      "image_word_recall": {
+       "value": 0.7258,
+       "ci95": [
+        0.6721,
+        0.7788
+       ],
+       "n": 40
+      }
+     },
+     "markitdown": {
+      "documents": 40,
+      "cer": {
+       "value": 0.5516,
+       "ci95": [
+        0.4659,
+        0.6384
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.7119,
+       "ci95": [
+        0.6085,
+        0.8173
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.8899,
+       "ci95": [
+        0.877,
+        0.9021
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.385,
+       "ci95": [
+        0.3294,
+        0.4438
+       ],
+       "n": 40
+      },
+      "image_word_recall": {
+       "value": 0.126,
+       "ci95": [
+        0.0765,
+        0.1779
+       ],
+       "n": 40
+      }
+     },
+     "pymupdf4llm": {
+      "documents": 40,
+      "cer": {
+       "value": 0.3271,
+       "ci95": [
+        0.3141,
+        0.3388
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.4422,
+       "ci95": [
+        0.426,
+        0.4573
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.8128,
+       "ci95": [
+        0.7974,
+        0.8291
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.2337,
+       "ci95": [
+        0.2198,
+        0.2464
+       ],
+       "n": 40
+      },
+      "image_word_recall": {
+       "value": 0.2943,
+       "ci95": [
+        0.2404,
+        0.3485
+       ],
+       "n": 40
+      }
+     }
+    }
+   },
+   "PDF spread": {
+    "documents": 40,
+    "readers": {
+     "heocr": {
+      "documents": 40,
+      "cer": {
+       "value": 0.0012,
+       "ci95": [
+        0.0008,
+        0.0017
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.0023,
+       "ci95": [
+        0.0014,
+        0.0032
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.001,
+       "ci95": [
+        0.0006,
+        0.0013
+       ],
+       "n": 40
+      }
+     },
+     "docling": {
+      "documents": 40,
+      "cer": {
+       "value": 0.7165,
+       "ci95": [
+        0.6728,
+        0.7561
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 1.2122,
+       "ci95": [
+        1.1683,
+        1.2514
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.9969,
+       "ci95": [
+        0.9936,
+        0.9994
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.0506,
+       "ci95": [
+        0.0426,
+        0.0592
+       ],
+       "n": 40
+      }
+     },
+     "markitdown": {
+      "documents": 40,
+      "cer": {
+       "value": 0.7594,
+       "ci95": [
+        0.7237,
+        0.7898
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.9331,
+       "ci95": [
+        0.8886,
+        0.973
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.3241,
+       "ci95": [
+        0.2679,
+        0.3846
+       ],
+       "n": 40
+      }
+     },
+     "pymupdf4llm": {
+      "documents": 40,
+      "cer": {
+       "value": 0.73,
+       "ci95": [
+        0.6992,
+        0.757
+       ],
+       "n": 40
+      },
+      "wer": {
+       "value": 0.8964,
+       "ci95": [
+        0.8594,
+        0.9286
+       ],
+       "n": 40
+      },
+      "number_recall": {
+       "value": 0.9227,
+       "ci95": [
+        0.9104,
+        0.9345
+       ],
+       "n": 40
+      },
+      "silent_loss": {
+       "value": 0.1982,
+       "ci95": [
+        0.1865,
+        0.2096
+       ],
+       "n": 40
+      }
+     }
+    }
+   },
+   "Scanned tables": {
+    "documents": 120,
+    "readers": {
+     "heocr": {
+      "documents": 120,
+      "cer": {
+       "value": 0.1808,
+       "ci95": [
+        0.1411,
+        0.223
+       ],
+       "n": 120
+      },
+      "number_recall": {
+       "value": 0.8701,
+       "ci95": [
+        0.8502,
+        0.8886
+       ],
+       "n": 120
+      },
+      "rows_read": {
+       "value": 0.6693,
+       "ci95": [
+        0.6044,
+        0.7327
+       ],
+       "n": 120
+      },
+      "rows_silent": {
+       "value": 0.0278,
+       "ci95": [
+        0.0085,
+        0.0524
+       ],
+       "n": 120
+      }
+     },
+     "stock": {
+      "documents": 120,
+      "cer": {
+       "value": 0.5446,
+       "ci95": [
+        0.5169,
+        0.5726
+       ],
+       "n": 120
+      },
+      "number_recall": {
+       "value": 0.1415,
+       "ci95": [
+        0.1314,
+        0.1515
+       ],
+       "n": 120
+      },
+      "rows_read": {
+       "value": 0.0368,
+       "ci95": [
+        0.0273,
+        0.0464
+       ],
+       "n": 120
+      },
+      "rows_silent": {
+       "value": 0.9632,
+       "ci95": [
+        0.9536,
+        0.9727
+       ],
+       "n": 120
+      }
+     },
+     "docling": {
+      "documents": 120,
+      "cer": {
+       "value": 0.6999,
+       "ci95": [
+        0.6958,
+        0.7041
+       ],
+       "n": 120
+      },
+      "number_recall": {
+       "value": 0.9502,
+       "ci95": [
+        0.9438,
+        0.9567
+       ],
+       "n": 120
+      },
+      "rows_read": {
+       "value": 0.0252,
+       "ci95": [
+        0.0189,
+        0.0322
+       ],
+       "n": 120
+      },
+      "rows_silent": {
+       "value": 0.9748,
+       "ci95": [
+        0.9678,
+        0.9811
+       ],
+       "n": 120
+      }
+     },
+     "markitdown": {
+      "documents": 120,
+      "cer": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 120
+      },
+      "number_recall": {
+       "value": 0.0,
+       "ci95": [
+        0.0,
+        0.0
+       ],
+       "n": 120
+      },
+      "rows_read": {
+       "value": 0.0,
+       "ci95": [
+        0.0,
+        0.0
+       ],
+       "n": 120
+      },
+      "rows_silent": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 120
+      }
+     },
+     "pymupdf4llm": {
+      "documents": 120,
+      "cer": {
+       "value": 0.9058,
+       "ci95": [
+        0.9023,
+        0.9095
+       ],
+       "n": 120
+      },
+      "number_recall": {
+       "value": 0.0455,
+       "ci95": [
+        0.0385,
+        0.0528
+       ],
+       "n": 120
+      },
+      "rows_read": {
+       "value": 0.0,
+       "ci95": [
+        0.0,
+        0.0
+       ],
+       "n": 120
+      },
+      "rows_silent": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 120
+      }
+     }
+    }
+   }
+  }
+ },
+ "vendors": {
+  "status": "pending_review"
+ }
+}
