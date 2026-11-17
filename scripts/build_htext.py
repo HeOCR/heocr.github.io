@@ -45,11 +45,11 @@ EXTRA_CSS = """
 T = {
     "en": {
         "title": "htext",
-        "desc": "htext: public-domain Hebrew text for training Hebrew OCR, with a rights record for every entry. CC0.",
-        "lede": "Public-domain Hebrew text for training HeOCR's recognizers, cut into lines, plain and with niqqud. Every work or document carries its own rights record: public domain in Israel, and its US status. All of it is released under CC0, so it can be used without conditions.",
+        "desc": "htext: openly licensed Hebrew text for training Hebrew OCR, in three releases (CC0, CC BY, CC BY-SA), with a rights record for every entry.",
+        "lede": "Openly licensed Hebrew text for training HeOCR's recognizers, cut into lines, plain and with niqqud: public-domain text first, and attribution and share-alike text in their own releases. Every work or document carries its own rights record: its status in Israel and in the US, its licence and its credit line. htext is published as three releases, one per licence, so you can pick the terms you need; the core release is CC0 and can be used without conditions.",
         "back": "← HeOCR", "other": "עברית", "other_href": "he/htext.html", "home": "./",
         "updated": "Updated {d}. Figures come from each corpus card and are rebuilt from <a href=\"{json}\">corpora.json</a>.",
-        "toc": [("what", "What htext is"), ("corpora", "Corpora"), ("rights", "Rights"), ("use", "Download and use"),
+        "toc": [("what", "What htext is"), ("releases", "Releases"), ("corpora", "Corpora"), ("rights", "Rights"), ("use", "Download and use"),
                 ("credit", "Credit"), ("licence", "Licence")],
         "what_p": [
             "htext collects Hebrew text whose rights are clear enough to publish openly, and turns it into training lines for "
@@ -62,6 +62,11 @@ T = {
         ],
         "stat_lines": "lines", "stat_works": "works", "stat_corpora": "corpora", "stat_corpus": "corpus", "stat_bytes": "of text",
         "corpora_h": "Corpora",
+        "releases_h": "Releases",
+        "releases_p": "htext ships one release per licence. Pick the release whose terms fit your use. Models trained on any of them can still be released under an open licence, with credit in their NOTICE.",
+        "r_contents": "Contains", "r_allows": "You may", "r_licence": "Licence",
+        "r_status": {"published": "published", "planned": "planned"},
+        "c_in": "Release",
         "planned_h": "Planned sources",
         "planned_p": "Sources being prepared. Each is published only after its rights are checked entry by entry.",
         "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
@@ -73,7 +78,7 @@ T = {
         "rights_h": "Rights",
         "rights_p": [
             "Every entry has a rights record with two fields, <code>pd_israel</code> and <code>pd_us</code>, each with the basis it was computed from and the year it holds for. A corpus variant includes an entry only if its record passes that variant's rule. The records are published with each corpus.",
-            "A translation counts as public domain only if both its author and its translator are. htext takes no text under a licence with conditions (no NC, ND or share-alike text), so nothing in it limits how the data can be used.",
+            "A translation counts as public domain only if both its author and its translator are. Every entry also records its source licence and credit line, so each release can be rebuilt and filtered. No release takes text under a non-commercial (NC) or no-derivatives (ND) licence, and text never crosses releases: a CC0 build never contains a CC BY or CC BY-SA line.",
             "The rights fields are the project's reading of the law, not legal advice.",
         ],
         "rights_basis": "Basis, {n}",
@@ -85,17 +90,17 @@ T = {
         "credit_h": "Credit",
         "credit_p": "Credit is not required by the licence, but some sources ask for it, and HeOCR gives it. Please carry these lines into any dataset or model card that uses a corpus:",
         "licence_h": "Licence",
-        "licence_p": "The data, meaning the text files, rights and line indexes, exclusion lists, cards and checksums, is dedicated to the public domain under <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>. The builder code is under the <a href=\"https://github.com/HeOCR/htext/blob/main/LICENSE\">MIT licence</a>.",
+        "licence_p": "Each release carries its own licence, listed under <a href=\"#releases\">Releases</a>; the CC BY and CC BY-SA terms bind the source text. HeOCR's own processing and metadata, meaning the rights and line indexes, exclusion lists, cards and checksums, are dedicated to the public domain under <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a> in every release, as far as they can be separated from the text. The builder code is under the <a href=\"https://github.com/HeOCR/htext/blob/main/LICENSE\">MIT licence</a>.",
         "footer": "Created by <a href=\"http://www.shaypalachy.com/\">Shay Palachy Affek</a> and the HeOCR maintainers.",
         "mb": "{x} MB",
     },
     "he": {
         "title": "htext",
-        "desc": "htext: טקסט עברי בנחלת הכלל לאימון OCR עברי, עם רישום זכויות לכל פריט. CC0.",
-        "lede": "טקסט עברי בנחלת הכלל לאימון מנועי הזיהוי של HeOCR, חתוך לשורות, עם ניקוד ובלעדיו. לכל יצירה או מסמך יש רישום זכויות משלו: נחלת הכלל בישראל, והמעמד בארה\"ב. הכול משוחרר ברישיון CC0, ואפשר להשתמש בו בלי תנאים.",
+        "desc": "htext: טקסט עברי ברישיונות פתוחים לאימון OCR עברי, בשלוש גרסאות (CC0,‏ CC BY,‏ CC BY-SA), עם רישום זכויות לכל פריט.",
+        "lede": "טקסט עברי ברישיונות פתוחים לאימון מנועי הזיהוי של HeOCR, חתוך לשורות, עם ניקוד ובלעדיו: בראש ובראשונה טקסט בנחלת הכלל, וטקסט בייחוס ובשיתוף זהה בגרסאות נפרדות. לכל יצירה או מסמך יש רישום זכויות משלו: מעמדו בישראל ובארה\"ב, הרישיון שלו ושורת הקרדיט שלו. htext מתפרסם בשלוש גרסאות, אחת לכל רישיון, כדי שתוכלו לבחור את התנאים שמתאימים לכם; גרסת הליבה היא CC0 ואפשר להשתמש בה בלי תנאים.",
         "back": "← HeOCR", "other": "English", "other_href": "../htext.html", "home": "./",
         "updated": "עודכן ב־{d}. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href=\"{json}\">corpora.json</a>.",
-        "toc": [("what", "מה זה htext"), ("corpora", "מאגרים"), ("rights", "זכויות"), ("use", "הורדה ושימוש"),
+        "toc": [("what", "מה זה htext"), ("releases", "גרסאות"), ("corpora", "מאגרים"), ("rights", "זכויות"), ("use", "הורדה ושימוש"),
                 ("credit", "קרדיט"), ("licence", "רישיון")],
         "what_p": [
             "htext אוסף טקסט עברי שזכויותיו ברורות דיין לפרסום פתוח, והופך אותו לשורות אימון עבור "
@@ -108,6 +113,11 @@ T = {
         ],
         "stat_lines": "שורות", "stat_works": "יצירות", "stat_corpora": "מאגרים", "stat_corpus": "מאגר", "stat_bytes": "טקסט",
         "corpora_h": "מאגרים",
+        "releases_h": "גרסאות",
+        "releases_p": "htext מתפרסם בגרסה אחת לכל רישיון. בחרו את הגרסה שתנאיה מתאימים לשימוש שלכם. מודלים שאומנו על כל אחת מהן עדיין יכולים להתפרסם ברישיון פתוח, עם קרדיט בקובץ ה־NOTICE שלהם.",
+        "r_contents": "תוכן", "r_allows": "מותר", "r_licence": "רישיון",
+        "r_status": {"published": "פורסמה", "planned": "מתוכננת"},
+        "c_in": "גרסת htext",
         "planned_h": "מקורות מתוכננים",
         "planned_p": "מקורות בהכנה. כל אחד מתפרסם רק אחרי שזכויותיו נבדקו פריט אחר פריט.",
         "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
@@ -119,7 +129,7 @@ T = {
         "rights_h": "זכויות",
         "rights_p": [
             "לכל פריט יש רישום זכויות עם שני שדות, <code>pd_israel</code> ו־<code>pd_us</code>, וכל אחד מציין את הבסיס שלפיו חושב ואת השנה שבה הוא תקף. גרסת מאגר כוללת פריט רק אם הרישום שלו עומד בכלל של אותה גרסה. הרישומים מתפרסמים עם כל מאגר.",
-            "תרגום נחשב נחלת הכלל רק אם גם המחבר וגם המתרגם בנחלת הכלל. htext אינו כולל טקסט ברישיון עם תנאים (לא NC, לא ND ולא שיתוף זהה), ולכן דבר בו אינו מגביל את השימוש בנתונים.",
+            "תרגום נחשב נחלת הכלל רק אם גם המחבר וגם המתרגם בנחלת הכלל. כל פריט מתעד גם את רישיון המקור ואת שורת הקרדיט שלו, כך שאפשר לבנות ולסנן כל גרסה מחדש. אף גרסה אינה כוללת טקסט ברישיון לא־מסחרי (NC) או ללא יצירות נגזרות (ND), וטקסט לעולם אינו עובר בין גרסאות: בנייה של CC0 לעולם אינה כוללת שורה ב־CC BY או ב־CC BY-SA.",
             "שדות הזכויות הם קריאת הפרויקט את החוק, ולא ייעוץ משפטי.",
         ],
         "rights_basis": "בסיס, {n}",
@@ -131,7 +141,7 @@ T = {
         "credit_h": "קרדיט",
         "credit_p": "הרישיון אינו מחייב קרדיט, אבל חלק מהמקורות מבקשים אותו, ו־HeOCR נותן אותו. אנא העבירו את השורות האלה לכל כרטיס מאגר נתונים או מודל שמשתמש במאגר:",
         "licence_h": "רישיון",
-        "licence_p": "הנתונים, כלומר קובצי הטקסט, אינדקסי הזכויות והשורות, רשימות ההחרגה, הכרטיסים וסיכומי הביקורת, מוקדשים לנחלת הכלל ברישיון <a href=\"https://creativecommons.org/publicdomain/zero/1.0/deed.he\">CC0 1.0</a>. קוד הבנייה ברישיון <a href=\"https://github.com/HeOCR/htext/blob/main/LICENSE\">MIT</a>.",
+        "licence_p": "לכל גרסה יש רישיון משלה, כמפורט תחת <a href=\"#releases\">גרסאות</a>; תנאי CC BY ו־CC BY-SA חלים על טקסט המקור. העיבוד והמטא־דאטה של HeOCR, כלומר אינדקסי הזכויות והשורות, רשימות ההחרגה, הכרטיסים וסיכומי הביקורת, מוקדשים לנחלת הכלל ברישיון <a href=\"https://creativecommons.org/publicdomain/zero/1.0/deed.he\">CC0 1.0</a> בכל הגרסאות, ככל שאפשר להפריד אותם מהטקסט. קוד הבנייה ברישיון <a href=\"https://github.com/HeOCR/htext/blob/main/LICENSE\">MIT</a>.",
         "footer": "נוצר בידי <a href=\"http://www.shaypalachy.com/\">שי פלצ'י אפק</a> ומתחזקי HeOCR.",
         "mb": "{x} MB",
     },
@@ -202,11 +212,21 @@ def page(lang: str, R: dict) -> str:
       f'<div class="stat"><b>{mb(lang, bytes_)}</b><span>{t["stat_bytes"]}</span></div>'
       f'<div class="stat"><b>{len(C)}</b><span>{t["stat_corpus"] if len(C) == 1 else t["stat_corpora"]}</span></div>'
       "</div>\n</section>\n")
+    # --- 1b. Releases
+    rel = {r["id"]: r for r in R["releases"]}
+    w(f'<section id="releases">\n<h2>{e(t["releases_h"])}</h2>\n<p>{e(t["releases_p"])}</p>\n')
+    for r in R["releases"]:
+        w(f'<h3>{e(r["name"])}</h3>\n<span class="status">{e(t["r_status"][r["status"]])}</span>'
+          f'<span class="status">{e(r["licence"]["name"])}</span>\n<ul class="facts">\n'
+          f'<li>{t["r_contents"]}: {e(r["contents"][lang])}</li>\n'
+          f'<li>{t["r_allows"]}: {e(r["allows"][lang])}</li>\n'
+          f'<li>{t["r_licence"]}: <a href="{e(r["licence"]["url"])}">{e(r["licence"]["name"])}</a></li>\n</ul>\n')
+    w("</section>\n")
     # --- 2. Corpora
     w(f'<section id="corpora">\n<h2>{e(t["corpora_h"])}</h2>\n')
     for c in C:
         w(f'<h3 id="{e(c["id"])}">{e(c["name"][lang])}</h3>\n')
-        w(f'<span class="status">{e(c["release"]["tag"])}</span><span class="status">CC0</span>\n')
+        w(f'<span class="status">{e(c["release"]["tag"])}</span><span class="status">{e(rel[c["htext_release"]]["name"])}</span>\n')
         w(f'<p>{e(c["description"][lang])}</p>\n')
         rows = [((f'<code>{e(f["name"])}</code>', False), (e(t["variant"][f["variant"]]), False),
                  (e(t["subset"][f["subset"]]), False), (n(f["lines"]), True), (n(f["works"]), True),
@@ -214,6 +234,7 @@ def page(lang: str, R: dict) -> str:
         w(table([t["th_file"], t["th_variant"], t["th_subset"], t["th_lines"], t["th_works"], t["th_size"]], rows))
         w(f'<p class="note">{t["variants_note"]}</p>\n')
         w('<ul class="facts">\n'
+          f'<li>{t["c_in"]}: {e(rel[c["htext_release"]]["name"])}</li>\n'
           f'<li>{t["c_source"]}: <a href="{e(c["source"]["url"])}">{e(c["source"]["name"][lang])}</a> ({e(c["source_licence"][lang])})</li>\n'
           f'<li>{t["c_release"]}: <a href="{e(c["release"]["url"])}">{e(c["release"]["tag"])}</a>, {e(c["release"]["date"])}</li>\n'
           f'<li>{t["c_card"]}: <a href="{e(c["card_url"])}">CORPUS_CARD.md</a></li>\n'

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-17",
+  "updated": "2026-11-18",
   "repository": "https://github.com/HeOCR/htext",
   "corpora": [
     {
@@ -82,8 +82,62 @@
           "bytes": 738977,
           "sha256": "ead01b4247123b10bd47007540a1a542d44c727335ae7bd77595a01a18d7adef"
         }
-      ]
+      ],
+      "htext_release": "cc0"
     }
   ],
-  "planned": []
+  "planned": [],
+  "releases": [
+    {
+      "id": "cc0",
+      "name": "htext-cc0",
+      "status": "published",
+      "licence": {
+        "name": "CC0 1.0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "contents": {
+        "en": "Public-domain text, CC0 text, and official texts that are not protected by copyright (laws, regulations, Knesset records, under section 6 of the Israeli Copyright Act).",
+        "he": "טקסט בנחלת הכלל, טקסט ב־CC0, וטקסטים רשמיים שאינם מוגנים בזכות יוצרים (חוקים, תקנות ודברי הכנסת, לפי סעיף 6 לחוק זכות יוצרים)."
+      },
+      "allows": {
+        "en": "Any use, with no conditions. This is the default release for training and benchmarks.",
+        "he": "כל שימוש, בלי תנאים. זו הגרסה ברירת המחדל לאימון ולמדדי ביצועים."
+      }
+    },
+    {
+      "id": "by",
+      "name": "htext-by",
+      "status": "planned",
+      "licence": {
+        "name": "CC BY 4.0 (per source)",
+        "url": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contents": {
+        "en": "Text whose source licence asks only for attribution (CC BY or equivalent).",
+        "he": "טקסט שרישיון המקור שלו דורש ייחוס בלבד (CC BY או מקביל)."
+      },
+      "allows": {
+        "en": "Any use, as long as you credit the sources. Each entry carries its credit line, and the release ships a consolidated NOTICE.",
+        "he": "כל שימוש, בתנאי שנותנים קרדיט למקורות. לכל פריט יש שורת קרדיט, והגרסה כוללת קובץ NOTICE מרוכז."
+      }
+    },
+    {
+      "id": "by-sa",
+      "name": "htext-by-sa",
+      "status": "planned",
+      "licence": {
+        "name": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      "contents": {
+        "en": "Share-alike text, mainly Hebrew Wikisource transcriptions and Sefaria versions licensed CC BY-SA.",
+        "he": "טקסט בשיתוף זהה, בעיקר תעתיקי ויקיטקסט העברית וגרסאות ספריא ברישיון CC BY-SA."
+      },
+      "allows": {
+        "en": "Any use, with credit, and anything you share that adapts the text must be under CC BY-SA too.",
+        "he": "כל שימוש, עם קרדיט, וכל עיבוד של הטקסט שמשותף הלאה חייב להיות גם הוא ב־CC BY-SA."
+      }
+    }
+  ]
 }

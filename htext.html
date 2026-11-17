@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>htext</title>
-<meta name="description" content="htext: public-domain Hebrew text for training Hebrew OCR, with a rights record for every entry. CC0.">
+<meta name="description" content="htext: openly licensed Hebrew text for training Hebrew OCR, in three releases (CC0, CC BY, CC BY-SA), with a rights record for every entry.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -130,23 +130,48 @@
     </nav>
     <a class="back" href="./">← HeOCR</a>
     <h1>htext</h1>
-    <p class="lede">Public-domain Hebrew text for training HeOCR's recognizers, cut into lines, plain and with niqqud. Every work or document carries its own rights record: public domain in Israel, and its US status. All of it is released under CC0, so it can be used without conditions.</p>
-    <p class="note">Updated 2026-11-17. Figures come from each corpus card and are rebuilt from <a href="htext/corpora.json">corpora.json</a>.</p>
+    <p class="lede">Openly licensed Hebrew text for training HeOCR's recognizers, cut into lines, plain and with niqqud: public-domain text first, and attribution and share-alike text in their own releases. Every work or document carries its own rights record: its status in Israel and in the US, its licence and its credit line. htext is published as three releases, one per licence, so you can pick the terms you need; the core release is CC0 and can be used without conditions.</p>
+    <p class="note">Updated 2026-11-18. Figures come from each corpus card and are rebuilt from <a href="htext/corpora.json">corpora.json</a>.</p>
   </div>
 </header>
 
 <main class="wrap doc ht">
-<nav class="toc"><a href="#what">What htext is</a> · <a href="#corpora">Corpora</a> · <a href="#rights">Rights</a> · <a href="#use">Download and use</a> · <a href="#credit">Credit</a> · <a href="#licence">Licence</a></nav>
+<nav class="toc"><a href="#what">What htext is</a> · <a href="#releases">Releases</a> · <a href="#corpora">Corpora</a> · <a href="#rights">Rights</a> · <a href="#use">Download and use</a> · <a href="#credit">Credit</a> · <a href="#licence">Licence</a></nav>
 <section id="what">
 <h2>What htext is</h2>
 <p>htext collects Hebrew text whose rights are clear enough to publish openly, and turns it into training lines for <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, HeOCR's synthetic page generator. The generator renders each line onto synthetic pages, so the recognizers learn real Hebrew vocabulary, spelling and punctuation, not only made-up text.</p>
 <p>Each source has its own builder, its own corpus and its own card. A build reads a pinned copy of the source, computes rights per entry, cleans and cuts the text, and checks that no line overlaps HeOCR's evaluation text. Only the files a card lists are published.</p>
 <div class="stats"><div class="stat"><b>2,028,962</b><span>lines</span></div><div class="stat"><b>21,799</b><span>works</span></div><div class="stat"><b><span dir="ltr">105.2 MB</span></b><span>of text</span></div><div class="stat"><b>1</b><span>corpus</span></div></div>
 </section>
+<section id="releases">
+<h2>Releases</h2>
+<p>htext ships one release per licence. Pick the release whose terms fit your use. Models trained on any of them can still be released under an open licence, with credit in their NOTICE.</p>
+<h3>htext-cc0</h3>
+<span class="status">published</span><span class="status">CC0 1.0</span>
+<ul class="facts">
+<li>Contains: Public-domain text, CC0 text, and official texts that are not protected by copyright (laws, regulations, Knesset records, under section 6 of the Israeli Copyright Act).</li>
+<li>You may: Any use, with no conditions. This is the default release for training and benchmarks.</li>
+<li>Licence: <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a></li>
+</ul>
+<h3>htext-by</h3>
+<span class="status">planned</span><span class="status">CC BY 4.0 (per source)</span>
+<ul class="facts">
+<li>Contains: Text whose source licence asks only for attribution (CC BY or equivalent).</li>
+<li>You may: Any use, as long as you credit the sources. Each entry carries its credit line, and the release ships a consolidated NOTICE.</li>
+<li>Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 (per source)</a></li>
+</ul>
+<h3>htext-by-sa</h3>
+<span class="status">planned</span><span class="status">CC BY-SA 4.0</span>
+<ul class="facts">
+<li>Contains: Share-alike text, mainly Hebrew Wikisource transcriptions and Sefaria versions licensed CC BY-SA.</li>
+<li>You may: Any use, with credit, and anything you share that adapts the text must be under CC BY-SA too.</li>
+<li>Licence: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+</ul>
+</section>
 <section id="corpora">
 <h2>Corpora</h2>
 <h3 id="pby">Project Ben-Yehuda public-domain lines</h3>
-<span class="status">pby-v1</span><span class="status">CC0</span>
+<span class="status">pby-v1</span><span class="status">htext-cc0</span>
 <p>Prose, articles, memoirs, letters, fables and poetry transcribed by Project Ben-Yehuda volunteers, cut into lines, plain and with niqqud.</p>
 <div class="tablewrap"><table>
 <thead><tr><th>File</th><th>Variant</th><th>Subset</th><th>Lines</th><th>Works</th><th>Size</th></tr></thead>
@@ -158,6 +183,7 @@
 </tbody></table></div>
 <p class="note"><b>Israel</b>: every line comes from a work that is public domain in Israel. <b>Israel + US</b>: the subset that is also public domain in the US. <b>niqqud</b> lines are pointed; <b>plain</b> lines carry no points.</p>
 <ul class="facts">
+<li>Release: htext-cc0</li>
 <li>Source: <a href="https://benyehuda.org">Project Ben-Yehuda</a> (Public domain (PBY&#x27;s dump licence))</li>
 <li>Release: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v1">pby-v1</a>, 2026-11-06</li>
 <li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
@@ -167,7 +193,7 @@
 <section id="rights">
 <h2>Rights</h2>
 <p>Every entry has a rights record with two fields, <code>pd_israel</code> and <code>pd_us</code>, each with the basis it was computed from and the year it holds for. A corpus variant includes an entry only if its record passes that variant's rule. The records are published with each corpus.</p>
-<p>A translation counts as public domain only if both its author and its translator are. htext takes no text under a licence with conditions (no NC, ND or share-alike text), so nothing in it limits how the data can be used.</p>
+<p>A translation counts as public domain only if both its author and its translator are. Every entry also records its source licence and credit line, so each release can be rebuilt and filtered. No release takes text under a non-commercial (NC) or no-derivatives (ND) licence, and text never crosses releases: a CC0 build never contains a CC BY or CC BY-SA line.</p>
 <p>The rights fields are the project's reading of the law, not legal advice.</p>
 <ul class="facts">
 <li><b>Project Ben-Yehuda</b>: Public domain in Israel: every author and every translator died at least 71 years before the build year (2026), with death years sourced from Wikidata. US status is recorded per work: public domain in the US when the transcribed edition appeared before 1931.</li>
@@ -191,7 +217,7 @@ grep -E &#x27;_v1\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
 </section>
 <section id="licence">
 <h2>Licence</h2>
-<p>The data, meaning the text files, rights and line indexes, exclusion lists, cards and checksums, is dedicated to the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. The builder code is under the <a href="https://github.com/HeOCR/htext/blob/main/LICENSE">MIT licence</a>.</p>
+<p>Each release carries its own licence, listed under <a href="#releases">Releases</a>; the CC BY and CC BY-SA terms bind the source text. HeOCR's own processing and metadata, meaning the rights and line indexes, exclusion lists, cards and checksums, are dedicated to the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> in every release, as far as they can be separated from the text. The builder code is under the <a href="https://github.com/HeOCR/htext/blob/main/LICENSE">MIT licence</a>.</p>
 </section>
 </main>
 

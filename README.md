@@ -23,7 +23,7 @@ It never holds figures from private corpora, not even aggregates.
 
 ## htext page
 
-`htext.html` and `he/htext.html` describe the [htext](https://github.com/HeOCR/htext) public-domain text dataset. They
+`htext.html` and `he/htext.html` describe the [htext](https://github.com/HeOCR/htext) Hebrew text dataset and its three releases (CC0, CC BY, CC BY-SA). They
 are generated from one file, `htext/corpora.json`; do not edit the two pages by hand. When htext publishes a corpus or a
 new version, add or update its entry in `corpora.json`, or refresh an existing entry's counts from its corpus card:
 
