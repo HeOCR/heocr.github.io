@@ -1,0 +1,143 @@
+{
+  "updated": "2026-11-18",
+  "repository": "https://github.com/HeOCR/htext",
+  "corpora": [
+    {
+      "id": "pby",
+      "version": "v1",
+      "name": {
+        "en": "Project Ben-Yehuda public-domain lines",
+        "he": "שורות בנחלת הכלל מפרויקט בן־יהודה"
+      },
+      "source": {
+        "name": {
+          "en": "Project Ben-Yehuda",
+          "he": "פרויקט בן־יהודה"
+        },
+        "url": "https://benyehuda.org"
+      },
+      "description": {
+        "en": "Prose, articles, memoirs, letters, fables and poetry transcribed by Project Ben-Yehuda volunteers, cut into lines, plain and with niqqud.",
+        "he": "פרוזה, מאמרים, זיכרונות, מכתבים, משלים ושירה שהקלידו מתנדבי פרויקט בן־יהודה, חתוכים לשורות, עם ניקוד ובלעדיו."
+      },
+      "rights_basis": {
+        "en": "Public domain in Israel: every author and every translator died at least 71 years before the build year (2026), with death years sourced from Wikidata. US status is recorded per work: public domain in the US when the transcribed edition appeared before 1931.",
+        "he": "נחלת הכלל בישראל: כל מחבר וכל מתרגם נפטרו 71 שנה לפחות לפני שנת הבנייה (2026), לפי שנות פטירה מוויקינתונים. המעמד בארה\"ב מתועד לכל יצירה: נחלת הכלל בארה\"ב כשהמהדורה שהוקלדה יצאה לפני 1931."
+      },
+      "source_licence": {
+        "en": "Public domain (PBY's dump licence)",
+        "he": "נחלת הכלל (רישיון המאגר של פרויקט בן־יהודה)"
+      },
+      "credit": {
+        "text": {
+          "en": "Project Ben-Yehuda volunteers",
+          "he": "מתנדבי פרויקט בן־יהודה"
+        },
+        "url": "https://benyehuda.org"
+      },
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v1/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v1/SHA256SUMS",
+      "release": {
+        "tag": "pby-v1",
+        "url": "https://github.com/HeOCR/htext/releases/tag/pby-v1",
+        "date": "2026-11-06"
+      },
+      "catalogue_works": 26455,
+      "works_in_corpus": 21799,
+      "works_in_il_us": 668,
+      "files": [
+        {
+          "name": "pby_lines_il_plain_v1.txt",
+          "variant": "il",
+          "subset": "plain",
+          "lines": 1627470,
+          "works": 13857,
+          "bytes": 74372961,
+          "sha256": "4cedcd0a882c1a7fbab93fb2efb55b26d9b2b34a92be77129cf78288ef4fbade"
+        },
+        {
+          "name": "pby_lines_il_niqqud_v1.txt",
+          "variant": "il",
+          "subset": "niqqud",
+          "lines": 401492,
+          "works": 12911,
+          "bytes": 30797418,
+          "sha256": "a1b78dc5b467189ed431b7daf8f044f1aa03b1f0389dc7320109dfbf0bb2285f"
+        },
+        {
+          "name": "pby_lines_il_us_plain_v1.txt",
+          "variant": "il_us",
+          "subset": "plain",
+          "lines": 70251,
+          "works": 559,
+          "bytes": 3263817,
+          "sha256": "05983a2088e8da4ed6855f3bb52c97a727a2d31ed952b9422c2e23de42cf8161"
+        },
+        {
+          "name": "pby_lines_il_us_niqqud_v1.txt",
+          "variant": "il_us",
+          "subset": "niqqud",
+          "lines": 10050,
+          "works": 290,
+          "bytes": 738977,
+          "sha256": "ead01b4247123b10bd47007540a1a542d44c727335ae7bd77595a01a18d7adef"
+        }
+      ],
+      "htext_release": "cc0"
+    }
+  ],
+  "planned": [],
+  "releases": [
+    {
+      "id": "cc0",
+      "name": "htext-cc0",
+      "status": "published",
+      "licence": {
+        "name": "CC0 1.0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "contents": {
+        "en": "Public-domain text, CC0 text, and official texts that are not protected by copyright (laws, regulations, Knesset records, under section 6 of the Israeli Copyright Act).",
+        "he": "טקסט בנחלת הכלל, טקסט ב־CC0, וטקסטים רשמיים שאינם מוגנים בזכות יוצרים (חוקים, תקנות ודברי הכנסת, לפי סעיף 6 לחוק זכות יוצרים)."
+      },
+      "allows": {
+        "en": "Any use, with no conditions. This is the default release for training and benchmarks.",
+        "he": "כל שימוש, בלי תנאים. זו הגרסה ברירת המחדל לאימון ולמדדי ביצועים."
+      }
+    },
+    {
+      "id": "by",
+      "name": "htext-by",
+      "status": "planned",
+      "licence": {
+        "name": "CC BY 4.0 (per source)",
+        "url": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contents": {
+        "en": "Text whose source licence asks only for attribution (CC BY or equivalent).",
+        "he": "טקסט שרישיון המקור שלו דורש ייחוס בלבד (CC BY או מקביל)."
+      },
+      "allows": {
+        "en": "Any use, as long as you credit the sources. Each entry carries its credit line, and the release ships a consolidated NOTICE.",
+        "he": "כל שימוש, בתנאי שנותנים קרדיט למקורות. לכל פריט יש שורת קרדיט, והגרסה כוללת קובץ NOTICE מרוכז."
+      }
+    },
+    {
+      "id": "by-sa",
+      "name": "htext-by-sa",
+      "status": "planned",
+      "licence": {
+        "name": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      "contents": {
+        "en": "Share-alike text, mainly Hebrew Wikisource transcriptions and Sefaria versions licensed CC BY-SA.",
+        "he": "טקסט בשיתוף זהה, בעיקר תעתיקי ויקיטקסט העברית וגרסאות ספריא ברישיון CC BY-SA."
+      },
+      "allows": {
+        "en": "Any use, with credit, and anything you share that adapts the text must be under CC BY-SA too.",
+        "he": "כל שימוש, עם קרדיט, וכל עיבוד של הטקסט שמשותף הלאה חייב להיות גם הוא ב־CC BY-SA."
+      }
+    }
+  ]
+}

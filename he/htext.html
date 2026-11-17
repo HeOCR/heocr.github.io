@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>htext</title>
+<meta name="description" content="htext: טקסט עברי ברישיונות פתוחים לאימון OCR עברי, בשלוש גרסאות (CC0,‏ CC BY,‏ CC BY-SA), עם רישום זכויות לכל פריט.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --text: #1d1b18;
+    --muted: #6b665e;
+    --line: #e7e3da;
+    --accent: #1f5f8b;
+    --accent-soft: #e6eff6;
+    --tag: #f2efe8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141414;
+      --surface: #1c1c1c;
+      --text: #ecebe8;
+      --muted: #a29d94;
+      --line: #2e2d2b;
+      --accent: #7fb6dd;
+      --accent-soft: #1d2a33;
+      --tag: #262523;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141414;
+    --surface: #1c1c1c;
+    --text: #ecebe8;
+    --muted: #a29d94;
+    --line: #2e2d2b;
+    --accent: #7fb6dd;
+    --accent-soft: #1d2a33;
+    --tag: #262523;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
+  .he { font-family: "Frank Ruhl Libre", serif; direction: rtl; text-align: left; color: var(--muted); font-size: 1.15rem; margin: 0 0 8px; }
+  h1 { font-family: "Frank Ruhl Libre", serif; font-size: clamp(2.6rem, 7vw, 3.6rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.01em; }
+  .lede { font-size: 1.15rem; max-width: 640px; margin: 0 0 24px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-block; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font-weight: 500; font-size: 0.95rem; }
+  .btn:hover { border-color: var(--accent); text-decoration: none; }
+
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 36px 0 0; font-size: 0.9rem; color: var(--muted); }
+  .flow span.step { background: var(--accent-soft); color: var(--text); padding: 4px 10px; border-radius: 999px; font-weight: 500; }
+
+  section { padding: 48px 0 8px; }
+  h2 { font-family: "Frank Ruhl Libre", serif; font-size: 1.7rem; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 22px; max-width: 680px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: flex; flex-direction: column; }
+  .card h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 600; }
+  .card h3 a { color: var(--text); }
+  .card p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; flex: 1; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.8rem; }
+  .meta span { background: var(--tag); padding: 2px 8px; border-radius: 6px; color: var(--muted); }
+  .meta a { font-weight: 500; }
+  .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
+  .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
+
+  footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
+  footer p { margin: 0 0 6px; }
+  .doc > section { max-width: 720px; }
+  .doc h2 { margin-top: 0; }
+  .doc ul, .doc ol { padding-left: 22px; }
+  .doc li { margin: 0 0 8px; }
+  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
+  .back { display: inline-block; margin-bottom: 18px; font-size: 0.95rem; }
+  header { padding-top: 20px; }
+  .langbar { display: flex; justify-content: flex-end; margin: 0 0 44px; }
+  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); overflow: hidden; font-size: 0.95rem; font-weight: 600; }
+  .lang-toggle a, .lang-toggle span { padding: 7px 16px; color: var(--muted); line-height: 1.3; }
+  .lang-toggle a:hover { background: var(--accent-soft); color: var(--text); text-decoration: none; }
+  .lang-toggle [aria-current] { background: var(--accent); color: var(--surface); }
+  body { font-family: Heebo, "Segoe UI", system-ui, -apple-system, sans-serif; }
+  .tag { color: var(--muted); font-size: 1.05rem; margin: 0 0 8px; text-align: right; }
+  .doc ul, .doc ol { padding-left: 0; padding-right: 22px; }
+  code, bdi, [dir="ltr"] { unicode-bidi: isolate; }
+  code { direction: ltr; display: inline-block; }
+
+  .ht section { max-width: none; }
+  .ht h2 { margin-top: 0; }
+  .ht h3 { font-size: 1.05rem; margin: 26px 0 4px; }
+  .status { display: inline-block; background: var(--tag); color: var(--muted); padding: 2px 10px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; margin: 0 6px 10px 0; margin-inline-end: 6px; }
+  .tablewrap { overflow-x: auto; margin: 8px 0 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+  th, td { padding: 8px 12px; text-align: start; border-bottom: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  tr.total td { font-weight: 600; }
+  th { font-weight: 600; color: var(--muted); font-size: 0.82rem; }
+  td.num { font-variant-numeric: tabular-nums; }
+  td code, li code, p code { font-size: 0.85em; }
+  .facts { font-size: 0.9rem; margin: 6px 0 0; }
+  .facts li { margin: 0 0 4px; }
+  .credit { border-inline-start: 3px solid var(--accent); padding: 2px 0; padding-inline-start: 12px; margin: 10px 0; }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
+  .toc a { font-size: 0.9rem; }
+  pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; direction: ltr; text-align: left; }
+  .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0 4px; }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; min-width: 140px; }
+  .stat b { display: block; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--muted); font-size: 0.85rem; }
+</style>
+<link rel="alternate" hreflang="en" href="https://heocr.github.io/htext.html">
+<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/htext.html">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="langbar" aria-label="שפה / Language">
+      <div class="lang-toggle">
+        <span aria-current="page" lang="he">עברית</span>
+        <a href="../htext.html" lang="en" hreflang="en">English</a>
+      </div>
+    </nav>
+    <a class="back" href="./">← HeOCR</a>
+    <h1>htext</h1>
+    <p class="lede">טקסט עברי ברישיונות פתוחים לאימון מנועי הזיהוי של HeOCR, חתוך לשורות, עם ניקוד ובלעדיו: בראש ובראשונה טקסט בנחלת הכלל, וטקסט בייחוס ובשיתוף זהה בגרסאות נפרדות. לכל יצירה או מסמך יש רישום זכויות משלו: מעמדו בישראל ובארה"ב, הרישיון שלו ושורת הקרדיט שלו. htext מתפרסם בשלוש גרסאות, אחת לכל רישיון, כדי שתוכלו לבחור את התנאים שמתאימים לכם; גרסת הליבה היא CC0 ואפשר להשתמש בה בלי תנאים.</p>
+    <p class="note">עודכן ב־2026-11-18. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href="../htext/corpora.json">corpora.json</a>.</p>
+  </div>
+</header>
+
+<main class="wrap doc ht">
+<nav class="toc"><a href="#what">מה זה htext</a> · <a href="#releases">גרסאות</a> · <a href="#corpora">מאגרים</a> · <a href="#rights">זכויות</a> · <a href="#use">הורדה ושימוש</a> · <a href="#credit">קרדיט</a> · <a href="#licence">רישיון</a></nav>
+<section id="what">
+<h2>מה זה htext</h2>
+<p>htext אוסף טקסט עברי שזכויותיו ברורות דיין לפרסום פתוח, והופך אותו לשורות אימון עבור <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, מחולל העמודים הסינתטיים של HeOCR. המחולל מצייר כל שורה על עמודים סינתטיים, כך שמנועי הזיהוי לומדים אוצר מילים, כתיב ופיסוק עבריים אמיתיים, ולא רק טקסט מומצא.</p>
+<p>לכל מקור יש בונה משלו, מאגר משלו וכרטיס משלו. בנייה קוראת עותק נעוץ של המקור, מחשבת זכויות לכל פריט, מנקה וחותכת את הטקסט, ובודקת ששום שורה אינה חופפת לטקסט ההערכה של HeOCR. רק הקבצים שהכרטיס מונה מתפרסמים.</p>
+<div class="stats"><div class="stat"><b>2,028,962</b><span>שורות</span></div><div class="stat"><b>21,799</b><span>יצירות</span></div><div class="stat"><b><span dir="ltr">105.2 MB</span></b><span>טקסט</span></div><div class="stat"><b>1</b><span>מאגר</span></div></div>
+</section>
+<section id="releases">
+<h2>גרסאות</h2>
+<p>htext מתפרסם בגרסה אחת לכל רישיון. בחרו את הגרסה שתנאיה מתאימים לשימוש שלכם. מודלים שאומנו על כל אחת מהן עדיין יכולים להתפרסם ברישיון פתוח, עם קרדיט בקובץ ה־NOTICE שלהם.</p>
+<h3>htext-cc0</h3>
+<span class="status">פורסמה</span><span class="status">CC0 1.0</span>
+<ul class="facts">
+<li>תוכן: טקסט בנחלת הכלל, טקסט ב־CC0, וטקסטים רשמיים שאינם מוגנים בזכות יוצרים (חוקים, תקנות ודברי הכנסת, לפי סעיף 6 לחוק זכות יוצרים).</li>
+<li>מותר: כל שימוש, בלי תנאים. זו הגרסה ברירת המחדל לאימון ולמדדי ביצועים.</li>
+<li>רישיון: <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a></li>
+</ul>
+<h3>htext-by</h3>
+<span class="status">מתוכננת</span><span class="status">CC BY 4.0 (per source)</span>
+<ul class="facts">
+<li>תוכן: טקסט שרישיון המקור שלו דורש ייחוס בלבד (CC BY או מקביל).</li>
+<li>מותר: כל שימוש, בתנאי שנותנים קרדיט למקורות. לכל פריט יש שורת קרדיט, והגרסה כוללת קובץ NOTICE מרוכז.</li>
+<li>רישיון: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 (per source)</a></li>
+</ul>
+<h3>htext-by-sa</h3>
+<span class="status">מתוכננת</span><span class="status">CC BY-SA 4.0</span>
+<ul class="facts">
+<li>תוכן: טקסט בשיתוף זהה, בעיקר תעתיקי ויקיטקסט העברית וגרסאות ספריא ברישיון CC BY-SA.</li>
+<li>מותר: כל שימוש, עם קרדיט, וכל עיבוד של הטקסט שמשותף הלאה חייב להיות גם הוא ב־CC BY-SA.</li>
+<li>רישיון: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+</ul>
+</section>
+<section id="corpora">
+<h2>מאגרים</h2>
+<h3 id="pby">שורות בנחלת הכלל מפרויקט בן־יהודה</h3>
+<span class="status">pby-v1</span><span class="status">htext-cc0</span>
+<p>פרוזה, מאמרים, זיכרונות, מכתבים, משלים ושירה שהקלידו מתנדבי פרויקט בן־יהודה, חתוכים לשורות, עם ניקוד ובלעדיו.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>קובץ</th><th>גרסה</th><th>סוג</th><th>שורות</th><th>יצירות</th><th>גודל</th></tr></thead>
+<tbody>
+<tr><td><code>pby_lines_il_plain_v1.txt</code></td><td>ישראל</td><td>ללא ניקוד</td><td class="num">1,627,470</td><td class="num">13,857</td><td class="num"><span dir="ltr">74.4 MB</span></td></tr>
+<tr><td><code>pby_lines_il_niqqud_v1.txt</code></td><td>ישראל</td><td>מנוקד</td><td class="num">401,492</td><td class="num">12,911</td><td class="num"><span dir="ltr">30.8 MB</span></td></tr>
+<tr><td><code>pby_lines_il_us_plain_v1.txt</code></td><td>ישראל + ארה&quot;ב</td><td>ללא ניקוד</td><td class="num">70,251</td><td class="num">559</td><td class="num"><span dir="ltr">3.3 MB</span></td></tr>
+<tr><td><code>pby_lines_il_us_niqqud_v1.txt</code></td><td>ישראל + ארה&quot;ב</td><td>מנוקד</td><td class="num">10,050</td><td class="num">290</td><td class="num"><span dir="ltr">0.7 MB</span></td></tr>
+</tbody></table></div>
+<p class="note"><b>ישראל</b>: כל שורה לקוחה מיצירה שבנחלת הכלל בישראל. <b>ישראל + ארה"ב</b>: תת־הקבוצה שבנחלת הכלל גם בארה"ב. שורות <b>מנוקדות</b> כוללות ניקוד; שורות <b>ללא ניקוד</b> אינן כוללות.</p>
+<ul class="facts">
+<li>גרסת htext: htext-cc0</li>
+<li>מקור: <a href="https://benyehuda.org">פרויקט בן־יהודה</a> (נחלת הכלל (רישיון המאגר של פרויקט בן־יהודה))</li>
+<li>גרסה: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v1">pby-v1</a>, 2026-11-06</li>
+<li>כרטיס המאגר: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>ל־21,799 מתוך 26,455 יצירות בקטלוג יש שורות במאגר; ל־668 מהן גם בגרסת ישראל + ארה&quot;ב.</li>
+</ul>
+</section>
+<section id="rights">
+<h2>זכויות</h2>
+<p>לכל פריט יש רישום זכויות עם שני שדות, <code>pd_israel</code> ו־<code>pd_us</code>, וכל אחד מציין את הבסיס שלפיו חושב ואת השנה שבה הוא תקף. גרסת מאגר כוללת פריט רק אם הרישום שלו עומד בכלל של אותה גרסה. הרישומים מתפרסמים עם כל מאגר.</p>
+<p>תרגום נחשב נחלת הכלל רק אם גם המחבר וגם המתרגם בנחלת הכלל. כל פריט מתעד גם את רישיון המקור ואת שורת הקרדיט שלו, כך שאפשר לבנות ולסנן כל גרסה מחדש. אף גרסה אינה כוללת טקסט ברישיון לא־מסחרי (NC) או ללא יצירות נגזרות (ND), וטקסט לעולם אינו עובר בין גרסאות: בנייה של CC0 לעולם אינה כוללת שורה ב־CC BY או ב־CC BY-SA.</p>
+<p>שדות הזכויות הם קריאת הפרויקט את החוק, ולא ייעוץ משפטי.</p>
+<ul class="facts">
+<li><b>פרויקט בן־יהודה</b>: נחלת הכלל בישראל: כל מחבר וכל מתרגם נפטרו 71 שנה לפחות לפני שנת הבנייה (2026), לפי שנות פטירה מוויקינתונים. המעמד בארה&quot;ב מתועד לכל יצירה: נחלת הכלל בארה&quot;ב כשהמהדורה שהוקלדה יצאה לפני 1931.</li>
+</ul>
+</section>
+<section id="use">
+<h2>הורדה ושימוש</h2>
+<p>קובצי המאגר מצורפים לגרסת ה־GitHub של כל מאגר, והכרטיס, סיכומי הביקורת ואינדקס הזכויות נמצאים במאגר הקוד. כל קובץ הוא UTF-8, שורה אחת לכל רשומה, מנורמל ל־NFC וללא שורות ריקות.</p>
+<p>הורידו את הקבצים ובדקו אותם מול סיכומי הביקורת שפורסמו:</p>
+<pre><code>gh release download pby-v1 -R HeOCR/htext
+curl -LO https://raw.githubusercontent.com/HeOCR/htext/main/data/pby/v1/SHA256SUMS
+grep -E &#x27;_v1\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
+<p>השתמשו בקובץ כטקסט אימון ל־hocrsyngen, שמתעד אותו כ־<code>external:sha256:&lt;hex&gt;</code>:</p>
+<pre><code>hocrsyngen ... --text-corpus pby_lines_il_plain_v1.txt</code></pre>
+<p>או בנו מאגר מחדש מהמקור: לכל מאגר יש מדריך בנייה במאגר הקוד, למשל <a href="https://github.com/HeOCR/htext/blob/main/docs/pby_corpus.md">המדריך של פרויקט בן־יהודה</a>.</p>
+</section>
+<section id="credit">
+<h2>קרדיט</h2>
+<p>הרישיון אינו מחייב קרדיט, אבל חלק מהמקורות מבקשים אותו, ו־HeOCR נותן אותו. אנא העבירו את השורות האלה לכל כרטיס מאגר נתונים או מודל שמשתמש במאגר:</p>
+<p class="credit">Credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a> · קרדיט: <a href="https://benyehuda.org">מתנדבי פרויקט בן־יהודה</a></p>
+</section>
+<section id="licence">
+<h2>רישיון</h2>
+<p>לכל גרסה יש רישיון משלה, כמפורט תחת <a href="#releases">גרסאות</a>; תנאי CC BY ו־CC BY-SA חלים על טקסט המקור. העיבוד והמטא־דאטה של HeOCR, כלומר אינדקסי הזכויות והשורות, רשימות ההחרגה, הכרטיסים וסיכומי הביקורת, מוקדשים לנחלת הכלל ברישיון <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.he">CC0 1.0</a> בכל הגרסאות, ככל שאפשר להפריד אותם מהטקסט. קוד הבנייה ברישיון <a href="https://github.com/HeOCR/htext/blob/main/LICENSE">MIT</a>.</p>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>נוצר בידי <a href="http://www.shaypalachy.com/">שי פלצ'י אפק</a> ומתחזקי HeOCR.</p>
+    <p><a href="https://github.com/HeOCR/htext">HeOCR/htext</a> · <a href="../htext/corpora.json">corpora.json</a> · <a href="./">HeOCR</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

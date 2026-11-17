@@ -20,3 +20,15 @@ python3 scripts/build_benchmarks.py --check   # fails if a committed page does n
 - figures on generated documents with exact gold.
 
 It never holds figures from private corpora, not even aggregates.
+
+## htext page
+
+`htext.html` and `he/htext.html` describe the [htext](https://github.com/HeOCR/htext) Hebrew text dataset and its three releases (CC0, CC BY, CC BY-SA). They
+are generated from one file, `htext/corpora.json`; do not edit the two pages by hand. When htext publishes a corpus or a
+new version, add or update its entry in `corpora.json`, or refresh an existing entry's counts from its corpus card:
+
+```
+python3 scripts/build_htext.py --import-card pby path/to/htext/data/pby/v1/corpus_card.json
+python3 scripts/build_htext.py           # writes both pages (standard library only)
+python3 scripts/build_htext.py --check   # fails if a committed page does not match corpora.json
+```
