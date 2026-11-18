@@ -2,6 +2,8 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
+<!-- theme: scripts/theme.py -->
+<script>try{if(localStorage.getItem("heocr-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HeOCR זכויות</title>
 <meta name="description" content="איך HeOCR בודק את הזכויות של כל סריקה, שורה ומודל שהוא מפרסם, ואיך לבקש להסיר פריט.">
@@ -10,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fbfaf7;
+    --bg: #ffffff;
     --surface: #ffffff;
     --text: #1d1b18;
     --muted: #6b665e;
@@ -18,18 +20,6 @@
     --accent: #1f5f8b;
     --accent-soft: #e6eff6;
     --tag: #f2efe8;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #141414;
-      --surface: #1c1c1c;
-      --text: #ecebe8;
-      --muted: #a29d94;
-      --line: #2e2d2b;
-      --accent: #7fb6dd;
-      --accent-soft: #1d2a33;
-      --tag: #262523;
-    }
   }
   :root[data-theme="dark"] {
     --bg: #141414;
@@ -96,6 +86,10 @@
   .doc ul, .doc ol { padding-left: 0; padding-right: 22px; }
   code, bdi, [dir="ltr"] { unicode-bidi: isolate; }
   code { direction: ltr; display: inline-block; }
+
+  .langbar { gap: 10px; align-items: center; flex-wrap: wrap; }
+  .theme-toggle { font: inherit; font-size: 0.95rem; font-weight: 600; padding: 7px 16px; line-height: 1.3; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--muted); cursor: pointer; }
+  .theme-toggle:hover { background: var(--accent-soft); color: var(--text); }
 </style>
 <link rel="alternate" hreflang="en" href="https://heocr.github.io/rights.html">
 <link rel="alternate" hreflang="he" href="https://heocr.github.io/he/rights.html">
@@ -109,6 +103,7 @@
         <span aria-current="page" lang="he">עברית</span>
         <a href="../rights.html" lang="en" hreflang="en">English</a>
       </div>
+      <button class="theme-toggle" type="button" aria-pressed="false" data-night="מצב לילה" data-day="מצב יום">מצב לילה</button>
     </nav>
     <a class="back" href="./">→ HeOCR</a>
     <h1>זכויות והסרה</h1>
@@ -188,5 +183,6 @@
   </div>
 </footer>
 
+<script>(function(){var b=document.querySelector(".theme-toggle");if(!b)return;var r=document.documentElement;function show(){var d=r.getAttribute("data-theme")==="dark";b.setAttribute("aria-pressed",d?"true":"false");b.textContent=d?b.getAttribute("data-day"):b.getAttribute("data-night")}show();b.addEventListener("click",function(){var d=r.getAttribute("data-theme")!=="dark";if(d)r.setAttribute("data-theme","dark");else r.removeAttribute("data-theme");try{localStorage.setItem("heocr-theme",d?"dark":"light")}catch(e){}show()})})();</script>
 </body>
 </html>
