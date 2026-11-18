@@ -4,7 +4,7 @@
   "corpora": [
     {
       "id": "pby",
-      "version": "v2",
+      "version": "v3",
       "name": {
         "en": "Project Ben-Yehuda public-domain lines",
         "he": "שורות בנחלת הכלל מפרויקט בן־יהודה"
@@ -35,37 +35,37 @@
         },
         "url": "https://benyehuda.org"
       },
-      "card_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v2/CORPUS_CARD.md",
-      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v2/SHA256SUMS",
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v3/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v3/SHA256SUMS",
       "release": {
-        "tag": "pby-v2",
-        "url": "https://github.com/HeOCR/htext/releases/tag/pby-v2",
+        "tag": "pby-v3",
+        "url": "https://github.com/HeOCR/htext/releases/tag/pby-v3",
         "date": "2026-11-18"
       },
       "catalogue_works": 26455,
-      "works_in_corpus": 25282,
+      "works_in_corpus": 25267,
       "works_in_il_us": 701,
       "files": [
         {
-          "name": "pby_lines_il_plain_v2.txt",
+          "name": "pby_lines_il_plain_v3.txt",
           "variant": "il",
           "subset": "plain",
-          "lines": 12318857,
-          "works": 16424,
-          "bytes": 560742640,
-          "sha256": "ab69e94eb4f038fc1845d4c79a9d6301df2acddf54557d7661f2bee35ae3bf9a"
+          "lines": 12278848,
+          "works": 16409,
+          "bytes": 558952843,
+          "sha256": "f033b0aaf76c84dfe9b6ff61dabbbc59d45c0080ada226f9a7180f9a0215bef0"
         },
         {
-          "name": "pby_lines_il_niqqud_v2.txt",
+          "name": "pby_lines_il_niqqud_v3.txt",
           "variant": "il",
           "subset": "niqqud",
-          "lines": 1680295,
-          "works": 15742,
-          "bytes": 119885937,
-          "sha256": "a149c5e5e8eb14e2862a89f45d678518de5e6ef3c3b23ed8824baf5b81ed1b28"
+          "lines": 1680290,
+          "works": 15738,
+          "bytes": 119885597,
+          "sha256": "d436f87dd54be6a71070f2b1bcaa33dc8d575963d5de6bc8a968ad9c7591083d"
         },
         {
-          "name": "pby_lines_il_us_plain_v2.txt",
+          "name": "pby_lines_il_us_plain_v3.txt",
           "variant": "il_us",
           "subset": "plain",
           "lines": 407456,
@@ -74,7 +74,7 @@
           "sha256": "8de0454dfd135ff2987db8964e30e397f9d295f1335b995560e57764a2d961f0"
         },
         {
-          "name": "pby_lines_il_us_niqqud_v2.txt",
+          "name": "pby_lines_il_us_niqqud_v3.txt",
           "variant": "il_us",
           "subset": "niqqud",
           "lines": 18613,
@@ -85,6 +85,11 @@
       ],
       "htext_release": "cc0",
       "previous": [
+        {
+          "tag": "pby-v2",
+          "url": "https://github.com/HeOCR/htext/releases/tag/pby-v2",
+          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v2/KNOWN_ISSUES.md"
+        },
         {
           "tag": "pby-v1",
           "url": "https://github.com/HeOCR/htext/releases/tag/pby-v1",
