@@ -4,7 +4,7 @@
   "corpora": [
     {
       "id": "pby",
-      "version": "v1",
+      "version": "v2",
       "name": {
         "en": "Project Ben-Yehuda public-domain lines",
         "he": "שורות בנחלת הכלל מפרויקט בן־יהודה"
@@ -17,12 +17,12 @@
         "url": "https://benyehuda.org"
       },
       "description": {
-        "en": "Prose, articles, memoirs, letters, fables and poetry transcribed by Project Ben-Yehuda volunteers, cut into lines, plain and with niqqud.",
-        "he": "פרוזה, מאמרים, זיכרונות, מכתבים, משלים ושירה שהקלידו מתנדבי פרויקט בן־יהודה, חתוכים לשורות, עם ניקוד ובלעדיו."
+        "en": "Prose, articles, memoirs, letters, fables, poetry, reference works and drama transcribed by Project Ben-Yehuda volunteers, cut into lines, plain and with niqqud.",
+        "he": "פרוזה, מאמרים, זיכרונות, מכתבים, משלים, שירה, ספרות עיון ומחזות שהקלידו מתנדבי פרויקט בן־יהודה, חתוכים לשורות, עם ניקוד ובלעדיו."
       },
       "rights_basis": {
-        "en": "Public domain in Israel: every author and every translator died at least 71 years before the build year (2026), with death years sourced from Wikidata. US status is recorded per work: public domain in the US when the transcribed edition appeared before 1931.",
-        "he": "נחלת הכלל בישראל: כל מחבר וכל מתרגם נפטרו 71 שנה לפחות לפני שנת הבנייה (2026), לפי שנות פטירה מוויקינתונים. המעמד בארה\"ב מתועד לכל יצירה: נחלת הכלל בארה\"ב כשהמהדורה שהוקלדה יצאה לפני 1931."
+        "en": "Public domain in Israel: every author and every translator died at least 71 years before the build year (2026), with death years from Wikidata or, where Wikidata has none, from a reviewed source such as the author's PBY page. US status is recorded per work: public domain in the US when the transcribed edition appeared before 1931.",
+        "he": "נחלת הכלל בישראל: כל מחבר וכל מתרגם נפטרו 71 שנה לפחות לפני שנת הבנייה (2026), לפי שנות פטירה מוויקינתונים, ובהיעדרן ממקור שנבדק, כמו דף המחבר בפרויקט בן־יהודה. המעמד בארה\"ב מתועד לכל יצירה: נחלת הכלל בארה\"ב כשהמהדורה שהוקלדה יצאה לפני 1931."
       },
       "source_licence": {
         "en": "Public domain (PBY's dump licence)",
@@ -35,55 +35,62 @@
         },
         "url": "https://benyehuda.org"
       },
-      "card_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v1/CORPUS_CARD.md",
-      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v1/SHA256SUMS",
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v2/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v2/SHA256SUMS",
       "release": {
-        "tag": "pby-v1",
-        "url": "https://github.com/HeOCR/htext/releases/tag/pby-v1",
-        "date": "2026-11-06"
+        "tag": "pby-v2",
+        "url": "https://github.com/HeOCR/htext/releases/tag/pby-v2",
+        "date": "2026-11-18"
       },
       "catalogue_works": 26455,
-      "works_in_corpus": 21799,
-      "works_in_il_us": 668,
+      "works_in_corpus": 25282,
+      "works_in_il_us": 701,
       "files": [
         {
-          "name": "pby_lines_il_plain_v1.txt",
+          "name": "pby_lines_il_plain_v2.txt",
           "variant": "il",
           "subset": "plain",
-          "lines": 1627470,
-          "works": 13857,
-          "bytes": 74372961,
-          "sha256": "4cedcd0a882c1a7fbab93fb2efb55b26d9b2b34a92be77129cf78288ef4fbade"
+          "lines": 12318857,
+          "works": 16424,
+          "bytes": 560742640,
+          "sha256": "ab69e94eb4f038fc1845d4c79a9d6301df2acddf54557d7661f2bee35ae3bf9a"
         },
         {
-          "name": "pby_lines_il_niqqud_v1.txt",
+          "name": "pby_lines_il_niqqud_v2.txt",
           "variant": "il",
           "subset": "niqqud",
-          "lines": 401492,
-          "works": 12911,
-          "bytes": 30797418,
-          "sha256": "a1b78dc5b467189ed431b7daf8f044f1aa03b1f0389dc7320109dfbf0bb2285f"
+          "lines": 1680295,
+          "works": 15742,
+          "bytes": 119885937,
+          "sha256": "a149c5e5e8eb14e2862a89f45d678518de5e6ef3c3b23ed8824baf5b81ed1b28"
         },
         {
-          "name": "pby_lines_il_us_plain_v1.txt",
+          "name": "pby_lines_il_us_plain_v2.txt",
           "variant": "il_us",
           "subset": "plain",
-          "lines": 70251,
-          "works": 559,
-          "bytes": 3263817,
-          "sha256": "05983a2088e8da4ed6855f3bb52c97a727a2d31ed952b9422c2e23de42cf8161"
+          "lines": 407456,
+          "works": 564,
+          "bytes": 18956168,
+          "sha256": "8de0454dfd135ff2987db8964e30e397f9d295f1335b995560e57764a2d961f0"
         },
         {
-          "name": "pby_lines_il_us_niqqud_v1.txt",
+          "name": "pby_lines_il_us_niqqud_v2.txt",
           "variant": "il_us",
           "subset": "niqqud",
-          "lines": 10050,
-          "works": 290,
-          "bytes": 738977,
-          "sha256": "ead01b4247123b10bd47007540a1a542d44c727335ae7bd77595a01a18d7adef"
+          "lines": 18613,
+          "works": 325,
+          "bytes": 1325641,
+          "sha256": "162e6fbd83762b0921d13375ca17726ca7335ebe9009554547f1ff8c345ec5b8"
         }
       ],
-      "htext_release": "cc0"
+      "htext_release": "cc0",
+      "previous": [
+        {
+          "tag": "pby-v1",
+          "url": "https://github.com/HeOCR/htext/releases/tag/pby-v1",
+          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md"
+        }
+      ]
     }
   ],
   "planned": [],
