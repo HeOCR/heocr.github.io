@@ -66,7 +66,7 @@
   .meta a { font-weight: 500; }
   .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
   .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
-  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
+  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; white-space: nowrap; }
 
   footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
   footer p { margin: 0 0 6px; }
@@ -116,68 +116,31 @@
 
 <main class="wrap">
 
-  <section id="real-print">
-    <h2>Reading real printed books</h2>
-    <p class="sub">Old printed Hebrew is where open OCR is weakest. We pair public-domain scans of a book with <a href="https://benyehuda.org">Project Ben-Yehuda</a>'s typed text of the same edition. That gives exact line-level training examples from real pages. Scans come from the <a href="https://www.nli.org.il">National Library of Israel</a>'s free-use collection and from public-domain scans on the <a href="https://archive.org">Internet Archive</a> and <a href="https://commons.wikimedia.org">Wikimedia Commons</a>. Every published line will keep its source record and its rights justification.</p>
+  <section id="models">
+    <h2>Use HeOCR</h2>
+    <p class="sub">What to use today to get Hebrew text out of documents.</p>
     <div class="grid">
       <div class="card">
-        <h3>R7 · Tesseract fine-tune, more books</h3>
-        <p>Same recipe as R6, on 95k real lines from 30 public-domain books: 7 National Library of Israel scans and 23 university-library scans on the Internet Archive. It reads single lines better than R6, with about a quarter fewer character errors on held-out books. On the same 38 pages, page-level error is a tie with R6: 20.9% character error and 39.3% word error, against 22.6% and 47.3% for stock Tesseract. R6 remains valid. Use <code>-l heocr_r7</code>.</p>
+        <h3><a href="https://github.com/HeOCR/heocr">heocr</a> · the pipeline</h3>
+        <p>Hebrew text, headings and tables out of any document: PDF, Word, Excel, PowerPoint, web pages and scans. It reads a PDF's own text layer where it can be trusted and runs OCR where it can't, and it records which, page by page, along with anything it could not read. <code>pip install heocr</code> (on PyPI from version 0.1.0; until then, install from the repository).</p>
+        <div class="meta"><span>Apache-2.0</span><span>Python</span></div>
+        <div class="row">
+          <a href="https://github.com/HeOCR/heocr">GitHub</a>
+          <a href="benchmarks.html">Benchmarks</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>R7 · OCR for old printed Hebrew</h3>
+        <p>Our recommended OCR model for scanned books and older print. On 38 real book pages with human-checked text, it makes 20.9% character errors and 39.3% word errors, against 22.5% and 48.1% for stock Tesseract <span style="white-space: nowrap">(<code>tessdata_best</code>)</span>: a small gain; see the <a href="benchmarks.html">Benchmarks</a> page for intervals. Use it in heocr with <code>--ocr-model heocr_r7</code>, or in Tesseract with <code>-l heocr_r7</code>.</p>
         <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
         <div class="row">
           <a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">Hugging Face</a>
           <a href="https://doi.org/10.5281/zenodo.24126449">Zenodo DOI</a>
-        </div>
-      </div>
-      <div class="card">
-        <h3>R6 · Tesseract fine-tune</h3>
-        <p>Google's open <code>tessdata_best</code> Hebrew model, fine-tuned on 13.6k real lines from National Library of Israel scans. We scored it on 38 real book pages with human-checked text (Hebrew Wikisource): 20.9% character error, against 22.6% for stock Tesseract, and 40.7% word error against 47.3%. That is a real gain, but a small one. Use it as a drop-in replacement for Tesseract's <code>heb</code>: <code>-l heocr_r6</code>.</p>
-        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
-        <div class="row">
-          <a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">Hugging Face</a>
-          <a href="https://doi.org/10.5281/zenodo.24109989">Zenodo DOI</a>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Real-scan line data</h3>
-        <p>Line images from real scans, each paired with its edition text. Each line records its book, scan record, source library and rights justification, so any item can be traced or removed.</p>
-        <div class="meta"><span>CC0</span><span>in preparation</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="models">
-    <h2>Models</h2>
-    <p class="sub">A three-step <a href="https://kraken.re">kraken</a> pipeline for modern Hebrew document pages: find the lines, put them in reading order, then read them. These are research baselines trained only on synthetic pages. On real scanned print they are much weaker; the real-book work above addresses this.</p>
-    <div class="grid">
-      <div class="card">
-        <h3>R4d · Segmentation</h3>
-        <p>Finds text-line baselines and polygons, plus eight region types such as title, body, stamp, signature and table cells.</p>
-        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
-        <div class="row">
-          <a href="https://huggingface.co/HeOCR/heocr-r4d-segmentation">Hugging Face</a>
-          <a href="https://doi.org/10.5281/zenodo.24023070">Zenodo DOI</a>
-        </div>
-      </div>
-      <div class="card">
-        <h3>A1 · Reading order</h3>
-        <p>Orders a page's lines using each line's position and region type.</p>
-        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
-        <div class="row">
-          <a href="https://huggingface.co/HeOCR/heocr-a1-reading-order">Hugging Face</a>
-          <a href="https://doi.org/10.5281/zenodo.24023072">Zenodo DOI</a>
-        </div>
-      </div>
-      <div class="card">
-        <h3>R3h · Recognition</h3>
-        <p>Reads printed and handwriting-style Hebrew lines, including digits, Latin letters and punctuation.</p>
-        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
-        <div class="row">
-          <a href="https://huggingface.co/HeOCR/heocr-r3h-recognition">Hugging Face</a>
-          <a href="https://doi.org/10.5281/zenodo.24023074">Zenodo DOI</a>
+          <a href="benchmarks.html">Benchmarks</a>
         </div>
       </div>
     </div>
+    <p class="note">Earlier models and research baselines stay openly available on <a href="https://huggingface.co/HeOCR">Hugging Face</a> and <a href="https://zenodo.org/communities/heocr">Zenodo</a>.</p>
   </section>
 
   <section id="datasets">
