@@ -66,7 +66,7 @@
   .meta a { font-weight: 500; }
   .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
   .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
-  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
+  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; white-space: nowrap; }
 
   footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
   footer p { margin: 0 0 6px; }
@@ -136,7 +136,7 @@
       </div>
       <div class="card">
         <h3><bdi>R7</bdi> · OCR לדפוס עברי ישן</h3>
-        <p>מודל ה־OCR שאנחנו ממליצים עליו לספרים סרוקים ולדפוס ישן. על 38 עמודי ספרים אמיתיים עם טקסט שנבדק בידי אדם הוא שוגה ב־20.9% מהתווים וב־39.3% מהמילים, לעומת 22.6% ו־47.3% ב־Tesseract הרגיל. ב־heocr משתמשים בו עם <code>--ocr-model heocr_r7</code>, וב־Tesseract עם <code>-l heocr_r7</code>.</p>
+        <p>מודל ה־OCR שאנחנו ממליצים עליו לספרים סרוקים ולדפוס ישן. על 38 עמודי ספרים אמיתיים עם טקסט שנבדק בידי אדם הוא שוגה ב־20.9% מהתווים וב־39.3% מהמילים, לעומת 22.5% ו־48.1% ב־Tesseract הרגיל <span style="white-space: nowrap">(<code>tessdata_best</code>)</span>: שיפור קטן; רווחי הסמך מופיעים בעמוד <a href="benchmarks.html">מדדי הביצועים</a>. ב־heocr משתמשים בו עם <code>--ocr-model heocr_r7</code>, וב־Tesseract עם <code>-l heocr_r7</code>.</p>
         <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
         <div class="row">
           <a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">Hugging Face</a>
@@ -148,22 +148,15 @@
     <p class="note">מודלים קודמים ומודלי בסיס למחקר נשארים זמינים באופן פתוח ב־<a href="https://huggingface.co/HeOCR">Hugging Face</a> וב־<a href="https://zenodo.org/communities/heocr">Zenodo</a>.</p>
   </section>
 
-  <section id="real-print">
-    <h2>קריאת ספרים מודפסים אמיתיים</h2>
-    <p class="sub">דפוס עברי ישן הוא המקום שבו OCR פתוח חלש במיוחד. אנחנו מצמידים סריקות של ספרים בנחלת הכלל לטקסט המוקלד של אותה מהדורה מ<a href="https://benyehuda.org">פרויקט בן־יהודה</a>, וכך מקבלים דוגמאות אימון מדויקות ברמת השורה מעמודים אמיתיים. הסריקות מגיעות מאוסף "שימוש חופשי" של <a href="https://www.nli.org.il">הספרייה הלאומית</a>, ומסריקות בנחלת הכלל ב־<a href="https://archive.org">Internet Archive</a> וב־<a href="https://commons.wikimedia.org">Wikimedia Commons</a>. כל שורה שתתפרסם תשמור את רשומת המקור שלה ואת הצדקת הזכויות שלה.</p>
+  <section id="datasets">
+    <h2>מאגרי נתונים</h2>
+    <p class="sub">כל מאגר בנוי רק מחומר שמותר להפיץ ולהשתמש בו מחדש, גם ללמידת מכונה. הזכויות מתועדות לכל פריט, ולא מניחים אותן לגבי אוסף שלם.</p>
     <div class="grid">
       <div class="card">
         <h3>נתוני שורות מסריקות אמיתיות</h3>
         <p>תמונות שורה מסריקות אמיתיות, כל אחת עם טקסט המהדורה שלה. כל שורה מתעדת את הספר, את רשומת הסריקה, את הספרייה שממנה הגיעה ואת הצדקת הזכויות, כך שאפשר להתחקות אחרי כל פריט או להסיר אותו.</p>
         <div class="meta"><span>CC0</span><span>בהכנה</span></div>
       </div>
-    </div>
-  </section>
-
-  <section id="datasets">
-    <h2>מאגרי נתונים</h2>
-    <p class="sub">כל מאגר בנוי רק מחומר שמותר להפיץ ולהשתמש בו מחדש, גם ללמידת מכונה. הזכויות מתועדות לכל פריט, ולא מניחים אותן לגבי אוסף שלם.</p>
-    <div class="grid">
       <div class="card">
         <h3><a href="https://github.com/HeOCR/hash">HASH</a></h3>
         <p>ארכיון עברי של כתב יד סרוק (Hebrew Archive of Scanned Handwriting): מסמכים סרוקים בכתב יד עברי מהמאה ה־18 ואילך, ובהם מכתבים, מחברות, טיוטות וטפסים.</p>
