@@ -63,7 +63,7 @@ T = {
             "computes rights per entry, cleans and cuts the text, and checks that no line overlaps HeOCR's evaluation text. "
             "Only the files a card lists are published.",
         ],
-        "stat_lines": "lines", "stat_works": "works", "stat_corpora": "corpora", "stat_corpus": "corpus", "stat_bytes": "of text",
+        "stat_lines": "lines", "stat_works": "works", "stat_works_laws": "works and laws", "stat_corpora": "corpora", "stat_corpus": "corpus", "stat_bytes": "of text",
         "corpora_h": "Corpora",
         "releases_h": "Releases",
         "releases_p": "htext ships one release per licence. Pick the release whose terms fit your use. Models trained on any of them can still be released under an open licence, with credit in their NOTICE.",
@@ -73,7 +73,10 @@ T = {
         "planned_h": "Planned sources",
         "planned_p": "Sources being prepared. Each is published only after its rights are checked entry by entry.",
         "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_prev": "Earlier version", "c_issues": "known issues", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
-        "th_file": "File", "th_variant": "Variant", "th_subset": "Subset", "th_lines": "Lines", "th_works": "Works", "th_size": "Size",
+        "th_file": "File", "th_variant": "Variant", "th_subset": "Subset", "th_lines": "Lines", "th_works": "Works", "th_laws": "Laws", "th_size": "Size",
+        "c_laws": "{w} of {c} laws in the catalogue have lines in this corpus.",
+        "c_quality": {"transcription": "Text: transcribed by people.",
+                      "ocr_layer": "Text: the OCR layer of the scans, filtered against a lexicon. An eye check of {k} random lines against the scans found an error in {l} ({lr}) and {ww} wrong words of {sw} ({wr})."},
         "total": "Total",
         "variant": {"il": "Israel", "il_us": "Israel + US"},
         "subset": {"plain": "plain", "niqqud": "niqqud"},
@@ -114,7 +117,7 @@ T = {
             "מנקה וחותכת את הטקסט, ובודקת ששום שורה אינה חופפת לטקסט ההערכה של HeOCR. "
             "רק הקבצים שהכרטיס מונה מתפרסמים.",
         ],
-        "stat_lines": "שורות", "stat_works": "יצירות", "stat_corpora": "מאגרים", "stat_corpus": "מאגר", "stat_bytes": "טקסט",
+        "stat_lines": "שורות", "stat_works": "יצירות", "stat_works_laws": "יצירות וחוקים", "stat_corpora": "מאגרים", "stat_corpus": "מאגר", "stat_bytes": "טקסט",
         "corpora_h": "מאגרים",
         "releases_h": "גרסאות",
         "releases_p": "htext מתפרסם בגרסה אחת לכל רישיון. בחרו את הגרסה שתנאיה מתאימים לשימוש שלכם. מודלים שאומנו על כל אחת מהן עדיין יכולים להתפרסם ברישיון פתוח, עם קרדיט בקובץ ה־NOTICE שלהם.",
@@ -124,7 +127,10 @@ T = {
         "planned_h": "מקורות מתוכננים",
         "planned_p": "מקורות בהכנה. כל אחד מתפרסם רק אחרי שזכויותיו נבדקו פריט אחר פריט.",
         "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_prev": "גרסה קודמת", "c_issues": "בעיות ידועות", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
-        "th_file": "קובץ", "th_variant": "גרסה", "th_subset": "סוג", "th_lines": "שורות", "th_works": "יצירות", "th_size": "גודל",
+        "th_file": "קובץ", "th_variant": "גרסה", "th_subset": "סוג", "th_lines": "שורות", "th_works": "יצירות", "th_laws": "חוקים", "th_size": "גודל",
+        "c_laws": "ל־{w} מתוך {c} חוקים בקטלוג יש שורות במאגר.",
+        "c_quality": {"transcription": "טקסט: הוקלד בידי אנשים.",
+                      "ocr_layer": "טקסט: שכבת ה־OCR של הסריקות, מסוננת מול מילון. בבדיקה בעין של {k} שורות אקראיות מול הסריקות נמצאה טעות ב־{l} ({lr}), ו־{ww} מילים שגויות מתוך {sw} ({wr})."},
         "total": "סה\"כ",
         "variant": {"il": "ישראל", "il_us": "ישראל + ארה\"ב"},
         "subset": {"plain": "ללא ניקוד", "niqqud": "מנוקד"},
@@ -205,13 +211,14 @@ def page(lang: str, R: dict) -> str:
     lines = sum(f["lines"] for c in C for f in c["files"] if f["variant"] == "il")
     bytes_ = sum(f["bytes"] for c in C for f in c["files"] if f["variant"] == "il")
     works = sum(c["works_in_corpus"] for c in C)
+    works_label = t["stat_works_laws"] if any(c.get("unit") == "laws" for c in C) else t["stat_works"]
     # --- 1. What
     w(f'<section id="what">\n<h2>{e(dict(t["toc"])["what"])}</h2>\n')
     for p in t["what_p"]:
         w(f"<p>{p}</p>\n")
     w('<div class="stats">'
       f'<div class="stat"><b>{n(lines)}</b><span>{t["stat_lines"]}</span></div>'
-      f'<div class="stat"><b>{n(works)}</b><span>{t["stat_works"]}</span></div>'
+      f'<div class="stat"><b>{n(works)}</b><span>{works_label}</span></div>'
       f'<div class="stat"><b>{mb(lang, bytes_)}</b><span>{t["stat_bytes"]}</span></div>'
       f'<div class="stat"><b>{len(C)}</b><span>{t["stat_corpus"] if len(C) == 1 else t["stat_corpora"]}</span></div>'
       "</div>\n</section>\n")
@@ -234,8 +241,19 @@ def page(lang: str, R: dict) -> str:
         rows = [((f'<code>{e(f["name"])}</code>', False), (e(t["variant"][f["variant"]]), False),
                  (e(t["subset"][f["subset"]]), False), (n(f["lines"]), True), (n(f["works"]), True),
                  (mb(lang, f["bytes"]), True)) for f in c["files"]]
-        w(table([t["th_file"], t["th_variant"], t["th_subset"], t["th_lines"], t["th_works"], t["th_size"]], rows))
-        w(f'<p class="note">{t["variants_note"]}</p>\n')
+        laws = c.get("unit") == "laws"
+        w(table([t["th_file"], t["th_variant"], t["th_subset"], t["th_lines"], t["th_laws"] if laws else t["th_works"], t["th_size"]], rows))
+        if any(f["variant"] == "il_us" for f in c["files"]):
+            w(f'<p class="note">{t["variants_note"]}</p>\n')
+        q = c.get("text_quality", "transcription")
+        if q == "ocr_layer":
+            k = c["eye_check"]
+            quality = t["c_quality"][q].format(k=n(k["lines_checked"]), l=n(k["lines_with_error"]), lr=f'{k["lines_with_error"] / k["lines_checked"]:.0%}',
+                                               ww=n(k["words_wrong"]), sw=n(k["sample_words"]), wr=f'{k["words_wrong"] / k["sample_words"]:.1%}')
+        else:
+            quality = t["c_quality"][q]
+        count = (t["c_laws"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"])) if laws
+                 else t["c_works"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"]), u=n(c["works_in_il_us"])))
         w('<ul class="facts">\n'
           f'<li>{t["c_in"]}: {e(rel[c["htext_release"]]["name"])}</li>\n'
           f'<li>{t["c_source"]}: <a href="{e(c["source"]["url"])}">{e(c["source"]["name"][lang])}</a> ({e(c["source_licence"][lang])})</li>\n'
@@ -244,7 +262,8 @@ def page(lang: str, R: dict) -> str:
           + "".join(f'<li>{t["c_prev"]}: <a href="{e(p["url"])}">{e(p["tag"])}</a>'
                     + (f' (<a href="{e(p["known_issues_url"])}">{t["c_issues"]}</a>)' if p.get("known_issues_url") else "")
                     + "</li>\n" for p in c.get("previous", []))
-          + f'<li>{e(t["c_works"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"]), u=n(c["works_in_il_us"])))}</li>\n'
+          + f'<li>{e(quality)}</li>\n'
+          + f'<li>{e(count)}</li>\n'
           "</ul>\n")
     if R.get("planned"):
         w(f'<h3 id="planned">{e(t["planned_h"])}</h3>\n<p>{e(t["planned_p"])}</p>\n<ul class="facts">\n')

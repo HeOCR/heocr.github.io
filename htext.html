@@ -136,7 +136,7 @@
 <h2>What htext is</h2>
 <p>htext collects Hebrew text whose rights are clear enough to publish openly, and turns it into training lines for <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, HeOCR's synthetic page generator. The generator renders each line onto synthetic pages, so the recognizers learn real Hebrew vocabulary, spelling and punctuation, not only made-up text.</p>
 <p>Each source has its own builder, its own corpus and its own card. A build reads a pinned copy of the source, computes rights per entry, cleans and cuts the text, and checks that no line overlaps HeOCR's evaluation text. Only the files a card lists are published.</p>
-<div class="stats"><div class="stat"><b>13,999,152</b><span>lines</span></div><div class="stat"><b>25,282</b><span>works</span></div><div class="stat"><b><span dir="ltr">680.6 MB</span></b><span>of text</span></div><div class="stat"><b>1</b><span>corpus</span></div></div>
+<div class="stats"><div class="stat"><b>14,233,973</b><span>lines</span></div><div class="stat"><b>27,286</b><span>works and laws</span></div><div class="stat"><b><span dir="ltr">691.0 MB</span></b><span>of text</span></div><div class="stat"><b>2</b><span>corpora</span></div></div>
 </section>
 <section id="releases">
 <h2>Releases</h2>
@@ -183,7 +183,24 @@
 <li>Release: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v2">pby-v2</a>, 2026-11-18</li>
 <li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v2/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
 <li>Earlier version: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v1">pby-v1</a> (<a href="https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md">known issues</a>)</li>
+<li>Text: transcribed by people.</li>
 <li>25,282 of 26,455 catalogue works have lines in this corpus; 701 also in the Israel + US variant.</li>
+</ul>
+<h3 id="knesset-laws">Knesset laws as published</h3>
+<span class="status">knesset-laws-v1</span><span class="status">htext-cc0</span>
+<p>The enacted laws of the first eight Knessets (1949–1977), as printed in Reshumot (Sefer HaChukim), cut into lines, with margin notes as lines of their own.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Variant</th><th>Subset</th><th>Lines</th><th>Laws</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>knesset_laws_lines_plain_v1.txt</code></td><td>Israel</td><td>plain</td><td class="num">234,821</td><td class="num">2,004</td><td class="num"><span dir="ltr">10.4 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>Release: htext-cc0</li>
+<li>Source: <a href="https://main.knesset.gov.il">The Knesset of Israel</a> (Not protected: Israel Copyright Act 2007, section 6)</li>
+<li>Release: <a href="https://github.com/HeOCR/htext/releases/tag/knesset-laws-v1">knesset-laws-v1</a>, 2026-11-18</li>
+<li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>Text: the OCR layer of the scans, filtered against a lexicon. An eye check of 100 random lines against the scans found an error in 9 (9%) and 9 wrong words of 454 (2.0%).</li>
+<li>2,004 of 2,146 laws in the catalogue have lines in this corpus.</li>
 </ul>
 </section>
 <section id="rights">
@@ -193,6 +210,7 @@
 <p>The rights fields are the project's reading of the law, not legal advice.</p>
 <ul class="facts">
 <li><b>Project Ben-Yehuda</b>: Public domain in Israel: every author and every translator died at least 71 years before the build year (2026), with death years from Wikidata or, where Wikidata has none, from a reviewed source such as the author&#x27;s PBY page. US status is recorded per work: public domain in the US when the transcribed edition appeared before 1931.</li>
+<li><b>The Knesset of Israel</b>: Laws are not protected by copyright in Israel (section 6 of the Copyright Act 2007). US status is not assessed.</li>
 </ul>
 </section>
 <section id="use">
@@ -210,6 +228,7 @@ grep -E &#x27;_v2\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
 <h2>Credit</h2>
 <p>Credit is not required by the licence, but some sources ask for it, and HeOCR gives it. Please carry these lines into any dataset or model card that uses a corpus:</p>
 <p class="credit">Credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a></p>
+<p class="credit">Credit: <a href="https://main.knesset.gov.il">The Knesset of Israel (Knesset database, laws as published in Reshumot)</a></p>
 </section>
 <section id="licence">
 <h2>Licence</h2>

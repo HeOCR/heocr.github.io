@@ -90,7 +90,72 @@
           "url": "https://github.com/HeOCR/htext/releases/tag/pby-v1",
           "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md"
         }
-      ]
+      ],
+      "text_quality": "transcription"
+    },
+    {
+      "id": "knesset-laws",
+      "version": "v1",
+      "unit": "laws",
+      "name": {
+        "en": "Knesset laws as published",
+        "he": "חוקי הכנסת כפי שפורסמו"
+      },
+      "source": {
+        "name": {
+          "en": "The Knesset of Israel",
+          "he": "כנסת ישראל"
+        },
+        "url": "https://main.knesset.gov.il"
+      },
+      "description": {
+        "en": "The enacted laws of the first eight Knessets (1949–1977), as printed in Reshumot (Sefer HaChukim), cut into lines, with margin notes as lines of their own.",
+        "he": "החוקים שחוקקו שמונה הכנסות הראשונות (1949–1977), כפי שנדפסו ברשומות (ספר החוקים), חתוכים לשורות, עם הערות השוליים כשורות נפרדות."
+      },
+      "rights_basis": {
+        "en": "Laws are not protected by copyright in Israel (section 6 of the Copyright Act 2007). US status is not assessed.",
+        "he": "חוקים אינם מוגנים בזכות יוצרים בישראל (סעיף 6 לחוק זכות יוצרים, התשס\"ח-2007). המעמד בארה\"ב לא נבדק."
+      },
+      "source_licence": {
+        "en": "Not protected: Israel Copyright Act 2007, section 6",
+        "he": "לא מוגן: חוק זכות יוצרים, סעיף 6"
+      },
+      "credit": {
+        "text": {
+          "en": "The Knesset of Israel (Knesset database, laws as published in Reshumot)",
+          "he": "כנסת ישראל (מאגר הכנסת, החוקים כפי שפורסמו ברשומות)"
+        },
+        "url": "https://main.knesset.gov.il"
+      },
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/SHA256SUMS",
+      "release": {
+        "tag": "knesset-laws-v1",
+        "url": "https://github.com/HeOCR/htext/releases/tag/knesset-laws-v1",
+        "date": "2026-11-18"
+      },
+      "catalogue_works": 2146,
+      "works_in_corpus": 2004,
+      "works_in_il_us": 0,
+      "files": [
+        {
+          "name": "knesset_laws_lines_plain_v1.txt",
+          "variant": "il",
+          "subset": "plain",
+          "lines": 234821,
+          "works": 2004,
+          "bytes": 10391546,
+          "sha256": "67c7a86bc8c8bb6b591b454900dbd5d6884099f4f2b94da937ead0505e0af01a"
+        }
+      ],
+      "htext_release": "cc0",
+      "text_quality": "ocr_layer",
+      "eye_check": {
+        "lines_checked": 100,
+        "lines_with_error": 9,
+        "sample_words": 454,
+        "words_wrong": 9
+      }
     }
   ],
   "planned": [],
