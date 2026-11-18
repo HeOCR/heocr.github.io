@@ -1,112 +1,54 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
-<!-- theme: scripts/theme.py -->
-<script>try{if(localStorage.getItem("heocr-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HeOCR rights</title>
 <meta name="description" content="How HeOCR checks the rights of every scan, line and model it publishes, and how to ask for an item to be removed.">
+<!-- shell:head -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #ffffff;
-    --surface: #ffffff;
-    --text: #1d1b18;
-    --muted: #6b665e;
-    --line: #e7e3da;
-    --accent: #1f5f8b;
-    --accent-soft: #e6eff6;
-    --tag: #f2efe8;
-  }
-  :root[data-theme="dark"] {
-    --bg: #141414;
-    --surface: #1c1c1c;
-    --text: #ecebe8;
-    --muted: #a29d94;
-    --line: #2e2d2b;
-    --accent: #7fb6dd;
-    --accent-soft: #1d2a33;
-    --tag: #262523;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
-
-  header { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
-  .he { font-family: "Frank Ruhl Libre", serif; direction: rtl; text-align: left; color: var(--muted); font-size: 1.15rem; margin: 0 0 8px; }
-  h1 { font-family: "Frank Ruhl Libre", serif; font-size: clamp(2.6rem, 7vw, 3.6rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.01em; }
-  .lede { font-size: 1.15rem; max-width: 640px; margin: 0 0 24px; }
-  .links { display: flex; flex-wrap: wrap; gap: 10px; }
-  .btn { display: inline-block; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font-weight: 500; font-size: 0.95rem; }
-  .btn:hover { border-color: var(--accent); text-decoration: none; }
-
-  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 36px 0 0; font-size: 0.9rem; color: var(--muted); }
-  .flow span.step { background: var(--accent-soft); color: var(--text); padding: 4px 10px; border-radius: 999px; font-weight: 500; }
-
-  section { padding: 48px 0 8px; }
-  h2 { font-family: "Frank Ruhl Libre", serif; font-size: 1.7rem; margin: 0 0 6px; }
-  .sub { color: var(--muted); margin: 0 0 22px; max-width: 680px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: flex; flex-direction: column; }
-  .card h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 600; }
-  .card h3 a { color: var(--text); }
-  .card p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; flex: 1; }
-  .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.8rem; }
-  .meta span { background: var(--tag); padding: 2px 8px; border-radius: 6px; color: var(--muted); }
-  .meta a { font-weight: 500; }
-  .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
-  .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
-
-  footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
-  footer p { margin: 0 0 6px; }
-  .doc > section { max-width: 720px; }
-  .doc h2 { margin-top: 0; }
-  .doc ul, .doc ol { padding-left: 22px; }
-  .doc li { margin: 0 0 8px; }
-  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
-  .back { display: inline-block; margin-bottom: 18px; font-size: 0.95rem; }
-  header { padding-top: 20px; }
-  .langbar { display: flex; justify-content: flex-end; margin: 0 0 44px; }
-  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); overflow: hidden; font-size: 0.95rem; font-weight: 600; }
-  .lang-toggle a, .lang-toggle span { padding: 7px 16px; color: var(--muted); line-height: 1.3; }
-  .lang-toggle a:hover { background: var(--accent-soft); color: var(--text); text-decoration: none; }
-  .lang-toggle [aria-current] { background: var(--accent); color: var(--surface); }
-
-  .langbar { gap: 10px; align-items: center; flex-wrap: wrap; }
-  .theme-toggle { font: inherit; font-size: 0.95rem; font-weight: 600; padding: 7px 16px; line-height: 1.3; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--muted); cursor: pointer; }
-  .theme-toggle:hover { background: var(--accent-soft); color: var(--text); }
-</style>
-<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/rights.html">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script>(function(){try{if(localStorage.getItem("heocr-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}})()</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HeOCR">
+<meta property="og:title" content="HeOCR rights">
+<meta property="og:description" content="How HeOCR checks the rights of every scan, line and model it publishes, and how to ask for an item to be removed.">
+<meta property="og:url" content="https://heocr.github.io/rights.html">
+<meta property="og:image" content="https://heocr.github.io/og-image-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" hreflang="en" href="https://heocr.github.io/rights.html">
+<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/rights.html">
+<!-- /shell:head -->
 </head>
-<body>
-
-<header>
-  <div class="wrap">
-    <nav class="langbar" aria-label="Language / שפה">
-      <div class="lang-toggle">
-        <span aria-current="page" lang="en">English</span>
+<body class="site">
+<!-- shell:header -->
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap bar">
+<a class="brand" href="./" aria-label="HeOCR"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="7" width="34" height="34" class="lg-box sw2"></rect><rect x="4" y="4" width="6" height="6" class="lg-h"></rect><rect x="38" y="4" width="6" height="6" class="lg-h"></rect><rect x="4" y="38" width="6" height="6" class="lg-h"></rect><rect x="38" y="38" width="6" height="6" class="lg-h"></rect><path d="M16 18H32V32.5" class="lg-ink sw45"></path><path d="M16 24.5V32.5" class="lg-ink sw45"></path></svg><span dir="ltr">He<b>OCR</b></span></a>
+<nav class="site-nav" aria-label="Site"><a href="benchmarks.html">Benchmarks</a><a href="htext.html">htext</a><a href="rights.html" aria-current="page">Rights &amp; takedown</a></nav>
+<div class="tools">
+<div class="lang-toggle" role="group" aria-label="Language / שפה">
+<span aria-current="page" lang="en">English</span>
         <a href="he/rights.html" lang="he" hreflang="he">עברית</a>
-      </div>
-      <button class="theme-toggle" type="button" aria-pressed="false" data-night="Night mode" data-day="Day mode">Night mode</button>
-    </nav>
-    <a class="back" href="./">← HeOCR</a>
-    <h1>Rights &amp; takedown</h1>
-    <p class="lede">Everything HeOCR publishes is meant to be usable by anyone, for any purpose, permanently. This page sets out how we check that, and what to do if you think we got something wrong.</p>
-  </div>
+</div>
+<button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><svg class="ico i-moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.6A5.6 5.6 0 0 1 6.4 3 5.6 5.6 0 1 0 13 9.6z"></path></svg><svg class="ico i-sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"></circle><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"></path></svg><span class="label">Night mode</span></button>
+</div>
+</div>
 </header>
-
-<main class="wrap doc">
+<!-- /shell:header -->
+<div class="band gridband"><div class="wrap page-head">
+<h1><span class="bb" data-tag="h1 · 0.99">Rights &amp; takedown</span></h1>
+<p class="lede">Everything HeOCR publishes is meant to be usable by anyone, for any purpose, permanently. This page sets out how we check that, and what to do if you think we got something wrong.</p>
+</div></div>
+<main id="main" class="wrap doc">
 
   <section>
     <h2>What we use</h2>
@@ -171,13 +113,16 @@
   </section>
 
 </main>
-
-<footer>
-  <div class="wrap">
-    <p><a href="./">HeOCR</a> · Created by <a href="http://www.shaypalachy.com/">Shay Palachy Affek</a> and the HeOCR maintainers.</p>
-  </div>
+<footer class="site-footer">
+<div class="wrap foot">
+<div class="foot-brand">He<b>OCR</b></div>
+<div class="foot-text">
+<p><a href="./">HeOCR</a> · Created by <a href="http://www.shaypalachy.com/">Shay Palachy Affek</a> and the HeOCR maintainers.</p>
+</div>
+</div>
 </footer>
-
-<script>(function(){var b=document.querySelector(".theme-toggle");if(!b)return;var r=document.documentElement;function show(){var d=r.getAttribute("data-theme")==="dark";b.setAttribute("aria-pressed",d?"true":"false");b.textContent=d?b.getAttribute("data-day"):b.getAttribute("data-night")}show();b.addEventListener("click",function(){var d=r.getAttribute("data-theme")!=="dark";if(d)r.setAttribute("data-theme","dark");else r.removeAttribute("data-theme");try{localStorage.setItem("heocr-theme",d?"dark":"light")}catch(e){}show()})})();</script>
+<!-- shell:tail -->
+<script src="theme.js"></script>
+<!-- /shell:tail -->
 </body>
 </html>

@@ -3,8 +3,9 @@
     python3 scripts/build_benchmarks.py           # write both pages
     python3 scripts/build_benchmarks.py --check   # exit 1 if a committed page is out of date
 
-Standard library only. The page styles are taken from rights.html and he/rights.html, so the benchmarks pages match
-the rest of the site. Edit results.json (HeOCR's evaluation owner exports it after each scored run), then rebuild.
+Standard library only. The markup follows the "Bounding Box" design (design/brand-handover/site/benchmarks.html);
+styles are site.css, the shell is scripts/shell.py, and the hero chart is scripts/hero_chart.py (the handover's,
+unchanged). Every number comes from results.json (HeOCR's evaluation owner exports it after each scored run).
 """
 from __future__ import annotations
 
@@ -12,62 +13,17 @@ import argparse, html, json, math, re, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import theme  # noqa: E402  (the site theme, one source for every page)
+import hero_chart as hc  # noqa: E402  (the hero chart, from the brand handover)
+import shell  # noqa: E402  (head, header, footer: one source for every page)
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "benchmarks" / "results.json"
-
-EXTRA_CSS = """
-  .bench section { max-width: none; }
-  .bench h2 { margin-top: 0; }
-  .bench h3 { font-size: 1.05rem; margin: 26px 0 4px; }
-  .status { display: inline-block; background: var(--tag); color: var(--muted); padding: 2px 10px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; margin: 0 0 10px; }
-  .empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; padding: 18px; color: var(--muted); }
-  .tablewrap { overflow-x: auto; margin: 8px 0 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
-  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
-  th, td { padding: 8px 12px; text-align: start; border-bottom: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
-  tr:last-child td { border-bottom: 0; }
-  th { font-weight: 600; color: var(--muted); font-size: 0.82rem; }
-  td.num { font-variant-numeric: tabular-nums; }
-  .ci { display: block; color: var(--muted); font-size: 0.78rem; }
-  tr.ours td { background: var(--accent-soft); }
-  tr.ours td:first-child { font-weight: 600; }
-  .facts { font-size: 0.85rem; color: var(--muted); margin: 6px 0 0; }
-  .facts li { margin: 0 0 3px; }
-  .warn { border-inline-start: 3px solid var(--accent); padding: 2px 0 2px 12px; padding-inline-start: 12px; margin: 10px 0; }
-  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
-  .toc a { font-size: 0.9rem; }
-  .hero { margin: 0; padding: 40px 0 8px; }
-  .hero-axis, .hero-lane { display: grid; grid-template-columns: minmax(7rem, 15rem) 1fr 4.5rem; gap: 10px; align-items: center; }
-  .hero-axis svg text { font-size: 11px; fill: var(--muted); }
-  .hero-cell { padding: 8px 0; border-bottom: 1px solid var(--line); }
-  .hero-name { font-weight: 600; font-size: 0.95rem; margin: 0 0 4px; }
-  .hero-reader { font-size: 0.85rem; color: var(--muted); }
-  .hero-lane.ours .hero-reader { color: var(--text); font-weight: 600; }
-  .hero-val { font-size: 0.85rem; font-variant-numeric: tabular-nums; text-align: end; }
-  .hero-ratio { font-size: 0.82rem; font-weight: 600; color: var(--accent); text-align: end; }
-  .hero-missing { grid-column: 2 / 4; font-size: 0.82rem; color: var(--muted); font-style: italic; }
-  .hero svg { direction: ltr; overflow: visible; }  /* the axis runs from 0% at the left on both pages; a dot at either end is drawn whole */
-  .hero svg .track { stroke: var(--line); stroke-width: 2; }
-  .hero svg .tick { stroke: var(--line); stroke-width: 1; }
-  .hero svg .interval { stroke: var(--muted); stroke-width: 2; stroke-linecap: round; }
-  .hero svg .dot { fill: var(--muted); stroke: var(--surface); stroke-width: 2; }
-  .hero .ours svg .interval { stroke: var(--accent); }
-  .hero .ours svg .dot { fill: var(--accent); }
-  @media (max-width: 600px) {  /* a phone: each reader's name above its strip */
-    .hero-axis, .hero-lane { grid-template-columns: 1fr 4rem; row-gap: 0; }
-    .hero-axis > span:first-child { display: none; }
-    .hero-reader { grid-column: 1 / -1; }
-    .hero-missing { grid-column: 1 / -1; }
-  }
-"""
 
 T = {
     "en": {
         "title": "HeOCR benchmarks",
         "desc": "How HeOCR's models and document reader compare with other open tools, per kind of Hebrew document.",
         "lede": "How HeOCR compares with other open tools, per kind of document. Every figure gives its sample size, a 95% interval, the measure, the reference and the run it comes from. The page is built from one file, <a href=\"{json}\">results.json</a>, which is updated after each scored run.",
-        "back": "← HeOCR", "other": "עברית", "other_href": "he/benchmarks.html", "home": "./",
         "updated": "Updated {d}.",
         "lower": "lower is better", "higher": "higher is better",
         "no_data": "No data yet", "pending": "Pending",
@@ -111,24 +67,12 @@ T = {
         "cell_note": {"PDF T4": "T4 and T5 use the same scanned pages; heocr and Tesseract read both by OCR, so their figures match. T4 adds a wrong text layer, which the other readers use."},
         "wer_note": "Word error counts inserted words as well as wrong and missing ones, so it can exceed 100%.",
         "footer": "Created by <a href=\"http://www.shaypalachy.com/\">Shay Palachy Affek</a> and the HeOCR maintainers.",
-        "hero_h": "Documents at a glance",
-        "hero_measure": "Character error rate, lower is better. Dots are the run's values; bars are 95% intervals. One linear axis for every row, starting at 0%.",
-        "hero_sets": "Generated documents with exact gold (D-bench). heocr is developed against these sets, so they are not held out.",
-        "hero_run": "Run {run}, updated {d}. Release gate: {gate}.",
-        "gate_not_run": "not yet run",
-        "best_alt": "Best alternative: {name}",
-        "no_alt": "No alternative reader was scored on this kind of document.",
-        "no_score": "No character-error score in this run.",
-        "of_docs": "{n} of {total} documents",
         "release_gate": "Release gate",
-        "ratio": "{r}× fewer errors vs best alternative",
-        "ratio_cap": "more than {r}× fewer errors vs best alternative",
     },
     "he": {
         "title": "מדדי ביצועים של HeOCR",
         "desc": "איך המודלים וקורא המסמכים של HeOCR משתווים לכלים פתוחים אחרים, לפי סוג המסמך העברי.",
         "lede": "איך HeOCR משתווה לכלים פתוחים אחרים, לפי סוג המסמך. לכל מספר מצוינים גודל המדגם, רווח בר־סמך של 95%, המדד, מקור הטקסט הנכון וההרצה שממנה הוא בא. הדף נבנה מקובץ אחד, <a href=\"{json}\">results.json</a>, שמתעדכן אחרי כל הרצה.",
-        "back": "→ HeOCR", "other": "English", "other_href": "../benchmarks.html", "home": "./",
         "updated": "עודכן {d}.",
         "lower": "נמוך יותר עדיף", "higher": "גבוה יותר עדיף",
         "no_data": "אין עדיין נתונים", "pending": "ממתין",
@@ -178,267 +122,305 @@ T = {
         "cell_note": {"PDF T4": "T4 ו־T5 משתמשים באותם עמודים סרוקים; heocr ו־Tesseract קוראים את שניהם ב־OCR, ולכן התוצאות שלהם זהות. ב־T4 נוספת שכבת טקסט שגויה, שבה משתמשים הקוראים האחרים."},
         "wer_note": "שגיאת מילים סופרת גם מילים שנוספו, לא רק מילים שגויות או חסרות, ולכן היא יכולה לעלות על 100%.",
         "footer": "נוצר בידי <a href=\"http://www.shaypalachy.com/\">שי פלצ'י אפק</a> ומתחזקי HeOCR.",
-        "hero_h": "המסמכים במבט אחד",
-        "hero_measure": "שיעור שגיאת התווים, נמוך יותר עדיף. הנקודות הן הערכים בהרצה; הקווים הם רווחי סמך של 95%. ציר ליניארי אחד לכל השורות, שמתחיל ב־0%.",
-        "hero_sets": "מסמכים מחוללים עם טקסט נכון מדויק (D-bench). heocr מפותח מול הקבוצות האלה, ולכן הן אינן מוחזקות בצד.",
-        "hero_run": "הרצה {run}, עודכן {d}. שער השחרור: {gate}.",
-        "gate_not_run": "עוד לא הורץ",
-        "best_alt": "החלופה הטובה ביותר: {name}",
-        "no_alt": "אף קורא חלופי לא הוערך על סוג המסמך הזה.",
-        "no_score": "אין ציון שגיאת תווים בהרצה הזו.",
-        "of_docs": "{n} מתוך {total} מסמכים",
         "release_gate": "שער השחרור",
-        "ratio": "פי {r} פחות שגיאות מהחלופה הטובה ביותר",
-        "ratio_cap": "יותר מפי {r} פחות שגיאות מהחלופה הטובה ביותר",
     },
 }
-LOWER = {"cer", "wer", "rows_silent", "silent_loss"}
+
+# Strings new with the "Bounding Box" design (design/brand-handover/site/MARKUP.md, "New wording"): listed in the
+# redesign PR for the maintainers to edit freely. The Hebrew needs a native read.
+NEW = {
+    "en": {
+        "kicker": "Documents by format", "chart_title": "Character error by document type", "ours": "ours",
+        "lg_alt": "Best other open tool", "lg_alt_s": "the lowest of Docling, MarkItDown and PyMuPDF4LLM",
+        "lg_tess": "Stock Tesseract", "lg_tess_s": "heb, tessdata_best",
+        "run": "Run", "gate_not_run": "not run", "gate_run": "run",
+        "axis_note": "One linear axis from 0 to 100%; bars start at zero. Whiskers show the interval ({interval}). "
+                     "Where an interval is narrower than its marker, read it from the numbers beside it.",
+        "more": "Documents by format: every reader and every measure",
+        "scored": "Scored",
+        "gate_sub": "The release gate scores a fresh set, made after the code is frozen. "
+                    "Each document type then gets one verdict: supported, or not supported.",
+        "gate_count": "<strong>{d}</strong> of {n} document types have a verdict",
+        "v_supported": "Supported", "v_unsupported": "Not supported", "v_pending": "Awaiting run",
+        "method": "Method, reference and run",
+        "cell_note_legend": "A dash means the reader has no score on that measure. An empty cell means the measure does not apply to that document type. The last column holds a measure that exists for one type only; its name is in that type's heading row.",
+        "caveat_from": "heocr is developed", "fixed_from": "Release gate not yet run",
+    },
+    "he": {
+        "kicker": "מסמכים לפי פורמט", "chart_title": "שגיאת תווים לפי סוג מסמך", "ours": "שלנו",
+        "lg_alt": "הכלי הפתוח האחר הטוב ביותר", "lg_alt_s": "הנמוך ביותר מבין Docling,‏ MarkItDown ו־PyMuPDF4LLM",
+        "lg_tess": "Tesseract הרגיל", "lg_tess_s": "heb, tessdata_best",
+        "run": "הרצה", "gate_not_run": "עוד לא הורץ", "gate_run": "הורץ",
+        "axis_note": "ציר ליניארי אחד, מ־0 עד 100%; הפסים מתחילים באפס. הקווים עם הקצוות מסמנים את רווח הסמך ({interval}). "
+                     "כשהרווח צר מהסמן, הוא מופיע במספרים שלצידו.",
+        "more": "מסמכים לפי פורמט: כל הקוראים וכל המדדים",
+        "scored": "הוערך",
+        "gate_sub": "שער השחרור מעריך קבוצה חדשה, שנוצרת אחרי שהקוד מוקפא. "
+                    "לכל סוג מסמך ניתנת אז החלטה אחת: נתמך או לא נתמך.",
+        "gate_count": "ל־<strong>{d}</strong> מתוך {n} סוגי מסמכים יש החלטה",
+        "v_supported": "נתמך", "v_unsupported": "לא נתמך", "v_pending": "ממתין להרצה",
+        "method": "שיטה, טקסט ייחוס והרצה",
+        "cell_note_legend": "קו מפריד פירושו שלקורא אין ציון במדד הזה. תא ריק פירושו שהמדד אינו חל על סוג המסמך הזה. בעמודה האחרונה מופיע מדד שקיים רק לסוג מסמך אחד; שמו מופיע בשורת הכותרת של אותו סוג.",
+        "caveat_from": "heocr מפותח", "fixed_from": "שער השחרור עוד לא הורץ",
+    },
+}
+for _lang in T:
+    T[_lang].update(NEW[_lang])
+
 READER_ORDER = ["heocr", "stock", "docling", "markitdown", "pymupdf4llm"]
-CELL_MEASURES = {"DOCX": ["cer", "wer", "number_recall", "labels"], "DOC": ["cer", "wer", "number_recall"],
-                 "Scanned tables": ["rows_read", "rows_silent", "cer", "number_recall"],
-                 "PDF T6": ["cer", "wer", "number_recall", "silent_loss", "image_word_recall"]}
-PDF_MEASURES = ["cer", "wer", "number_recall", "silent_loss"]
+STD = ("cer", "wer", "number_recall", "labels", "silent_loss", "image_word_recall")  # text formats, in column order
+TBL = ("rows_read", "rows_silent", "cer", "number_recall")                            # scanned tables
+EXTRA = ("labels", "image_word_recall")  # measures that exist for one type only: the shared last column
+UP = {"number_recall", "labels", "image_word_recall", "rows_read"}                     # higher is better
+VERDICTS = {"supported": "supported", "not_supported": "unsupported", "unsupported": "unsupported"}
+ICON = {
+    "info": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6"></circle><path d="M8 7.3v3.5M8 5.1v.1"></path></svg>',
+    "supported": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.6l3 3 6-7.2"></path></svg>',
+    "unsupported": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>',
+    "pending": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.6"></circle><path d="M8 4.9V8l2 1.3"></path></svg>',
+}
+NA = '<td class="num na">–</td>'
 e = html.escape
-
-
-def pct(x):
-    if x is None:
-        return "–"
-    v = 100 * x
-    return f"{v:.2f}%" if abs(v) < 1 else f"{v:.1f}%"
 
 
 def cell_html(v, ci):
     if v is None:
-        return '<td class="num">–</td>'
-    s = f'<bdi dir="ltr">{pct(v)}</bdi>'
-    if ci:
-        s += f'<span class="ci"><bdi dir="ltr">[{pct(ci[0]).rstrip("%")}–{pct(ci[1])}]</bdi></span>'
-    return f'<td class="num">{s}</td>'
+        return NA
+    civ = f'<span class="ci"><bdi dir="ltr">{hc.interval(ci)}%</bdi></span>' if ci else ""
+    return f'<td class="num"><span class="v"><bdi dir="ltr">{hc.pct(v)}</bdi></span>{civ}</td>'
 
 
-ALTERNATIVES = ["docling", "markitdown", "pymupdf4llm"]  # the open alternatives; stock Tesseract is shown on its own lane
-HERO_MEASURE = "cer"
+def verdict(kind, t, lg=False, label=None):
+    return f'<span class="verdict {kind}{" lg" if lg else ""}">{ICON[kind]}{label or t["v_" + kind]}</span>'
 
 
-def hero_series(R: dict) -> dict:
-    """The hero chart's data, from results.json alone: per documents cell, in the file's order, three lanes,
-    heocr, the best alternative (the lowest character error rate among ALTERNATIVES) and stock Tesseract
-    (tessdata_best heb, always shown). A lane holds the CER and its 95% interval, or None when the reader
-    has no score in the cell. Only readers present in results.json appear. ``axis`` is the one linear
-    axis every row shares: from 0 to the largest interval end, rounded up to a clean tick (``hero_axis``)."""
-    D = R["documents"]
-    cells = []
-
-    def lane(key, role, rec, documents):
-        m = (rec or {}).get(HERO_MEASURE)
-        if not m:
-            return {"key": key, "role": role, "value": None}
-        lo, hi = m["ci95"] if m.get("ci95") else (m["value"], m["value"])
-        return {"key": key, "role": role, "value": m["value"], "lo": lo, "hi": hi,
-                "n": m.get("n", rec.get("documents")), "documents": documents}
-
-    for cell, c in D["cells"].items():
-        readers = c["readers"]
-        alts = [(readers[k][HERO_MEASURE]["value"], k) for k in ALTERNATIVES if HERO_MEASURE in readers.get(k, {})]
-        best = min(alts)[1] if alts else None  # ties go to the earlier name in ALTERNATIVES order, deterministically
-        lanes = [
-            lane("heocr", "ours", readers.get("heocr"), c["documents"]),
-            lane(best, "alt", readers.get(best) if best else None, c["documents"]),
-            lane("stock", "stock", readers.get("stock"), c["documents"]),
-        ]
-        cells.append({"cell": cell, "documents": c["documents"], "lanes": lanes, "ratio": hero_ratio(lanes[0], lanes[1])})
-    top = max((ln["hi"] for c in cells for ln in c["lanes"] if ln["value"] is not None), default=0.0)
-    return {"measure": HERO_MEASURE, "cells": cells, "axis": hero_axis(top), "run": D["run"], "updated": R["updated"],
-            "gate": D.get("gate", "not_run")}
+def cell_verdicts(D) -> dict:
+    """{cell: 'supported' | 'unsupported'} from results.json, once eval adds verdicts after the gate."""
+    return {c: VERDICTS[v["verdict"]] for c, v in D["cells"].items() if v.get("verdict") in VERDICTS}
 
 
-HERO_RATIO_CAP = 50  # above it, "more than 50x": a point value near zero makes a huge ratio unstable
+def present(cell) -> set:
+    return set().union(*[set(r) - {"documents"} for r in cell["readers"].values()])
 
 
-def hero_ratio(ours: dict, alt: dict) -> dict | None:
-    """How many times fewer errors heocr makes than the best alternative, from the two point estimates; only
-    when the two 95% intervals do not overlap and heocr's is the lower, else None (and None with no alternative).
-    ``text`` is the figure: an integer from 3x, one decimal below, and the cap (``capped``) above HERO_RATIO_CAP."""
-    if ours["value"] is None or alt["value"] is None or not ours["hi"] < alt["lo"]:
-        return None
-    r = alt["value"] / ours["value"] if ours["value"] > 0 else math.inf
-    if r > HERO_RATIO_CAP:
-        return {"value": r, "text": str(HERO_RATIO_CAP), "capped": True}
-    return {"value": r, "text": f"{r:.0f}" if r >= 3 else f"{r:.1f}", "capped": False}
+def col_head(t, m):
+    return f'{e(t["m"][m])}<span class="dir{" up" if m in UP else ""}">{e(t["higher"] if m in UP else t["lower"])}</span>'
 
 
-HERO_TICK_STEPS = (0.01, 0.02, 0.025, 0.05, 0.1, 0.2, 0.25, 0.5)  # error rates; the smallest giving at most 5 intervals
+def slug(code):
+    return "doc-" + code.lower().replace(" ", "-")
 
 
-def hero_axis(top: float) -> dict:
-    """The shared linear axis: 0 to ``top`` rounded up to a clean tick, at most 5 intervals."""
-    step = next((s for s in HERO_TICK_STEPS if math.ceil(round(top / s, 9)) <= 5), 1.0)
-    n = max(1, math.ceil(round(top / step, 9)))
-    return {"max": round(n * step, 4), "ticks": [round(i * step, 4) for i in range(n + 1)]}
+def docs_tables(t, D, verdicts):
+    """Two grouped tables: the text formats and the scanned tables, one <tbody> per document type."""
+    out = []
+    cells = D["cells"]
+    for order, pick in ((STD, lambda c: "rows_read" not in present(c)), (TBL, lambda c: "rows_read" in present(c))):
+        group = {c: v for c, v in cells.items() if pick(v)}
+        if not group:
+            continue
+        cols = [m for m in order if m not in EXTRA and any(m in present(v) for v in group.values())]
+        has_extra = any(m in present(v) for v in group.values() for m in EXTRA)
+        head = [f'<th scope="col">{e(t["reader"])}</th>'] + [f'<th scope="col">{col_head(t, m)}</th>' for m in cols]
+        if has_extra:
+            head.append('<td class="thx"></td>')
+        out.append(f'<div class="tablewrap"><table>\n<thead><tr>{"".join(head)}</tr></thead>')
+        for code, cell in group.items():
+            mine = present(cell)
+            extra = next((m for m in EXTRA if m in mine), None)
+            badge = verdict(verdicts[code], t) if code in verdicts else ""
+            gnote = f'<span class="gnote">{e(t["cell_note"][code])}</span>' if code in t["cell_note"] else ""
+            colh = ""
+            if extra:
+                ns = {r[extra]["n"] for r in cell["readers"].values() if extra in r and "n" in r[extra]}
+                ntag = f'<span class="tag-n">n = {min(ns)}</span>' if len(ns) == 1 and ns != {cell["documents"]} else ""
+                colh = f'<th class="colh" scope="col">{col_head(t, extra).replace("</span>", ntag + "</span>")}</th>'
+            span = len(cols) + 1 + (1 if has_extra and not extra else 0)
+            meta = f'· {code} · {e(t["docs"].format(n=cell["documents"]))}'
+            out.append(f'<tbody>\n<tr class="group"><th colspan="{span}" scope="rowgroup" id="{slug(code)}">'
+                       f'<span class="gtitle">{e(t["cells"][code])} <span class="note">{meta}</span>{badge}{gnote}</span></th>{colh}</tr>')
+            for key in READER_ORDER:
+                if key not in cell["readers"]:
+                    continue
+                r = cell["readers"][key]
+                ours = key == "heocr"
+                label = e(t["readers"][key]) + (f'<span class="tag-ours">{e(t["ours"])}</span>' if ours else "")
+                if r.get("documents", cell["documents"]) != cell["documents"]:
+                    label += f'<span class="tag-n block">n = {r["documents"]}</span>'
+                tds = []
+                for m in cols + ([extra] if extra else [None] if has_extra else []):
+                    if m is None or m not in mine:
+                        tds.append('<td class="nap"></td>')
+                    elif m not in r:
+                        tds.append(NA)
+                    else:
+                        tds.append(cell_html(r[m]["value"], r[m]["ci95"]))
+                out.append(f'<tr{" class=\"ours\"" if ours else ""}><td>{label}</td>{"".join(tds)}</tr>')
+            out.append("</tbody>")
+        out.append("</table></div>")
+    return "\n".join(out)
 
 
-def hero_html(H: dict, t: dict, lang: str) -> str:
-    """Draw the hero chart: plain HTML rows with one small inline SVG strip per lane (the shared 0-to-max track, the
-    interval as a line, the value as a dot). All colour comes from the page's CSS variables, so it reads in
-    both themes, and all drawing is here, apart from the data (hero_series)."""
-    out = [f'<figure class="hero" aria-labelledby="hero-h">\n<h2 id="hero-h">{e(t["hero_h"])}</h2>\n'
-           f'<p class="sub">{e(t["hero_measure"])}</p>\n']
-    top = H["axis"]["max"]
-    at = lambda v: round(100 * max(0.0, min(top, v)) / top, 2)  # position in the strip, %
-    ticks = "".join(f'<line x1="{at(v)}%" x2="{at(v)}%" y1="0" y2="16" class="tick"/>' for v in H["axis"]["ticks"])
-    last = len(H["axis"]["ticks"]) - 1
-    labels = "".join(f'<text x="{at(v)}%" y="12" text-anchor="{"start" if i == 0 else "end" if i == last else "middle"}">{100 * v:g}%</text>'
-                     for i, v in enumerate(H["axis"]["ticks"]))
-    out.append(f'<div class="hero-axis"><span></span><svg dir="ltr" width="100%" height="16" aria-hidden="true">{labels}</svg><span></span></div>\n')
-    d = "rtl" if lang == "he" else "ltr"
-    for c in H["cells"]:
-        out.append(f'<div class="hero-cell">\n<div class="hero-name"><bdi dir="{d}">{e(t["cells"][c["cell"]])}</bdi> <span class="note">· <bdi dir="ltr">{c["cell"]}</bdi> · '
-                   f'<bdi dir="{d}">{e(t["docs"].format(n=c["documents"]))}</bdi></span></div>\n')
-        for ln in c["lanes"]:
-            if ln["role"] == "alt":
-                name = t["best_alt"].format(name=t["readers"][ln["key"]]) if ln["key"] else t["readers"].get("alt", "")
-            else:
-                name = t["readers"][ln["key"]]
-            if ln["value"] is None:
-                msg = t["no_alt"] if ln["role"] == "alt" and not ln["key"] else t["no_score"]
-                out.append(f'<div class="hero-lane {ln["role"]} none"><span class="hero-reader">{e(name) if ln["key"] else ""}</span>'
-                           f'<span class="hero-missing">{e(msg)}</span></div>\n')
-                continue
-            sub = ""
-            if ln["n"] is not None and ln["n"] != ln["documents"]:
-                sub = f' <span class="ci">{e(t["of_docs"].format(n=ln["n"], total=ln["documents"]))}</span>'
-            x, lo, hi = (at(v) for v in (ln["value"], ln["lo"], ln["hi"]))
-            tip = f'{name}: {pct(ln["value"])} [{pct(ln["lo"])}–{pct(ln["hi"])}]'
-            out.append(f'<div class="hero-lane {ln["role"]}"><span class="hero-reader">{e(name)}{sub}</span>'
-                       f'<svg dir="ltr" width="100%" height="16" role="img" aria-label="{e(tip)}">{ticks}'
-                       f'<line x1="0%" x2="100%" y1="8" y2="8" class="track"/>'
-                       f'<line x1="{lo}%" x2="{hi}%" y1="8" y2="8" class="interval"/>'
-                       f'<circle cx="{x}%" cy="8" r="5" class="dot"><title>{e(tip)}</title></circle></svg>'
-                       f'<span class="hero-val"><bdi dir="ltr">{pct(ln["value"])}</bdi></span></div>\n')
-            if ln["role"] == "ours" and c["ratio"]:
-                r = c["ratio"]
-                out.append(f'<div class="hero-ratio">{e(t["ratio_cap" if r["capped"] else "ratio"].format(r=r["text"]))}</div>\n')
-        out.append("</div>\n")
-    gate = t["gate_not_run"] if H["gate"] == "not_run" else H["gate"]
-    out.append(f'<figcaption class="note">{e(t["hero_sets"])} {e(t["hero_run"].format(run=H["run"], d=H["updated"], gate=gate))}</figcaption>\n</figure>\n')
-    return "".join(out)
+def hist_table(t, P):
+    head = (f'<th scope="col">{e(t["engine"])}</th><th scope="col">{e(t["cer"])}<span class="dir">{e(t["lower"])}</span></th>'
+            f'<th scope="col">{e(t["wer"])}<span class="dir">{e(t["lower"])}</span></th>')
+    out = [f'<div class="tablewrap narrow"><table>\n<thead><tr>{head}</tr></thead>']
+    for s in P["slices"]:
+        meta = f'· {e(t["pages"].format(p=s["pages"], c=s["clusters"]))}'
+        gnote = f'<span class="gnote">{e(t["too_small"])}</span>' if s["too_small"] else ""
+        out.append(f'<tbody>\n<tr class="group"><th colspan="3" scope="rowgroup"><span class="gtitle">{e(t["slice"][s["id"]])} '
+                   f'<span class="note">{meta}</span>{gnote}</span></th></tr>')
+        for k, row in s["engines"].items():
+            meta_e = P["engines"][k]
+            name = e(meta_e["name"])
+            if meta_e.get("url"):
+                name = f'<a href="{e(meta_e["url"])}">{name}</a>'
+            if meta_e["ours"]:
+                name += f'<span class="tag-ours">{e(t["ours"])}</span>'
+            out.append(f'<tr{" class=\"ours\"" if meta_e["ours"] else ""}><td>{name}</td>'
+                       f'{cell_html(row["cer"], row["cer_ci95"])}{cell_html(row["wer"], row["wer_ci95"])}</tr>')
+        out.append("</tbody>")
+    out.append("</table></div>")
+    return "\n".join(out)
 
 
 def facts(rows):
     return '<ul class="facts">' + "".join(f"<li><strong>{e(k)}:</strong> {v}</li>" for k, v in rows) + "</ul>"
 
 
+def method(t, rows):
+    return f'<details class="method"><summary>{e(t["method"])}</summary>\n{facts(rows)}\n</details>'
+
+
+def domain_head(h2, status, cls=""):
+    return f'<div class="domain-head"><h2>{h2}</h2><span class="status{cls}">{status}</span></div>'
+
+
+def legend(t):
+    return ('<ul class="hc-legend">\n'
+            f'<li class="ours">{hc.legend_marker("ours")}<span><b>heocr</b> <small>{e(t["ours"])}</small></span></li>\n'
+            f'<li>{hc.legend_marker("alt")}<span><b>{e(t["lg_alt"])}</b> <small>{e(t["lg_alt_s"])}</small></span></li>\n'
+            f'<li>{hc.legend_marker("tess")}<span><b>{e(t["lg_tess"])}</b> <small>{e(t["lg_tess_s"])}</small></span></li>\n'
+            "</ul>")
+
+
+def hero(t, lang, R, doc_interval):
+    D = R["documents"]
+    not_run = D.get("gate", "not_run") == "not_run"
+    gate = t["gate_not_run"] if not_run else t["gate_run"]
+    caveat = t["doc_sub"][t["doc_sub"].index(t["caveat_from"]):]
+    svgs = hc.hero_svg(D, lang, "wide") + "\n" + hc.hero_svg(D, lang, "narrow")
+    return f'''<figure class="wrap hero-chart" id="hero">
+<div class="panel" data-tag="figure · hero">
+<p class="kicker">{e(t["kicker"])}</p>
+<div class="hc-title"><h2>{e(t["chart_title"])}</h2><span class="dir">{e(t["lower"])}</span></div>
+<p class="hc-finding">{hc.finding_sentence(D, lang)}</p>
+{legend(t)}
+{svgs}
+<figcaption class="hc-foot">
+<p class="hc-run"><span>{e(t["run"])} <code>{e(D["run"])}</code></span><span><bdi dir="ltr">{e(R["updated"])}</bdi></span>{verdict("pending" if not_run else "supported", t, label=t["release_gate"] + ": " + gate)}</p>
+<p class="note">{e(caveat)}</p>
+<p class="note">{e(t["axis_note"].format(interval=doc_interval))}</p>
+<p class="note"><a href="#documents">{e(t["more"])}</a></p>
+</figcaption>
+</div>
+</figure>
+'''
+
+
+def gate_block(t, lang, D, verdicts):
+    kinds = [verdicts.get(c, "pending") for c in D["cells"]]
+    strip = "".join(f'<span class="gate-cell {k}">{"" if k == "pending" else ICON[k]}</span>' for k in kinds)
+    decided = sum(k != "pending" for k in kinds)
+    if decided == len(kinds):
+        count = (f'<strong>{kinds.count("supported")}</strong>{e(t["v_supported"])}<span class="sep">·</span>'
+                 f'<strong>{kinds.count("unsupported")}</strong>{e(t["v_unsupported"])}')
+    else:
+        count = t["gate_count"].format(d=decided, n=len(kinds))
+    items = "".join(f'<li><a href="#{slug(c)}"><span class="code">{c}</span> <span class="name">{e(hc.TYPE_LABELS[lang][c])}</span></a>'
+                    f'{verdict(k, t)}</li>\n' for c, k in zip(D["cells"], kinds))
+    return (f'<div class="gate-summary">\n<div class="gate-strip" aria-hidden="true">{strip}</div>\n<p class="gate-count">{count}</p>\n</div>\n'
+            f'<ul class="gate-list">\n{items}</ul>')
+
+
+def cap(s):
+    return s[:1].upper() + s[1:]
+
+
 def page(lang: str, R: dict) -> str:
     t = T[lang]
-    style_src = (ROOT / ("he/rights.html" if lang == "he" else "rights.html")).read_text(encoding="utf-8")
-    style = re.search(r"<style>(.*?)</style>", style_src, re.S).group(1)
-    pre = "../" if lang == "he" else ""
+    pre = shell.prefix(lang)
     json_href = f"{pre}benchmarks/results.json"
     P, D = R["p_hist"], R["documents"]
-    out = []
-    w = out.append
-    # --- head
-    w(f'<!doctype html>\n<html lang="{lang}"{" dir=\"rtl\"" if lang == "he" else ""}>\n<head>\n<meta charset="utf-8">\n{theme.HEAD}'
-      '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-      f'<title>{e(t["title"])}</title>\n<meta name="description" content="{e(t["desc"])}">\n')
-    fonts = ("family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;600&family=Inter:wght@400;500;600"
-             if lang == "he" else "family=Frank+Ruhl+Libre:wght@500;700&family=Inter:wght@400;500;600")
-    w('<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-      f'<link href="https://fonts.googleapis.com/css2?{fonts}&display=swap" rel="stylesheet">\n')
-    w(f"<style>{style}{EXTRA_CSS}</style>\n")
-    w('<link rel="alternate" hreflang="en" href="https://heocr.github.io/benchmarks.html">\n'
-      '<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/benchmarks.html">\n</head>\n<body>\n\n')
-    # --- header
-    cur = '<span aria-current="page" lang="{0}">{1}</span>'.format(lang, "עברית" if lang == "he" else "English")
-    oth = f'<a href="{t["other_href"]}" lang="{"en" if lang == "he" else "he"}" hreflang="{"en" if lang == "he" else "he"}">{t["other"]}</a>'
-    w(f'<header>\n  <div class="wrap">\n    <nav class="langbar" aria-label="{"שפה / Language" if lang == "he" else "Language / שפה"}">\n'
-      f'      <div class="lang-toggle">\n        {cur}\n        {oth}\n      </div>\n      {theme.button(lang)}\n    </nav>\n'
-      f'    <a class="back" href="{t["home"]}">{t["back"]}</a>\n    <h1>{e(t["title"])}</h1>\n'
-      f'    <p class="lede">{t["lede"].format(json=json_href)}</p>\n'
-      f'    <p class="note">{e(t["updated"].format(d=R["updated"]))}</p>\n  </div>\n</header>\n\n')
-    w('<main class="wrap doc bench">\n')
-    w(hero_html(hero_series(R), t, lang))
-    w(f'<!-- release-gate: eval adds the "{e(t["release_gate"])}" section here after the gate verdict -->\n<div id="release-gate"></div>\n')
-    ids = [("p-mod", t["pmod_h"]), ("p-hist", t["phist_h"]), ("handwriting", t["hand_h"]),
-           ("documents", t["doc_h"]), ("vendors", t["vend_h"])]
-    w('<nav class="toc">' + " · ".join(f'<a href="#{i}">{e(h)}</a>' for i, h in ids) + "</nav>\n")
-    # --- 1. P-mod
-    w(f'<section id="p-mod">\n<h2>{e(t["pmod_h"])}</h2>\n<span class="status">{e(t["no_data"])}</span>\n'
-      f'<div class="empty">{e(t["pmod_t"])}</div>\n</section>\n')
-    # --- 2. P-hist
-    w(f'<section id="p-hist">\n<h2>{e(t["phist_h"])}</h2>\n<p class="warn">{e(t["phist_small"])}</p>\n')
-    for s in P["slices"]:
-        w(f'<h3>{e(t["slice"][s["id"]])} <span class="note">· {e(t["pages"].format(p=s["pages"], c=s["clusters"]))}</span></h3>\n')
-        if s["too_small"]:
-            w(f'<p class="note">{e(t["too_small"])}</p>\n')
-        w(f'<div class="tablewrap"><table>\n<thead><tr><th>{e(t["engine"])}</th><th>{e(t["cer"])} <span class="ci">{e(t["lower"])}</span></th>'
-          f'<th>{e(t["wer"])} <span class="ci">{e(t["lower"])}</span></th></tr></thead>\n<tbody>\n')
-        for k, row in s["engines"].items():
-            meta = P["engines"][k]
-            name = e(meta["name"])
-            if meta.get("url"):
-                name = f'<a href="{e(meta["url"])}">{name}</a>'
-            w(f'<tr{" class=\"ours\"" if meta["ours"] else ""}><td>{name}</td>{cell_html(row["cer"], row["cer_ci95"])}'
-              f'{cell_html(row["wer"], row["wer_ci95"])}</tr>\n')
-        w("</tbody></table></div>\n")
+    verdicts = cell_verdicts(D)
+    not_run = D.get("gate", "not_run") == "not_run"
+    gate_state = cap(t["gate_not_run"] if not_run else t["gate_run"])
+    doc_interval = t.get("x_doc_interval", D["interval"])
+    w = []
+    w.append(shell.head(lang, e(t["title"]), e(t["desc"]), "bench"))
+    w.append(shell.header(lang, "bench"))
+    w.append('<main id="main" class="bench">\n')
+    w.append(shell.page_head(e(t["title"]), f'<p class="lede">{t["lede"].format(json=json_href)}</p>\n'
+                                             f'<p class="note">{e(t["updated"].format(d=R["updated"]))}</p>'))
+    w.append(hero(t, lang, R, doc_interval))
+    sections = [("p-mod", t["pmod_h"], t["no_data"], ""), ("p-hist", t["phist_h"], t["scored"], " scored"),
+                ("handwriting", t["hand_h"], t["no_data"], ""), ("documents", t["doc_h"], t["scored"], " scored"),
+                ("vendors", t["vend_h"], t["pending"], "")]
+    w.append(shell.toc(lang, [(i, e(h), e(st)) for i, h, st, _ in sections] + [("gate", e(t["release_gate"]), e(gate_state))]))
+
+    def empty(sid, h2, status, text):
+        return (f'<section id="{sid}" class="wrap domain">\n{domain_head(e(h2), e(status))}\n'
+                f'<div class="empty">{e(text)}</div>\n</section>\n')
+
+    w.append(empty("p-mod", t["pmod_h"], t["no_data"], t["pmod_t"]))
+    # --- historical print: one grouped table
     ref = P["reference"]
-    w(facts([
+    w.append(f'<section id="p-hist" class="wrap domain">\n'
+             f'{domain_head(e(t["phist_h"]), e(t["scored"]) + " <bdi dir=\"ltr\">" + e(P["scored"]) + "</bdi>", " scored")}\n'
+             f'<p class="warn">{ICON["info"]}<span>{e(t["phist_small"])}</span></p>\n{hist_table(t, P)}\n')
+    w.append(method(t, [
         (t["f_measure"], e(t.get("x_phist_measure", P["measure"]))),
         (t["f_ref"], f'{e(t.get("x_phist_set", P["set"]))}; <a href="{e(ref["source_url"])}">{e(t.get("x_ws", ref["source"]))}</a> (<code>{e(ref["name"])}</code>)'),
         (t["f_licence"], e(ref["licence"])),
         (t["f_interval"], e(t.get("x_phist_interval", P["interval"]))),
         (t["f_run"], e(t["phist_run"].format(d=P["scored"], repo=P["scorer"]["repo"], commit=P["scorer"]["commit"]))),
         (t["f_code"], f'<a href="{e(P["scorer"]["url"])}">{e(P["scorer"]["repo"])}</a> <code>evaluate-references</code>'),
-    ]))
+    ]) + "\n")
     for x in P.get("not_scored", []):
-        w(f'<p class="note">{e(t["not_scored"].format(e=x))}</p>\n')
-    w("</section>\n")
-    # --- 3. Handwriting
-    w(f'<section id="handwriting">\n<h2>{e(t["hand_h"])}</h2>\n<span class="status">{e(t["no_data"])}</span>\n'
-      f'<div class="empty">{e(t["hand_t"])}</div>\n</section>\n')
-    # --- 4. Documents
-    w(f'<section id="documents">\n<h2>{e(t["doc_h"])}</h2>\n<p class="sub">{e(t["doc_sub"])}</p>\n')
-    for cell, c in D["cells"].items():
-        ms = CELL_MEASURES.get(cell, PDF_MEASURES)
-        w(f'<h3>{e(t["cells"][cell])} <span class="note">· {cell} · {e(t["docs"].format(n=c["documents"]))}</span></h3>\n')
-        w(f'<div class="tablewrap"><table>\n<thead><tr><th>{e(t["reader"])}</th>' +
-          "".join(f'<th>{e(t["m"][m])} <span class="ci">{e(t["lower"] if m in LOWER else t["higher"])}</span></th>' for m in ms) +
-          "</tr></thead>\n<tbody>\n")
-        for r in READER_ORDER:
-            x = c["readers"].get(r)
-            if not x or not any(m in x for m in ms):
-                continue  # the reader does not handle this format
-            tds = "".join(cell_html(x[m]["value"], x[m]["ci95"]) if x and m in x else '<td class="num">–</td>' for m in ms)
-            w(f'<tr{" class=\"ours\"" if r == "heocr" else ""}><td>{e(t["readers"][r])}</td>{tds}</tr>\n')
-        w("</tbody></table></div>\n")
-        if cell in t["cell_note"]:
-            w(f'<p class="note">{e(t["cell_note"][cell])}</p>\n')
+        w.append(f'<p class="note">{e(t["not_scored"].format(e=x))}</p>\n')
+    w.append("</section>\n")
+    w.append(empty("handwriting", t["hand_h"], t["no_data"], t["hand_t"]))
+    # --- documents by format: two grouped tables
     commit = re.search(r"[0-9a-f]{40}", D["heocr"])
     commit = commit.group(0)[:7] if commit else D["heocr"]
-    ref = D["reference"]
+    dref = D["reference"]
     vers = "; ".join(f'{e(t["readers"][k])} {e(v.get("version") or v.get("ocr", ""))}' for k, v in D["baselines"].items())
-    w(f'<p class="note">{e(t["reader_note"])}</p>\n')
-    w(f'<p class="note">{e(t["wer_note"])}</p>\n')
-    w(facts([
+    w.append(f'<section id="documents" class="wrap domain">\n'
+             f'{domain_head(e(t["doc_h"]), e(t["scored"]) + " <bdi dir=\"ltr\">" + e(R["updated"]) + "</bdi>", " scored")}\n'
+             f'<p class="sub">{e(t["doc_sub"])}</p>\n{docs_tables(t, D, verdicts)}\n'
+             f'<p class="legend-note">{e(t["cell_note_legend"])}</p>\n'
+             f'<p class="note">{e(t["reader_note"])}</p>\n<p class="note">{e(t["wer_note"])}</p>\n')
+    w.append(method(t, [
         (t["f_measure"], f'<code>{e(D["measure"])}</code> (text normalised the same way for every reader; ratios of sums over documents)'
          if lang == "en" else f'<code>{e(D["measure"])}</code> (הטקסט מנורמל באותו אופן לכל הקוראים; יחס של סכומים על פני המסמכים)'),
-        (t["f_ref"], e(t.get("x_doc_ref", f'{ref["name"]}: {ref["source"]}'))),
-        (t["f_licence"], e(ref["licence"])),
-        (t["f_interval"], e(t.get("x_doc_interval", D["interval"]))),
+        (t["f_ref"], e(t.get("x_doc_ref", f'{dref["name"]}: {dref["source"]}'))),
+        (t["f_licence"], e(dref["licence"])),
+        (t["f_interval"], e(doc_interval)),
         (t["f_run"], e(t["doc_run"].format(run=D["run"], commit=commit))),
         (t["f_readers"], vers),
         (t["f_excluded"], e(t["doc_excluded"])),
         (t["f_code"], e(t["doc_code"])),
-    ]))
-    w("</section>\n")
-    # --- 5. Vendors
-    w(f'<section id="vendors">\n<h2>{e(t["vend_h"])}</h2>\n<span class="status">{e(t["pending"])}</span>\n'
-      f'<div class="empty">{e(t["vend_t"])}</div>\n</section>\n')
-    w("</main>\n\n<footer>\n  <div class=\"wrap\">\n"
-      f'    <p>{t["footer"]}</p>\n    <p><a href="{json_href}">results.json</a> · <a href="{t["home"]}">HeOCR</a></p>\n'
-      "  </div>\n</footer>\n\n" + theme.BODY + "</body>\n</html>\n")
-    return "".join(out)
+    ]) + "\n</section>\n")
+    w.append(empty("vendors", t["vend_h"], t["pending"], t["vend_t"]))
+    # --- release gate
+    fixed = t["doc_sub"][t["doc_sub"].index(t["fixed_from"]):] if not_run else ""
+    pend = verdict("pending", t, label=gate_state) if not_run else ""
+    w.append(f'<section id="gate" class="wrap domain">\n<div class="domain-head"><h2>{e(t["release_gate"])}</h2>{pend}</div>\n'
+             f'<p class="sub">{e(t["gate_sub"])}{" " + e(fixed) if fixed else ""}</p>\n{gate_block(t, lang, D, verdicts)}\n</section>\n')
+    w.append("</main>\n")
+    w.append(shell.footer([f"<p>{t['footer']}</p>", f'<p><a href="{json_href}">results.json</a> · <a href="./">HeOCR</a></p>']))
+    w.append(shell.tail(lang))
+    return "".join(w)
 
 
 def main():
