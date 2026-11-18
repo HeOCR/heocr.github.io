@@ -136,7 +136,7 @@
 <h2>What htext is</h2>
 <p>htext collects Hebrew text whose rights are clear enough to publish openly, and turns it into training lines for <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, HeOCR's synthetic page generator. The generator renders each line onto synthetic pages, so the recognizers learn real Hebrew vocabulary, spelling and punctuation, not only made-up text.</p>
 <p>Each source has its own builder, its own corpus and its own card. A build reads a pinned copy of the source, computes rights per entry, cleans and cuts the text, and checks that no line overlaps HeOCR's evaluation text. Only the files a card lists are published.</p>
-<div class="stats"><div class="stat"><b>14,233,973</b><span>lines</span></div><div class="stat"><b>27,286</b><span>works and laws</span></div><div class="stat"><b><span dir="ltr">691.0 MB</span></b><span>of text</span></div><div class="stat"><b>2</b><span>corpora</span></div></div>
+<div class="stats"><div class="stat"><b>14,292,093</b><span>lines</span></div><div class="stat"><b>27,325</b><span>works, laws and books</span></div><div class="stat"><b><span dir="ltr">695.7 MB</span></b><span>of text</span></div><div class="stat"><b>3</b><span>corpora</span></div></div>
 </section>
 <section id="releases">
 <h2>Releases</h2>
@@ -202,6 +202,23 @@
 <li>Text: the OCR layer of the scans, filtered against a lexicon. An eye check of 100 random lines against the scans found an error in 9 (9%) and 9 wrong words of 454 (2.0%).</li>
 <li>2,004 of 2,146 laws in the catalogue have lines in this corpus.</li>
 </ul>
+<h3 id="tanakh">Tanakh: the Westminster Leningrad Codex</h3>
+<span class="status">tanakh-v1</span><span class="status">htext-cc0</span>
+<p>The Hebrew Bible, all 39 books, as the Westminster Leningrad Codex (WLC 4.20) gives it, cut into lines in two forms: with niqqud (no cantillation) and plain.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Variant</th><th>Subset</th><th>Lines</th><th>Books</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>tanakh_lines_niqqud_v1.txt</code></td><td>Israel</td><td>niqqud</td><td class="num">58,120</td><td class="num">39</td><td class="num"><span dir="ltr">4.6 MB</span></td></tr>
+<tr><td><code>tanakh_lines_plain_v1.txt</code></td><td>Israel</td><td>plain</td><td class="num">58,074</td><td class="num">39</td><td class="num"><span dir="ltr">2.7 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>Release: htext-cc0</li>
+<li>Source: <a href="https://github.com/openscriptures/morphhb">Westminster Leningrad Codex, via the Open Scriptures Hebrew Bible</a> (Public domain)</li>
+<li>Release: <a href="https://github.com/HeOCR/htext/releases/tag/tanakh-v1">tanakh-v1</a>, 2026-11-18</li>
+<li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>Text: transcribed by people.</li>
+<li>All 39 books have lines in this corpus, in both forms. The pointed and plain files hold the same verses, so the totals above count them once.</li>
+</ul>
 </section>
 <section id="rights">
 <h2>Rights</h2>
@@ -211,6 +228,7 @@
 <ul class="facts">
 <li><b>Project Ben-Yehuda</b>: Public domain in Israel: every author and every translator died at least 71 years before the build year (2026), with death years from Wikidata or, where Wikidata has none, from a reviewed source such as the author&#x27;s PBY page. US status is recorded per work: public domain in the US when the transcribed edition appeared before 1931.</li>
 <li><b>The Knesset of Israel</b>: Laws are not protected by copyright in Israel (section 6 of the Copyright Act 2007). US status is not assessed.</li>
+<li><b>Westminster Leningrad Codex, via the Open Scriptures Hebrew Bible</b>: The Leningrad Codex is about a thousand years old, and the WLC text is in the public domain (&quot;The text of the WLC remains in the Public Domain&quot;, OSHB). Public domain in Israel and in the US. Only the words are used; OSHB&#x27;s CC BY lemma and morphology layers are not. The edition is WLC, not UXLC.</li>
 </ul>
 </section>
 <section id="use">
@@ -229,6 +247,7 @@ grep -E &#x27;_v2\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
 <p>Credit is not required by the licence, but some sources ask for it, and HeOCR gives it. Please carry these lines into any dataset or model card that uses a corpus:</p>
 <p class="credit">Credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a></p>
 <p class="credit">Credit: <a href="https://main.knesset.gov.il">The Knesset of Israel (Knesset database, laws as published in Reshumot)</a></p>
+<p class="credit">Credit: <a href="https://github.com/openscriptures/morphhb">Westminster Leningrad Codex (public domain), via the Open Scriptures Hebrew Bible</a></p>
 </section>
 <section id="licence">
 <h2>Licence</h2>
