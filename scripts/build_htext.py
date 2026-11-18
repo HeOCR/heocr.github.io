@@ -69,7 +69,7 @@ T = {
         "c_in": "Release",
         "planned_h": "Planned sources",
         "planned_p": "Sources being prepared. Each is published only after its rights are checked entry by entry.",
-        "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
+        "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_prev": "Earlier version", "c_issues": "known issues", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
         "th_file": "File", "th_variant": "Variant", "th_subset": "Subset", "th_lines": "Lines", "th_works": "Works", "th_size": "Size",
         "total": "Total",
         "variant": {"il": "Israel", "il_us": "Israel + US"},
@@ -120,7 +120,7 @@ T = {
         "c_in": "גרסת htext",
         "planned_h": "מקורות מתוכננים",
         "planned_p": "מקורות בהכנה. כל אחד מתפרסם רק אחרי שזכויותיו נבדקו פריט אחר פריט.",
-        "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
+        "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_prev": "גרסה קודמת", "c_issues": "בעיות ידועות", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
         "th_file": "קובץ", "th_variant": "גרסה", "th_subset": "סוג", "th_lines": "שורות", "th_works": "יצירות", "th_size": "גודל",
         "total": "סה\"כ",
         "variant": {"il": "ישראל", "il_us": "ישראל + ארה\"ב"},
@@ -238,7 +238,10 @@ def page(lang: str, R: dict) -> str:
           f'<li>{t["c_source"]}: <a href="{e(c["source"]["url"])}">{e(c["source"]["name"][lang])}</a> ({e(c["source_licence"][lang])})</li>\n'
           f'<li>{t["c_release"]}: <a href="{e(c["release"]["url"])}">{e(c["release"]["tag"])}</a>, {e(c["release"]["date"])}</li>\n'
           f'<li>{t["c_card"]}: <a href="{e(c["card_url"])}">CORPUS_CARD.md</a></li>\n'
-          f'<li>{e(t["c_works"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"]), u=n(c["works_in_il_us"])))}</li>\n'
+          + "".join(f'<li>{t["c_prev"]}: <a href="{e(p["url"])}">{e(p["tag"])}</a>'
+                    + (f' (<a href="{e(p["known_issues_url"])}">{t["c_issues"]}</a>)' if p.get("known_issues_url") else "")
+                    + "</li>\n" for p in c.get("previous", []))
+          + f'<li>{e(t["c_works"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"]), u=n(c["works_in_il_us"])))}</li>\n'
           "</ul>\n")
     if R.get("planned"):
         w(f'<h3 id="planned">{e(t["planned_h"])}</h3>\n<p>{e(t["planned_p"])}</p>\n<ul class="facts">\n')
@@ -260,7 +263,7 @@ def page(lang: str, R: dict) -> str:
     w(f'<section id="use">\n<h2>{e(t["use_h"])}</h2>\n<p>{t["use_p"]}</p>\n<p>{t["use_steps"]}</p>\n')
     w("<pre><code>" + e(f"gh release download {first['release']['tag']} -R HeOCR/htext\n"
                          f"curl -LO {sums}\n"
-                         f"grep -E '_v1\\.txt$' SHA256SUMS | sha256sum -c") + "</code></pre>\n")
+                         f"grep -E '_{first['version']}\\.txt$' SHA256SUMS | sha256sum -c") + "</code></pre>\n")
     w(f'<p>{t["use_gen"]}</p>\n')
     w("<pre><code>" + e(f"hocrsyngen ... --text-corpus {first['files'][0]['name']}") + "</code></pre>\n")
     w(f'<p>{t["use_build"].format(doc="https://github.com/HeOCR/htext/blob/main/docs/pby_corpus.md")}</p>\n</section>\n')
