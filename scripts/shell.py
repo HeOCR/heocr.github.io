@@ -26,17 +26,18 @@ PAGES = {
     "bench": ("benchmarks.html", "he/benchmarks.html"),
     "htext": ("htext.html", "he/htext.html"),
     "rights": ("rights.html", "he/rights.html"),
+    "download": ("download.html", "he/download.html"),
 }
-NAV = ("bench", "htext", "rights")
+NAV = ("bench", "htext", "download", "rights")
 
 STR = {
     "en": {
-        "nav": {"bench": "Benchmarks", "htext": "htext", "rights": "Rights &amp; takedown"},
+        "nav": {"bench": "Benchmarks", "htext": "htext", "download": "Download", "rights": "Rights &amp; takedown"},
         "nav_aria": "Site", "lang_aria": "Language / שפה", "theme": "Night mode",
         "skip": "Skip to content", "toc_aria": "On this page", "lang_name": "English",
     },
     "he": {
-        "nav": {"bench": "מדדי ביצועים", "htext": "htext", "rights": "זכויות והסרה"},
+        "nav": {"bench": "מדדי ביצועים", "htext": "htext", "download": "הורדה", "rights": "זכויות והסרה"},
         "nav_aria": "ניווט באתר", "lang_aria": "שפה / Language", "theme": "מצב לילה",
         "skip": "דילוג לתוכן", "toc_aria": "בעמוד זה", "lang_name": "עברית",
     },
