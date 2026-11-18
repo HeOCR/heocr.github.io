@@ -8,7 +8,7 @@ the rest of the site. Edit results.json (HeOCR's evaluation owner exports it aft
 """
 from __future__ import annotations
 
-import argparse, html, json, re, sys
+import argparse, html, json, math, re, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -46,7 +46,7 @@ EXTRA_CSS = """
   .hero-lane.ours .hero-reader { color: var(--text); font-weight: 600; }
   .hero-val { font-size: 0.85rem; font-variant-numeric: tabular-nums; text-align: end; }
   .hero-missing { grid-column: 2 / 4; font-size: 0.82rem; color: var(--muted); font-style: italic; }
-  .hero svg { direction: ltr; overflow: visible; }  /* the axis runs from 0% at the left on both pages; a dot at 0% or 100% is drawn whole */
+  .hero svg { direction: ltr; overflow: visible; }  /* the axis runs from 0% at the left on both pages; a dot at either end is drawn whole */
   .hero svg .track { stroke: var(--line); stroke-width: 2; }
   .hero svg .tick { stroke: var(--line); stroke-width: 1; }
   .hero svg .interval { stroke: var(--muted); stroke-width: 2; stroke-linecap: round; }
@@ -111,7 +111,7 @@ T = {
         "wer_note": "Word error counts inserted words as well as wrong and missing ones, so it can exceed 100%.",
         "footer": "Created by <a href=\"http://www.shaypalachy.com/\">Shay Palachy Affek</a> and the HeOCR maintainers.",
         "hero_h": "Documents at a glance",
-        "hero_measure": "Character accuracy (100% minus the character error rate), higher is better. Dots are the run's values; bars are 95% intervals. The axis runs from 0% to 100%.",
+        "hero_measure": "Character error rate, lower is better. Dots are the run's values; bars are 95% intervals. One linear axis for every row, starting at 0%.",
         "hero_sets": "Generated documents with exact gold (D-bench). heocr is developed against these sets, so they are not held out.",
         "hero_run": "Run {run}, updated {d}. Release gate: {gate}.",
         "gate_not_run": "not yet run",
@@ -176,7 +176,7 @@ T = {
         "wer_note": "שגיאת מילים סופרת גם מילים שנוספו, לא רק מילים שגויות או חסרות, ולכן היא יכולה לעלות על 100%.",
         "footer": "נוצר בידי <a href=\"http://www.shaypalachy.com/\">שי פלצ'י אפק</a> ומתחזקי HeOCR.",
         "hero_h": "המסמכים במבט אחד",
-        "hero_measure": "דיוק תווים (100% פחות שיעור שגיאת התווים), גבוה יותר עדיף. הנקודות הן הערכים בהרצה; הקווים הם רווחי סמך של 95%. הציר נע מ־0% עד 100%.",
+        "hero_measure": "שיעור שגיאת התווים, נמוך יותר עדיף. הנקודות הן הערכים בהרצה; הקווים הם רווחי סמך של 95%. ציר ליניארי אחד לכל השורות, שמתחיל ב־0%.",
         "hero_sets": "מסמכים מחוללים עם טקסט נכון מדויק (D-bench). heocr מפותח מול הקבוצות האלה, ולכן הן אינן מוחזקות בצד.",
         "hero_run": "הרצה {run}, עודכן {d}. שער השחרור: {gate}.",
         "gate_not_run": "עוד לא הורץ",
@@ -218,9 +218,10 @@ HERO_MEASURE = "cer"
 
 def hero_series(R: dict) -> dict:
     """The hero chart's data, from results.json alone: per documents cell, in the file's order, three lanes,
-    heocr, the best alternative (highest character accuracy among ALTERNATIVES) and stock Tesseract
-    (tessdata_best heb, always shown). A lane holds accuracy = 1 - CER and its 95% interval, or None
-    when the reader has no score in the cell. Only readers present in results.json appear."""
+    heocr, the best alternative (the lowest character error rate among ALTERNATIVES) and stock Tesseract
+    (tessdata_best heb, always shown). A lane holds the CER and its 95% interval, or None when the reader
+    has no score in the cell. Only readers present in results.json appear. ``axis`` is the one linear
+    axis every row shares: from 0 to the largest interval end, rounded up to a clean tick (``hero_axis``)."""
     D = R["documents"]
     cells = []
 
@@ -229,35 +230,45 @@ def hero_series(R: dict) -> dict:
         if not m:
             return {"key": key, "role": role, "value": None}
         lo, hi = m["ci95"] if m.get("ci95") else (m["value"], m["value"])
-        return {"key": key, "role": role, "value": 1 - m["value"], "lo": 1 - hi, "hi": 1 - lo,
+        return {"key": key, "role": role, "value": m["value"], "lo": lo, "hi": hi,
                 "n": m.get("n", rec.get("documents")), "documents": documents}
 
     for cell, c in D["cells"].items():
         readers = c["readers"]
-        alts = [(1 - readers[k][HERO_MEASURE]["value"], k) for k in ALTERNATIVES if HERO_MEASURE in readers.get(k, {})]
-        best = max(alts)[1] if alts else None  # ties go to the later name in ALTERNATIVES order, deterministically
+        alts = [(readers[k][HERO_MEASURE]["value"], k) for k in ALTERNATIVES if HERO_MEASURE in readers.get(k, {})]
+        best = min(alts)[1] if alts else None  # ties go to the earlier name in ALTERNATIVES order, deterministically
         cells.append({"cell": cell, "documents": c["documents"], "lanes": [
             lane("heocr", "ours", readers.get("heocr"), c["documents"]),
             lane(best, "alt", readers.get(best) if best else None, c["documents"]),
             lane("stock", "stock", readers.get("stock"), c["documents"]),
         ]})
-    return {"measure": HERO_MEASURE, "cells": cells, "run": D["run"], "updated": R["updated"], "gate": D.get("gate", "not_run")}
+    top = max((ln["hi"] for c in cells for ln in c["lanes"] if ln["value"] is not None), default=0.0)
+    return {"measure": HERO_MEASURE, "cells": cells, "axis": hero_axis(top), "run": D["run"], "updated": R["updated"],
+            "gate": D.get("gate", "not_run")}
 
 
-def acc(x: float) -> str:
-    v = 100 * x
-    return f"{v:.2f}%" if v >= 99 else f"{v:.1f}%"
+HERO_TICK_STEPS = (0.01, 0.02, 0.025, 0.05, 0.1, 0.2, 0.25, 0.5)  # error rates; the smallest giving at most 5 intervals
+
+
+def hero_axis(top: float) -> dict:
+    """The shared linear axis: 0 to ``top`` rounded up to a clean tick, at most 5 intervals."""
+    step = next((s for s in HERO_TICK_STEPS if math.ceil(round(top / s, 9)) <= 5), 1.0)
+    n = max(1, math.ceil(round(top / step, 9)))
+    return {"max": round(n * step, 4), "ticks": [round(i * step, 4) for i in range(n + 1)]}
 
 
 def hero_html(H: dict, t: dict, lang: str) -> str:
-    """Draw the hero chart: plain HTML rows with one small inline SVG strip per lane (a 0-100% track, the
+    """Draw the hero chart: plain HTML rows with one small inline SVG strip per lane (the shared 0-to-max track, the
     interval as a line, the value as a dot). All colour comes from the page's CSS variables, so it reads in
     both themes, and all drawing is here, apart from the data (hero_series)."""
     out = [f'<figure class="hero" aria-labelledby="hero-h">\n<h2 id="hero-h">{e(t["hero_h"])}</h2>\n'
            f'<p class="sub">{e(t["hero_measure"])}</p>\n']
-    ticks = "".join(f'<line x1="{p}%" x2="{p}%" y1="0" y2="16" class="tick"/>' for p in (0, 25, 50, 75, 100))
-    labels = "".join(f'<text x="{p}%" y="12" text-anchor="{"start" if p == 0 else "end" if p == 100 else "middle"}">{p}%</text>'
-                     for p in (0, 25, 50, 75, 100))
+    top = H["axis"]["max"]
+    at = lambda v: round(100 * max(0.0, min(top, v)) / top, 2)  # position in the strip, %
+    ticks = "".join(f'<line x1="{at(v)}%" x2="{at(v)}%" y1="0" y2="16" class="tick"/>' for v in H["axis"]["ticks"])
+    last = len(H["axis"]["ticks"]) - 1
+    labels = "".join(f'<text x="{at(v)}%" y="12" text-anchor="{"start" if i == 0 else "end" if i == last else "middle"}">{100 * v:g}%</text>'
+                     for i, v in enumerate(H["axis"]["ticks"]))
     out.append(f'<div class="hero-axis"><span></span><svg dir="ltr" width="100%" height="16" aria-hidden="true">{labels}</svg><span></span></div>\n')
     d = "rtl" if lang == "he" else "ltr"
     for c in H["cells"]:
@@ -276,14 +287,14 @@ def hero_html(H: dict, t: dict, lang: str) -> str:
             sub = ""
             if ln["n"] is not None and ln["n"] != ln["documents"]:
                 sub = f' <span class="ci">{e(t["of_docs"].format(n=ln["n"], total=ln["documents"]))}</span>'
-            x, lo, hi = (round(100 * max(0.0, min(1.0, v)), 2) for v in (ln["value"], ln["lo"], ln["hi"]))
-            tip = f'{name}: {acc(ln["value"])} [{acc(ln["lo"])}–{acc(ln["hi"])}]'
+            x, lo, hi = (at(v) for v in (ln["value"], ln["lo"], ln["hi"]))
+            tip = f'{name}: {pct(ln["value"])} [{pct(ln["lo"])}–{pct(ln["hi"])}]'
             out.append(f'<div class="hero-lane {ln["role"]}"><span class="hero-reader">{e(name)}{sub}</span>'
                        f'<svg dir="ltr" width="100%" height="16" role="img" aria-label="{e(tip)}">{ticks}'
                        f'<line x1="0%" x2="100%" y1="8" y2="8" class="track"/>'
                        f'<line x1="{lo}%" x2="{hi}%" y1="8" y2="8" class="interval"/>'
                        f'<circle cx="{x}%" cy="8" r="5" class="dot"><title>{e(tip)}</title></circle></svg>'
-                       f'<span class="hero-val"><bdi dir="ltr">{acc(ln["value"])}</bdi></span></div>\n')
+                       f'<span class="hero-val"><bdi dir="ltr">{pct(ln["value"])}</bdi></span></div>\n')
         out.append("</div>\n")
     gate = t["gate_not_run"] if H["gate"] == "not_run" else H["gate"]
     out.append(f'<figcaption class="note">{e(t["hero_sets"])} {e(t["hero_run"].format(run=H["run"], d=H["updated"], gate=gate))}</figcaption>\n</figure>\n')
