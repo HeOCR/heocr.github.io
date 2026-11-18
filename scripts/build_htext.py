@@ -14,6 +14,9 @@ from __future__ import annotations
 import argparse, html, json, re, sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import theme  # noqa: E402  (the site theme, one source for every page)
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "htext" / "corpora.json"
 
@@ -178,7 +181,7 @@ def page(lang: str, R: dict) -> str:
     out = []
     w = out.append
     # --- head (same structure as the Benchmarks page)
-    w(f'<!doctype html>\n<html lang="{lang}"{" dir=\"rtl\"" if lang == "he" else ""}>\n<head>\n<meta charset="utf-8">\n'
+    w(f'<!doctype html>\n<html lang="{lang}"{" dir=\"rtl\"" if lang == "he" else ""}>\n<head>\n<meta charset="utf-8">\n{theme.HEAD}'
       '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
       f'<title>{e(t["title"])}</title>\n<meta name="description" content="{e(t["desc"])}">\n')
     fonts = ("family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;600&family=Inter:wght@400;500;600"
@@ -192,7 +195,7 @@ def page(lang: str, R: dict) -> str:
     cur = '<span aria-current="page" lang="{0}">{1}</span>'.format(lang, "עברית" if lang == "he" else "English")
     oth = f'<a href="{t["other_href"]}" lang="{"en" if lang == "he" else "he"}" hreflang="{"en" if lang == "he" else "he"}">{t["other"]}</a>'
     w(f'<header>\n  <div class="wrap">\n    <nav class="langbar" aria-label="{"שפה / Language" if lang == "he" else "Language / שפה"}">\n'
-      f'      <div class="lang-toggle">\n        {cur}\n        {oth}\n      </div>\n    </nav>\n'
+      f'      <div class="lang-toggle">\n        {cur}\n        {oth}\n      </div>\n      {theme.button(lang)}\n    </nav>\n'
       f'    <a class="back" href="{t["home"]}">{t["back"]}</a>\n    <h1>{e(t["title"])}</h1>\n'
       f'    <p class="lede">{t["lede"]}</p>\n'
       f'    <p class="note">{t["updated"].format(d=e(R["updated"]), json=json_href)}</p>\n  </div>\n</header>\n\n')
@@ -279,7 +282,7 @@ def page(lang: str, R: dict) -> str:
     w(f'<section id="licence">\n<h2>{e(t["licence_h"])}</h2>\n<p>{t["licence_p"]}</p>\n</section>\n')
     w("</main>\n\n<footer>\n  <div class=\"wrap\">\n"
       f'    <p>{t["footer"]}</p>\n    <p><a href="{R["repository"]}">HeOCR/htext</a> · <a href="{json_href}">corpora.json</a> · <a href="{t["home"]}">HeOCR</a></p>\n'
-      "  </div>\n</footer>\n\n</body>\n</html>\n")
+      "  </div>\n</footer>\n\n" + theme.BODY + "</body>\n</html>\n")
     return "".join(out)
 
 

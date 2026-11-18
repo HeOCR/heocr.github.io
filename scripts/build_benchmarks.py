@@ -11,6 +11,9 @@ from __future__ import annotations
 import argparse, html, json, re, sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import theme  # noqa: E402  (the site theme, one source for every page)
+
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "benchmarks" / "results.json"
 
@@ -34,6 +37,28 @@ EXTRA_CSS = """
   .warn { border-inline-start: 3px solid var(--accent); padding: 2px 0 2px 12px; padding-inline-start: 12px; margin: 10px 0; }
   .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
   .toc a { font-size: 0.9rem; }
+  .hero { margin: 0; padding: 40px 0 8px; }
+  .hero-axis, .hero-lane { display: grid; grid-template-columns: minmax(7rem, 15rem) 1fr 4.5rem; gap: 10px; align-items: center; }
+  .hero-axis svg text { font-size: 11px; fill: var(--muted); }
+  .hero-cell { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .hero-name { font-weight: 600; font-size: 0.95rem; margin: 0 0 4px; }
+  .hero-reader { font-size: 0.85rem; color: var(--muted); }
+  .hero-lane.ours .hero-reader { color: var(--text); font-weight: 600; }
+  .hero-val { font-size: 0.85rem; font-variant-numeric: tabular-nums; text-align: end; }
+  .hero-missing { grid-column: 2 / 4; font-size: 0.82rem; color: var(--muted); font-style: italic; }
+  .hero svg { direction: ltr; overflow: visible; }  /* the axis runs from 0% at the left on both pages; a dot at 0% or 100% is drawn whole */
+  .hero svg .track { stroke: var(--line); stroke-width: 2; }
+  .hero svg .tick { stroke: var(--line); stroke-width: 1; }
+  .hero svg .interval { stroke: var(--muted); stroke-width: 2; stroke-linecap: round; }
+  .hero svg .dot { fill: var(--muted); stroke: var(--surface); stroke-width: 2; }
+  .hero .ours svg .interval { stroke: var(--accent); }
+  .hero .ours svg .dot { fill: var(--accent); }
+  @media (max-width: 600px) {  /* a phone: each reader's name above its strip */
+    .hero-axis, .hero-lane { grid-template-columns: 1fr 4rem; row-gap: 0; }
+    .hero-axis > span:first-child { display: none; }
+    .hero-reader { grid-column: 1 / -1; }
+    .hero-missing { grid-column: 1 / -1; }
+  }
 """
 
 T = {
@@ -85,6 +110,16 @@ T = {
         "cell_note": {"PDF T4": "T4 and T5 use the same scanned pages; heocr and Tesseract read both by OCR, so their figures match. T4 adds a wrong text layer, which the other readers use."},
         "wer_note": "Word error counts inserted words as well as wrong and missing ones, so it can exceed 100%.",
         "footer": "Created by <a href=\"http://www.shaypalachy.com/\">Shay Palachy Affek</a> and the HeOCR maintainers.",
+        "hero_h": "Documents at a glance",
+        "hero_measure": "Character accuracy (100% minus the character error rate), higher is better. Dots are the run's values; bars are 95% intervals. The axis runs from 0% to 100%.",
+        "hero_sets": "Generated documents with exact gold (D-bench). heocr is developed against these sets, so they are not held out.",
+        "hero_run": "Run {run}, updated {d}. Release gate: {gate}.",
+        "gate_not_run": "not yet run",
+        "best_alt": "Best alternative: {name}",
+        "no_alt": "No alternative reader was scored on this kind of document.",
+        "no_score": "No character-error score in this run.",
+        "of_docs": "{n} of {total} documents",
+        "release_gate": "Release gate",
     },
     "he": {
         "title": "מדדי ביצועים של HeOCR",
@@ -140,6 +175,16 @@ T = {
         "cell_note": {"PDF T4": "T4 ו־T5 משתמשים באותם עמודים סרוקים; heocr ו־Tesseract קוראים את שניהם ב־OCR, ולכן התוצאות שלהם זהות. ב־T4 נוספת שכבת טקסט שגויה, שבה משתמשים הקוראים האחרים."},
         "wer_note": "שגיאת מילים סופרת גם מילים שנוספו, לא רק מילים שגויות או חסרות, ולכן היא יכולה לעלות על 100%.",
         "footer": "נוצר בידי <a href=\"http://www.shaypalachy.com/\">שי פלצ'י אפק</a> ומתחזקי HeOCR.",
+        "hero_h": "המסמכים במבט אחד",
+        "hero_measure": "דיוק תווים (100% פחות שיעור שגיאת התווים), גבוה יותר עדיף. הנקודות הן הערכים בהרצה; הקווים הם רווחי סמך של 95%. הציר נע מ־0% עד 100%.",
+        "hero_sets": "מסמכים מחוללים עם טקסט נכון מדויק (D-bench). heocr מפותח מול הקבוצות האלה, ולכן הן אינן מוחזקות בצד.",
+        "hero_run": "הרצה {run}, עודכן {d}. שער השחרור: {gate}.",
+        "gate_not_run": "עוד לא הורץ",
+        "best_alt": "החלופה הטובה ביותר: {name}",
+        "no_alt": "אף קורא חלופי לא הוערך על סוג המסמך הזה.",
+        "no_score": "אין ציון שגיאת תווים בהרצה הזו.",
+        "of_docs": "{n} מתוך {total} מסמכים",
+        "release_gate": "שער השחרור",
     },
 }
 LOWER = {"cer", "wer", "rows_silent", "silent_loss"}
@@ -167,6 +212,84 @@ def cell_html(v, ci):
     return f'<td class="num">{s}</td>'
 
 
+ALTERNATIVES = ["docling", "markitdown", "pymupdf4llm"]  # the open alternatives; stock Tesseract is shown on its own lane
+HERO_MEASURE = "cer"
+
+
+def hero_series(R: dict) -> dict:
+    """The hero chart's data, from results.json alone: per documents cell, in the file's order, three lanes,
+    heocr, the best alternative (highest character accuracy among ALTERNATIVES) and stock Tesseract
+    (tessdata_best heb, always shown). A lane holds accuracy = 1 - CER and its 95% interval, or None
+    when the reader has no score in the cell. Only readers present in results.json appear."""
+    D = R["documents"]
+    cells = []
+
+    def lane(key, role, rec, documents):
+        m = (rec or {}).get(HERO_MEASURE)
+        if not m:
+            return {"key": key, "role": role, "value": None}
+        lo, hi = m["ci95"] if m.get("ci95") else (m["value"], m["value"])
+        return {"key": key, "role": role, "value": 1 - m["value"], "lo": 1 - hi, "hi": 1 - lo,
+                "n": m.get("n", rec.get("documents")), "documents": documents}
+
+    for cell, c in D["cells"].items():
+        readers = c["readers"]
+        alts = [(1 - readers[k][HERO_MEASURE]["value"], k) for k in ALTERNATIVES if HERO_MEASURE in readers.get(k, {})]
+        best = max(alts)[1] if alts else None  # ties go to the later name in ALTERNATIVES order, deterministically
+        cells.append({"cell": cell, "documents": c["documents"], "lanes": [
+            lane("heocr", "ours", readers.get("heocr"), c["documents"]),
+            lane(best, "alt", readers.get(best) if best else None, c["documents"]),
+            lane("stock", "stock", readers.get("stock"), c["documents"]),
+        ]})
+    return {"measure": HERO_MEASURE, "cells": cells, "run": D["run"], "updated": R["updated"], "gate": D.get("gate", "not_run")}
+
+
+def acc(x: float) -> str:
+    v = 100 * x
+    return f"{v:.2f}%" if v >= 99 else f"{v:.1f}%"
+
+
+def hero_html(H: dict, t: dict, lang: str) -> str:
+    """Draw the hero chart: plain HTML rows with one small inline SVG strip per lane (a 0-100% track, the
+    interval as a line, the value as a dot). All colour comes from the page's CSS variables, so it reads in
+    both themes, and all drawing is here, apart from the data (hero_series)."""
+    out = [f'<figure class="hero" aria-labelledby="hero-h">\n<h2 id="hero-h">{e(t["hero_h"])}</h2>\n'
+           f'<p class="sub">{e(t["hero_measure"])}</p>\n']
+    ticks = "".join(f'<line x1="{p}%" x2="{p}%" y1="0" y2="16" class="tick"/>' for p in (0, 25, 50, 75, 100))
+    labels = "".join(f'<text x="{p}%" y="12" text-anchor="{"start" if p == 0 else "end" if p == 100 else "middle"}">{p}%</text>'
+                     for p in (0, 25, 50, 75, 100))
+    out.append(f'<div class="hero-axis"><span></span><svg dir="ltr" width="100%" height="16" aria-hidden="true">{labels}</svg><span></span></div>\n')
+    d = "rtl" if lang == "he" else "ltr"
+    for c in H["cells"]:
+        out.append(f'<div class="hero-cell">\n<div class="hero-name"><bdi dir="{d}">{e(t["cells"][c["cell"]])}</bdi> <span class="note">· <bdi dir="ltr">{c["cell"]}</bdi> · '
+                   f'<bdi dir="{d}">{e(t["docs"].format(n=c["documents"]))}</bdi></span></div>\n')
+        for ln in c["lanes"]:
+            if ln["role"] == "alt":
+                name = t["best_alt"].format(name=t["readers"][ln["key"]]) if ln["key"] else t["readers"].get("alt", "")
+            else:
+                name = t["readers"][ln["key"]]
+            if ln["value"] is None:
+                msg = t["no_alt"] if ln["role"] == "alt" and not ln["key"] else t["no_score"]
+                out.append(f'<div class="hero-lane {ln["role"]} none"><span class="hero-reader">{e(name) if ln["key"] else ""}</span>'
+                           f'<span class="hero-missing">{e(msg)}</span></div>\n')
+                continue
+            sub = ""
+            if ln["n"] is not None and ln["n"] != ln["documents"]:
+                sub = f' <span class="ci">{e(t["of_docs"].format(n=ln["n"], total=ln["documents"]))}</span>'
+            x, lo, hi = (round(100 * max(0.0, min(1.0, v)), 2) for v in (ln["value"], ln["lo"], ln["hi"]))
+            tip = f'{name}: {acc(ln["value"])} [{acc(ln["lo"])}–{acc(ln["hi"])}]'
+            out.append(f'<div class="hero-lane {ln["role"]}"><span class="hero-reader">{e(name)}{sub}</span>'
+                       f'<svg dir="ltr" width="100%" height="16" role="img" aria-label="{e(tip)}">{ticks}'
+                       f'<line x1="0%" x2="100%" y1="8" y2="8" class="track"/>'
+                       f'<line x1="{lo}%" x2="{hi}%" y1="8" y2="8" class="interval"/>'
+                       f'<circle cx="{x}%" cy="8" r="5" class="dot"><title>{e(tip)}</title></circle></svg>'
+                       f'<span class="hero-val"><bdi dir="ltr">{acc(ln["value"])}</bdi></span></div>\n')
+        out.append("</div>\n")
+    gate = t["gate_not_run"] if H["gate"] == "not_run" else H["gate"]
+    out.append(f'<figcaption class="note">{e(t["hero_sets"])} {e(t["hero_run"].format(run=H["run"], d=H["updated"], gate=gate))}</figcaption>\n</figure>\n')
+    return "".join(out)
+
+
 def facts(rows):
     return '<ul class="facts">' + "".join(f"<li><strong>{e(k)}:</strong> {v}</li>" for k, v in rows) + "</ul>"
 
@@ -181,7 +304,7 @@ def page(lang: str, R: dict) -> str:
     out = []
     w = out.append
     # --- head
-    w(f'<!doctype html>\n<html lang="{lang}"{" dir=\"rtl\"" if lang == "he" else ""}>\n<head>\n<meta charset="utf-8">\n'
+    w(f'<!doctype html>\n<html lang="{lang}"{" dir=\"rtl\"" if lang == "he" else ""}>\n<head>\n<meta charset="utf-8">\n{theme.HEAD}'
       '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
       f'<title>{e(t["title"])}</title>\n<meta name="description" content="{e(t["desc"])}">\n')
     fonts = ("family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;600&family=Inter:wght@400;500;600"
@@ -195,11 +318,13 @@ def page(lang: str, R: dict) -> str:
     cur = '<span aria-current="page" lang="{0}">{1}</span>'.format(lang, "עברית" if lang == "he" else "English")
     oth = f'<a href="{t["other_href"]}" lang="{"en" if lang == "he" else "he"}" hreflang="{"en" if lang == "he" else "he"}">{t["other"]}</a>'
     w(f'<header>\n  <div class="wrap">\n    <nav class="langbar" aria-label="{"שפה / Language" if lang == "he" else "Language / שפה"}">\n'
-      f'      <div class="lang-toggle">\n        {cur}\n        {oth}\n      </div>\n    </nav>\n'
+      f'      <div class="lang-toggle">\n        {cur}\n        {oth}\n      </div>\n      {theme.button(lang)}\n    </nav>\n'
       f'    <a class="back" href="{t["home"]}">{t["back"]}</a>\n    <h1>{e(t["title"])}</h1>\n'
       f'    <p class="lede">{t["lede"].format(json=json_href)}</p>\n'
       f'    <p class="note">{e(t["updated"].format(d=R["updated"]))}</p>\n  </div>\n</header>\n\n')
     w('<main class="wrap doc bench">\n')
+    w(hero_html(hero_series(R), t, lang))
+    w(f'<!-- release-gate: eval adds the "{e(t["release_gate"])}" section here after the gate verdict -->\n<div id="release-gate"></div>\n')
     ids = [("p-mod", t["pmod_h"]), ("p-hist", t["phist_h"]), ("handwriting", t["hand_h"]),
            ("documents", t["doc_h"]), ("vendors", t["vend_h"])]
     w('<nav class="toc">' + " · ".join(f'<a href="#{i}">{e(h)}</a>' for i, h in ids) + "</nav>\n")
@@ -277,7 +402,7 @@ def page(lang: str, R: dict) -> str:
       f'<div class="empty">{e(t["vend_t"])}</div>\n</section>\n')
     w("</main>\n\n<footer>\n  <div class=\"wrap\">\n"
       f'    <p>{t["footer"]}</p>\n    <p><a href="{json_href}">results.json</a> · <a href="{t["home"]}">HeOCR</a></p>\n'
-      "  </div>\n</footer>\n\n</body>\n</html>\n")
+      "  </div>\n</footer>\n\n" + theme.BODY + "</body>\n</html>\n")
     return "".join(out)
 
 
