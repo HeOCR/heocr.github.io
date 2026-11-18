@@ -45,6 +45,7 @@ EXTRA_CSS = """
   .hero-reader { font-size: 0.85rem; color: var(--muted); }
   .hero-lane.ours .hero-reader { color: var(--text); font-weight: 600; }
   .hero-val { font-size: 0.85rem; font-variant-numeric: tabular-nums; text-align: end; }
+  .hero-ratio { font-size: 0.82rem; font-weight: 600; color: var(--accent); text-align: end; }
   .hero-missing { grid-column: 2 / 4; font-size: 0.82rem; color: var(--muted); font-style: italic; }
   .hero svg { direction: ltr; overflow: visible; }  /* the axis runs from 0% at the left on both pages; a dot at either end is drawn whole */
   .hero svg .track { stroke: var(--line); stroke-width: 2; }
@@ -120,6 +121,8 @@ T = {
         "no_score": "No character-error score in this run.",
         "of_docs": "{n} of {total} documents",
         "release_gate": "Release gate",
+        "ratio": "{r}× fewer errors vs best alternative",
+        "ratio_cap": "more than {r}× fewer errors vs best alternative",
     },
     "he": {
         "title": "מדדי ביצועים של HeOCR",
@@ -185,6 +188,8 @@ T = {
         "no_score": "אין ציון שגיאת תווים בהרצה הזו.",
         "of_docs": "{n} מתוך {total} מסמכים",
         "release_gate": "שער השחרור",
+        "ratio": "פי {r} פחות שגיאות מהחלופה הטובה ביותר",
+        "ratio_cap": "יותר מפי {r} פחות שגיאות מהחלופה הטובה ביותר",
     },
 }
 LOWER = {"cer", "wer", "rows_silent", "silent_loss"}
@@ -237,14 +242,30 @@ def hero_series(R: dict) -> dict:
         readers = c["readers"]
         alts = [(readers[k][HERO_MEASURE]["value"], k) for k in ALTERNATIVES if HERO_MEASURE in readers.get(k, {})]
         best = min(alts)[1] if alts else None  # ties go to the earlier name in ALTERNATIVES order, deterministically
-        cells.append({"cell": cell, "documents": c["documents"], "lanes": [
+        lanes = [
             lane("heocr", "ours", readers.get("heocr"), c["documents"]),
             lane(best, "alt", readers.get(best) if best else None, c["documents"]),
             lane("stock", "stock", readers.get("stock"), c["documents"]),
-        ]})
+        ]
+        cells.append({"cell": cell, "documents": c["documents"], "lanes": lanes, "ratio": hero_ratio(lanes[0], lanes[1])})
     top = max((ln["hi"] for c in cells for ln in c["lanes"] if ln["value"] is not None), default=0.0)
     return {"measure": HERO_MEASURE, "cells": cells, "axis": hero_axis(top), "run": D["run"], "updated": R["updated"],
             "gate": D.get("gate", "not_run")}
+
+
+HERO_RATIO_CAP = 50  # above it, "more than 50x": a point value near zero makes a huge ratio unstable
+
+
+def hero_ratio(ours: dict, alt: dict) -> dict | None:
+    """How many times fewer errors heocr makes than the best alternative, from the two point estimates; only
+    when the two 95% intervals do not overlap and heocr's is the lower, else None (and None with no alternative).
+    ``text`` is the figure: an integer from 3x, one decimal below, and the cap (``capped``) above HERO_RATIO_CAP."""
+    if ours["value"] is None or alt["value"] is None or not ours["hi"] < alt["lo"]:
+        return None
+    r = alt["value"] / ours["value"] if ours["value"] > 0 else math.inf
+    if r > HERO_RATIO_CAP:
+        return {"value": r, "text": str(HERO_RATIO_CAP), "capped": True}
+    return {"value": r, "text": f"{r:.0f}" if r >= 3 else f"{r:.1f}", "capped": False}
 
 
 HERO_TICK_STEPS = (0.01, 0.02, 0.025, 0.05, 0.1, 0.2, 0.25, 0.5)  # error rates; the smallest giving at most 5 intervals
@@ -295,6 +316,9 @@ def hero_html(H: dict, t: dict, lang: str) -> str:
                        f'<line x1="{lo}%" x2="{hi}%" y1="8" y2="8" class="interval"/>'
                        f'<circle cx="{x}%" cy="8" r="5" class="dot"><title>{e(tip)}</title></circle></svg>'
                        f'<span class="hero-val"><bdi dir="ltr">{pct(ln["value"])}</bdi></span></div>\n')
+            if ln["role"] == "ours" and c["ratio"]:
+                r = c["ratio"]
+                out.append(f'<div class="hero-ratio">{e(t["ratio_cap" if r["capped"] else "ratio"].format(r=r["text"]))}</div>\n')
         out.append("</div>\n")
     gate = t["gate_not_run"] if H["gate"] == "not_run" else H["gate"]
     out.append(f'<figcaption class="note">{e(t["hero_sets"])} {e(t["hero_run"].format(run=H["run"], d=H["updated"], gate=gate))}</figcaption>\n</figure>\n')
