@@ -121,66 +121,41 @@
 
 <main class="wrap">
 
+  <section id="models">
+    <h2>שימוש ב־HeOCR</h2>
+    <p class="sub">במה להשתמש היום כדי להוציא טקסט עברי ממסמכים.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/heocr"><bdi>heocr</bdi></a> · צינור העיבוד</h3>
+        <p>טקסט עברי, כותרות וטבלאות מכל מסמך: PDF, ‏Word, ‏Excel, ‏PowerPoint, דפי אינטרנט וסריקות. הוא קורא את שכבת הטקסט של ה־PDF כשאפשר לסמוך עליה, ומריץ OCR כשאי אפשר, ומתעד עמוד אחר עמוד מה עשה ומה לא הצליח לקרוא. <code>pip install heocr</code> (ב־PyPI החל מגרסה 0.1.0; עד אז, התקנה מהמאגר).</p>
+        <div class="meta"><span>Apache-2.0</span><span>Python</span></div>
+        <div class="row">
+          <a href="https://github.com/HeOCR/heocr">GitHub</a>
+          <a href="benchmarks.html">מדדי ביצועים</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3><bdi>R7</bdi> · OCR לדפוס עברי ישן</h3>
+        <p>מודל ה־OCR שאנחנו ממליצים עליו לספרים סרוקים ולדפוס ישן. על 38 עמודי ספרים אמיתיים עם טקסט שנבדק בידי אדם הוא שוגה ב־20.9% מהתווים וב־39.3% מהמילים, לעומת 22.6% ו־47.3% ב־Tesseract הרגיל. ב־heocr משתמשים בו עם <code>--ocr-model heocr_r7</code>, וב־Tesseract עם <code>-l heocr_r7</code>.</p>
+        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24126449">DOI ב־Zenodo</a>
+          <a href="benchmarks.html">מדדי ביצועים</a>
+        </div>
+      </div>
+    </div>
+    <p class="note">מודלים קודמים ומודלי בסיס למחקר נשארים זמינים באופן פתוח ב־<a href="https://huggingface.co/HeOCR">Hugging Face</a> וב־<a href="https://zenodo.org/communities/heocr">Zenodo</a>.</p>
+  </section>
+
   <section id="real-print">
     <h2>קריאת ספרים מודפסים אמיתיים</h2>
     <p class="sub">דפוס עברי ישן הוא המקום שבו OCR פתוח חלש במיוחד. אנחנו מצמידים סריקות של ספרים בנחלת הכלל לטקסט המוקלד של אותה מהדורה מ<a href="https://benyehuda.org">פרויקט בן־יהודה</a>, וכך מקבלים דוגמאות אימון מדויקות ברמת השורה מעמודים אמיתיים. הסריקות מגיעות מאוסף "שימוש חופשי" של <a href="https://www.nli.org.il">הספרייה הלאומית</a>, ומסריקות בנחלת הכלל ב־<a href="https://archive.org">Internet Archive</a> וב־<a href="https://commons.wikimedia.org">Wikimedia Commons</a>. כל שורה שתתפרסם תשמור את רשומת המקור שלה ואת הצדקת הזכויות שלה.</p>
     <div class="grid">
       <div class="card">
-        <h3><bdi>R7</bdi> · כוונון של <bdi>Tesseract</bdi>, יותר ספרים</h3>
-        <p>אותו מתכון כמו <bdi>R6</bdi>, על 95 אלף שורות אמיתיות מ־30 ספרים בנחלת הכלל: 7 סריקות של הספרייה הלאומית ו־23 סריקות של ספריות אוניברסיטאיות ב־Internet Archive. הוא קורא שורות בודדות טוב יותר מ־<bdi>R6</bdi>, עם כרבע פחות שגיאות תווים על ספרים שלא שימשו לאימון. על אותם 38 עמודים, ברמת העמוד השלם הוא בתיקו עם <bdi>R6</bdi>: 20.9% שגיאת תווים ו־39.3% שגיאת מילים, לעומת 22.6% ו־47.3% ב־Tesseract הרגיל. <bdi>R6</bdi> עדיין תקף. השימוש: <code>-l heocr_r7</code>.</p>
-        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
-        <div class="row">
-          <a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">Hugging Face</a>
-          <a href="https://doi.org/10.5281/zenodo.24126449">DOI ב־Zenodo</a>
-        </div>
-      </div>
-      <div class="card">
-        <h3><bdi>R6</bdi> · כוונון של <bdi>Tesseract</bdi></h3>
-        <p>מודל העברית הפתוח של Google, <code>tessdata_best</code>, אחרי כוונון על 13.6 אלף שורות אמיתיות מסריקות של הספרייה הלאומית. בדקנו אותו על 38 עמודי ספרים אמיתיים, עם טקסט שנבדק בידי אדם (ויקיטקסט העברי): 20.9% שגיאת תווים לעומת 22.6% ב־Tesseract הרגיל, ו־40.7% שגיאת מילים לעומת 47.3%. זה שיפור אמיתי, אבל קטן. אפשר להשתמש בו במקום <code>heb</code> של Tesseract, עם <code>-l heocr_r6</code>.</p>
-        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
-        <div class="row">
-          <a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">Hugging Face</a>
-          <a href="https://doi.org/10.5281/zenodo.24109989">DOI ב־Zenodo</a>
-        </div>
-      </div>
-      <div class="card">
         <h3>נתוני שורות מסריקות אמיתיות</h3>
         <p>תמונות שורה מסריקות אמיתיות, כל אחת עם טקסט המהדורה שלה. כל שורה מתעדת את הספר, את רשומת הסריקה, את הספרייה שממנה הגיעה ואת הצדקת הזכויות, כך שאפשר להתחקות אחרי כל פריט או להסיר אותו.</p>
         <div class="meta"><span>CC0</span><span>בהכנה</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="models">
-    <h2>מודלים</h2>
-    <p class="sub">צינור עבודה בן שלושה שלבים ב־<a href="https://kraken.re">kraken</a> לעמודי מסמכים בעברית מודרנית: מציאת השורות, סידורן בסדר הקריאה, וקריאתן. אלה מודלי בסיס למחקר שאומנו רק על עמודים סינתטיים. על דפוס סרוק אמיתי הם חלשים בהרבה, ועל זה בדיוק עונה העבודה על ספרים אמיתיים שלמעלה.</p>
-    <div class="grid">
-      <div class="card">
-        <h3><bdi>R4d</bdi> · פילוח</h3>
-        <p>מוצא את קווי הבסיס והמצולעים של שורות הטקסט, ושמונה סוגי אזורים, כמו כותרת, גוף, חותמת, חתימה ותאי טבלה.</p>
-        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
-        <div class="row">
-          <a href="https://huggingface.co/HeOCR/heocr-r4d-segmentation">Hugging Face</a>
-          <a href="https://doi.org/10.5281/zenodo.24023070">DOI ב־Zenodo</a>
-        </div>
-      </div>
-      <div class="card">
-        <h3><bdi>A1</bdi> · סדר קריאה</h3>
-        <p>מסדר את שורות העמוד לפי המיקום וסוג האזור של כל שורה.</p>
-        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
-        <div class="row">
-          <a href="https://huggingface.co/HeOCR/heocr-a1-reading-order">Hugging Face</a>
-          <a href="https://doi.org/10.5281/zenodo.24023072">DOI ב־Zenodo</a>
-        </div>
-      </div>
-      <div class="card">
-        <h3><bdi>R3h</bdi> · זיהוי</h3>
-        <p>קורא שורות עברית מודפסות ובסגנון כתב יד, כולל ספרות, אותיות לטיניות ופיסוק.</p>
-        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
-        <div class="row">
-          <a href="https://huggingface.co/HeOCR/heocr-r3h-recognition">Hugging Face</a>
-          <a href="https://doi.org/10.5281/zenodo.24023074">DOI ב־Zenodo</a>
-        </div>
       </div>
     </div>
   </section>
