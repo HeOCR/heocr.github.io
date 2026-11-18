@@ -1,0 +1,61 @@
+/* ---------- 1. Tokens: Bounding Box ---------- */
+:root {
+  --bg: #ffffff;
+  --surface: #f6f7fc;
+  --text: #0c1222;
+  --muted: #56607a;
+  --line: #dfe3f2;
+  --line-strong: #b9c1de;
+  --accent: #2447f9;
+  --accent-soft: #eef1ff;
+  --tag: #eef0f7;
+  --on-accent: #ffffff;
+  --grid: #f1f3fb;
+  /* chart series: heocr = good green, best other tool = error red, Tesseract = neutral */
+  --series-ours: #15803d;
+  --series-alt: #dc2626;
+  --series-tess: #64748b;
+  --ok: #166534;
+  --ok-soft: #e7f4ec;
+  --no: #a12a22;
+  --no-soft: #fbe9e7;
+
+  --font-display: "JetBrains Mono", "Noto Sans Hebrew", ui-monospace, monospace;
+  --font-body: "Noto Sans Hebrew", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Noto Sans Hebrew", ui-monospace, Menlo, Consolas, monospace;
+
+  --fs-h1: clamp(1.9rem, 1.3rem + 2.6cqi, 2.9rem);
+  --fs-h2: 1.45rem;
+  --fs-h3: 1.02rem;
+  --fs-lede: 1.1rem;
+  --fs-body: 1rem;
+  --fs-small: 0.9rem;
+  --fs-micro: 0.76rem;
+
+  --radius: 2px;
+  --radius-sm: 2px;
+  --wrap: 1160px;
+  --gutter: 24px;
+}
+[data-theme="dark"] {
+  /* today's night neutrals, unchanged */
+  --bg: #141414;
+  --surface: #1c1c1c;
+  --text: #ecebe8;
+  --muted: #a29d94;
+  --line: #2e2d2b;
+  --tag: #262523;
+  /* brand blue, lifted for the dark ground (today: #7fb6dd / #1d2a33) */
+  --accent: #8fa3ff;
+  --accent-soft: #1b2040;
+  --line-strong: #4a4844;
+  --on-accent: #0b1020;
+  --grid: #1a1a1a;
+  --series-ours: #1f9d55;
+  --series-alt: #f0564a;
+  --series-tess: #8892a0;
+  --ok: #7fcf9f;
+  --ok-soft: #18281f;
+  --no: #ee9a8b;
+  --no-soft: #31201c;
+}
