@@ -2,141 +2,51 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
-<!-- theme: scripts/theme.py -->
-<script>try{if(localStorage.getItem("heocr-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>htext</title>
 <meta name="description" content="htext: טקסט עברי ברישיונות פתוחים לאימון OCR עברי, בשלוש גרסאות (CC0,‏ CC BY,‏ CC BY-SA), עם רישום זכויות לכל פריט.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #ffffff;
-    --surface: #ffffff;
-    --text: #1d1b18;
-    --muted: #6b665e;
-    --line: #e7e3da;
-    --accent: #1f5f8b;
-    --accent-soft: #e6eff6;
-    --tag: #f2efe8;
-  }
-  :root[data-theme="dark"] {
-    --bg: #141414;
-    --surface: #1c1c1c;
-    --text: #ecebe8;
-    --muted: #a29d94;
-    --line: #2e2d2b;
-    --accent: #7fb6dd;
-    --accent-soft: #1d2a33;
-    --tag: #262523;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
-
-  header { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
-  .he { font-family: "Frank Ruhl Libre", serif; direction: rtl; text-align: left; color: var(--muted); font-size: 1.15rem; margin: 0 0 8px; }
-  h1 { font-family: "Frank Ruhl Libre", serif; font-size: clamp(2.6rem, 7vw, 3.6rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.01em; }
-  .lede { font-size: 1.15rem; max-width: 640px; margin: 0 0 24px; }
-  .links { display: flex; flex-wrap: wrap; gap: 10px; }
-  .btn { display: inline-block; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font-weight: 500; font-size: 0.95rem; }
-  .btn:hover { border-color: var(--accent); text-decoration: none; }
-
-  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 36px 0 0; font-size: 0.9rem; color: var(--muted); }
-  .flow span.step { background: var(--accent-soft); color: var(--text); padding: 4px 10px; border-radius: 999px; font-weight: 500; }
-
-  section { padding: 48px 0 8px; }
-  h2 { font-family: "Frank Ruhl Libre", serif; font-size: 1.7rem; margin: 0 0 6px; }
-  .sub { color: var(--muted); margin: 0 0 22px; max-width: 680px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: flex; flex-direction: column; }
-  .card h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 600; }
-  .card h3 a { color: var(--text); }
-  .card p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; flex: 1; }
-  .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.8rem; }
-  .meta span { background: var(--tag); padding: 2px 8px; border-radius: 6px; color: var(--muted); }
-  .meta a { font-weight: 500; }
-  .card .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
-  .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
-
-  footer { margin-top: 56px; padding: 28px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
-  footer p { margin: 0 0 6px; }
-  .doc > section { max-width: 720px; }
-  .doc h2 { margin-top: 0; }
-  .doc ul, .doc ol { padding-left: 22px; }
-  .doc li { margin: 0 0 8px; }
-  code { font-size: 0.9em; background: var(--tag); padding: 1px 5px; border-radius: 4px; }
-  .back { display: inline-block; margin-bottom: 18px; font-size: 0.95rem; }
-  header { padding-top: 20px; }
-  .langbar { display: flex; justify-content: flex-end; margin: 0 0 44px; }
-  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); overflow: hidden; font-size: 0.95rem; font-weight: 600; }
-  .lang-toggle a, .lang-toggle span { padding: 7px 16px; color: var(--muted); line-height: 1.3; }
-  .lang-toggle a:hover { background: var(--accent-soft); color: var(--text); text-decoration: none; }
-  .lang-toggle [aria-current] { background: var(--accent); color: var(--surface); }
-  body { font-family: Heebo, "Segoe UI", system-ui, -apple-system, sans-serif; }
-  .tag { color: var(--muted); font-size: 1.05rem; margin: 0 0 8px; text-align: right; }
-  .doc ul, .doc ol { padding-left: 0; padding-right: 22px; }
-  code, bdi, [dir="ltr"] { unicode-bidi: isolate; }
-  code { direction: ltr; display: inline-block; }
-
-  .langbar { gap: 10px; align-items: center; flex-wrap: wrap; }
-  .theme-toggle { font: inherit; font-size: 0.95rem; font-weight: 600; padding: 7px 16px; line-height: 1.3; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--muted); cursor: pointer; }
-  .theme-toggle:hover { background: var(--accent-soft); color: var(--text); }
-
-  .ht section { max-width: none; }
-  .ht h2 { margin-top: 0; }
-  .ht h3 { font-size: 1.05rem; margin: 26px 0 4px; }
-  .status { display: inline-block; background: var(--tag); color: var(--muted); padding: 2px 10px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; margin: 0 6px 10px 0; margin-inline-end: 6px; }
-  .tablewrap { overflow-x: auto; margin: 8px 0 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
-  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
-  th, td { padding: 8px 12px; text-align: start; border-bottom: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
-  tr:last-child td { border-bottom: 0; }
-  tr.total td { font-weight: 600; }
-  th { font-weight: 600; color: var(--muted); font-size: 0.82rem; }
-  td.num { font-variant-numeric: tabular-nums; }
-  td code, li code, p code { font-size: 0.85em; }
-  .facts { font-size: 0.9rem; margin: 6px 0 0; }
-  .facts li { margin: 0 0 4px; }
-  .credit { border-inline-start: 3px solid var(--accent); padding: 2px 0; padding-inline-start: 12px; margin: 10px 0; }
-  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
-  .toc a { font-size: 0.9rem; }
-  pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; direction: ltr; text-align: left; }
-  .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0 4px; }
-  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; min-width: 140px; }
-  .stat b { display: block; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
-  .stat span { color: var(--muted); font-size: 0.85rem; }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css">
+<script>(function(){try{if(localStorage.getItem("heocr-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}})()</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HeOCR">
+<meta property="og:title" content="htext">
+<meta property="og:description" content="htext: טקסט עברי ברישיונות פתוחים לאימון OCR עברי, בשלוש גרסאות (CC0,‏ CC BY,‏ CC BY-SA), עם רישום זכויות לכל פריט.">
+<meta property="og:url" content="https://heocr.github.io/he/htext.html">
+<meta property="og:image" content="https://heocr.github.io/og-image-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" hreflang="en" href="https://heocr.github.io/htext.html">
 <link rel="alternate" hreflang="he" href="https://heocr.github.io/he/htext.html">
 </head>
-<body>
-
-<header>
-  <div class="wrap">
-    <nav class="langbar" aria-label="שפה / Language">
-      <div class="lang-toggle">
-        <span aria-current="page" lang="he">עברית</span>
+<body class="site">
+<a class="skip" href="#main">דילוג לתוכן</a>
+<header class="site-header">
+<div class="wrap bar">
+<a class="brand" href="./" aria-label="HeOCR"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="7" width="34" height="34" class="lg-box sw2"></rect><rect x="4" y="4" width="6" height="6" class="lg-h"></rect><rect x="38" y="4" width="6" height="6" class="lg-h"></rect><rect x="4" y="38" width="6" height="6" class="lg-h"></rect><rect x="38" y="38" width="6" height="6" class="lg-h"></rect><path d="M16 18H32V32.5" class="lg-ink sw45"></path><path d="M16 24.5V32.5" class="lg-ink sw45"></path></svg><span dir="ltr">He<b>OCR</b></span></a>
+<nav class="site-nav" aria-label="ניווט באתר"><a href="benchmarks.html">מדדי ביצועים</a><a href="htext.html" aria-current="page">htext</a><a href="rights.html">זכויות והסרה</a></nav>
+<div class="tools">
+<div class="lang-toggle" role="group" aria-label="שפה / Language">
+<span aria-current="page" lang="he">עברית</span>
         <a href="../htext.html" lang="en" hreflang="en">English</a>
-      </div>
-      <button class="theme-toggle" type="button" aria-pressed="false" data-night="מצב לילה" data-day="מצב יום">מצב לילה</button>
-    </nav>
-    <a class="back" href="./">← HeOCR</a>
-    <h1>htext</h1>
-    <p class="lede">טקסט עברי ברישיונות פתוחים לאימון מנועי הזיהוי של HeOCR, חתוך לשורות, עם ניקוד ובלעדיו: בראש ובראשונה טקסט בנחלת הכלל, וטקסט בייחוס ובשיתוף זהה בגרסאות נפרדות. לכל יצירה או מסמך יש רישום זכויות משלו: מעמדו בישראל ובארה"ב, הרישיון שלו ושורת הקרדיט שלו. htext מתפרסם בשלוש גרסאות, אחת לכל רישיון, כדי שתוכלו לבחור את התנאים שמתאימים לכם; גרסת הליבה היא CC0 ואפשר להשתמש בה בלי תנאים.</p>
-    <p class="note">עודכן ב־2026-11-18. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href="../htext/corpora.json">corpora.json</a>.</p>
-  </div>
+</div>
+<button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><svg class="ico i-moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.6A5.6 5.6 0 0 1 6.4 3 5.6 5.6 0 1 0 13 9.6z"></path></svg><svg class="ico i-sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"></circle><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"></path></svg><span class="label">מצב לילה</span></button>
+</div>
+</div>
 </header>
-
-<main class="wrap doc ht">
-<nav class="toc"><a href="#what">מה זה htext</a> · <a href="#releases">גרסאות</a> · <a href="#corpora">מאגרים</a> · <a href="#rights">זכויות</a> · <a href="#use">הורדה ושימוש</a> · <a href="#credit">קרדיט</a> · <a href="#licence">רישיון</a></nav>
+<div class="band gridband"><div class="wrap page-head">
+<h1><span class="bb" data-tag="h1 · 0.99">htext</span></h1>
+<p class="lede">טקסט עברי ברישיונות פתוחים לאימון מנועי הזיהוי של HeOCR, חתוך לשורות, עם ניקוד ובלעדיו: בראש ובראשונה טקסט בנחלת הכלל, וטקסט בייחוס ובשיתוף זהה בגרסאות נפרדות. לכל יצירה או מסמך יש רישום זכויות משלו: מעמדו בישראל ובארה"ב, הרישיון שלו ושורת הקרדיט שלו. htext מתפרסם בשלוש גרסאות, אחת לכל רישיון, כדי שתוכלו לבחור את התנאים שמתאימים לכם; גרסת הליבה היא CC0 ואפשר להשתמש בה בלי תנאים.</p>
+<p class="note">עודכן ב־2026-11-18. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href="../htext/corpora.json">corpora.json</a>.</p>
+</div></div>
+<nav class="wrap" aria-label="בעמוד זה"><div class="toc"><a href="#what">מה זה htext</a><a href="#releases">גרסאות</a><a href="#corpora">מאגרים</a><a href="#rights">זכויות</a><a href="#use">הורדה ושימוש</a><a href="#credit">קרדיט</a><a href="#licence">רישיון</a></div></nav>
+<main id="main" class="wrap doc ht">
 <section id="what">
 <h2>מה זה htext</h2>
 <p>htext אוסף טקסט עברי שזכויותיו ברורות דיין לפרסום פתוח, והופך אותו לשורות אימון עבור <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, מחולל העמודים הסינתטיים של HeOCR. המחולל מצייר כל שורה על עמודים סינתטיים, כך שמנועי הזיהוי לומדים אוצר מילים, כתיב ופיסוק עבריים אמיתיים, ולא רק טקסט מומצא.</p>
@@ -259,14 +169,15 @@ grep -E &#x27;_v2\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
 <p>לכל גרסה יש רישיון משלה, כמפורט תחת <a href="#releases">גרסאות</a>; תנאי CC BY ו־CC BY-SA חלים על טקסט המקור. העיבוד והמטא־דאטה של HeOCR, כלומר אינדקסי הזכויות והשורות, רשימות ההחרגה, הכרטיסים וסיכומי הביקורת, מוקדשים לנחלת הכלל ברישיון <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.he">CC0 1.0</a> בכל הגרסאות, ככל שאפשר להפריד אותם מהטקסט. קוד הבנייה ברישיון <a href="https://github.com/HeOCR/htext/blob/main/LICENSE">MIT</a>.</p>
 </section>
 </main>
-
-<footer>
-  <div class="wrap">
-    <p>נוצר בידי <a href="http://www.shaypalachy.com/">שי פלצ'י אפק</a> ומתחזקי HeOCR.</p>
-    <p><a href="https://github.com/HeOCR/htext">HeOCR/htext</a> · <a href="../htext/corpora.json">corpora.json</a> · <a href="./">HeOCR</a></p>
-  </div>
+<footer class="site-footer">
+<div class="wrap foot">
+<div class="foot-brand">He<b>OCR</b></div>
+<div class="foot-text">
+<p>נוצר בידי <a href="http://www.shaypalachy.com/">שי פלצ'י אפק</a> ומתחזקי HeOCR.</p>
+<p><a href="https://github.com/HeOCR/htext">HeOCR/htext</a> · <a href="../htext/corpora.json">corpora.json</a> · <a href="./">HeOCR</a></p>
+</div>
+</div>
 </footer>
-
-<script>(function(){var b=document.querySelector(".theme-toggle");if(!b)return;var r=document.documentElement;function show(){var d=r.getAttribute("data-theme")==="dark";b.setAttribute("aria-pressed",d?"true":"false");b.textContent=d?b.getAttribute("data-day"):b.getAttribute("data-night")}show();b.addEventListener("click",function(){var d=r.getAttribute("data-theme")!=="dark";if(d)r.setAttribute("data-theme","dark");else r.removeAttribute("data-theme");try{localStorage.setItem("heocr-theme",d?"dark":"light")}catch(e){}show()})})();</script>
+<script src="../theme.js"></script>
 </body>
 </html>

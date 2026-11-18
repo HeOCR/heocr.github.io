@@ -2,7 +2,26 @@
 
 The one-page project site for HeOCR: https://heocr.github.io
 
-It is static HTML with no build step: `index.html` and `rights.html` in English, and `he/index.html` and `he/rights.html` in Hebrew. A toggle at the top of each page switches language. GitHub Pages serves it from `main`.
+It is static HTML: `index.html`, `benchmarks.html`, `htext.html` and `rights.html` in English, and the same under `he/` in Hebrew. A toggle at the top of each page switches language. GitHub Pages serves it from `main`.
+
+## Design and shell
+
+The site uses the "Bounding Box" brand. The handover (brand guide, tokens, logo files, reference pages) is in
+`design/brand-handover/`; read its `README.md`, `BRAND.md` and `site/MARKUP.md` before changing the look.
+
+- `site.css` and `theme.js` at the root are the handover's, used as delivered: one stylesheet for every page, EN and HE.
+  Light is the default whatever the OS setting; night mode only through the toggle, remembered under `heocr-theme`.
+- `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` and `og-image-1200x630.png` come from `design/brand-handover/logo/`.
+- `scripts/shell.py` is the one source for the head, header (logo, navigation, language switch, theme toggle), footer,
+  boxed page title and page index. The generated pages call it; the hand-written pages (`index.html`, `rights.html`,
+  EN and HE) carry its blocks between `<!-- shell:… -->` markers, kept in sync by:
+
+```
+python3 scripts/apply_shell.py           # rewrite the shell blocks of the hand-written pages
+python3 scripts/apply_shell.py --check   # fails if a hand-written page's shell differs from shell.py
+```
+
+Edit the hand-written pages' title, page head, `<main>` and footer lines by hand; never edit inside the markers.
 
 ## Benchmarks page
 
@@ -14,6 +33,11 @@ run, then rebuild:
 python3 scripts/build_benchmarks.py           # writes both pages (standard library only)
 python3 scripts/build_benchmarks.py --check   # fails if a committed page does not match results.json
 ```
+
+The hero chart is drawn by `scripts/hero_chart.py` (the handover's generator, unchanged): every document type, one
+linear axis from 0 to 100%, only the readers in the file, intervals drawn and printed. Release-gate verdicts appear by
+themselves once `results.json` gives a document type `"verdict": "supported"` or `"not_supported"`; until then each
+type shows "Awaiting run".
 
 `results.json` holds only figures that may be published:
 - figures on public references (Hebrew Wikisource);

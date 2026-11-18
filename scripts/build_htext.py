@@ -5,7 +5,8 @@
     python3 scripts/build_htext.py --import-card pby PATH/corpus_card.json
                                                          # refresh one corpus's counts from its htext card, then build
 
-Standard library only. The page styles are taken from rights.html and he/rights.html, as on the Benchmarks page.
+Standard library only. The markup follows the "Bounding Box" design (design/brand-handover/site/htext.html): styles are
+site.css and the shell is scripts/shell.py, as on every page.
 When htext publishes a corpus or a new version, add or update its entry in corpora.json (counts come from the
 corpus card in HeOCR/htext, data/<corpus>/<version>/corpus_card.json), then rebuild.
 """
@@ -15,42 +16,16 @@ import argparse, html, json, re, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import theme  # noqa: E402  (the site theme, one source for every page)
+import shell  # noqa: E402  (head, header, footer: one source for every page)
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "htext" / "corpora.json"
-
-EXTRA_CSS = """
-  .ht section { max-width: none; }
-  .ht h2 { margin-top: 0; }
-  .ht h3 { font-size: 1.05rem; margin: 26px 0 4px; }
-  .status { display: inline-block; background: var(--tag); color: var(--muted); padding: 2px 10px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; margin: 0 6px 10px 0; margin-inline-end: 6px; }
-  .tablewrap { overflow-x: auto; margin: 8px 0 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
-  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
-  th, td { padding: 8px 12px; text-align: start; border-bottom: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
-  tr:last-child td { border-bottom: 0; }
-  tr.total td { font-weight: 600; }
-  th { font-weight: 600; color: var(--muted); font-size: 0.82rem; }
-  td.num { font-variant-numeric: tabular-nums; }
-  td code, li code, p code { font-size: 0.85em; }
-  .facts { font-size: 0.9rem; margin: 6px 0 0; }
-  .facts li { margin: 0 0 4px; }
-  .credit { border-inline-start: 3px solid var(--accent); padding: 2px 0; padding-inline-start: 12px; margin: 10px 0; }
-  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
-  .toc a { font-size: 0.9rem; }
-  pre { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; direction: ltr; text-align: left; }
-  .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0 4px; }
-  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; min-width: 140px; }
-  .stat b { display: block; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
-  .stat span { color: var(--muted); font-size: 0.85rem; }
-"""
 
 T = {
     "en": {
         "title": "htext",
         "desc": "htext: openly licensed Hebrew text for training Hebrew OCR, in three releases (CC0, CC BY, CC BY-SA), with a rights record for every entry.",
         "lede": "Openly licensed Hebrew text for training HeOCR's recognizers, cut into lines, plain and with niqqud: public-domain text first, and attribution and share-alike text in their own releases. Every work or document carries its own rights record: its status in Israel and in the US, its licence and its credit line. htext is published as three releases, one per licence, so you can pick the terms you need; the core release is CC0 and can be used without conditions.",
-        "back": "← HeOCR", "other": "עברית", "other_href": "he/htext.html", "home": "./",
         "updated": "Updated {d}. Figures come from each corpus card and are rebuilt from <a href=\"{json}\">corpora.json</a>.",
         "toc": [("what", "What htext is"), ("releases", "Releases"), ("corpora", "Corpora"), ("rights", "Rights"), ("use", "Download and use"),
                 ("credit", "Credit"), ("licence", "Licence")],
@@ -105,7 +80,6 @@ T = {
         "title": "htext",
         "desc": "htext: טקסט עברי ברישיונות פתוחים לאימון OCR עברי, בשלוש גרסאות (CC0,‏ CC BY,‏ CC BY-SA), עם רישום זכויות לכל פריט.",
         "lede": "טקסט עברי ברישיונות פתוחים לאימון מנועי הזיהוי של HeOCR, חתוך לשורות, עם ניקוד ובלעדיו: בראש ובראשונה טקסט בנחלת הכלל, וטקסט בייחוס ובשיתוף זהה בגרסאות נפרדות. לכל יצירה או מסמך יש רישום זכויות משלו: מעמדו בישראל ובארה\"ב, הרישיון שלו ושורת הקרדיט שלו. htext מתפרסם בשלוש גרסאות, אחת לכל רישיון, כדי שתוכלו לבחור את התנאים שמתאימים לכם; גרסת הליבה היא CC0 ואפשר להשתמש בה בלי תנאים.",
-        "back": "← HeOCR", "other": "English", "other_href": "../htext.html", "home": "./",
         "updated": "עודכן ב־{d}. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href=\"{json}\">corpora.json</a>.",
         "toc": [("what", "מה זה htext"), ("releases", "גרסאות"), ("corpora", "מאגרים"), ("rights", "זכויות"), ("use", "הורדה ושימוש"),
                 ("credit", "קרדיט"), ("licence", "רישיון")],
@@ -181,34 +155,17 @@ def table(head, rows, total=None):
 
 def page(lang: str, R: dict) -> str:
     t = T[lang]
-    style_src = (ROOT / ("he/rights.html" if lang == "he" else "rights.html")).read_text(encoding="utf-8")
-    style = re.search(r"<style>(.*?)</style>", style_src, re.S).group(1)
-    pre = "../" if lang == "he" else ""
+    pre = shell.prefix(lang)
     json_href = f"{pre}htext/corpora.json"
     C = R["corpora"]
     out = []
     w = out.append
-    # --- head (same structure as the Benchmarks page)
-    w(f'<!doctype html>\n<html lang="{lang}"{" dir=\"rtl\"" if lang == "he" else ""}>\n<head>\n<meta charset="utf-8">\n{theme.HEAD}'
-      '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-      f'<title>{e(t["title"])}</title>\n<meta name="description" content="{e(t["desc"])}">\n')
-    fonts = ("family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;600&family=Inter:wght@400;500;600"
-             if lang == "he" else "family=Frank+Ruhl+Libre:wght@500;700&family=Inter:wght@400;500;600")
-    w('<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-      f'<link href="https://fonts.googleapis.com/css2?{fonts}&display=swap" rel="stylesheet">\n')
-    w(f"<style>{style}{EXTRA_CSS}</style>\n")
-    w('<link rel="alternate" hreflang="en" href="https://heocr.github.io/htext.html">\n'
-      '<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/htext.html">\n</head>\n<body>\n\n')
-    # --- header
-    cur = '<span aria-current="page" lang="{0}">{1}</span>'.format(lang, "עברית" if lang == "he" else "English")
-    oth = f'<a href="{t["other_href"]}" lang="{"en" if lang == "he" else "he"}" hreflang="{"en" if lang == "he" else "he"}">{t["other"]}</a>'
-    w(f'<header>\n  <div class="wrap">\n    <nav class="langbar" aria-label="{"שפה / Language" if lang == "he" else "Language / שפה"}">\n'
-      f'      <div class="lang-toggle">\n        {cur}\n        {oth}\n      </div>\n      {theme.button(lang)}\n    </nav>\n'
-      f'    <a class="back" href="{t["home"]}">{t["back"]}</a>\n    <h1>{e(t["title"])}</h1>\n'
-      f'    <p class="lede">{t["lede"]}</p>\n'
-      f'    <p class="note">{t["updated"].format(d=e(R["updated"]), json=json_href)}</p>\n  </div>\n</header>\n\n')
-    w('<main class="wrap doc ht">\n')
-    w('<nav class="toc">' + " · ".join(f'<a href="#{i}">{e(h)}</a>' for i, h in t["toc"]) + "</nav>\n")
+    w(shell.head(lang, e(t["title"]), e(t["desc"]), "htext"))
+    w(shell.header(lang, "htext"))
+    w(shell.page_head(e(t["title"]), f'<p class="lede">{t["lede"]}</p>\n'
+                                      f'<p class="note">{t["updated"].format(d=e(R["updated"]), json=json_href)}</p>'))
+    w(shell.toc(lang, [(i, e(h), None) for i, h in t["toc"]]))
+    w('<main id="main" class="wrap doc ht">\n')
     # --- totals: the "il" variant holds every published line; il_us is its subset
     # A file that holds the same text as another file of its corpus (another form of it) is counted once.
     lines = sum(f["lines"] for c in C for f in c["files"] if f["variant"] == "il" and not f.get("same_text_as"))
@@ -303,9 +260,10 @@ def page(lang: str, R: dict) -> str:
     w("</section>\n")
     # --- 6. Licence
     w(f'<section id="licence">\n<h2>{e(t["licence_h"])}</h2>\n<p>{t["licence_p"]}</p>\n</section>\n')
-    w("</main>\n\n<footer>\n  <div class=\"wrap\">\n"
-      f'    <p>{t["footer"]}</p>\n    <p><a href="{R["repository"]}">HeOCR/htext</a> · <a href="{json_href}">corpora.json</a> · <a href="{t["home"]}">HeOCR</a></p>\n'
-      "  </div>\n</footer>\n\n" + theme.BODY + "</body>\n</html>\n")
+    w("</main>\n")
+    w(shell.footer([f"<p>{t['footer']}</p>",
+                    f'<p><a href="{R["repository"]}">HeOCR/htext</a> · <a href="{json_href}">corpora.json</a> · <a href="./">HeOCR</a></p>']))
+    w(shell.tail(lang))
     return "".join(out)
 
 
