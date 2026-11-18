@@ -156,6 +156,74 @@
         "sample_words": 454,
         "words_wrong": 9
       }
+    },
+    {
+      "id": "tanakh",
+      "version": "v1",
+      "unit": "books",
+      "name": {
+        "en": "Tanakh: the Westminster Leningrad Codex",
+        "he": "תנ\"ך: כתב יד לנינגרד (WLC)"
+      },
+      "source": {
+        "name": {
+          "en": "Westminster Leningrad Codex, via the Open Scriptures Hebrew Bible",
+          "he": "כתב יד לנינגרד בגרסת וסטמינסטר, דרך Open Scriptures Hebrew Bible"
+        },
+        "url": "https://github.com/openscriptures/morphhb"
+      },
+      "description": {
+        "en": "The Hebrew Bible, all 39 books, as the Westminster Leningrad Codex (WLC 4.20) gives it, cut into lines in two forms: with niqqud (no cantillation) and plain.",
+        "he": "התנ\"ך, כל 39 הספרים, כפי שהוא מופיע בכתב יד לנינגרד בגרסת וסטמינסטר (WLC 4.20), חתוך לשורות בשתי צורות: מנוקד (בלי טעמים) ובלי ניקוד."
+      },
+      "rights_basis": {
+        "en": "The Leningrad Codex is about a thousand years old, and the WLC text is in the public domain (\"The text of the WLC remains in the Public Domain\", OSHB). Public domain in Israel and in the US. Only the words are used; OSHB's CC BY lemma and morphology layers are not. The edition is WLC, not UXLC.",
+        "he": "כתב יד לנינגרד בן כאלף שנה, וטקסט ה־WLC בנחלת הכלל (\"The text of the WLC remains in the Public Domain\", ‏OSHB). נחלת הכלל בישראל ובארה\"ב. נלקחות רק המילים, בלי שכבות הלמות והמורפולוגיה של OSHB שברישיון CC BY. המהדורה היא WLC ולא UXLC."
+      },
+      "source_licence": {
+        "en": "Public domain",
+        "he": "נחלת הכלל"
+      },
+      "credit": {
+        "text": {
+          "en": "Westminster Leningrad Codex (public domain), via the Open Scriptures Hebrew Bible",
+          "he": "כתב יד לנינגרד בגרסת וסטמינסטר (נחלת הכלל), דרך Open Scriptures Hebrew Bible"
+        },
+        "url": "https://github.com/openscriptures/morphhb"
+      },
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/SHA256SUMS",
+      "release": {
+        "tag": "tanakh-v1",
+        "url": "https://github.com/HeOCR/htext/releases/tag/tanakh-v1",
+        "date": "2026-11-18"
+      },
+      "catalogue_works": 39,
+      "works_in_corpus": 39,
+      "works_in_il_us": 39,
+      "files": [
+        {
+          "name": "tanakh_lines_niqqud_v1.txt",
+          "variant": "il",
+          "subset": "niqqud",
+          "lines": 58120,
+          "works": 39,
+          "bytes": 4631929,
+          "sha256": "3c7cd4579f6c5a352848862a0fcab5a46b4f56516cef08104c31d591ec60909f"
+        },
+        {
+          "name": "tanakh_lines_plain_v1.txt",
+          "variant": "il",
+          "subset": "plain",
+          "lines": 58074,
+          "works": 39,
+          "bytes": 2681470,
+          "sha256": "954a0ad534b464356e4b948bf088d3e13192cf8061b6b22f0a75d156a78d71af",
+          "same_text_as": "tanakh_lines_niqqud_v1.txt"
+        }
+      ],
+      "htext_release": "cc0",
+      "text_quality": "transcription"
     }
   ],
   "planned": [],

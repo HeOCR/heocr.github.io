@@ -141,7 +141,7 @@
 <h2>מה זה htext</h2>
 <p>htext אוסף טקסט עברי שזכויותיו ברורות דיין לפרסום פתוח, והופך אותו לשורות אימון עבור <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, מחולל העמודים הסינתטיים של HeOCR. המחולל מצייר כל שורה על עמודים סינתטיים, כך שמנועי הזיהוי לומדים אוצר מילים, כתיב ופיסוק עבריים אמיתיים, ולא רק טקסט מומצא.</p>
 <p>לכל מקור יש בונה משלו, מאגר משלו וכרטיס משלו. בנייה קוראת עותק נעוץ של המקור, מחשבת זכויות לכל פריט, מנקה וחותכת את הטקסט, ובודקת ששום שורה אינה חופפת לטקסט ההערכה של HeOCR. רק הקבצים שהכרטיס מונה מתפרסמים.</p>
-<div class="stats"><div class="stat"><b>14,233,973</b><span>שורות</span></div><div class="stat"><b>27,286</b><span>יצירות וחוקים</span></div><div class="stat"><b><span dir="ltr">691.0 MB</span></b><span>טקסט</span></div><div class="stat"><b>2</b><span>מאגרים</span></div></div>
+<div class="stats"><div class="stat"><b>14,292,093</b><span>שורות</span></div><div class="stat"><b>27,325</b><span>יצירות, חוקים וספרים</span></div><div class="stat"><b><span dir="ltr">695.7 MB</span></b><span>טקסט</span></div><div class="stat"><b>3</b><span>מאגרים</span></div></div>
 </section>
 <section id="releases">
 <h2>גרסאות</h2>
@@ -207,6 +207,23 @@
 <li>טקסט: שכבת ה־OCR של הסריקות, מסוננת מול מילון. בבדיקה בעין של 100 שורות אקראיות מול הסריקות נמצאה טעות ב־9 (9%), ו־9 מילים שגויות מתוך 454 (2.0%).</li>
 <li>ל־2,004 מתוך 2,146 חוקים בקטלוג יש שורות במאגר.</li>
 </ul>
+<h3 id="tanakh">תנ&quot;ך: כתב יד לנינגרד (WLC)</h3>
+<span class="status">tanakh-v1</span><span class="status">htext-cc0</span>
+<p>התנ&quot;ך, כל 39 הספרים, כפי שהוא מופיע בכתב יד לנינגרד בגרסת וסטמינסטר (WLC 4.20), חתוך לשורות בשתי צורות: מנוקד (בלי טעמים) ובלי ניקוד.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>קובץ</th><th>גרסה</th><th>סוג</th><th>שורות</th><th>ספרים</th><th>גודל</th></tr></thead>
+<tbody>
+<tr><td><code>tanakh_lines_niqqud_v1.txt</code></td><td>ישראל</td><td>מנוקד</td><td class="num">58,120</td><td class="num">39</td><td class="num"><span dir="ltr">4.6 MB</span></td></tr>
+<tr><td><code>tanakh_lines_plain_v1.txt</code></td><td>ישראל</td><td>ללא ניקוד</td><td class="num">58,074</td><td class="num">39</td><td class="num"><span dir="ltr">2.7 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>גרסת htext: htext-cc0</li>
+<li>מקור: <a href="https://github.com/openscriptures/morphhb">כתב יד לנינגרד בגרסת וסטמינסטר, דרך Open Scriptures Hebrew Bible</a> (נחלת הכלל)</li>
+<li>גרסה: <a href="https://github.com/HeOCR/htext/releases/tag/tanakh-v1">tanakh-v1</a>, 2026-11-18</li>
+<li>כרטיס המאגר: <a href="https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>טקסט: הוקלד בידי אנשים.</li>
+<li>לכל 39 הספרים יש שורות במאגר, בשתי הצורות. שני הקבצים, המנוקד והלא־מנוקד, מכילים את אותם פסוקים, ולכן הסיכומים למעלה סופרים אותם פעם אחת.</li>
+</ul>
 </section>
 <section id="rights">
 <h2>זכויות</h2>
@@ -216,6 +233,7 @@
 <ul class="facts">
 <li><b>פרויקט בן־יהודה</b>: נחלת הכלל בישראל: כל מחבר וכל מתרגם נפטרו 71 שנה לפחות לפני שנת הבנייה (2026), לפי שנות פטירה מוויקינתונים, ובהיעדרן ממקור שנבדק, כמו דף המחבר בפרויקט בן־יהודה. המעמד בארה&quot;ב מתועד לכל יצירה: נחלת הכלל בארה&quot;ב כשהמהדורה שהוקלדה יצאה לפני 1931.</li>
 <li><b>כנסת ישראל</b>: חוקים אינם מוגנים בזכות יוצרים בישראל (סעיף 6 לחוק זכות יוצרים, התשס&quot;ח-2007). המעמד בארה&quot;ב לא נבדק.</li>
+<li><b>כתב יד לנינגרד בגרסת וסטמינסטר, דרך Open Scriptures Hebrew Bible</b>: כתב יד לנינגרד בן כאלף שנה, וטקסט ה־WLC בנחלת הכלל (&quot;The text of the WLC remains in the Public Domain&quot;, ‏OSHB). נחלת הכלל בישראל ובארה&quot;ב. נלקחות רק המילים, בלי שכבות הלמות והמורפולוגיה של OSHB שברישיון CC BY. המהדורה היא WLC ולא UXLC.</li>
 </ul>
 </section>
 <section id="use">
@@ -234,6 +252,7 @@ grep -E &#x27;_v2\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
 <p>הרישיון אינו מחייב קרדיט, אבל חלק מהמקורות מבקשים אותו, ו־HeOCR נותן אותו. אנא העבירו את השורות האלה לכל כרטיס מאגר נתונים או מודל שמשתמש במאגר:</p>
 <p class="credit">Credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a> · קרדיט: <a href="https://benyehuda.org">מתנדבי פרויקט בן־יהודה</a></p>
 <p class="credit">Credit: <a href="https://main.knesset.gov.il">The Knesset of Israel (Knesset database, laws as published in Reshumot)</a> · קרדיט: <a href="https://main.knesset.gov.il">כנסת ישראל (מאגר הכנסת, החוקים כפי שפורסמו ברשומות)</a></p>
+<p class="credit">Credit: <a href="https://github.com/openscriptures/morphhb">Westminster Leningrad Codex (public domain), via the Open Scriptures Hebrew Bible</a> · קרדיט: <a href="https://github.com/openscriptures/morphhb">כתב יד לנינגרד בגרסת וסטמינסטר (נחלת הכלל), דרך Open Scriptures Hebrew Bible</a></p>
 </section>
 <section id="licence">
 <h2>רישיון</h2>
