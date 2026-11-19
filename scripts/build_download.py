@@ -40,7 +40,7 @@ T = {
         "offline": "<strong>Fully offline.</strong> Your files never leave your computer. The app makes no network connections and collects no data: no telemetry, no analytics, no update checks.",
         "mac": "macOS", "mac_req": "macOS 13 or later. One app for Apple silicon and Intel. Signed with an Apple Developer ID and notarized by Apple.",
         "win": "Windows", "win_req": "Windows 10 or 11, 64-bit.",
-        "get": "Download", "coming": "Coming soon", "soon": "Windows follows once its installer is code-signed.", "notes_link": "Release notes and checksum",
+        "get": "Download for {}", "coming": "Coming soon", "soon": "Windows follows once its installer is code-signed.", "notes_link": "Release notes and checksum",
         "what_h": "What it does",
         "what": [
             "Opens PDF, Word (DOCX) and image files (PNG, JPEG, TIFF and more), and also Excel (XLSX), PowerPoint (PPTX) and saved web pages: drag one onto the window, or use the open button.",
@@ -72,7 +72,7 @@ T = {
         "offline": "<strong>עובד במלואו בלי אינטרנט.</strong> הקבצים שלכם לא יוצאים מהמחשב. האפליקציה אינה מתחברת לרשת ואינה אוספת נתונים: בלי טלמטריה, בלי אנליטיקה, בלי בדיקת עדכונים.",
         "mac": "macOS", "mac_req": "macOS 13 ואילך. אפליקציה אחת למעבדי Apple ול־Intel. חתומה ב־Apple Developer ID ומאושרת (notarized) על ידי Apple.",
         "win": "Windows", "win_req": "Windows 10 או 11, ‏64 סיביות.",
-        "get": "הורדה", "coming": "בקרוב", "soon": "גרסת Windows תצא כשהמתקין שלה ייחתם.", "notes_link": "הערות הגרסה וסכום הביקורת",
+        "get": "הורדה ל־{}", "coming": "בקרוב", "soon": "גרסת Windows תצא כשהמתקין שלה ייחתם.", "notes_link": "הערות הגרסה וסכום הביקורת",
         "what_h": "מה היא עושה",
         "what": [
             "פותחת קובצי PDF, ‏Word ‏(DOCX) ותמונות (PNG, ‏JPEG, ‏TIFF ועוד), וגם Excel ‏(XLSX), ‏PowerPoint ‏(PPTX) ודפי אינטרנט שמורים: גוררים קובץ לחלון, או לוחצים על כפתור הפתיחה.",
@@ -114,7 +114,7 @@ def page(lang: str) -> str:
     w.append(f'<p class="warn">{SHIELD}<span>{t["offline"]}</span></p>\n')
     w.append('<div class="grid">\n')
     for key, href in (("mac", MAC), ("win", WIN)):
-        action = (f'<a class="btn primary" href="{href}">{e(t["get"])} {e(t[key])}</a>' if RELEASED[key]
+        action = (f'<a class="btn primary" href="{href}">{e(t["get"]).format(e(t[key]))}</a>' if RELEASED[key]
                   else f'<span class="verdict pending">{e(t["coming"])}</span>')
         w.append(f'  <div class="card"><h3>{e(t[key])}</h3><p>{e(t[key + "_req"])}</p>'
                  f'<div class="row">{action}</div></div>\n')
