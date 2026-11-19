@@ -1,4 +1,4 @@
-"""Build benchmarks.html and he/benchmarks.html from benchmarks/results.json.
+"""Build benchmarks.html (Hebrew, root) and en/benchmarks.html from benchmarks/results.json.
 
     python3 scripts/build_benchmarks.py           # write both pages
     python3 scripts/build_benchmarks.py --check   # exit 1 if a committed page is out of date
@@ -508,7 +508,7 @@ def main():
     a = ap.parse_args()
     R = json.loads(RESULTS.read_text(encoding="utf-8"))
     stale = []
-    for lang, path in (("en", ROOT / "benchmarks.html"), ("he", ROOT / "he" / "benchmarks.html")):
+    for lang, path in (("he", ROOT / "benchmarks.html"), ("en", ROOT / "en" / "benchmarks.html")):
         s = page(lang, R)
         if a.check:
             if not path.exists() or path.read_text(encoding="utf-8") != s:

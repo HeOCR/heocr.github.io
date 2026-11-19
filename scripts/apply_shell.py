@@ -1,6 +1,6 @@
 """Keep the shared shell of the hand-written pages in sync with scripts/shell.py.
 
-    python3 scripts/apply_shell.py           # rewrite the shell blocks of index.html, rights.html (EN, HE)
+    python3 scripts/apply_shell.py           # rewrite the shell blocks of index.html, rights.html (HE at the root, EN under en/)
     python3 scripts/apply_shell.py --check   # exit 1 if a page's shell differs from shell.py
 
 The hand-written pages carry three marked blocks, which this script owns:
@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import shell  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-HAND = {"home": ("index.html", "he/index.html"), "rights": ("rights.html", "he/rights.html")}
+HAND = {"home": "index.html", "rights": "rights.html"}
 
 
 def block(name: str, body: str) -> str:
@@ -52,8 +52,9 @@ def main() -> None:
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
     stale = []
-    for page, paths in HAND.items():
-        for lang, rel in zip(("en", "he"), paths):
+    for page in HAND:
+        for lang in shell.LANGS:
+            rel = shell.site_path(lang, page)
             path = ROOT / rel
             old = path.read_text(encoding="utf-8")
             new = render(page, lang, old)

@@ -1,4 +1,4 @@
-"""Build the privacy policy pages (privacy.html, he/privacy.html) for the HeOCR apps.
+"""Build the privacy policy pages (privacy.html, en/privacy.html) for the HeOCR apps.
 
     python3 scripts/build_privacy.py           # write the pages
     python3 scripts/build_privacy.py --check   # exit 1 if a page is out of date
@@ -104,7 +104,7 @@ def main():
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
     stale = []
-    for lang, path in (("en", ROOT / "privacy.html"), ("he", ROOT / "he" / "privacy.html")):
+    for lang, path in (("he", ROOT / "privacy.html"), ("en", ROOT / "en" / "privacy.html")):
         s = page(lang)
         if a.check:
             if not path.exists() or path.read_text(encoding="utf-8") != s:

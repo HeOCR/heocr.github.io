@@ -1,4 +1,4 @@
-"""Build htext.html and he/htext.html from htext/corpora.json.
+"""Build htext.html (Hebrew, root) and en/htext.html from htext/corpora.json.
 
     python3 scripts/build_htext.py                       # write both pages
     python3 scripts/build_htext.py --check               # exit 1 if a committed page is out of date
@@ -291,7 +291,7 @@ def main():
         import_card(R, a.import_card[0], Path(a.import_card[1]))
         DATA.write_text(json.dumps(R, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     stale = []
-    for lang, path in (("en", ROOT / "htext.html"), ("he", ROOT / "he" / "htext.html")):
+    for lang, path in (("he", ROOT / "htext.html"), ("en", ROOT / "en" / "htext.html")):
         s = page(lang, R)
         if a.check:
             if not path.exists() or path.read_text(encoding="utf-8") != s:

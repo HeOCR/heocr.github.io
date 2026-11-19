@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>htext</title>
-<meta name="description" content="htext: openly licensed Hebrew text for training Hebrew OCR, in three releases (CC0, CC BY, CC BY-SA), with a rights record for every entry.">
+<meta name="description" content="htext: טקסט עברי ברישיונות פתוחים לאימון OCR עברי, בשלוש גרסאות (CC0,‏ CC BY,‏ CC BY-SA), עם רישום זכויות לכל פריט.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
@@ -16,165 +16,167 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HeOCR">
 <meta property="og:title" content="htext">
-<meta property="og:description" content="htext: openly licensed Hebrew text for training Hebrew OCR, in three releases (CC0, CC BY, CC BY-SA), with a rights record for every entry.">
-<meta property="og:url" content="https://heocr.github.io/htext.html">
-<meta property="og:image" content="https://heocr.github.io/og-image-1200x630.png">
+<meta property="og:description" content="htext: טקסט עברי ברישיונות פתוחים לאימון OCR עברי, בשלוש גרסאות (CC0,‏ CC BY,‏ CC BY-SA), עם רישום זכויות לכל פריט.">
+<meta property="og:url" content="https://heocr.org/htext.html">
+<meta property="og:image" content="https://heocr.org/og-image-1200x630.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="alternate" hreflang="en" href="https://heocr.github.io/htext.html">
-<link rel="alternate" hreflang="he" href="https://heocr.github.io/he/htext.html">
+<link rel="canonical" href="https://heocr.org/htext.html">
+<link rel="alternate" hreflang="he" href="https://heocr.org/htext.html">
+<link rel="alternate" hreflang="en" href="https://heocr.org/en/htext.html">
+<link rel="alternate" hreflang="x-default" href="https://heocr.org/htext.html">
 </head>
 <body class="site">
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main">דילוג לתוכן</a>
 <header class="site-header">
 <div class="wrap bar">
 <a class="brand" href="./" aria-label="HeOCR"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="7" width="34" height="34" class="lg-box sw2"></rect><rect x="4" y="4" width="6" height="6" class="lg-h"></rect><rect x="38" y="4" width="6" height="6" class="lg-h"></rect><rect x="4" y="38" width="6" height="6" class="lg-h"></rect><rect x="38" y="38" width="6" height="6" class="lg-h"></rect><path d="M16 18H32V32.5" class="lg-ink sw45"></path><path d="M16 24.5V32.5" class="lg-ink sw45"></path></svg><span dir="ltr">He<b>OCR</b></span></a>
-<nav class="site-nav" aria-label="Site"><a href="benchmarks.html">Benchmarks</a><a href="htext.html" aria-current="page">htext</a><a href="download.html">Download</a><a href="rights.html">Rights &amp; takedown</a></nav>
+<nav class="site-nav" aria-label="ניווט באתר"><a href="benchmarks.html">מדדי ביצועים</a><a href="htext.html" aria-current="page">htext</a><a href="download.html">הורדה</a><a href="rights.html">זכויות והסרה</a></nav>
 <div class="tools">
-<div class="lang-toggle" role="group" aria-label="Language / שפה">
-<span aria-current="page" lang="en">English</span>
-        <a href="he/htext.html" lang="he" hreflang="he">עברית</a>
+<div class="lang-toggle" role="group" aria-label="שפה / Language">
+<span aria-current="page" lang="he">עברית</span>
+        <a href="en/htext.html" lang="en" hreflang="en">English</a>
 </div>
-<button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><svg class="ico i-moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.6A5.6 5.6 0 0 1 6.4 3 5.6 5.6 0 1 0 13 9.6z"></path></svg><svg class="ico i-sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"></circle><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"></path></svg><span class="label">Night mode</span></button>
+<button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><svg class="ico i-moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.6A5.6 5.6 0 0 1 6.4 3 5.6 5.6 0 1 0 13 9.6z"></path></svg><svg class="ico i-sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"></circle><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"></path></svg><span class="label">מצב לילה</span></button>
 </div>
 </div>
 </header>
 <div class="band gridband"><div class="wrap page-head">
 <h1><span class="bb" data-tag="h1 · 0.99">htext</span></h1>
-<p class="lede">Openly licensed Hebrew text for training HeOCR's recognizers, cut into lines, plain and with niqqud: public-domain text first, and attribution and share-alike text in their own releases. Every work or document carries its own rights record: its status in Israel and in the US, its licence and its credit line. htext is published as three releases, one per licence, so you can pick the terms you need; the core release is CC0 and can be used without conditions.</p>
-<p class="note">Updated 2026-11-18. Figures come from each corpus card and are rebuilt from <a href="htext/corpora.json">corpora.json</a>.</p>
+<p class="lede">טקסט עברי ברישיונות פתוחים לאימון מנועי הזיהוי של HeOCR, חתוך לשורות, עם ניקוד ובלעדיו: בראש ובראשונה טקסט בנחלת הכלל, וטקסט בייחוס ובשיתוף זהה בגרסאות נפרדות. לכל יצירה או מסמך יש רישום זכויות משלו: מעמדו בישראל ובארה"ב, הרישיון שלו ושורת הקרדיט שלו. htext מתפרסם בשלוש גרסאות, אחת לכל רישיון, כדי שתוכלו לבחור את התנאים שמתאימים לכם; גרסת הליבה היא CC0 ואפשר להשתמש בה בלי תנאים.</p>
+<p class="note">עודכן ב־2026-11-18. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href="htext/corpora.json">corpora.json</a>.</p>
 </div></div>
-<nav class="wrap" aria-label="On this page"><div class="toc"><a href="#what">What htext is</a><a href="#releases">Releases</a><a href="#corpora">Corpora</a><a href="#rights">Rights</a><a href="#use">Download and use</a><a href="#credit">Credit</a><a href="#licence">Licence</a></div></nav>
+<nav class="wrap" aria-label="בעמוד זה"><div class="toc"><a href="#what">מה זה htext</a><a href="#releases">גרסאות</a><a href="#corpora">מאגרים</a><a href="#rights">זכויות</a><a href="#use">הורדה ושימוש</a><a href="#credit">קרדיט</a><a href="#licence">רישיון</a></div></nav>
 <main id="main" class="wrap doc ht">
 <section id="what">
-<h2>What htext is</h2>
-<p>htext collects Hebrew text whose rights are clear enough to publish openly, and turns it into training lines for <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, HeOCR's synthetic page generator. The generator renders each line onto synthetic pages, so the recognizers learn real Hebrew vocabulary, spelling and punctuation, not only made-up text.</p>
-<p>Each source has its own builder, its own corpus and its own card. A build reads a pinned copy of the source, computes rights per entry, cleans and cuts the text, and checks that no line overlaps HeOCR's evaluation text. Only the files a card lists are published.</p>
-<div class="stats"><div class="stat"><b>14,252,079</b><span>lines</span></div><div class="stat"><b>27,310</b><span>works, laws and books</span></div><div class="stat"><b><span dir="ltr">693.9 MB</span></b><span>of text</span></div><div class="stat"><b>3</b><span>corpora</span></div></div>
+<h2>מה זה htext</h2>
+<p>htext אוסף טקסט עברי שזכויותיו ברורות דיין לפרסום פתוח, והופך אותו לשורות אימון עבור <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, מחולל העמודים הסינתטיים של HeOCR. המחולל מצייר כל שורה על עמודים סינתטיים, כך שמנועי הזיהוי לומדים אוצר מילים, כתיב ופיסוק עבריים אמיתיים, ולא רק טקסט מומצא.</p>
+<p>לכל מקור יש בונה משלו, מאגר משלו וכרטיס משלו. בנייה קוראת עותק נעוץ של המקור, מחשבת זכויות לכל פריט, מנקה וחותכת את הטקסט, ובודקת ששום שורה אינה חופפת לטקסט ההערכה של HeOCR. רק הקבצים שהכרטיס מונה מתפרסמים.</p>
+<div class="stats"><div class="stat"><b>14,252,079</b><span>שורות</span></div><div class="stat"><b>27,310</b><span>יצירות, חוקים וספרים</span></div><div class="stat"><b><span dir="ltr">693.9 MB</span></b><span>טקסט</span></div><div class="stat"><b>3</b><span>מאגרים</span></div></div>
 </section>
 <section id="releases">
-<h2>Releases</h2>
-<p>htext ships one release per licence. Pick the release whose terms fit your use. Models trained on any of them can still be released under an open licence, with credit in their NOTICE.</p>
+<h2>גרסאות</h2>
+<p>htext מתפרסם בגרסה אחת לכל רישיון. בחרו את הגרסה שתנאיה מתאימים לשימוש שלכם. מודלים שאומנו על כל אחת מהן עדיין יכולים להתפרסם ברישיון פתוח, עם קרדיט בקובץ ה־NOTICE שלהם.</p>
 <h3>htext-cc0</h3>
-<span class="status">published</span><span class="status">CC0 1.0</span>
+<span class="status">פורסמה</span><span class="status">CC0 1.0</span>
 <ul class="facts">
-<li>Contains: Public-domain text, CC0 text, and official texts that are not protected by copyright (laws, regulations, Knesset records, under section 6 of the Israeli Copyright Act).</li>
-<li>You may: Any use, with no conditions. This is the default release for training and benchmarks.</li>
-<li>Licence: <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a></li>
+<li>תוכן: טקסט בנחלת הכלל, טקסט ב־CC0, וטקסטים רשמיים שאינם מוגנים בזכות יוצרים (חוקים, תקנות ודברי הכנסת, לפי סעיף 6 לחוק זכות יוצרים).</li>
+<li>מותר: כל שימוש, בלי תנאים. זו הגרסה ברירת המחדל לאימון ולמדדי ביצועים.</li>
+<li>רישיון: <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a></li>
 </ul>
 <h3>htext-by</h3>
-<span class="status">planned</span><span class="status">CC BY 4.0 (per source)</span>
+<span class="status">מתוכננת</span><span class="status">CC BY 4.0 (per source)</span>
 <ul class="facts">
-<li>Contains: Text whose source licence asks only for attribution (CC BY or equivalent).</li>
-<li>You may: Any use, as long as you credit the sources. Each entry carries its credit line, and the release ships a consolidated NOTICE.</li>
-<li>Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 (per source)</a></li>
+<li>תוכן: טקסט שרישיון המקור שלו דורש ייחוס בלבד (CC BY או מקביל).</li>
+<li>מותר: כל שימוש, בתנאי שנותנים קרדיט למקורות. לכל פריט יש שורת קרדיט, והגרסה כוללת קובץ NOTICE מרוכז.</li>
+<li>רישיון: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 (per source)</a></li>
 </ul>
 <h3>htext-by-sa</h3>
-<span class="status">planned</span><span class="status">CC BY-SA 4.0</span>
+<span class="status">מתוכננת</span><span class="status">CC BY-SA 4.0</span>
 <ul class="facts">
-<li>Contains: Share-alike text, mainly Hebrew Wikisource transcriptions and Sefaria versions licensed CC BY-SA.</li>
-<li>You may: Any use, with credit, and anything you share that adapts the text must be under CC BY-SA too.</li>
-<li>Licence: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
+<li>תוכן: טקסט בשיתוף זהה, בעיקר תעתיקי ויקיטקסט העברית וגרסאות ספריא ברישיון CC BY-SA.</li>
+<li>מותר: כל שימוש, עם קרדיט, וכל עיבוד של הטקסט שמשותף הלאה חייב להיות גם הוא ב־CC BY-SA.</li>
+<li>רישיון: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
 </ul>
 </section>
 <section id="corpora">
-<h2>Corpora</h2>
-<h3 id="pby">Project Ben-Yehuda public-domain lines</h3>
+<h2>מאגרים</h2>
+<h3 id="pby">שורות בנחלת הכלל מפרויקט בן־יהודה</h3>
 <span class="status">pby-v3</span><span class="status">htext-cc0</span>
-<p>Prose, articles, memoirs, letters, fables, poetry, reference works and drama transcribed by Project Ben-Yehuda volunteers, cut into lines, plain and with niqqud.</p>
+<p>פרוזה, מאמרים, זיכרונות, מכתבים, משלים, שירה, ספרות עיון ומחזות שהקלידו מתנדבי פרויקט בן־יהודה, חתוכים לשורות, עם ניקוד ובלעדיו.</p>
 <div class="tablewrap"><table>
-<thead><tr><th>File</th><th>Variant</th><th>Subset</th><th>Lines</th><th>Works</th><th>Size</th></tr></thead>
+<thead><tr><th>קובץ</th><th>גרסה</th><th>סוג</th><th>שורות</th><th>יצירות</th><th>גודל</th></tr></thead>
 <tbody>
-<tr><td><code>pby_lines_il_plain_v3.txt</code></td><td>Israel</td><td>plain</td><td class="num">12,278,848</td><td class="num">16,409</td><td class="num"><span dir="ltr">559.0 MB</span></td></tr>
-<tr><td><code>pby_lines_il_niqqud_v3.txt</code></td><td>Israel</td><td>niqqud</td><td class="num">1,680,290</td><td class="num">15,738</td><td class="num"><span dir="ltr">119.9 MB</span></td></tr>
-<tr><td><code>pby_lines_il_us_plain_v3.txt</code></td><td>Israel + US</td><td>plain</td><td class="num">407,456</td><td class="num">564</td><td class="num"><span dir="ltr">19.0 MB</span></td></tr>
-<tr><td><code>pby_lines_il_us_niqqud_v3.txt</code></td><td>Israel + US</td><td>niqqud</td><td class="num">18,613</td><td class="num">325</td><td class="num"><span dir="ltr">1.3 MB</span></td></tr>
+<tr><td><code>pby_lines_il_plain_v3.txt</code></td><td>ישראל</td><td>ללא ניקוד</td><td class="num">12,278,848</td><td class="num">16,409</td><td class="num"><span dir="ltr">559.0 MB</span></td></tr>
+<tr><td><code>pby_lines_il_niqqud_v3.txt</code></td><td>ישראל</td><td>מנוקד</td><td class="num">1,680,290</td><td class="num">15,738</td><td class="num"><span dir="ltr">119.9 MB</span></td></tr>
+<tr><td><code>pby_lines_il_us_plain_v3.txt</code></td><td>ישראל + ארה&quot;ב</td><td>ללא ניקוד</td><td class="num">407,456</td><td class="num">564</td><td class="num"><span dir="ltr">19.0 MB</span></td></tr>
+<tr><td><code>pby_lines_il_us_niqqud_v3.txt</code></td><td>ישראל + ארה&quot;ב</td><td>מנוקד</td><td class="num">18,613</td><td class="num">325</td><td class="num"><span dir="ltr">1.3 MB</span></td></tr>
 </tbody></table></div>
-<p class="note"><b>Israel</b>: every line comes from a work that is public domain in Israel. <b>Israel + US</b>: the subset that is also public domain in the US. <b>niqqud</b> lines are pointed; <b>plain</b> lines carry no points.</p>
+<p class="note"><b>ישראל</b>: כל שורה לקוחה מיצירה שבנחלת הכלל בישראל. <b>ישראל + ארה"ב</b>: תת־הקבוצה שבנחלת הכלל גם בארה"ב. שורות <b>מנוקדות</b> כוללות ניקוד; שורות <b>ללא ניקוד</b> אינן כוללות.</p>
 <ul class="facts">
-<li>Release: htext-cc0</li>
-<li>Source: <a href="https://benyehuda.org">Project Ben-Yehuda</a> (Public domain (PBY&#x27;s dump licence))</li>
-<li>Release: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v3">pby-v3</a>, 2026-11-18</li>
-<li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v3/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
-<li>Earlier version: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v2">pby-v2</a> (<a href="https://github.com/HeOCR/htext/blob/main/data/pby/v2/KNOWN_ISSUES.md">known issues</a>)</li>
-<li>Earlier version: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v1">pby-v1</a> (<a href="https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md">known issues</a>)</li>
-<li>Text: transcribed by people.</li>
-<li>25,267 of 26,455 catalogue works have lines in this corpus; 701 also in the Israel + US variant.</li>
+<li>גרסת htext: htext-cc0</li>
+<li>מקור: <a href="https://benyehuda.org">פרויקט בן־יהודה</a> (נחלת הכלל (רישיון המאגר של פרויקט בן־יהודה))</li>
+<li>גרסה: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v3">pby-v3</a>, 2026-11-18</li>
+<li>כרטיס המאגר: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v3/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>גרסה קודמת: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v2">pby-v2</a> (<a href="https://github.com/HeOCR/htext/blob/main/data/pby/v2/KNOWN_ISSUES.md">בעיות ידועות</a>)</li>
+<li>גרסה קודמת: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v1">pby-v1</a> (<a href="https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md">בעיות ידועות</a>)</li>
+<li>טקסט: הוקלד בידי אנשים.</li>
+<li>ל־25,267 מתוך 26,455 יצירות בקטלוג יש שורות במאגר; ל־701 מהן גם בגרסת ישראל + ארה&quot;ב.</li>
 </ul>
-<h3 id="knesset-laws">Knesset laws as published</h3>
+<h3 id="knesset-laws">חוקי הכנסת כפי שפורסמו</h3>
 <span class="status">knesset-laws-v1</span><span class="status">htext-cc0</span>
-<p>The enacted laws of the first eight Knessets (1949–1977), as printed in Reshumot (Sefer HaChukim), cut into lines, with margin notes as lines of their own.</p>
+<p>החוקים שחוקקו שמונה הכנסות הראשונות (1949–1977), כפי שנדפסו ברשומות (ספר החוקים), חתוכים לשורות, עם הערות השוליים כשורות נפרדות.</p>
 <div class="tablewrap"><table>
-<thead><tr><th>File</th><th>Variant</th><th>Subset</th><th>Lines</th><th>Laws</th><th>Size</th></tr></thead>
+<thead><tr><th>קובץ</th><th>גרסה</th><th>סוג</th><th>שורות</th><th>חוקים</th><th>גודל</th></tr></thead>
 <tbody>
-<tr><td><code>knesset_laws_lines_plain_v1.txt</code></td><td>Israel</td><td>plain</td><td class="num">234,821</td><td class="num">2,004</td><td class="num"><span dir="ltr">10.4 MB</span></td></tr>
+<tr><td><code>knesset_laws_lines_plain_v1.txt</code></td><td>ישראל</td><td>ללא ניקוד</td><td class="num">234,821</td><td class="num">2,004</td><td class="num"><span dir="ltr">10.4 MB</span></td></tr>
 </tbody></table></div>
 <ul class="facts">
-<li>Release: htext-cc0</li>
-<li>Source: <a href="https://main.knesset.gov.il">The Knesset of Israel</a> (Not protected: Israel Copyright Act 2007, section 6)</li>
-<li>Release: <a href="https://github.com/HeOCR/htext/releases/tag/knesset-laws-v1">knesset-laws-v1</a>, 2026-11-18</li>
-<li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
-<li>Text: the OCR layer of the scans, filtered against a lexicon. An eye check of 100 random lines against the scans found an error in 9 (9%) and 9 wrong words of 454 (2.0%).</li>
-<li>2,004 of 2,146 laws in the catalogue have lines in this corpus.</li>
+<li>גרסת htext: htext-cc0</li>
+<li>מקור: <a href="https://main.knesset.gov.il">כנסת ישראל</a> (לא מוגן: חוק זכות יוצרים, סעיף 6)</li>
+<li>גרסה: <a href="https://github.com/HeOCR/htext/releases/tag/knesset-laws-v1">knesset-laws-v1</a>, 2026-11-18</li>
+<li>כרטיס המאגר: <a href="https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>טקסט: שכבת ה־OCR של הסריקות, מסוננת מול מילון. בבדיקה בעין של 100 שורות אקראיות מול הסריקות נמצאה טעות ב־9 (9%), ו־9 מילים שגויות מתוך 454 (2.0%).</li>
+<li>ל־2,004 מתוך 2,146 חוקים בקטלוג יש שורות במאגר.</li>
 </ul>
-<h3 id="tanakh">Tanakh: the Westminster Leningrad Codex</h3>
+<h3 id="tanakh">תנ&quot;ך: כתב יד לנינגרד (WLC)</h3>
 <span class="status">tanakh-v1</span><span class="status">htext-cc0</span>
-<p>The Hebrew Bible, all 39 books, as the Westminster Leningrad Codex (WLC 4.20) gives it, cut into lines in two forms: with niqqud (no cantillation) and plain.</p>
+<p>התנ&quot;ך, כל 39 הספרים, כפי שהוא מופיע בכתב יד לנינגרד בגרסת וסטמינסטר (WLC 4.20), חתוך לשורות בשתי צורות: מנוקד (בלי טעמים) ובלי ניקוד.</p>
 <div class="tablewrap"><table>
-<thead><tr><th>File</th><th>Variant</th><th>Subset</th><th>Lines</th><th>Books</th><th>Size</th></tr></thead>
+<thead><tr><th>קובץ</th><th>גרסה</th><th>סוג</th><th>שורות</th><th>ספרים</th><th>גודל</th></tr></thead>
 <tbody>
-<tr><td><code>tanakh_lines_niqqud_v1.txt</code></td><td>Israel</td><td>niqqud</td><td class="num">58,120</td><td class="num">39</td><td class="num"><span dir="ltr">4.6 MB</span></td></tr>
-<tr><td><code>tanakh_lines_plain_v1.txt</code></td><td>Israel</td><td>plain</td><td class="num">58,074</td><td class="num">39</td><td class="num"><span dir="ltr">2.7 MB</span></td></tr>
+<tr><td><code>tanakh_lines_niqqud_v1.txt</code></td><td>ישראל</td><td>מנוקד</td><td class="num">58,120</td><td class="num">39</td><td class="num"><span dir="ltr">4.6 MB</span></td></tr>
+<tr><td><code>tanakh_lines_plain_v1.txt</code></td><td>ישראל</td><td>ללא ניקוד</td><td class="num">58,074</td><td class="num">39</td><td class="num"><span dir="ltr">2.7 MB</span></td></tr>
 </tbody></table></div>
 <ul class="facts">
-<li>Release: htext-cc0</li>
-<li>Source: <a href="https://github.com/openscriptures/morphhb">Westminster Leningrad Codex, via the Open Scriptures Hebrew Bible</a> (Public domain)</li>
-<li>Release: <a href="https://github.com/HeOCR/htext/releases/tag/tanakh-v1">tanakh-v1</a>, 2026-11-18</li>
-<li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
-<li>Text: transcribed by people.</li>
-<li>All 39 books have lines in this corpus, in both forms. The pointed and plain files hold the same verses, so the totals above count them once.</li>
+<li>גרסת htext: htext-cc0</li>
+<li>מקור: <a href="https://github.com/openscriptures/morphhb">כתב יד לנינגרד בגרסת וסטמינסטר, דרך Open Scriptures Hebrew Bible</a> (נחלת הכלל)</li>
+<li>גרסה: <a href="https://github.com/HeOCR/htext/releases/tag/tanakh-v1">tanakh-v1</a>, 2026-11-18</li>
+<li>כרטיס המאגר: <a href="https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>טקסט: הוקלד בידי אנשים.</li>
+<li>לכל 39 הספרים יש שורות במאגר, בשתי הצורות. שני הקבצים, המנוקד והלא־מנוקד, מכילים את אותם פסוקים, ולכן הסיכומים למעלה סופרים אותם פעם אחת.</li>
 </ul>
 </section>
 <section id="rights">
-<h2>Rights</h2>
-<p>Every entry has a rights record with two fields, <code>pd_israel</code> and <code>pd_us</code>, each with the basis it was computed from and the year it holds for. A corpus variant includes an entry only if its record passes that variant's rule. The records are published with each corpus.</p>
-<p>A translation counts as public domain only if both its author and its translator are. Every entry also records its source licence and credit line, so each release can be rebuilt and filtered. No release takes text under a non-commercial (NC) or no-derivatives (ND) licence, and text never crosses releases: a CC0 build never contains a CC BY or CC BY-SA line.</p>
-<p>The rights fields are the project's reading of the law, not legal advice.</p>
+<h2>זכויות</h2>
+<p>לכל פריט יש רישום זכויות עם שני שדות, <code>pd_israel</code> ו־<code>pd_us</code>, וכל אחד מציין את הבסיס שלפיו חושב ואת השנה שבה הוא תקף. גרסת מאגר כוללת פריט רק אם הרישום שלו עומד בכלל של אותה גרסה. הרישומים מתפרסמים עם כל מאגר.</p>
+<p>תרגום נחשב נחלת הכלל רק אם גם המחבר וגם המתרגם בנחלת הכלל. כל פריט מתעד גם את רישיון המקור ואת שורת הקרדיט שלו, כך שאפשר לבנות ולסנן כל גרסה מחדש. אף גרסה אינה כוללת טקסט ברישיון לא־מסחרי (NC) או ללא יצירות נגזרות (ND), וטקסט לעולם אינו עובר בין גרסאות: בנייה של CC0 לעולם אינה כוללת שורה ב־CC BY או ב־CC BY-SA.</p>
+<p>שדות הזכויות הם קריאת הפרויקט את החוק, ולא ייעוץ משפטי.</p>
 <ul class="facts">
-<li><b>Project Ben-Yehuda</b>: Public domain in Israel: every author and every translator died at least 71 years before the build year (2026), with death years from Wikidata or, where Wikidata has none, from a reviewed source such as the author&#x27;s PBY page. US status is recorded per work: public domain in the US when the transcribed edition appeared before 1931.</li>
-<li><b>The Knesset of Israel</b>: Laws are not protected by copyright in Israel (section 6 of the Copyright Act 2007). US status is not assessed.</li>
-<li><b>Westminster Leningrad Codex, via the Open Scriptures Hebrew Bible</b>: The Leningrad Codex is about a thousand years old, and the WLC text is in the public domain (&quot;The text of the WLC remains in the Public Domain&quot;, OSHB). Public domain in Israel and in the US. Only the words are used; OSHB&#x27;s CC BY lemma and morphology layers are not. The edition is WLC, not UXLC.</li>
+<li><b>פרויקט בן־יהודה</b>: נחלת הכלל בישראל: כל מחבר וכל מתרגם נפטרו 71 שנה לפחות לפני שנת הבנייה (2026), לפי שנות פטירה מוויקינתונים, ובהיעדרן ממקור שנבדק, כמו דף המחבר בפרויקט בן־יהודה. המעמד בארה&quot;ב מתועד לכל יצירה: נחלת הכלל בארה&quot;ב כשהמהדורה שהוקלדה יצאה לפני 1931.</li>
+<li><b>כנסת ישראל</b>: חוקים אינם מוגנים בזכות יוצרים בישראל (סעיף 6 לחוק זכות יוצרים, התשס&quot;ח-2007). המעמד בארה&quot;ב לא נבדק.</li>
+<li><b>כתב יד לנינגרד בגרסת וסטמינסטר, דרך Open Scriptures Hebrew Bible</b>: כתב יד לנינגרד בן כאלף שנה, וטקסט ה־WLC בנחלת הכלל (&quot;The text of the WLC remains in the Public Domain&quot;, ‏OSHB). נחלת הכלל בישראל ובארה&quot;ב. נלקחות רק המילים, בלי שכבות הלמות והמורפולוגיה של OSHB שברישיון CC BY. המהדורה היא WLC ולא UXLC.</li>
 </ul>
 </section>
 <section id="use">
-<h2>Download and use</h2>
-<p>The corpus files are assets of each corpus's GitHub release, and the card, checksums and rights index are in the repository. Every file is UTF-8 with one line per row, NFC normalised, with no blank lines.</p>
-<p>Download the files and check them against the published checksums:</p>
+<h2>הורדה ושימוש</h2>
+<p>קובצי המאגר מצורפים לגרסת ה־GitHub של כל מאגר, והכרטיס, סיכומי הביקורת ואינדקס הזכויות נמצאים במאגר הקוד. כל קובץ הוא UTF-8, שורה אחת לכל רשומה, מנורמל ל־NFC וללא שורות ריקות.</p>
+<p>הורידו את הקבצים ובדקו אותם מול סיכומי הביקורת שפורסמו:</p>
 <pre><code>gh release download pby-v3 -R HeOCR/htext
 curl -LO https://raw.githubusercontent.com/HeOCR/htext/main/data/pby/v3/SHA256SUMS
 grep -E &#x27;_v3\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
-<p>Use a file as training text for hocrsyngen, which records it as <code>external:sha256:&lt;hex&gt;</code>:</p>
+<p>השתמשו בקובץ כטקסט אימון ל־hocrsyngen, שמתעד אותו כ־<code>external:sha256:&lt;hex&gt;</code>:</p>
 <pre><code>hocrsyngen ... --text-corpus pby_lines_il_plain_v3.txt</code></pre>
-<p>Or rebuild a corpus from its source: each corpus has a build guide in the repository, for example <a href="https://github.com/HeOCR/htext/blob/main/docs/pby_corpus.md">the PBY guide</a>.</p>
+<p>או בנו מאגר מחדש מהמקור: לכל מאגר יש מדריך בנייה במאגר הקוד, למשל <a href="https://github.com/HeOCR/htext/blob/main/docs/pby_corpus.md">המדריך של פרויקט בן־יהודה</a>.</p>
 </section>
 <section id="credit">
-<h2>Credit</h2>
-<p>Credit is not required by the licence, but some sources ask for it, and HeOCR gives it. Please carry these lines into any dataset or model card that uses a corpus:</p>
-<p class="credit">Credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a></p>
-<p class="credit">Credit: <a href="https://main.knesset.gov.il">The Knesset of Israel (Knesset database, laws as published in Reshumot)</a></p>
-<p class="credit">Credit: <a href="https://github.com/openscriptures/morphhb">Westminster Leningrad Codex (public domain), via the Open Scriptures Hebrew Bible</a></p>
+<h2>קרדיט</h2>
+<p>הרישיון אינו מחייב קרדיט, אבל חלק מהמקורות מבקשים אותו, ו־HeOCR נותן אותו. אנא העבירו את השורות האלה לכל כרטיס מאגר נתונים או מודל שמשתמש במאגר:</p>
+<p class="credit">Credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a> · קרדיט: <a href="https://benyehuda.org">מתנדבי פרויקט בן־יהודה</a></p>
+<p class="credit">Credit: <a href="https://main.knesset.gov.il">The Knesset of Israel (Knesset database, laws as published in Reshumot)</a> · קרדיט: <a href="https://main.knesset.gov.il">כנסת ישראל (מאגר הכנסת, החוקים כפי שפורסמו ברשומות)</a></p>
+<p class="credit">Credit: <a href="https://github.com/openscriptures/morphhb">Westminster Leningrad Codex (public domain), via the Open Scriptures Hebrew Bible</a> · קרדיט: <a href="https://github.com/openscriptures/morphhb">כתב יד לנינגרד בגרסת וסטמינסטר (נחלת הכלל), דרך Open Scriptures Hebrew Bible</a></p>
 </section>
 <section id="licence">
-<h2>Licence</h2>
-<p>Each release carries its own licence, listed under <a href="#releases">Releases</a>; the CC BY and CC BY-SA terms bind the source text. HeOCR's own processing and metadata, meaning the rights and line indexes, exclusion lists, cards and checksums, are dedicated to the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a> in every release, as far as they can be separated from the text. The builder code is under the <a href="https://github.com/HeOCR/htext/blob/main/LICENSE">MIT licence</a>.</p>
+<h2>רישיון</h2>
+<p>לכל גרסה יש רישיון משלה, כמפורט תחת <a href="#releases">גרסאות</a>; תנאי CC BY ו־CC BY-SA חלים על טקסט המקור. העיבוד והמטא־דאטה של HeOCR, כלומר אינדקסי הזכויות והשורות, רשימות ההחרגה, הכרטיסים וסיכומי הביקורת, מוקדשים לנחלת הכלל ברישיון <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.he">CC0 1.0</a> בכל הגרסאות, ככל שאפשר להפריד אותם מהטקסט. קוד הבנייה ברישיון <a href="https://github.com/HeOCR/htext/blob/main/LICENSE">MIT</a>.</p>
 </section>
 </main>
 <footer class="site-footer">
 <div class="wrap foot">
 <div class="foot-brand">He<b>OCR</b></div>
 <div class="foot-text">
-<p>Created by <a href="http://www.shaypalachy.com/">Shay Palachy Affek</a> and the HeOCR maintainers.</p>
+<p>נוצר בידי <a href="http://www.shaypalachy.com/">שי פלצ'י אפק</a> ומתחזקי HeOCR.</p>
 <p><a href="https://github.com/HeOCR/htext">HeOCR/htext</a> · <a href="htext/corpora.json">corpora.json</a> · <a href="./">HeOCR</a></p>
 </div>
 </div>
