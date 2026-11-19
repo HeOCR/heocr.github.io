@@ -104,7 +104,7 @@ def head_assets(lang: str, title: str, desc: str | None, page: str) -> str:
         out.append(f'<meta property="og:description" content="{desc}">')
     out += [
         f'<meta property="og:url" content="{url}">',
-        f'<meta property="og:image" content="{SITE}/og-image-1200x630.png">',
+        f'<meta property="og:image" content="{SITE}/og-image-{lang}-1200x630.png">',
         '<meta property="og:image:width" content="1200">',
         '<meta property="og:image:height" content="630">',
         '<meta name="twitter:card" content="summary_large_image">',
