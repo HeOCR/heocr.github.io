@@ -313,7 +313,7 @@
  },
  "documents": {
   "status": "scored",
-  "gate": "not_run",
+  "gate": "run",
   "run": "synth-2026-11-17-main",
   "heocr": "heocr @ HeOCR/heocr 7f5e99ee70827f1dc080f3a5471d2307e8a548fd (main after #64; synthetic run for the public benchmarks page, 2026-11-17)",
   "baselines": {
@@ -453,7 +453,8 @@
        "n": 60
       }
      }
-    }
+    },
+    "verdict": "supported"
    },
    "DOC": {
     "documents": 40,
@@ -485,7 +486,8 @@
        "n": 40
       }
      }
-    }
+    },
+    "verdict": "supported"
    },
    "PDF T1": {
     "documents": 318,
@@ -665,7 +667,8 @@
        "n": 318
       }
      }
-    }
+    },
+    "verdict": "supported"
    },
    "PDF T2": {
     "documents": 40,
@@ -810,7 +813,8 @@
        "n": 40
       }
      }
-    }
+    },
+    "verdict": "supported"
    },
    "PDF T3": {
     "documents": 151,
@@ -990,7 +994,8 @@
        "n": 151
       }
      }
-    }
+    },
+    "verdict": "supported"
    },
    "PDF T4": {
     "documents": 40,
@@ -1170,7 +1175,17 @@
        "n": 40
       }
      }
-    }
+    },
+    "verdict": "not_supported",
+    "gate_failed": [
+     {
+      "baseline": "stock",
+      "measure": "cer",
+      "delta": -2.225,
+      "upper_97_5": 3.633,
+      "margin": 0.5
+     }
+    ]
    },
    "PDF T5": {
     "documents": 40,
@@ -1350,7 +1365,24 @@
        "n": 40
       }
      }
-    }
+    },
+    "verdict": "not_supported",
+    "gate_failed": [
+     {
+      "baseline": "stock",
+      "measure": "cer",
+      "delta": -3.385,
+      "upper_97_5": 0.514,
+      "margin": 0.5
+     },
+     {
+      "baseline": "pymupdf4llm",
+      "measure": "number_recall",
+      "delta": 3.113,
+      "upper_97_5": 9.407,
+      "margin": 1.0
+     }
+    ]
    },
    "PDF T6": {
     "documents": 40,
@@ -1538,7 +1570,13 @@
        "n": 40
       }
      }
-    }
+    },
+    "verdict": "not_supported",
+    "gate_failed": [
+     {
+      "veto": "reversed_amounts"
+     }
+    ]
    },
    "PDF spread": {
     "documents": 40,
@@ -1683,7 +1721,8 @@
        "n": 40
       }
      }
-    }
+    },
+    "verdict": "supported"
    },
    "Scanned tables": {
     "documents": 120,
@@ -1863,8 +1902,18 @@
        "n": 120
       }
      }
-    }
+    },
+    "verdict": "supported"
    }
+  },
+  "gate_run": {
+   "name": "gate-rc1",
+   "heocr": "0.1.0rc1",
+   "commit": "57e58deb3a230a86b07e9fdf110223cac9fbf471",
+   "scored": "2026-11-19",
+   "set": "a fresh generated set, seeded after the code was frozen (registration amendment 6)",
+   "rule": "a type is supported when, against every applicable baseline and gate measure, the one-sided 97.5% upper bound of the paired document bootstrap of heocr minus baseline (larger = worse for heocr) is within the registered margin; a reference-free check on the real test split can then hold a type back",
+   "units": "points"
   }
  },
  "vendors": {

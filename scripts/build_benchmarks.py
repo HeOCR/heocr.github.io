@@ -145,6 +145,12 @@ NEW = {
         "method": "Method, reference and run",
         "cell_note_legend": "A dash means the reader has no score on that measure. An empty cell means the measure does not apply to that document type. The last column holds a measure that exists for one type only; its name is in that type's heading row.",
         "caveat_from": "heocr is developed", "fixed_from": "Release gate not yet run",
+        "doc_sub_run": "It has since run, on heocr {version}: the verdicts come from that fresh set, while the figures in these tables are the earlier development run.",
+        "gate_ran": "Run {name}: heocr {version} (commit {commit}), scored {date}. The verdict is set by the one-sided 97.5% upper bound of heocr's difference from each other reader, against a fixed margin.",
+        "gate_hero": "{s} of {n} supported",
+        "why_cmp": "vs {reader}: {measure}, difference {delta}, upper bound {upper} &gt; margin {margin} points",
+        "why_veto": {"reversed_amounts": "held back by the real-document check: reversed amounts"},
+        "why_m": {"number_recall": "Numbers missed", "image_word_recall": "Words in image regions missed", "rows_read": "Table rows not read"},
     },
     "he": {
         "kicker": "מסמכים לפי פורמט", "chart_title": "שגיאת תווים לפי סוג מסמך", "ours": "שלנו",
@@ -162,6 +168,12 @@ NEW = {
         "method": "שיטה, טקסט ייחוס והרצה",
         "cell_note_legend": "קו מפריד פירושו שלקורא אין ציון במדד הזה. תא ריק פירושו שהמדד אינו חל על סוג המסמך הזה. בעמודה האחרונה מופיע מדד שקיים רק לסוג מסמך אחד; שמו מופיע בשורת הכותרת של אותו סוג.",
         "caveat_from": "heocr מפותח", "fixed_from": "שער השחרור עוד לא הורץ",
+        "doc_sub_run": "מאז הוא הורץ, על heocr {version}: ההחלטות מבוססות על הקבוצה החדשה הזו, והמספרים בטבלאות האלה הם מהרצת הפיתוח הקודמת.",
+        "gate_ran": "הרצה {name}: heocr {version} (קומיט {commit}), הוערכה ב־{date}. ההחלטה נקבעת לפי הגבול העליון החד־צדדי ברמת 97.5% של ההפרש בין heocr לכל קורא אחר, מול סף קבוע.",
+        "gate_hero": "{s} מתוך {n} נתמכים",
+        "why_cmp": "מול {reader}: {measure}, הפרש {delta}, גבול עליון {upper} &gt; סף {margin} נקודות",
+        "why_veto": {"reversed_amounts": "נעצר בבדיקת המסמכים האמיתיים: סכומים הפוכים"},
+        "why_m": {"number_recall": "מספרים שהוחמצו", "image_word_recall": "מילים שהוחמצו באזורי תמונה", "rows_read": "שורות טבלה שלא נקראו"},
     },
 }
 for _lang in T:
@@ -304,11 +316,21 @@ def legend(t):
             "</ul>")
 
 
+def hero_badge(t, D, not_run, gate):
+    if not_run:
+        return verdict("pending", t, label=t["release_gate"] + ": " + gate)
+    v = [c.get("verdict") for c in D["cells"].values()]
+    s = v.count("supported")
+    kind = "supported" if s == len(v) else "unsupported" if s == 0 else "pending"
+    return verdict(kind, t, label=t["release_gate"] + ": " + t["gate_hero"].format(s=s, n=len(v)))
+
+
 def hero(t, lang, R, doc_interval):
     D = R["documents"]
     not_run = D.get("gate", "not_run") == "not_run"
     gate = t["gate_not_run"] if not_run else t["gate_run"]
-    caveat = t["doc_sub"][t["doc_sub"].index(t["caveat_from"]):]
+    sub = doc_sub(t, D, not_run)
+    caveat = sub[sub.index(t["caveat_from"]):]
     svgs = hc.hero_svg(D, lang, "wide") + "\n" + hc.hero_svg(D, lang, "narrow")
     return f'''<figure class="wrap hero-chart" id="hero">
 <div class="panel" data-tag="figure · hero">
@@ -318,7 +340,7 @@ def hero(t, lang, R, doc_interval):
 {legend(t)}
 {svgs}
 <figcaption class="hc-foot">
-<p class="hc-run"><span>{e(t["run"])} <code>{e(D["run"])}</code></span><span><bdi dir="ltr">{e(R["updated"])}</bdi></span>{verdict("pending" if not_run else "supported", t, label=t["release_gate"] + ": " + gate)}</p>
+<p class="hc-run"><span>{e(t["run"])} <code>{e(D["run"])}</code></span><span><bdi dir="ltr">{e(R["updated"])}</bdi></span>{hero_badge(t, D, not_run, gate)}</p>
 <p class="note">{e(caveat)}</p>
 <p class="note">{e(t["axis_note"].format(interval=doc_interval))}</p>
 <p class="note"><a href="#documents">{e(t["more"])}</a></p>
@@ -326,6 +348,22 @@ def hero(t, lang, R, doc_interval):
 </div>
 </figure>
 '''
+
+
+def num(x):
+    return f'<bdi dir="ltr">{x:.2f}</bdi>'.replace("-", "\u2212")
+
+
+def why(t, cell):
+    """The failed comparisons of a not-supported type, from results.json's gate_failed."""
+    out = []
+    for f in cell.get("gate_failed", []):
+        if "veto" in f:
+            out.append(e(t["why_veto"][f["veto"]]))
+        else:
+            out.append(t["why_cmp"].format(reader=e(hc.READER_NAMES.get(f["baseline"], f["baseline"])), measure=e(t["why_m"].get(f["measure"], t["m"][f["measure"]])),
+                                           delta=num(f["delta"]), upper=num(f["upper_97_5"]), margin=num(f["margin"])))
+    return f'<span class="why">{"; ".join(out)}</span>' if out else ""
 
 
 def gate_block(t, lang, D, verdicts):
@@ -337,10 +375,21 @@ def gate_block(t, lang, D, verdicts):
                  f'<strong>{kinds.count("unsupported")}</strong>{e(t["v_unsupported"])}')
     else:
         count = t["gate_count"].format(d=decided, n=len(kinds))
-    items = "".join(f'<li><a href="#{slug(c)}"><span class="code">{c}</span> <span class="name">{e(hc.TYPE_LABELS[lang][c])}</span></a>'
+    items = "".join(f'<li><a href="#{slug(c)}"><span class="code">{c}</span> <span class="name">{e(hc.TYPE_LABELS[lang][c])}</span>{why(t, D["cells"][c])}</a>'
                     f'{verdict(k, t)}</li>\n' for c, k in zip(D["cells"], kinds))
     return (f'<div class="gate-summary">\n<div class="gate-strip" aria-hidden="true">{strip}</div>\n<p class="gate-count">{count}</p>\n</div>\n'
             f'<ul class="gate-list">\n{items}</ul>')
+
+
+def gate_ran(t, D):
+    g = D["gate_run"]
+    return t["gate_ran"].format(name=g["name"], version=g["heocr"], commit=g["commit"][:7], date=g["scored"])
+
+
+def doc_sub(t, D, not_run):
+    if not_run:
+        return t["doc_sub"]
+    return t["doc_sub"][:t["doc_sub"].index(t["fixed_from"])] + t["doc_sub_run"].format(version=D["gate_run"]["heocr"])
 
 
 def cap(s):
@@ -397,7 +446,7 @@ def page(lang: str, R: dict) -> str:
     vers = "; ".join(f'{e(t["readers"][k])} {e(v.get("version") or v.get("ocr", ""))}' for k, v in D["baselines"].items())
     w.append(f'<section id="documents" class="wrap domain">\n'
              f'{domain_head(e(t["doc_h"]), e(t["scored"]) + " <bdi dir=\"ltr\">" + e(R["updated"]) + "</bdi>", " scored")}\n'
-             f'<p class="sub">{e(t["doc_sub"])}</p>\n{docs_tables(t, D, verdicts)}\n'
+             f'<p class="sub">{e(doc_sub(t, D, not_run))}</p>\n{docs_tables(t, D, verdicts)}\n'
              f'<p class="legend-note">{e(t["cell_note_legend"])}</p>\n'
              f'<p class="note">{e(t["reader_note"])}</p>\n<p class="note">{e(t["wer_note"])}</p>\n')
     w.append(method(t, [
@@ -416,7 +465,7 @@ def page(lang: str, R: dict) -> str:
     fixed = t["doc_sub"][t["doc_sub"].index(t["fixed_from"]):] if not_run else ""
     pend = verdict("pending", t, label=gate_state) if not_run else ""
     w.append(f'<section id="gate" class="wrap domain">\n<div class="domain-head"><h2>{e(t["release_gate"])}</h2>{pend}</div>\n'
-             f'<p class="sub">{e(t["gate_sub"])}{" " + e(fixed) if fixed else ""}</p>\n{gate_block(t, lang, D, verdicts)}\n</section>\n')
+             f'<p class="sub">{e(t["gate_sub"])}{" " + e(fixed) if fixed else ""}{" " + e(gate_ran(t, D)) if not not_run else ""}</p>\n{gate_block(t, lang, D, verdicts)}\n</section>\n')
     w.append("</main>\n")
     w.append(shell.footer([f"<p>{t['footer']}</p>", f'<p><a href="{json_href}">results.json</a> · <a href="./">HeOCR</a></p>']))
     w.append(shell.tail(lang))
