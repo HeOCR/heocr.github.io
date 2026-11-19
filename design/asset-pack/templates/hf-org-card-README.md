@@ -15,15 +15,15 @@ pinned: false
 
 <div dir="rtl">
 
-HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים.
+‏HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים.
 
-**המודלים**
-- [heocr-modern-v1-tesseract-heb](https://huggingface.co/HeOCR/heocr-modern-v1-tesseract-heb): מודל Tesseract לדפוס עברי מודרני.
-- [heocr-oldprint-v1-tesseract-heb](https://huggingface.co/HeOCR/heocr-oldprint-v1-tesseract-heb): מודל Tesseract לדפוס עברי ישן.
+‏**המודלים**
+- ‏[heocr-modern-v1-tesseract-heb](https://huggingface.co/HeOCR/heocr-modern-v1-tesseract-heb): מודל Tesseract לדפוס עברי מודרני.
+- ‏[heocr-oldprint-v1-tesseract-heb](https://huggingface.co/HeOCR/heocr-oldprint-v1-tesseract-heb): מודל Tesseract לדפוס עברי ישן.
 
-כל המודלים ב-Apache-2.0. ביצועים מדווחים רק על סטים נסתרים.
+‏כל המודלים ב-Apache-2.0. ביצועים מדווחים רק על סטים נסתרים.
 
-**האתר:** [heocr.org](https://heocr.org) · **הקוד:** [GitHub](https://github.com/HeOCR) · **פרסומים:** [Zenodo](https://zenodo.org/communities/heocr) · **חבילת פייתון:** `pip install heocr`
+‏**האתר:** [heocr.org](https://heocr.org) · **הקוד:** [GitHub](https://github.com/HeOCR) · **פרסומים:** [Zenodo](https://zenodo.org/communities/heocr) · **חבילת פייתון:** `pip install heocr`
 
 </div>
 
