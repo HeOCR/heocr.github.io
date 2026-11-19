@@ -8,27 +8,37 @@ scripts/apply_shell.py between ``<!-- shell:… -->`` markers.
 - Light is the default whatever the OS setting; night mode only through the toggle, remembered in
   localStorage under ``heocr-theme`` (theme.js). The one-line head script applies a saved night choice
   before the first paint, so it never flashes light.
-- Hebrew pages differ only by ``lang="he" dir="rtl"``, the strings below, and ``../`` before assets.
+- Hebrew is the default language and lives at the site root; English lives under ``en/``. English pages differ
+  from Hebrew only by ``lang="en" dir="ltr"``, the strings below, and ``../`` before assets.
 """
 from __future__ import annotations
 
 from html import escape as e
 
-SITE = "https://heocr.github.io"
+SITE = "https://heocr.org"
 STORAGE_KEY = "heocr-theme"
 TAG_H1 = "h1 · 0.99"
 FONTS = ("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700"
          "&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap")
 
-# page key -> (English path, Hebrew path), relative to the site root
+# page key -> file name, relative to the language's directory (Hebrew: the site root; English: en/)
 PAGES = {
-    "home": ("index.html", "he/index.html"),
-    "bench": ("benchmarks.html", "he/benchmarks.html"),
-    "htext": ("htext.html", "he/htext.html"),
-    "rights": ("rights.html", "he/rights.html"),
-    "download": ("download.html", "he/download.html"),
-    "privacy": ("privacy.html", "he/privacy.html"),  # linked from the Download page, not in the header
+    "home": "index.html",
+    "bench": "benchmarks.html",
+    "htext": "htext.html",
+    "rights": "rights.html",
+    "download": "download.html",
+    "privacy": "privacy.html",  # linked from the Download page, not in the header
 }
+LANG_DIR = {"he": "", "en": "en/"}  # Hebrew is the default language: the root
+LANGS = ("he", "en")
+
+
+def site_path(lang: str, page: str) -> str:
+    """Path of ``page`` in ``lang`` relative to the site root, e.g. ``en/htext.html``."""
+    return LANG_DIR[lang] + PAGES[page]
+
+
 NAV = ("bench", "htext", "download", "rights")
 
 STR = {
@@ -54,24 +64,29 @@ ICONS = ('<svg class="ico i-moon" viewBox="0 0 16 16" aria-hidden="true"><path d
 
 
 def prefix(lang: str) -> str:
-    return "../" if lang == "he" else ""
+    """What to put before a site-root asset (site.css, theme.js, ...) on a page in ``lang``."""
+    return "../" if LANG_DIR[lang] else ""
 
 
 def _rel(lang: str, target_lang: str, page: str) -> str:
     """Link from a page in ``lang`` to ``page`` in ``target_lang``."""
-    path = PAGES[page][0 if target_lang == "en" else 1]
-    if path.endswith("index.html"):
-        path = path[: -len("index.html")] or "./"
-    if lang == "he":
-        return "./" if path == "he/" else path[3:] if path.startswith("he/") else "../" + (path if path != "./" else "")
-    return path
+    name = PAGES[page]
+    if name == "index.html":
+        name = ""
+    if lang == target_lang:
+        return name or "./"
+    return prefix(lang) + LANG_DIR[target_lang] + name or "./"
+
+
+def page_url(lang: str, page: str) -> str:
+    """Absolute URL of ``page`` in ``lang`` (an index page is its directory)."""
+    return f"{SITE}/{site_path(lang, page)}".replace("index.html", "")
 
 
 def head_assets(lang: str, title: str, desc: str | None, page: str) -> str:
     """Everything in <head> after the title: fonts, stylesheet, theme script, icons, link previews."""
     p = prefix(lang)
-    en, he = PAGES[page]
-    url = f"{SITE}/{he if lang == 'he' else en}".replace("index.html", "")
+    url = page_url(lang, page)
     out = [
         '<link rel="preconnect" href="https://fonts.googleapis.com">',
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
@@ -93,8 +108,10 @@ def head_assets(lang: str, title: str, desc: str | None, page: str) -> str:
         '<meta property="og:image:width" content="1200">',
         '<meta property="og:image:height" content="630">',
         '<meta name="twitter:card" content="summary_large_image">',
-        f'<link rel="alternate" hreflang="en" href="{SITE}/{en}">'.replace("index.html", ""),
-        f'<link rel="alternate" hreflang="he" href="{SITE}/{he}">'.replace("index.html", ""),
+        f'<link rel="canonical" href="{url}">',
+        f'<link rel="alternate" hreflang="he" href="{page_url("he", page)}">',
+        f'<link rel="alternate" hreflang="en" href="{page_url("en", page)}">',
+        f'<link rel="alternate" hreflang="x-default" href="{page_url("he", page)}">',
     ]
     return "\n".join(out)
 

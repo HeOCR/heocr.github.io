@@ -1,4 +1,4 @@
-"""Build the Download pages (download.html, he/download.html) for the HeOCR desktop app.
+"""Build the Download pages (download.html, en/download.html) for the HeOCR desktop app.
 
     python3 scripts/build_download.py           # write the pages
     python3 scripts/build_download.py --check   # exit 1 if a page is out of date
@@ -139,7 +139,7 @@ def main():
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
     stale = []
-    for lang, path in (("en", ROOT / "download.html"), ("he", ROOT / "he" / "download.html")):
+    for lang, path in (("he", ROOT / "download.html"), ("en", ROOT / "en" / "download.html")):
         s = page(lang)
         if a.check:
             if not path.exists() or path.read_text(encoding="utf-8") != s:
