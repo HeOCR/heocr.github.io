@@ -38,11 +38,11 @@ node raster.js raster_jobs.json                 # the PNGs
 
 Needs Python 3 with fontTools, and Node with Playwright for the PNGs. `tools/repos.json` holds every repository's one-line description, the badge labels, and the model and dataset entries. `tools/hbrand.py` is the drawing code: the mark, the box, the grid and outlined text.
 
-## The one-line descriptions are drafts
+## The one-line descriptions
 
-The line on each social preview comes from `tools/repos.json`. I wrote them from the brief, and the owner's decision is that each repository's maintainer supplies the real line through the lead. When the approved lines arrive, edit `repos.json`, run the two commands above, and the previews are replaced. Until then **do not upload the social previews**. The line for `heocr-compute` in particular is a guess.
+The line on each social preview comes from `tools/repos.json`. Each repository's maintainer supplied its line through the lead on 2026-11-20 (the lead wrote `heocr-compute`'s). The Hebrew lines are new wording and need the owner's approval before the social previews are uploaded. To change a line, edit `repos.json` and run the two commands above.
 
-Also to confirm before use: the model name `heocr-modern-tesseract-heb` and the licences on the two card headers (Apache-2.0, CC0-1.0) are examples taken from the brief's pattern, not from the records.
+The model card headers name the two published models, `heocr-modern-v1-tesseract-heb` and `heocr-oldprint-v1-tesseract-heb` (Apache-2.0). The htext header reads "CC0 (data) · MIT (code)", because every htext corpus published so far is CC0. When the first CC BY or CC BY-SA corpus ships, change it to "CC0, CC BY and CC BY-SA releases · code MIT".
 
 ## Platform limits
 
