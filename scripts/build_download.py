@@ -43,7 +43,7 @@ T = {
         "offline": "<strong>Fully offline.</strong> Your files never leave your computer. The app makes no network connections and collects no data: no telemetry, no analytics, no update checks.",
         "mac": "macOS", "mac_req": "macOS 13 or later. One app for Apple silicon and Intel. Signed with an Apple Developer ID and notarized by Apple.",
         "win": "Windows", "win_req": "Windows 10 or 11, 64-bit.",
-        "get": "Download for {}", "coming": "Coming soon", "unsigned": "* Windows: unsigned. Windows SmartScreen will warn; choose More info → Run anyway. A signed build follows soon.", "notes_link": "Release notes and checksum",
+        "privacy": "Privacy policy", "get": "Download for {}", "coming": "Coming soon", "unsigned": "* Windows: unsigned. Windows SmartScreen will warn; choose More info → Run anyway. A signed build follows soon.", "notes_link": "Release notes and checksum",
         "what_h": "What it does",
         "what": [
             "Opens PDF, Word (DOCX) and image files (PNG, JPEG, TIFF and more), and also Excel (XLSX), PowerPoint (PPTX) and saved web pages: drag one onto the window, or use the open button.",
@@ -75,7 +75,7 @@ T = {
         "offline": "<strong>עובד במלואו בלי אינטרנט.</strong> הקבצים שלכם לא יוצאים מהמחשב. האפליקציה אינה מתחברת לרשת ואינה אוספת נתונים: בלי טלמטריה, בלי אנליטיקה, בלי בדיקת עדכונים.",
         "mac": "macOS", "mac_req": "macOS 13 ואילך. אפליקציה אחת למעבדי Apple ול־Intel. חתומה ב־Apple Developer ID ומאושרת (notarized) על ידי Apple.",
         "win": "Windows", "win_req": "Windows 10 או 11, ‏64 סיביות.",
-        "get": "הורדה ל־{}", "coming": "בקרוב", "unsigned": "* Windows: לא חתום. ‏SmartScreen של Windows יזהיר; בחרו „מידע נוסף” ואז „הפעל בכל זאת”. גרסה חתומה תגיע בקרוב.", "notes_link": "הערות הגרסה וסכום הביקורת",
+        "privacy": "מדיניות פרטיות", "get": "הורדה ל־{}", "coming": "בקרוב", "unsigned": "* Windows: לא חתום. ‏SmartScreen של Windows יזהיר; בחרו „מידע נוסף” ואז „הפעל בכל זאת”. גרסה חתומה תגיע בקרוב.", "notes_link": "הערות הגרסה וסכום הביקורת",
         "what_h": "מה היא עושה",
         "what": [
             "פותחת קובצי PDF, ‏Word ‏(DOCX) ותמונות (PNG, ‏JPEG, ‏TIFF ועוד), וגם Excel ‏(XLSX), ‏PowerPoint ‏(PPTX) ודפי אינטרנט שמורים: גוררים קובץ לחלון, או לוחצים על כפתור הפתיחה.",
@@ -129,7 +129,7 @@ def page(lang: str) -> str:
              + f'<p><a href="{POLICY}">{e(t["sign_more"])}</a></p>\n</section>\n')
     w.append(f'<section id="inside">\n<h2>{e(t["inside_h"])}</h2>\n<p>{t["inside"]}</p>\n</section>\n')
     w.append("</main>\n")
-    w.append(shell.footer([f'<p><a href="{REPO}">HeOCR/heocr-desktop</a> · <a href="./">HeOCR</a></p>']))
+    w.append(shell.footer([f'<p><a href="{REPO}">HeOCR/heocr-desktop</a> · <a href="privacy.html">{e(t["privacy"])}</a> · <a href="./">HeOCR</a></p>']))
     w.append(shell.tail(lang))
     return "".join(w)
 
