@@ -26,7 +26,8 @@ VERSION = "0.1.0"
 MAC = f"{REPO}/releases/latest/download/HeOCR-{VERSION}-macos.dmg"
 WIN = f"{REPO}/releases/latest/download/HeOCR-{VERSION}-windows-x64.msi"
 # A platform's download link goes live only once its file is in a published release; until then it 404s.
-RELEASED = {"mac": False, "win": False}
+RELEASED = {"mac": True, "win": False}  # mac: v0.1.0, 2026-11-19; win waits for SignPath
+RELEASE_NOTES = f"{REPO}/releases/tag/v{VERSION}"
 LICENSES = f"{REPO}/blob/main/THIRD_PARTY_LICENSES.md"
 POLICY = f"{REPO}/blob/main/docs/code-signing-policy.md"
 e = html.escape
@@ -39,7 +40,7 @@ T = {
         "offline": "<strong>Fully offline.</strong> Your files never leave your computer. The app makes no network connections and collects no data: no telemetry, no analytics, no update checks.",
         "mac": "macOS", "mac_req": "macOS 13 or later. One app for Apple silicon and Intel. Signed with an Apple Developer ID and notarized by Apple.",
         "win": "Windows", "win_req": "Windows 10 or 11, 64-bit.",
-        "get": "Download", "coming": "Coming soon", "soon": "The first release is being prepared.",
+        "get": "Download", "coming": "Coming soon", "soon": "Windows follows once its installer is code-signed.", "notes_link": "Release notes and checksum",
         "what_h": "What it does",
         "what": [
             "Opens PDF, Word (DOCX) and image files (PNG, JPEG, TIFF and more), and also Excel (XLSX), PowerPoint (PPTX) and saved web pages: drag one onto the window, or use the open button.",
@@ -71,7 +72,7 @@ T = {
         "offline": "<strong>עובד במלואו בלי אינטרנט.</strong> הקבצים שלכם לא יוצאים מהמחשב. האפליקציה אינה מתחברת לרשת ואינה אוספת נתונים: בלי טלמטריה, בלי אנליטיקה, בלי בדיקת עדכונים.",
         "mac": "macOS", "mac_req": "macOS 13 ואילך. אפליקציה אחת למעבדי Apple ול־Intel. חתומה ב־Apple Developer ID ומאושרת (notarized) על ידי Apple.",
         "win": "Windows", "win_req": "Windows 10 או 11, ‏64 סיביות.",
-        "get": "הורדה", "coming": "בקרוב", "soon": "הגרסה הראשונה בהכנה.",
+        "get": "הורדה", "coming": "בקרוב", "soon": "גרסת Windows תצא כשהמתקין שלה ייחתם.", "notes_link": "הערות הגרסה וסכום הביקורת",
         "what_h": "מה היא עושה",
         "what": [
             "פותחת קובצי PDF, ‏Word ‏(DOCX) ותמונות (PNG, ‏JPEG, ‏TIFF ועוד), וגם Excel ‏(XLSX), ‏PowerPoint ‏(PPTX) ודפי אינטרנט שמורים: גוררים קובץ לחלון, או לוחצים על כפתור הפתיחה.",
@@ -117,7 +118,7 @@ def page(lang: str) -> str:
                   else f'<span class="verdict pending">{e(t["coming"])}</span>')
         w.append(f'  <div class="card"><h3>{e(t[key])}</h3><p>{e(t[key + "_req"])}</p>'
                  f'<div class="row">{action}</div></div>\n')
-    w.append(f'</div>\n<p class="note">{e(t["soon"])}</p>\n')
+    w.append(f'</div>\n<p class="note"><a href="{RELEASE_NOTES}">{e(t["notes_link"])}</a> · {e(t["soon"])}</p>\n')
     w.append(f'<section id="what">\n<h2>{e(t["what_h"])}</h2>\n<ul>\n' + "".join(f"  <li>{e(x)}</li>\n" for x in t["what"]) + "</ul>\n</section>\n")
     w.append(f'<section id="notes">\n<h2>{e(t["notes_h"])}</h2>\n<ul>\n' + "".join(f"  <li>{x}</li>\n" for x in t["notes"]) + "</ul>\n</section>\n")
     w.append(f'<section id="code-signing">\n<h2>{e(t["sign_h"])}</h2>\n' + "".join(f"<p>{x}</p>\n" for x in t["sign"])
