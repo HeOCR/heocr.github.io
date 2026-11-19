@@ -11,7 +11,7 @@ The site uses the "Bounding Box" brand. The handover (brand guide, tokens, logo 
 
 - `site.css` and `theme.js` at the root are the handover's, used as delivered: one stylesheet for every page, EN and HE.
   Light is the default whatever the OS setting; night mode only through the toggle, remembered under `heocr-theme`.
-- `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` and `og-image-1200x630.png` come from `design/brand-handover/logo/`.
+- `favicon.svg`, `favicon.ico`, `apple-touch-icon.png` come from `design/brand-handover/logo/`. The link-preview images `og-image-he-1200x630.png` (Hebrew pages) and `og-image-en-1200x630.png` (English pages) come from `design/asset-pack/og/`; `og-image-1200x630.png` is a copy of the English one, kept for old links.
 - `scripts/shell.py` is the one source for the head, header (logo, navigation, language switch, theme toggle), footer,
   boxed page title and page index. The generated pages call it; the hand-written pages (`index.html`, `rights.html`,
   EN and HE) carry its blocks between `<!-- shell:… -->` markers, kept in sync by:
