@@ -189,6 +189,7 @@ ICON = {
     "info": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6"></circle><path d="M8 7.3v3.5M8 5.1v.1"></path></svg>',
     "supported": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.6l3 3 6-7.2"></path></svg>',
     "unsupported": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>',
+    "partial": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.6"></circle><path d="M8 2.4v11.2"></path></svg>',
     "pending": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.6"></circle><path d="M8 4.9V8l2 1.3"></path></svg>',
 }
 NA = '<td class="num na">–</td>'
@@ -321,7 +322,7 @@ def hero_badge(t, D, not_run, gate):
         return verdict("pending", t, label=t["release_gate"] + ": " + gate)
     v = [c.get("verdict") for c in D["cells"].values()]
     s = v.count("supported")
-    kind = "supported" if s == len(v) else "unsupported" if s == 0 else "pending"
+    kind = "supported" if s == len(v) else "unsupported" if s == 0 else "partial"
     return verdict(kind, t, label=t["release_gate"] + ": " + t["gate_hero"].format(s=s, n=len(v)))
 
 

@@ -53,10 +53,11 @@ STR = {
         "no_alt": "no other open tool reads this format",
         "no_stock": "not scored on this type",
         "no_measure": "no character-error score; see table",
-        "aria": "Character error by document type, lower is better. {finding} "
+        "aria": "Character error by document type, lower is better. {finding} {gate}"
                 "All figures are in the Documents by format tables below.",
-        "lowest_all": "heocr has the lowest character error on all {m} document types that another tool also reads",
-        "lowest_some": "heocr has the lowest character error on {k} of the {m} document types that another tool also reads",
+        "gate": "The release gate, scored on a fresh set, supports {s} of {n} document types. ",
+        "lowest_all": "On the development run, heocr has the lowest character error on all {m} document types that another tool also reads",
+        "lowest_some": "On the development run, heocr has the lowest character error on {k} of the {m} document types that another tool also reads",
         "clear_all": ", with no overlap between 95% intervals.",
         "clear_some": "; its 95% interval is clear of every other reader on {c} of them.",
         "behind": " It is not the lowest on: {types}.",
@@ -71,10 +72,11 @@ STR = {
         "no_alt": "אף כלי פתוח אחר לא קורא את הפורמט הזה",
         "no_stock": "לא הוערך על סוג זה",
         "no_measure": "אין ציון שגיאת תווים; ראו בטבלה",
-        "aria": "שגיאת תווים לפי סוג מסמך, נמוך יותר עדיף. {finding} "
+        "aria": "שגיאת תווים לפי סוג מסמך, נמוך יותר עדיף. {finding} {gate}"
                 "כל המספרים מופיעים בטבלאות של מסמכים לפי פורמט למטה.",
-        "lowest_all": "ל־‎heocr‏ שגיאת התווים הנמוכה ביותר בכל {m} סוגי המסמכים שגם כלי אחר קורא",
-        "lowest_some": "ל־‎heocr‏ שגיאת התווים הנמוכה ביותר ב־{k} מתוך {m} סוגי המסמכים שגם כלי אחר קורא",
+        "gate": "שער השחרור, שהוערך על קבוצה חדשה, תומך ב־{s} מתוך {n} סוגי מסמכים. ",
+        "lowest_all": "בהרצת הפיתוח, ל־‎heocr‏ שגיאת התווים הנמוכה ביותר בכל {m} סוגי המסמכים שגם כלי אחר קורא",
+        "lowest_some": "בהרצת הפיתוח, ל־‎heocr‏ שגיאת התווים הנמוכה ביותר ב־{k} מתוך {m} סוגי המסמכים שגם כלי אחר קורא",
         "clear_all": ", בלי חפיפה בין רווחי הסמך של 95%.",
         "clear_some": "; ב־{c} מהם רווח הסמך שלו אינו חופף לאף קורא אחר.",
         "behind": " הוא אינו הנמוך ביותר ב: {types}.",
@@ -226,7 +228,9 @@ def hero_svg(doc, lang="en", variant="wide"):
         o.append("</g>")
         return v, lo, hi
 
-    aria = s["aria"].format(finding=finding_sentence(doc, lang))
+    v = [c.get("verdict") for c in doc["cells"].values()]
+    gate = "" if doc.get("gate", "not_run") == "not_run" else s["gate"].format(s=v.count("supported"), n=len(v))
+    aria = s["aria"].format(finding=finding_sentence(doc, lang), gate=gate)
     o.append(f'<svg class="hc hc-{variant}" viewBox="0 0 {W} {num(H)}" role="img" aria-label="{escape(aria, quote=True)}">')
 
     # axis header
