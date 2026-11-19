@@ -151,6 +151,8 @@ def finding_sentence(doc, lang="en"):
     s, f = STR[lang], finding(doc)
     k, m = f["lowest"], f["comparable"]
     text = (s["lowest_all"] if k == m else s["lowest_some"]).format(k=k, m=m)
+    if doc.get("heldout"):  # the figures come from a registered held-out run, not the development run
+        text = text.replace("On the development run", "On the held-out set").replace("בהרצת הפיתוח", "בקבוצה המוחזקת בצד")
     text += s["clear_all"] if f["clear"] == k else s["clear_some"].format(c=f["clear"])
     if f["behind"]:
         text += s["behind"].format(types=s["list_sep"].join(f["behind"]))

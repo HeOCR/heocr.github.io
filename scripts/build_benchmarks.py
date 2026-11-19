@@ -148,6 +148,10 @@ NEW = {
         "doc_sub_run": "It has since run, on heocr {version}: the verdicts come from that fresh set, while the figures in these tables are the earlier development run.",
         "gate_ran": "Run {name}: heocr {version} (commit {commit}), scored {date}. The verdict is set by the one-sided 97.5% upper bound of heocr's difference from each other reader, against a fixed margin.",
         "gate_hero": "{s} of {n} supported",
+        "not_measured": "Not measured on a held-out set yet",
+        "phist_nm": "Not measured on a held-out set yet. The historical-print test set is waiting for volunteer references; no figure is shown until it is scored.",
+        "doc_sub_heldout": "Generated documents with exact gold: Word files and PDFs of every kind HeOCR's document reader handles, made by our generators so the correct text is known exactly. Each table is one kind of document. These figures come from the release gate's fresh set: generated with new seeds after heocr {version}'s code was frozen, so heocr was never tuned on these documents. They are drawn by the same generators heocr is developed against, so a good figure means good on generated documents of this kind, not more.",
+        "doc_caveat_heldout": "Held-out set: the release gate's fresh generated documents, made after heocr {version}'s code was frozen.",
         "why_cmp": "vs {reader}: {measure}, difference {delta}, upper bound {upper} &gt; margin {margin} points",
         "why_veto": {"reversed_amounts": "held back by the real-document check: reversed amounts"},
         "why_m": {"number_recall": "Numbers missed", "image_word_recall": "Words in image regions missed", "rows_read": "Table rows not read"},
@@ -171,6 +175,10 @@ NEW = {
         "doc_sub_run": "מאז הוא הורץ, על heocr {version}: ההחלטות מבוססות על הקבוצה החדשה הזו, והמספרים בטבלאות האלה הם מהרצת הפיתוח הקודמת.",
         "gate_ran": "הרצה {name}: heocr {version} (קומיט {commit}), הוערכה ב־{date}. ההחלטה נקבעת לפי הגבול העליון החד־צדדי ברמת 97.5% של ההפרש בין heocr לכל קורא אחר, מול סף קבוע.",
         "gate_hero": "{s} מתוך {n} נתמכים",
+        "not_measured": "עוד לא נמדד על קבוצה מוחזקת בצד",
+        "phist_nm": "עוד לא נמדד על קבוצה מוחזקת בצד. קבוצת המבחן של הדפוס ההיסטורי ממתינה לטקסטי ייחוס ממתנדבים; לא יוצג מספר עד שהיא תוערך.",
+        "doc_sub_heldout": "מסמכים מחוללים עם טקסט נכון מדויק: קובצי Word וקובצי PDF מכל הסוגים שקורא המסמכים של HeOCR מטפל בהם, שנוצרו במחוללים שלנו כך שהטקסט הנכון ידוע במדויק. כל טבלה היא סוג מסמך אחד. המספרים האלה הם מהקבוצה החדשה של שער השחרור: נוצרה עם seeds חדשים אחרי שהקוד של heocr {version} הוקפא, ולכן heocr מעולם לא כוונן עליה. היא נוצרה באותם מחוללים ש־heocr מפותח מולם, ולכן מספר טוב פירושו טוב על מסמכים מחוללים מהסוג הזה, לא יותר.",
+        "doc_caveat_heldout": "קבוצה מוחזקת בצד: המסמכים המחוללים החדשים של שער השחרור, שנוצרו אחרי שהקוד של heocr {version} הוקפא.",
         "why_cmp": "מול {reader}: {measure}, הפרש {delta}, גבול עליון {upper} &gt; סף {margin} נקודות",
         "why_veto": {"reversed_amounts": "נעצר בבדיקת המסמכים האמיתיים: סכומים הפוכים"},
         "why_m": {"number_recall": "מספרים שהוחמצו", "image_word_recall": "מילים שהוחמצו באזורי תמונה", "rows_read": "שורות טבלה שלא נקראו"},
@@ -331,7 +339,8 @@ def hero(t, lang, R, doc_interval):
     not_run = D.get("gate", "not_run") == "not_run"
     gate = t["gate_not_run"] if not_run else t["gate_run"]
     sub = doc_sub(t, D, not_run)
-    caveat = sub[sub.index(t["caveat_from"]):]
+    caveat = (t["doc_caveat_heldout"].format(version=D["gate_run"]["heocr"]) if D.get("heldout")
+              else sub[sub.index(t["caveat_from"]):])
     svgs = hc.hero_svg(D, lang, "wide") + "\n" + hc.hero_svg(D, lang, "narrow")
     return f'''<figure class="wrap hero-chart" id="hero">
 <div class="panel" data-tag="figure · hero">
@@ -388,6 +397,8 @@ def gate_ran(t, D):
 
 
 def doc_sub(t, D, not_run):
+    if D.get("heldout"):
+        return t["doc_sub_heldout"].format(version=D["gate_run"]["heocr"])
     if not_run:
         return t["doc_sub"]
     return t["doc_sub"][:t["doc_sub"].index(t["fixed_from"])] + t["doc_sub_run"].format(version=D["gate_run"]["heocr"])
@@ -413,17 +424,26 @@ def page(lang: str, R: dict) -> str:
     w.append(shell.page_head(e(t["title"]), f'<p class="lede">{t["lede"].format(json=json_href)}</p>\n'
                                              f'<p class="note">{e(t["updated"].format(d=R["updated"]))}</p>'))
     w.append(hero(t, lang, R, doc_interval))
-    sections = [("p-mod", t["pmod_h"], t["no_data"], ""), ("p-hist", t["phist_h"], t["scored"], " scored"),
+    p_nm = P.get("status") == "not_measured"
+    sections = [("p-mod", t["pmod_h"], t["no_data"], ""),
+                ("p-hist", t["phist_h"], t["not_measured"] if p_nm else t["scored"], "" if p_nm else " scored"),
                 ("handwriting", t["hand_h"], t["no_data"], ""), ("documents", t["doc_h"], t["scored"], " scored"),
                 ("vendors", t["vend_h"], t["pending"], "")]
     w.append(shell.toc(lang, [(i, e(h), e(st)) for i, h, st, _ in sections] + [("gate", e(t["release_gate"]), e(gate_state))]))
 
-    def empty(sid, h2, status, text):
-        return (f'<section id="{sid}" class="wrap domain">\n{domain_head(e(h2), e(status))}\n'
-                f'<div class="empty">{e(text)}</div>\n</section>\n')
-
     w.append(empty("p-mod", t["pmod_h"], t["no_data"], t["pmod_t"]))
-    # --- historical print: one grouped table
+    # --- historical print: one grouped table, once a held-out set is scored
+    if p_nm:
+        w.append(empty("p-hist", t["phist_h"], t["not_measured"], t["phist_nm"]))
+    else:
+        w.append(phist_section(t, P))
+    w.append(empty("handwriting", t["hand_h"], t["no_data"], t["hand_t"]))
+    w.extend(rest_of_page(t, lang, R, D, verdicts, not_run, gate_state, doc_interval, json_href))
+    return "".join(w)
+
+
+def phist_section(t, P):
+    w = []
     ref = P["reference"]
     w.append(f'<section id="p-hist" class="wrap domain">\n'
              f'{domain_head(e(t["phist_h"]), e(t["scored"]) + " <bdi dir=\"ltr\">" + e(P["scored"]) + "</bdi>", " scored")}\n'
@@ -439,7 +459,16 @@ def page(lang: str, R: dict) -> str:
     for x in P.get("not_scored", []):
         w.append(f'<p class="note">{e(t["not_scored"].format(e=x))}</p>\n')
     w.append("</section>\n")
-    w.append(empty("handwriting", t["hand_h"], t["no_data"], t["hand_t"]))
+    return "".join(w)
+
+
+def empty(sid, h2, status, text):
+    return (f'<section id="{sid}" class="wrap domain">\n{domain_head(e(h2), e(status))}\n'
+            f'<div class="empty">{e(text)}</div>\n</section>\n')
+
+
+def rest_of_page(t, lang, R, D, verdicts, not_run, gate_state, doc_interval, json_href):
+    w = []
     # --- documents by format: two grouped tables
     commit = re.search(r"[0-9a-f]{40}", D["heocr"])
     commit = commit.group(0)[:7] if commit else D["heocr"]
@@ -470,7 +499,7 @@ def page(lang: str, R: dict) -> str:
     w.append("</main>\n")
     w.append(shell.footer([f"<p>{t['footer']}</p>", f'<p><a href="{json_href}">results.json</a> · <a href="./">HeOCR</a></p>']))
     w.append(shell.tail(lang))
-    return "".join(w)
+    return w
 
 
 def main():
