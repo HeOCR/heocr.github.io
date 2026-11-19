@@ -244,6 +244,7 @@ td.na { color: var(--muted); }
 .site .gate-list a { color: var(--text); font-size: 0.95rem; line-height: 1.35; }
 .gate-list .code { display: inline-block; min-width: 7.2em; font-weight: 600; white-space: nowrap; }
 .gate-list .name { color: var(--muted); font-size: var(--fs-small); }
+.gate-list .why { display: block; color: var(--muted); font-size: var(--fs-micro); line-height: 1.4; margin-top: 2px; }
 
 /* ---------- 9. Home page pieces (class names unchanged from today) ---------- */
 .home-hero { padding-block: 56px 44px; border-bottom: 1px solid var(--line); }
