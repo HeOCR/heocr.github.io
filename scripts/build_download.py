@@ -7,7 +7,8 @@ Standard library only. The shell (head, header, footer) is scripts/shell.py and 
 every page; the page uses existing components only (warn box, cards, buttons).
 Each platform shows a "Coming soon" label until its release is published (``RELEASED``). The PR that
 publishes a release sets its flag, and the card then links to the file in the app's latest GitHub release.
-Windows waits for SignPath code signing.
+A platform in ``UNSIGNED`` gets "*" on its button and the note under the cards (Windows, until SignPath
+signs its installer).
 """
 from __future__ import annotations
 
@@ -26,7 +27,9 @@ VERSION = "0.1.0"
 MAC = f"{REPO}/releases/latest/download/HeOCR-{VERSION}-macos.dmg"
 WIN = f"{REPO}/releases/latest/download/HeOCR-{VERSION}-windows-x64.msi"
 # A platform's download link goes live only once its file is in a published release; until then it 404s.
-RELEASED = {"mac": True, "win": False}  # mac: v0.1.0, 2026-11-19; win waits for SignPath
+RELEASED = {"mac": True, "win": True}  # both v0.1.0, 2026-11-19; Windows unsigned until SignPath
+# A platform whose installer is not code-signed yet: its button gets "*", explained under the cards.
+UNSIGNED = {"win"}
 RELEASE_NOTES = f"{REPO}/releases/tag/v{VERSION}"
 LICENSES = f"{REPO}/blob/main/THIRD_PARTY_LICENSES.md"
 POLICY = f"{REPO}/blob/main/docs/code-signing-policy.md"
@@ -40,7 +43,7 @@ T = {
         "offline": "<strong>Fully offline.</strong> Your files never leave your computer. The app makes no network connections and collects no data: no telemetry, no analytics, no update checks.",
         "mac": "macOS", "mac_req": "macOS 13 or later. One app for Apple silicon and Intel. Signed with an Apple Developer ID and notarized by Apple.",
         "win": "Windows", "win_req": "Windows 10 or 11, 64-bit.",
-        "get": "Download for {}", "coming": "Coming soon", "soon": "Windows follows once its installer is code-signed.", "notes_link": "Release notes and checksum",
+        "get": "Download for {}", "coming": "Coming soon", "unsigned": "* Windows: unsigned. Windows SmartScreen will warn; choose More info → Run anyway. A signed build follows soon.", "notes_link": "Release notes and checksum",
         "what_h": "What it does",
         "what": [
             "Opens PDF, Word (DOCX) and image files (PNG, JPEG, TIFF and more), and also Excel (XLSX), PowerPoint (PPTX) and saved web pages: drag one onto the window, or use the open button.",
@@ -72,7 +75,7 @@ T = {
         "offline": "<strong>עובד במלואו בלי אינטרנט.</strong> הקבצים שלכם לא יוצאים מהמחשב. האפליקציה אינה מתחברת לרשת ואינה אוספת נתונים: בלי טלמטריה, בלי אנליטיקה, בלי בדיקת עדכונים.",
         "mac": "macOS", "mac_req": "macOS 13 ואילך. אפליקציה אחת למעבדי Apple ול־Intel. חתומה ב־Apple Developer ID ומאושרת (notarized) על ידי Apple.",
         "win": "Windows", "win_req": "Windows 10 או 11, ‏64 סיביות.",
-        "get": "הורדה ל־{}", "coming": "בקרוב", "soon": "גרסת Windows תצא כשהמתקין שלה ייחתם.", "notes_link": "הערות הגרסה וסכום הביקורת",
+        "get": "הורדה ל־{}", "coming": "בקרוב", "unsigned": "* Windows: לא חתום. ‏SmartScreen של Windows יזהיר; בחרו „מידע נוסף” ואז „הפעל בכל זאת”. גרסה חתומה תגיע בקרוב.", "notes_link": "הערות הגרסה וסכום הביקורת",
         "what_h": "מה היא עושה",
         "what": [
             "פותחת קובצי PDF, ‏Word ‏(DOCX) ותמונות (PNG, ‏JPEG, ‏TIFF ועוד), וגם Excel ‏(XLSX), ‏PowerPoint ‏(PPTX) ודפי אינטרנט שמורים: גוררים קובץ לחלון, או לוחצים על כפתור הפתיחה.",
@@ -114,11 +117,12 @@ def page(lang: str) -> str:
     w.append(f'<p class="warn">{SHIELD}<span>{t["offline"]}</span></p>\n')
     w.append('<div class="grid">\n')
     for key, href in (("mac", MAC), ("win", WIN)):
-        action = (f'<a class="btn primary" href="{href}">{e(t["get"]).format(e(t[key]))}</a>' if RELEASED[key]
+        star = "*" if key in UNSIGNED else ""
+        action = (f'<a class="btn primary" href="{href}">{e(t["get"]).format(e(t[key]))}{star}</a>' if RELEASED[key]
                   else f'<span class="verdict pending">{e(t["coming"])}</span>')
         w.append(f'  <div class="card"><h3>{e(t[key])}</h3><p>{e(t[key + "_req"])}</p>'
                  f'<div class="row">{action}</div></div>\n')
-    w.append(f'</div>\n<p class="note"><a href="{RELEASE_NOTES}">{e(t["notes_link"])}</a> · {e(t["soon"])}</p>\n')
+    w.append(f'</div>\n<p class="note">{e(t["unsigned"])} <a href="{RELEASE_NOTES}">{e(t["notes_link"])}</a></p>\n')
     w.append(f'<section id="what">\n<h2>{e(t["what_h"])}</h2>\n<ul>\n' + "".join(f"  <li>{e(x)}</li>\n" for x in t["what"]) + "</ul>\n</section>\n")
     w.append(f'<section id="notes">\n<h2>{e(t["notes_h"])}</h2>\n<ul>\n' + "".join(f"  <li>{x}</li>\n" for x in t["notes"]) + "</ul>\n</section>\n")
     w.append(f'<section id="code-signing">\n<h2>{e(t["sign_h"])}</h2>\n' + "".join(f"<p>{x}</p>\n" for x in t["sign"])
