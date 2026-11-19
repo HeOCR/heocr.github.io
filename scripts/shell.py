@@ -27,6 +27,7 @@ PAGES = {
     "htext": ("htext.html", "he/htext.html"),
     "rights": ("rights.html", "he/rights.html"),
     "download": ("download.html", "he/download.html"),
+    "privacy": ("privacy.html", "he/privacy.html"),  # linked from the Download page, not in the header
 }
 NAV = ("bench", "htext", "download", "rights")
 
