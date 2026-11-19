@@ -9,25 +9,25 @@
 
 <div dir="rtl">
 
-HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים, והכלים רצים על המחשב או הטלפון שלכם.
+‏HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים, והכלים רצים על המחשב או הטלפון שלכם.
 
-**האתר:** [heocr.org](https://heocr.org) · **מודלים:** [Hugging Face](https://huggingface.co/HeOCR) · **פרסומים:** [Zenodo](https://zenodo.org/communities/heocr)
+‏**האתר:** [heocr.org](https://heocr.org) · **מודלים:** [Hugging Face](https://huggingface.co/HeOCR) · **פרסומים:** [Zenodo](https://zenodo.org/communities/heocr)
 
-**כלים**
-- [heocr](https://github.com/HeOCR/heocr): חבילת פייתון וכלי שורת פקודה: טקסט עברי מקובצי PDF, אופיס, דפי אינטרנט, סריקות וצילומים.
-- [heocr-desktop](https://github.com/HeOCR/heocr-desktop): האפליקציות של HeOCR למק, לווינדוס ולאנדרואיד: טקסט עברי ממסמכים, בלי אינטרנט.
+‏**כלים**
+- ‏[heocr](https://github.com/HeOCR/heocr): חבילת פייתון וכלי שורת פקודה: טקסט עברי מקובצי PDF, אופיס, דפי אינטרנט, סריקות וצילומים.
+- ‏[heocr-desktop](https://github.com/HeOCR/heocr-desktop): האפליקציות של HeOCR למק, לווינדוס ולאנדרואיד: טקסט עברי ממסמכים, בלי אינטרנט.
 
-**מודלים ונתונים**
-- [heocr-engine](https://github.com/HeOCR/heocr-engine): המודלים: אימון ואריזה של מודלי זיהוי טקסט עברי.
-- [htext](https://github.com/HeOCR/htext): טקסט עברי בנחלת הכלל וברישיון פתוח, לאימון OCR בעברית.
-- [hocrsyngen](https://github.com/HeOCR/hocrsyngen): מחולל נתונים סינתטיים לאימון זיהוי טקסט עברי: שורות ועמודים.
-- [hdocsyngen](https://github.com/HeOCR/hdocsyngen): מחולל מסמכים סינתטיים בעברית: קובצי Office ו-PDF, עם מבנה מדויק.
+‏**מודלים ונתונים**
+- ‏[heocr-engine](https://github.com/HeOCR/heocr-engine): המודלים: אימון ואריזה של מודלי זיהוי טקסט עברי.
+- ‏[htext](https://github.com/HeOCR/htext): טקסט עברי בנחלת הכלל וברישיון פתוח, לאימון OCR בעברית.
+- ‏[hocrsyngen](https://github.com/HeOCR/hocrsyngen): מחולל נתונים סינתטיים לאימון זיהוי טקסט עברי: שורות ועמודים.
+- ‏[hdocsyngen](https://github.com/HeOCR/hdocsyngen): מחולל מסמכים סינתטיים בעברית: קובצי Office ו-PDF, עם מבנה מדויק.
 
-**בדיקה ותשתית**
-- [heocr-review](https://github.com/HeOCR/heocr-review): בודקים ומתקנים טקסט עברי מול סריקות של דפים, שורה אחר שורה.
-- [heocr-compute](https://github.com/HeOCR/heocr-compute): מריץ את עבודות האימון של HeOCR על מכונות שכורות: מידע פתוח בלבד, בתוך תקציב.
+‏**בדיקה ותשתית**
+- ‏[heocr-review](https://github.com/HeOCR/heocr-review): בודקים ומתקנים טקסט עברי מול סריקות של דפים, שורה אחר שורה.
+- ‏[heocr-compute](https://github.com/HeOCR/heocr-compute): מריץ את עבודות האימון של HeOCR על מכונות שכורות: מידע פתוח בלבד, בתוך תקציב.
 
-**רוצים לעזור?** פתחו issue או pull request באחד המאגרים.
+‏**רוצים לעזור?** פתחו issue או pull request באחד המאגרים.
 
 </div>
 
