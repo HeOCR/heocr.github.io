@@ -1,60 +1,54 @@
-<!-- For HeOCR/.github at profile/README.md. BASE = https://raw.githubusercontent.com/HeOCR/heocr.github.io/main/design/asset-pack -->
+<!-- For HeOCR/.github at profile/README.md. The Hebrew is approved wording only: the tagline, the maintainers' one-liners (tools/repos.json) and the lines the owner approved on 2026-11-20. -->
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="BASE/banners/master/banner-he-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="BASE/banners/master/banner-he-light.png">
-    <img src="BASE/banners/master/banner-he-light.png" width="640" alt="HeOCR: טקסט עברי מכל מסמך">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/HeOCR/heocr.github.io/main/design/asset-pack/banners/master/banner-he-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/HeOCR/heocr.github.io/main/design/asset-pack/banners/master/banner-he-light.png">
+    <img src="https://raw.githubusercontent.com/HeOCR/heocr.github.io/main/design/asset-pack/banners/master/banner-he-light.png" width="640" alt="HeOCR: טקסט עברי מכל מסמך">
   </picture>
 </p>
 
 <div dir="rtl">
 
-## HeOCR
+HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים, והכלים רצים על המחשב או הטלפון שלכם.
 
-HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF, קובצי וורד, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים, והכלים עובדים על המחשב או הטלפון שלכם.
+**האתר:** [heocr.org](https://heocr.org) · **מודלים:** [Hugging Face](https://huggingface.co/HeOCR) · **פרסומים:** [Zenodo](https://zenodo.org/communities/heocr)
 
-האתר: [heocr.org](https://heocr.org)
-
-**הכלים**
-- [heocr](https://github.com/HeOCR/heocr): צינור העיבוד וחבילת הפייתון.
-- [heocr-desktop](https://github.com/HeOCR/heocr-desktop): האפליקציות למחשב ולטלפון.
+**כלים**
+- [heocr](https://github.com/HeOCR/heocr): חבילת פייתון וכלי שורת פקודה: טקסט עברי מקובצי PDF, אופיס, דפי אינטרנט, סריקות וצילומים.
+- [heocr-desktop](https://github.com/HeOCR/heocr-desktop): האפליקציות של HeOCR למק, לווינדוס ולאנדרואיד: טקסט עברי ממסמכים, בלי אינטרנט.
 
 **מודלים ונתונים**
-- [heocr-engine](https://github.com/HeOCR/heocr-engine): המודלים.
-- [htext](https://github.com/HeOCR/htext): מאגרי טקסט עברי.
-- [hocrsyngen](https://github.com/HeOCR/hocrsyngen), [hdocsyngen](https://github.com/HeOCR/hdocsyngen): מחוללים של חומר סינתטי.
+- [heocr-engine](https://github.com/HeOCR/heocr-engine): המודלים: אימון ואריזה של מודלי זיהוי טקסט עברי.
+- [htext](https://github.com/HeOCR/htext): טקסט עברי בנחלת הכלל וברישיון פתוח, לאימון OCR בעברית.
+- [hocrsyngen](https://github.com/HeOCR/hocrsyngen): מחולל נתונים סינתטיים לאימון זיהוי טקסט עברי: שורות ועמודים.
+- [hdocsyngen](https://github.com/HeOCR/hdocsyngen): מחולל מסמכים סינתטיים בעברית: קובצי Office ו-PDF, עם מבנה מדויק.
 
 **בדיקה ותשתית**
-- [heocr-review](https://github.com/HeOCR/heocr-review): אתר הבדיקה של המתנדבים.
-- [heocr-compute](https://github.com/HeOCR/heocr-compute): עבודות חישוב.
+- [heocr-review](https://github.com/HeOCR/heocr-review): בודקים ומתקנים טקסט עברי מול סריקות של דפים, שורה אחר שורה.
+- [heocr-compute](https://github.com/HeOCR/heocr-compute): מריץ את עבודות האימון של HeOCR על מכונות שכורות: מידע פתוח בלבד, בתוך תקציב.
 
-**איך עוזרים**
-- בודקים ומתקנים שורות של טקסט עברי מול סריקות, כמה דקות בכל פעם: [review.heocr.org](https://review.heocr.org).
-- פותחים issue או pull request באחד המאגרים. בכל מאגר יש קובץ הנחיות.
+**רוצים לעזור?** פתחו issue או pull request באחד המאגרים.
 
 </div>
 
 ---
 
-## HeOCR (English)
+HeOCR is an open project for getting Hebrew text out of any document: PDF and Office files, web pages, scans and photos. The code, the models and the data are open, and the tools run on your own computer or phone.
 
-HeOCR is an open project for getting Hebrew text out of any document: PDFs, Word files, scans and photos. The code, the models and the data are open, and the tools run on your own computer or phone.
-
-Website: [heocr.org/en](https://heocr.org/en/)
+**Website:** [heocr.org/en](https://heocr.org/en/) · **Models:** [Hugging Face](https://huggingface.co/HeOCR) · **Publications:** [Zenodo](https://zenodo.org/communities/heocr)
 
 **Tools**
-- [heocr](https://github.com/HeOCR/heocr): the pipeline and Python package.
-- [heocr-desktop](https://github.com/HeOCR/heocr-desktop): the desktop and phone apps.
+- [heocr](https://github.com/HeOCR/heocr): Python package and CLI: Hebrew text out of PDFs, Office files, web pages, scans and photos.
+- [heocr-desktop](https://github.com/HeOCR/heocr-desktop): HeOCR's apps for Mac, Windows and Android: Hebrew text out of documents, fully offline.
 
 **Models and data**
-- [heocr-engine](https://github.com/HeOCR/heocr-engine): the models.
-- [htext](https://github.com/HeOCR/htext): Hebrew text datasets.
-- [hocrsyngen](https://github.com/HeOCR/hocrsyngen), [hdocsyngen](https://github.com/HeOCR/hdocsyngen): generators of synthetic material.
+- [heocr-engine](https://github.com/HeOCR/heocr-engine): The models: training and packaging Hebrew OCR models.
+- [htext](https://github.com/HeOCR/htext): Public-domain and openly licensed Hebrew text, for training Hebrew OCR.
+- [hocrsyngen](https://github.com/HeOCR/hocrsyngen): A generator of synthetic Hebrew OCR training data: lines and pages.
+- [hdocsyngen](https://github.com/HeOCR/hdocsyngen): A generator of synthetic Hebrew documents: Office files and PDFs, with exact structure.
 
 **Review and infrastructure**
-- [heocr-review](https://github.com/HeOCR/heocr-review): the volunteers' review site.
-- [heocr-compute](https://github.com/HeOCR/heocr-compute): compute jobs.
+- [heocr-review](https://github.com/HeOCR/heocr-review): Check and correct Hebrew text against page scans, line by line.
+- [heocr-compute](https://github.com/HeOCR/heocr-compute): Runs HeOCR's training jobs on rented machines: open data only, within a budget.
 
-**How to help**
-- Check and correct lines of Hebrew text against scans, a few minutes at a time: [review.heocr.org](https://review.heocr.org).
-- Open an issue or a pull request in any repository. Each one has a contributing guide.
+**Want to help?** Open an issue or a pull request in any of the repositories.
