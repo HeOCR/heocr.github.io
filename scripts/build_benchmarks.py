@@ -149,6 +149,25 @@ NEW = {
         "gate_ran": "Run {name}: heocr {version} (commit {commit}), scored {date}. The verdict is set by the one-sided 97.5% upper bound of heocr's difference from each other reader, against a fixed margin.",
         "gate_hero": "{s} of {n} supported",
         "not_measured": "Not measured on a held-out set yet",
+        "pmod_scored": "Scored",
+        "ps_h": "Printed pages photographed by phone (PS-v1)",
+        "ps_sub": "12 pages of printed modern Hebrew (legislation and prose), typeset by us from public-domain texts, printed and photographed by the maintainer with three phones. Held out: no model was trained, tuned or chosen on them. Character error (lower is better) per condition; the first photo of each page per phone counts.",
+        "ps_caveat": "Not a sample of real-world documents: one printer, three phones, our own typesetting. With 12 pages, intervals are wide.",
+        "ps_cond": {"flat_A": "Flat, main phone (headline)", "flat": "Flat, all phones", "angle": "At an angle", "lowlight": "Low light", "crumpled": "Crumpled and flattened"},
+        "ps_readers": {"heocr": "heocr", "heocr_stockheb": "heocr with stock Tesseract's model", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)", "r7": "HeOCR R7", "r8b": "HeOCR R8b"},
+        "ps_finding": "On these real photos, heocr's own model is no better than stock Tesseract's model inside heocr, and heocr is slightly worse than plain Tesseract on flat photos. It finds more of the numbers.",
+        "nq_h": "Pointed print (niqqud) photographed by phone (NQ1)",
+        "nq_sub": "25 pages of modern pointed Hebrew (poetry, Tanakh, and prose pointed by Dicta's nakdan), typeset by us in open fonts, printed and photographed twice in each of two sessions. Held out. Character error is shown with niqqud counted, and with niqqud removed from both sides (letters only); marks found is the share of vowel marks read correctly.",
+        "nq_caveat": "Modern pointed print in open fonts, not old pointed books. 25 pages, one printer, one phone.",
+        "nq_cols": ("Character error, niqqud counted", "Character error, letters only", "Vowel marks found"),
+        "nq_readers": {"heocr": "heocr (heocr_modern_v1)", "heocr_oldprint": "heocr with heocr_oldprint_v1", "heocr_stockheb": "heocr with stock Tesseract's model", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)"},
+        "nq_finding": "HeOCR's own models write no niqqud: pointed text comes out unpointed. On the letters alone they match stock Tesseract's model.",
+        "eff_h": "What the model adds",
+        "eff_sub": "heocr with its own model (heocr_modern_v1) against the same heocr with stock Tesseract's model, on the same generated documents. These generated documents favour heocr; see the photographed pages above, where the gain does not hold.",
+        "eff_cols": ("Document type", "Measure", "Own model", "Stock model", "Difference (95% interval)"),
+        "eff_m": {"cer": "Character error", "number_recall": "Numbers missed"}, "to": "to",
+        "hero_photos": "On real phone photos (Printed pages photographed by phone, below) the picture is different: heocr's character error is {h}% against {t}% for plain Tesseract on the headline photos, and its own model adds nothing there.",
+
         "phist_nm": "Not measured on a held-out set yet. The historical-print test set is waiting for volunteer references; no figure is shown until it is scored.",
         "doc_sub_heldout": "Generated documents with exact gold: Word files and PDFs of every kind HeOCR's document reader handles, made by our generators so the correct text is known exactly. Each table is one kind of document. These figures come from the release gate's fresh set: generated with new seeds after heocr {version}'s code was frozen, so heocr was never tuned on these documents. They are drawn by the same generators heocr is developed against, so a good figure means good on generated documents of this kind, not more.",
         "doc_caveat_heldout": "Held-out set: the release gate's fresh generated documents, made after heocr {version}'s code was frozen.",
@@ -176,6 +195,25 @@ NEW = {
         "gate_ran": "הרצה {name}: heocr {version} (קומיט {commit}), הוערכה ב־{date}. ההחלטה נקבעת לפי הגבול העליון החד־צדדי ברמת 97.5% של ההפרש בין heocr לכל קורא אחר, מול סף קבוע.",
         "gate_hero": "{s} מתוך {n} נתמכים",
         "not_measured": "עוד לא נמדד על קבוצה מוחזקת בצד",
+        "pmod_scored": "הוערך",
+        "ps_h": "דפים מודפסים שצולמו בטלפון (PS-v1)",
+        "ps_sub": "12 עמודים של דפוס עברי מודרני (חקיקה ופרוזה), שסודרו אצלנו מטקסטים בנחלת הכלל, הודפסו וצולמו בידי המתחזק בשלושה טלפונים. מוחזקים בצד: שום מודל לא אומן, כוונן או נבחר עליהם. שגיאת תווים (נמוך יותר עדיף) לפי תנאי צילום; נספר הצילום הראשון של כל עמוד בכל טלפון.",
+        "ps_caveat": "לא מדגם של מסמכים מהעולם: מדפסת אחת, שלושה טלפונים, סידור שלנו. עם 12 עמודים, רווחי הסמך רחבים.",
+        "ps_cond": {"flat_A": "ישר, הטלפון הראשי (עיקרי)", "flat": "ישר, כל הטלפונים", "angle": "בזווית", "lowlight": "תאורה חלשה", "crumpled": "מקומט ומיושר"},
+        "ps_readers": {"heocr": "heocr", "heocr_stockheb": "heocr עם המודל הרגיל של Tesseract", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)", "r7": "HeOCR R7", "r8b": "HeOCR R8b"},
+        "ps_finding": "בצילומים האמיתיים האלה, המודל שלנו לא טוב מהמודל הרגיל של Tesseract בתוך heocr, ו־heocr מעט חלש מ־Tesseract לבדו בצילומים ישרים. הוא מוצא יותר מן המספרים.",
+        "nq_h": "דפוס מנוקד שצולם בטלפון (NQ1)",
+        "nq_sub": "25 עמודים של עברית מודרנית מנוקדת (שירה, תנ\"ך ופרוזה שנוקדה בנקדן של דיקטה), שסודרו אצלנו בגופנים פתוחים, הודפסו וצולמו פעמיים בכל אחד משני סבבים. מוחזקים בצד. שגיאת התווים מוצגת עם הניקוד ובלעדיו משני הצדדים (אותיות בלבד); סימני ניקוד שנמצאו הוא חלק סימני הניקוד שנקראו נכון.",
+        "nq_caveat": "דפוס מודרני מנוקד בגופנים פתוחים, לא ספרים ישנים מנוקדים. 25 עמודים, מדפסת אחת, טלפון אחד.",
+        "nq_cols": ("שגיאת תווים, עם ניקוד", "שגיאת תווים, אותיות בלבד", "סימני ניקוד שנמצאו"),
+        "nq_readers": {"heocr": "heocr (heocr_modern_v1)", "heocr_oldprint": "heocr עם heocr_oldprint_v1", "heocr_stockheb": "heocr עם המודל הרגיל של Tesseract", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)"},
+        "nq_finding": "המודלים של HeOCR לא כותבים ניקוד: טקסט מנוקד יוצא בלי ניקוד. באותיות בלבד הם משתווים למודל הרגיל של Tesseract.",
+        "eff_h": "מה המודל מוסיף",
+        "eff_sub": "heocr עם המודל שלו (heocr_modern_v1) מול אותו heocr עם המודל הרגיל של Tesseract, על אותם מסמכים מחוללים. המסמכים המחוללים האלה נוחים ל־heocr; ראו את הדפים המצולמים למעלה, שם השיפור לא מחזיק.",
+        "eff_cols": ("סוג מסמך", "מדד", "המודל שלנו", "המודל הרגיל", "הפרש (רווח סמך 95%)"),
+        "eff_m": {"cer": "שגיאת תווים", "number_recall": "מספרים שהוחמצו"}, "to": "עד",
+        "hero_photos": "בצילומי טלפון אמיתיים (דפים מודפסים שצולמו בטלפון, למטה) התמונה שונה: שגיאת התווים של heocr היא {h}% מול {t}% ל־Tesseract לבדו בצילומים העיקריים, והמודל שלו לא מוסיף שם דבר.",
+
         "phist_nm": "עוד לא נמדד על קבוצה מוחזקת בצד. קבוצת המבחן של הדפוס ההיסטורי ממתינה לטקסטי ייחוס ממתנדבים; לא יוצג מספר עד שהיא תוערך.",
         "doc_sub_heldout": "מסמכים מחוללים עם טקסט נכון מדויק: קובצי Word וקובצי PDF מכל הסוגים שקורא המסמכים של HeOCR מטפל בהם, שנוצרו במחוללים שלנו כך שהטקסט הנכון ידוע במדויק. כל טבלה היא סוג מסמך אחד. המספרים האלה הם מהקבוצה החדשה של שער השחרור: נוצרה עם seeds חדשים אחרי שהקוד של heocr {version} הוקפא, ולכן heocr מעולם לא כוונן עליה. היא נוצרה באותם מחוללים ש־heocr מפותח מולם, ולכן מספר טוב פירושו טוב על מסמכים מחוללים מהסוג הזה, לא יותר.",
         "doc_caveat_heldout": "קבוצה מוחזקת בצד: המסמכים המחוללים החדשים של שער השחרור, שנוצרו אחרי שהקוד של heocr {version} הוקפא.",
@@ -334,6 +372,15 @@ def hero_badge(t, D, not_run, gate):
     return verdict(kind, t, label=t["release_gate"] + ": " + t["gate_hero"].format(s=s, n=len(v)))
 
 
+def photo_note(t, R):
+    """The synthetic gain never stands alone (lead, 2026-11-20): the real-photo headline sits right under it."""
+    PM = R.get("p_mod", {})
+    if PM.get("status") != "scored":
+        return ""
+    row = PM["ps_v1"]["rows"][0]["readers"]
+    return f'<p class="hc-finding warn">{ICON["info"]}<span>{e(t["hero_photos"].format(h=f"{row['heocr']['cer']:.1f}", t=f"{row['stock_best']['cer']:.1f}"))}</span></p>'
+
+
 def hero(t, lang, R, doc_interval):
     D = R["documents"]
     not_run = D.get("gate", "not_run") == "not_run"
@@ -347,6 +394,7 @@ def hero(t, lang, R, doc_interval):
 <p class="kicker">{e(t["kicker"])}</p>
 <div class="hc-title"><h2>{e(t["chart_title"])}</h2><span class="dir">{e(t["lower"])}</span></div>
 <p class="hc-finding">{hc.finding_sentence(D, lang)}</p>
+{photo_note(t, R)}
 {legend(t)}
 {svgs}
 <figcaption class="hc-foot">
@@ -425,13 +473,14 @@ def page(lang: str, R: dict) -> str:
                                              f'<p class="note">{e(t["updated"].format(d=R["updated"]))}</p>'))
     w.append(hero(t, lang, R, doc_interval))
     p_nm = P.get("status") == "not_measured"
-    sections = [("p-mod", t["pmod_h"], t["no_data"], ""),
+    pm = R.get("p_mod", {}).get("status") == "scored"
+    sections = [("p-mod", t["pmod_h"], t["pmod_scored"] if pm else t["no_data"], " scored" if pm else ""),
                 ("p-hist", t["phist_h"], t["not_measured"] if p_nm else t["scored"], "" if p_nm else " scored"),
                 ("handwriting", t["hand_h"], t["no_data"], ""), ("documents", t["doc_h"], t["scored"], " scored"),
                 ("vendors", t["vend_h"], t["pending"], "")]
     w.append(shell.toc(lang, [(i, e(h), e(st)) for i, h, st, _ in sections] + [("gate", e(t["release_gate"]), e(gate_state))]))
 
-    w.append(empty("p-mod", t["pmod_h"], t["no_data"], t["pmod_t"]))
+    w.append(pmod_section(t, R["p_mod"]) if pm else empty("p-mod", t["pmod_h"], t["no_data"], t["pmod_t"]))
     # --- historical print: one grouped table, once a held-out set is scored
     if p_nm:
         w.append(empty("p-hist", t["phist_h"], t["not_measured"], t["phist_nm"]))
@@ -440,6 +489,57 @@ def page(lang: str, R: dict) -> str:
     w.append(empty("handwriting", t["hand_h"], t["no_data"], t["hand_t"]))
     w.extend(rest_of_page(t, lang, R, D, verdicts, not_run, gate_state, doc_interval, json_href))
     return "".join(w)
+
+
+def pct(v):
+    return "–" if v is None else f'<bdi dir="ltr">{v:.1f}%</bdi>'
+
+
+def pct_ci(v, ci):
+    if v is None: return NA
+    c = f'<span class="ci"><bdi dir="ltr">{ci[0]:.1f}–{ci[1]:.1f}%</bdi></span>' if ci else ""
+    return f'<td class="num"><span class="v"><bdi dir="ltr">{v:.1f}%</bdi></span>{c}</td>'
+
+
+def pmod_section(t, PM):
+    ps, nq = PM["ps_v1"], PM["nq1"]
+    rd = list(t["ps_readers"])
+    head = '<th scope="col"></th>' + "".join(f'<th scope="col">{e(t["ps_readers"][r])}</th>' for r in rd)
+    rows = []
+    for row in ps["rows"]:
+        tds = "".join(pct_ci(row["readers"][r]["cer"], row["readers"][r]["cer_ci95"]) for r in rd)
+        rows.append(f'<tr><th scope="row">{e(t["ps_cond"][row["id"]])} <span class="note">n = {row["pages"]}</span></th>{tds}</tr>')
+    ps_tab = f'<div class="tablewrap"><table>\n<thead><tr>{head}</tr></thead>\n<tbody>\n' + "\n".join(rows) + "\n</tbody></table></div>"
+    nr = list(t["nq_readers"]); c1, c2, c3 = t["nq_cols"]
+    nrows = []
+    for r in nr:
+        v = nq["readers"][r]
+        nrows.append(f'<tr{" class=\"ours\"" if r in ("heocr", "heocr_oldprint") else ""}><th scope="row">{e(t["nq_readers"][r])}</th>'
+                     f'{pct_ci(v["cer_kept"], v["cer_kept_ci95"])}{pct_ci(v["cer_stripped"], v["cer_stripped_ci95"])}'
+                     f'<td class="num"><span class="v">{pct(v["mark_recall"])}</span></td></tr>')
+    nq_tab = (f'<div class="tablewrap narrow"><table>\n<thead><tr><th scope="col"></th><th scope="col">{e(c1)}</th><th scope="col">{e(c2)}</th>'
+              f'<th scope="col">{e(c3)}</th></tr></thead>\n<tbody>\n' + "\n".join(nrows) + "\n</tbody></table></div>")
+    return (f'<section id="p-mod" class="wrap domain">\n{domain_head(e(t["pmod_h"]), e(t["pmod_scored"]), " scored")}\n'
+            f'<h3>{e(t["ps_h"])}</h3>\n<p class="sub">{e(t["ps_sub"])}</p>\n<p class="warn">{ICON["info"]}<span>{e(t["ps_finding"])}</span></p>\n{ps_tab}\n'
+            f'<p class="note">{e(t["ps_caveat"])}</p>\n'
+            + method(t, [(t["f_measure"], e(ps["measure"])), (t["f_interval"], e(ps["interval"])), (t["f_run"], e(ps["registration"]))]) + "\n"
+            f'<h3>{e(t["nq_h"])}</h3>\n<p class="sub">{e(t["nq_sub"])}</p>\n<p class="warn">{ICON["info"]}<span>{e(t["nq_finding"])}</span></p>\n{nq_tab}\n'
+            f'<p class="note">{e(t["nq_caveat"])}</p>\n'
+            + method(t, [(t["f_measure"], e(nq["measure"])), (t["f_interval"], e(nq["interval"])), (t["f_run"], e(nq["registration"]))]) + "\n</section>\n")
+
+
+def effect_table(t, D):
+    M = D.get("model_effect")
+    if not M: return ""
+    a, b, c, d, f = t["eff_cols"]
+    rows = []
+    for r in M["rows"]:
+        rows.append(f'<tr><td>{e(t["cells"][r["cell"]])}</td><td>{e(t["eff_m"][r["measure"]])}</td>'
+                    f'<td class="num">{pct(r["heocr"])}</td><td class="num">{pct(r["heocr_stockheb"])}</td>'
+                    f'<td class="num"><bdi dir="ltr">{r["delta"]:+.2f}</bdi> <span class="ci"><bdi dir="ltr">{r["ci95"][0]:+.2f}</bdi> {e(t["to"])} <bdi dir="ltr">{r["ci95"][1]:+.2f}</bdi></span></td></tr>')
+    return (f'<h3>{e(t["eff_h"])}</h3>\n<p class="sub">{e(t["eff_sub"])}</p>\n<div class="tablewrap"><table>\n<thead><tr><th scope="col">{e(a)}</th>'
+            f'<th scope="col">{e(b)}</th><th scope="col">{e(c)}</th><th scope="col">{e(d)}</th><th scope="col">{e(f)}</th></tr></thead>\n<tbody>\n'
+            + "\n".join(rows) + "\n</tbody></table></div>\n")
 
 
 def phist_section(t, P):
@@ -476,7 +576,7 @@ def rest_of_page(t, lang, R, D, verdicts, not_run, gate_state, doc_interval, jso
     vers = "; ".join(f'{e(t["readers"][k])} {e(v.get("version") or v.get("ocr", ""))}' for k, v in D["baselines"].items())
     w.append(f'<section id="documents" class="wrap domain">\n'
              f'{domain_head(e(t["doc_h"]), e(t["scored"]) + " <bdi dir=\"ltr\">" + e(R["updated"]) + "</bdi>", " scored")}\n'
-             f'<p class="sub">{e(doc_sub(t, D, not_run))}</p>\n{docs_tables(t, D, verdicts)}\n'
+             f'<p class="sub">{e(doc_sub(t, D, not_run))}</p>\n{docs_tables(t, D, verdicts)}\n{effect_table(t, D)}'
              f'<p class="legend-note">{e(t["cell_note_legend"])}</p>\n'
              f'<p class="note">{e(t["reader_note"])}</p>\n<p class="note">{e(t["wer_note"])}</p>\n')
     w.append(method(t, [
