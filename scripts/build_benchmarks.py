@@ -453,7 +453,8 @@ def gate_block(t, lang, D, verdicts):
 
 def gate_ran(t, D):
     g = D["gate_run"]
-    return t["gate_ran"].format(name=g["name"], version=g["heocr"], commit=g["commit"][:7], date=g["scored"])
+    v = g["heocr"] + (f' ({g["heocr_note"]})' if g.get("heocr_note") else "")
+    return t["gate_ran"].format(name=g["name"], version=v, commit=g["commit"][:7], date=g["scored"])
 
 
 def doc_sub(t, D, not_run):
