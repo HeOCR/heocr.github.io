@@ -172,8 +172,8 @@
       "previous": [
         {
           "tag": "knesset-laws-v1",
-          "url": "https://github.com/HeOCR/htext/releases/tag/knesset-laws-v1",
-          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/KNOWN_ISSUES.md"
+          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/KNOWN_ISSUES.md",
+          "withdrawn": "2026-11-20"
         }
       ],
       "hf": {
