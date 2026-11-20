@@ -69,7 +69,7 @@
 </figcaption>
 </div>
 </figure>
-<nav class="wrap" aria-label="בעמוד זה"><div class="toc"><a href="#p-mod">דפוס עברי מודרני<small>הוערך</small></a><a href="#p-hist">דפוס עברי היסטורי ורבני<small>עוד לא נמדד על קבוצה מוחזקת בצד</small></a><a href="#handwriting">כתב יד<small>אין עדיין נתונים</small></a><a href="#documents">מסמכים לפי פורמט<small>הוערך</small></a><a href="#vendors">ספקי OCR מסחריים<small>ממתין</small></a><a href="#gate">שער השחרור<small>הורץ</small></a></div></nav>
+<nav class="wrap" aria-label="בעמוד זה"><div class="toc"><a href="#p-mod">דפוס עברי מודרני<small>הוערך</small></a><a href="#p-hist">דפוס עברי היסטורי ורבני<small>עוד לא נמדד על קבוצה מוחזקת בצד</small></a><a href="#handwriting">כתב יד<small>הוערך</small></a><a href="#documents">מסמכים לפי פורמט<small>הוערך</small></a><a href="#vendors">ספקי OCR מסחריים<small>ממתין</small></a><a href="#gate">שער השחרור<small>הורץ</small></a></div></nav>
 <section id="p-mod" class="wrap domain">
 <div class="domain-head"><h2>דפוס עברי מודרני</h2><span class="status scored">הוערך</span></div>
 <h3>דפים מודפסים שצולמו בטלפון (PS-v1)</h3>
@@ -110,8 +110,23 @@
 <div class="empty">עוד לא נמדד על קבוצה מוחזקת בצד. קבוצת המבחן של הדפוס ההיסטורי ממתינה לטקסטי ייחוס ממתנדבים; לא יוצג מספר עד שהיא תוערך.</div>
 </section>
 <section id="handwriting" class="wrap domain">
-<div class="domain-head"><h2>כתב יד</h2><span class="status">אין עדיין נתונים</span></div>
-<div class="empty">אין עדיין נתונים: אין קבוצת כתב יד מוערכת עם טקסט ייחוס אמיתי שנבדק בידי אדם.</div>
+<div class="domain-head"><h2>כתב יד</h2><span class="status scored">הוערך <bdi dir="ltr">2026-11-20</bdi></span></div>
+<p class="sub">225 שורות בכתב יד עברי של 10 כותבים, שצולמו בטלפון, ממבחן זיהוי כתב היד העברי של ivrit.ai (חלק המבחן). מוחזקות בצד: אף מודל של HeOCR לא אומן, כוונן או נבחר עליהן. כל קורא מקבל את תמונת השורה כפי שהיא.</p>
+<p class="warn"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6"></circle><path d="M8 7.3v3.5M8 5.1v.1"></path></svg><span>כתב יד עדיין אינו נתמך. בשורות המוחזקות בצד האלה כל הקוראים, גם שלנו, טועים ברוב התווים. המודל של HeOCR, שאומן על דפוס, גרוע כאן מהמודל הרגיל של Tesseract (+6.5 נקודות של שגיאת תווים, רווח סמך 95% מ־+4.5 עד +8.7).</span></p>
+<div class="tablewrap narrow"><table>
+<thead><tr><th scope="col"></th><th scope="col">שגיאת תווים</th><th scope="col">שגיאת מילים</th><th scope="col">מילים שנמצאו</th></tr></thead>
+<tbody>
+<tr class="ours"><th scope="row">heocr, מצב שורה אחת (heocr_modern_v1)</th><td class="num"><span class="v"><bdi dir="ltr">83.1%</bdi></span><span class="ci"><bdi dir="ltr">79.3–88.0%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">114.2%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.7%</bdi></span></td></tr>
+<tr class="ours"><th scope="row">heocr, הגדרות ברירת מחדל</th><td class="num"><span class="v"><bdi dir="ltr">82.4%</bdi></span><span class="ci"><bdi dir="ltr">78.6–87.1%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">118.7%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.7%</bdi></span></td></tr>
+<tr><th scope="row">heocr עם המודל הרגיל של Tesseract</th><td class="num"><span class="v"><bdi dir="ltr">76.6%</bdi></span><span class="ci"><bdi dir="ltr">71.8–82.6%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">114.7%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.8%</bdi></span></td></tr>
+<tr><th scope="row">Tesseract (tessdata_best heb)</th><td class="num"><span class="v"><bdi dir="ltr">75.4%</bdi></span><span class="ci"><bdi dir="ltr">71.0–80.4%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">111.8%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.5%</bdi></span></td></tr>
+<tr><th scope="row">Tesseract (tessdata_fast heb)</th><td class="num"><span class="v"><bdi dir="ltr">79.3%</bdi></span><span class="ci"><bdi dir="ltr">76.0–83.3%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">113.5%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.0%</bdi></span></td></tr>
+</tbody></table></div>
+<p class="note">אף מודל של HeOCR לא אומן על כתב יד. טקסט הייחוס הוא התעתוק של מתנדבי ivrit.ai, ולא נבדק בידינו. עם 10 כותבים רווחי הסמך רחבים. שגיאת המילים יכולה לעבור 100% כשקורא כותב יותר מילים שגויות ממספר המילים בשורה.</p>
+<p class="note">נתונים: ivrit.ai Hebrew handwriting OCR benchmark (<a href="https://huggingface.co/datasets/ivrit-ai/hebrew-handwriting-ocr-benchmark">Hugging Face</a>), מתוך <a href="https://transcriptor.ivrit.ai">transcriptor.ivrit.ai</a>; CC BY 4.0 under the ivrit.ai licence; held privately for evaluation only; not covered by any HeOCR licence.</p>
+<details class="method"><summary>שיטה, טקסט ייחוס והרצה</summary>
+<ul class="facts"><li><strong>מדד:</strong> line CER and WER under line_fold_v1, ratio of sums over all 225 lines, blank outputs included; words found = mean share of a line&#x27;s reference words present in the output</li><li><strong>רווח סמך:</strong> 95% percentile bootstrap over the 10 writers (2,000 resamples, seed 0)</li><li><strong>הרצה:</strong> ivritai_hw_lines_v0_2026-11-20; one registered run 2026-11-20 (heocr 0.2.0rc1)</li></ul>
+</details>
 </section>
 <section id="documents" class="wrap domain">
 <div class="domain-head"><h2>מסמכים לפי פורמט</h2><span class="status scored">הוערך <bdi dir="ltr">2026-11-20</bdi></span></div>
