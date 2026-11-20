@@ -4,7 +4,7 @@
   "corpora": [
     {
       "id": "pby",
-      "version": "v3",
+      "version": "v3.1",
       "name": {
         "en": "Project Ben-Yehuda public-domain lines",
         "he": "שורות בנחלת הכלל מפרויקט בן־יהודה"
@@ -17,8 +17,8 @@
         "url": "https://benyehuda.org"
       },
       "description": {
-        "en": "Prose, articles, memoirs, letters, fables, poetry, reference works and drama transcribed by Project Ben-Yehuda volunteers, cut into lines, plain and with niqqud.",
-        "he": "פרוזה, מאמרים, זיכרונות, מכתבים, משלים, שירה, ספרות עיון ומחזות שהקלידו מתנדבי פרויקט בן־יהודה, חתוכים לשורות, עם ניקוד ובלעדיו."
+        "en": "Prose, articles, memoirs, letters, fables, poetry, reference works and drama transcribed by Project Ben-Yehuda volunteers, cut into lines, plain and with niqqud. Version 3.1 includes only the Israel variants. The Israel + US variants are available in v2.1 and v1.1.",
+        "he": "פרוזה, מאמרים, זיכרונות, מכתבים, משלים, שירה, ספרות עיון ומחזות שהקלידו מתנדבי פרויקט בן־יהודה, חתוכים לשורות, עם ניקוד ובלעדיו. גרסה 3.1 כוללת רק את הגרסאות הישראליות. הגרסאות לישראל ולארה״ב זמינות בגרסאות 2.1 ו־1.1."
       },
       "rights_basis": {
         "en": "Public domain in Israel: every author and every translator died at least 71 years before the build year (2026), with death years from Wikidata or, where Wikidata has none, from a reviewed source such as the author's PBY page. US status is recorded per work: public domain in the US when the transcribed edition appeared before 1931.",
@@ -35,69 +35,69 @@
         },
         "url": "https://benyehuda.org"
       },
-      "card_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v3/CORPUS_CARD.md",
-      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v3/SHA256SUMS",
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v3.1/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v3.1/SHA256SUMS",
       "release": {
-        "tag": "pby-v3",
-        "url": "https://github.com/HeOCR/htext/releases/tag/pby-v3",
-        "date": "2026-11-18"
+        "tag": "pby-v3.1",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v3.1",
+        "date": "2026-11-20"
       },
       "catalogue_works": 26455,
-      "works_in_corpus": 25267,
-      "works_in_il_us": 701,
       "files": [
         {
           "name": "pby_lines_il_plain_v3.txt",
           "variant": "il",
           "subset": "plain",
-          "lines": 12278848,
-          "works": 16409,
-          "bytes": 558952843,
-          "sha256": "f033b0aaf76c84dfe9b6ff61dabbbc59d45c0080ada226f9a7180f9a0215bef0"
+          "lines": 11937498,
+          "bytes": 543363626,
+          "sha256": "ff20f4502f27daae23266f8eb895ce1db0d1ba1acf6c2268203cd9c0e8256d5c"
         },
         {
           "name": "pby_lines_il_niqqud_v3.txt",
           "variant": "il",
           "subset": "niqqud",
-          "lines": 1680290,
-          "works": 15738,
-          "bytes": 119885597,
-          "sha256": "d436f87dd54be6a71070f2b1bcaa33dc8d575963d5de6bc8a968ad9c7591083d"
-        },
-        {
-          "name": "pby_lines_il_us_plain_v3.txt",
-          "variant": "il_us",
-          "subset": "plain",
-          "lines": 407456,
-          "works": 564,
-          "bytes": 18956168,
-          "sha256": "8de0454dfd135ff2987db8964e30e397f9d295f1335b995560e57764a2d961f0"
-        },
-        {
-          "name": "pby_lines_il_us_niqqud_v3.txt",
-          "variant": "il_us",
-          "subset": "niqqud",
-          "lines": 18613,
-          "works": 325,
-          "bytes": 1325641,
-          "sha256": "162e6fbd83762b0921d13375ca17726ca7335ebe9009554547f1ff8c345ec5b8"
+          "lines": 1672711,
+          "bytes": 119281529,
+          "sha256": "4fe93147b96e1b089cb3bfe8900049e0a9cf0c03e9a853126bfbce25862ee8f2"
         }
       ],
       "htext_release": "cc0",
       "previous": [
         {
+          "tag": "pby-v2.1",
+          "url": "https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v2.1"
+        },
+        {
+          "tag": "pby-v1.1",
+          "url": "https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v1.1"
+        },
+        {
+          "tag": "pby-v3",
+          "url": "https://github.com/HeOCR/htext/releases/tag/pby-v3",
+          "withdrawn": "2026-11-20"
+        },
+        {
           "tag": "pby-v2",
           "url": "https://github.com/HeOCR/htext/releases/tag/pby-v2",
-          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v2/KNOWN_ISSUES.md"
+          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v2/KNOWN_ISSUES.md",
+          "withdrawn": "2026-11-20"
         },
         {
           "tag": "pby-v1",
           "url": "https://github.com/HeOCR/htext/releases/tag/pby-v1",
-          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md"
+          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md",
+          "withdrawn": "2026-11-20"
         }
       ],
       "text_quality": "transcription",
-      "withdrawn": "2026-11-20"
+      "hf": {
+        "repo": "HeOCR/htext-pby",
+        "revision": "pby-v3.1",
+        "filtered": true
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24398596"
+      }
     },
     {
       "id": "knesset-laws",
@@ -180,7 +180,7 @@
     },
     {
       "id": "tanakh",
-      "version": "v1",
+      "version": "v1.1",
       "unit": "books",
       "name": {
         "en": "Tanakh: the Westminster Leningrad Codex",
@@ -194,8 +194,8 @@
         "url": "https://github.com/openscriptures/morphhb"
       },
       "description": {
-        "en": "The Hebrew Bible, all 39 books, as the Westminster Leningrad Codex (WLC 4.20) gives it, cut into lines in two forms: with niqqud (no cantillation) and plain.",
-        "he": "התנ\"ך, כל 39 הספרים, כפי שהוא מופיע בכתב יד לנינגרד בגרסת וסטמינסטר (WLC 4.20), חתוך לשורות בשתי צורות: מנוקד (בלי טעמים) ובלי ניקוד."
+        "en": "Filtered lines of the Westminster Leningrad Codex (WLC 4.20), plain and with niqqud (without cantillation).",
+        "he": "שורות מסוננות מכתב יד לנינגרד בגרסת וסטמינסטר (WLC 4.20), עם ניקוד ובלי ניקוד, ללא טעמים."
       },
       "rights_basis": {
         "en": "The Leningrad Codex is about a thousand years old, and the WLC text is in the public domain (\"The text of the WLC remains in the Public Domain\", OSHB). Public domain in Israel and in the US. Only the words are used; OSHB's CC BY lemma and morphology layers are not. The edition is WLC, not UXLC.",
@@ -212,40 +212,50 @@
         },
         "url": "https://github.com/openscriptures/morphhb"
       },
-      "card_url": "https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/CORPUS_CARD.md",
-      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/SHA256SUMS",
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/tanakh/v1.1/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/tanakh/v1.1/SHA256SUMS",
       "release": {
-        "tag": "tanakh-v1",
-        "url": "https://github.com/HeOCR/htext/releases/tag/tanakh-v1",
-        "date": "2026-11-18"
+        "tag": "tanakh-v1.1",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-tanakh/tree/tanakh-v1.1",
+        "date": "2026-11-20"
       },
       "catalogue_works": 39,
-      "works_in_corpus": 39,
-      "works_in_il_us": 39,
       "files": [
-        {
-          "name": "tanakh_lines_niqqud_v1.txt",
-          "variant": "il",
-          "subset": "niqqud",
-          "lines": 58120,
-          "works": 39,
-          "bytes": 4631929,
-          "sha256": "3c7cd4579f6c5a352848862a0fcab5a46b4f56516cef08104c31d591ec60909f"
-        },
         {
           "name": "tanakh_lines_plain_v1.txt",
           "variant": "il",
           "subset": "plain",
-          "lines": 58074,
-          "works": 39,
-          "bytes": 2681470,
-          "sha256": "954a0ad534b464356e4b948bf088d3e13192cf8061b6b22f0a75d156a78d71af",
+          "lines": 57637,
+          "bytes": 2656873,
+          "sha256": "0291d17d4594bc0a41b5304eb3655add4a2ebb03ab92f90fe9e4d773883d8c7b",
           "same_text_as": "tanakh_lines_niqqud_v1.txt"
+        },
+        {
+          "name": "tanakh_lines_niqqud_v1.txt",
+          "variant": "il",
+          "subset": "niqqud",
+          "lines": 57683,
+          "bytes": 4589508,
+          "sha256": "c4da466e48fef1086dc18fe3d7baed439ff6fd22d09ddc0d7f655066a66a1c0f"
         }
       ],
       "htext_release": "cc0",
       "text_quality": "transcription",
-      "withdrawn": "2026-11-20"
+      "previous": [
+        {
+          "tag": "tanakh-v1",
+          "url": "https://github.com/HeOCR/htext/releases/tag/tanakh-v1",
+          "withdrawn": "2026-11-20"
+        }
+      ],
+      "hf": {
+        "repo": "HeOCR/htext-tanakh",
+        "revision": "tanakh-v1.1",
+        "filtered": true
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24398530"
+      }
     }
   ],
   "planned": [],

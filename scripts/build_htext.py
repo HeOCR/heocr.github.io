@@ -47,7 +47,7 @@ T = {
         "c_in": "Release",
         "planned_h": "Planned sources",
         "planned_p": "Sources being prepared. Each is published only after its rights are checked entry by entry.",
-        "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_prev": "Earlier version", "c_issues": "known issues", "c_withdrawn": "withdrawn {d}: its files overlapped HeOCR's evaluation text", "c_withdrawn_corpus": "Withdrawn {d}. A corrected check by HeOCR's evaluation found that these files share text with its evaluation sets, so they were taken down from GitHub, Hugging Face and Zenodo. HeOCR keeps a private backup; decontaminated versions will be published as new versions.", "c_status_withdrawn": "withdrawn", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "all versions", "c_hf": "Hugging Face", "c_hf_filtered": "filtered against HeOCR's evaluation text, so not byte-identical to the GitHub release. Correction, 2026-11-20: a corrected check found that some overlap remains; do not use these files for models scored on HeOCR's evaluation sets. Decontaminated versions are coming", "c_hf_same": "the same files as the GitHub release", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
+        "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_prev": "Earlier version", "c_issues": "known issues", "c_withdrawn": "withdrawn {d}: its files overlapped HeOCR's evaluation text", "c_withdrawn_corpus": "Withdrawn {d}. A corrected check by HeOCR's evaluation found that these files share text with its evaluation sets, so they were taken down from GitHub, Hugging Face and Zenodo. HeOCR keeps a private backup; decontaminated versions will be published as new versions.", "c_status_withdrawn": "withdrawn", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "all versions", "c_hf": "Hugging Face", "c_hf_filtered": "Corrected check: zero shared 6-grams across 16 evaluation pools for these exact text files", "c_hf_same": "the same files as the GitHub release", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
         "th_file": "File", "th_variant": "Variant", "th_subset": "Subset", "th_lines": "Lines", "th_works": "Works", "th_laws": "Laws", "th_books": "Books", "th_size": "Size",
         "c_laws": "{w} of {c} laws in the catalogue have lines in this corpus.",
         "c_books": "All {w} books have lines in this corpus, in both forms. The pointed and plain files hold the same verses, so the totals above count them once.",
@@ -65,7 +65,7 @@ T = {
         ],
         "rights_basis": "Basis, {n}",
         "use_h": "Download and use",
-        "use_p": "The corpus files are assets of each corpus's GitHub release, and the card, checksums and rights index are in the repository. Every file is UTF-8 with one line per row, NFC normalised, with no blank lines.",
+        "use_p": "Use the release links above to download the text files. The corpus cards and SHA-256 checksums are in the source repository. Every file is UTF-8 with one line per row, NFC normalised, with no blank lines.",
         "use_steps": "Download the files and check them against the published checksums:",
         "use_gen": "Use a file as training text for hocrsyngen, which records it as <code>external:sha256:&lt;hex&gt;</code>:",
         "use_build": "Or rebuild a corpus from its source: each corpus has a build guide in the repository, for example <a href=\"{doc}\">the PBY guide</a>.",
@@ -101,7 +101,7 @@ T = {
         "c_in": "גרסת htext",
         "planned_h": "מקורות מתוכננים",
         "planned_p": "מקורות בהכנה. כל אחד מתפרסם רק אחרי שזכויותיו נבדקו פריט אחר פריט.",
-        "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_prev": "גרסה קודמת", "c_issues": "בעיות ידועות", "c_withdrawn": "הוסרה ב־{d}: הקבצים שלה חפפו לטקסט ההערכה של HeOCR", "c_withdrawn_corpus": "הוסר ב־{d}. בדיקה מתוקנת של צוות ההערכה של HeOCR מצאה שהקבצים חולקים טקסט עם מערכי ההערכה, ולכן הם הורדו מ־GitHub, מ־Hugging Face ומ־Zenodo. ל־HeOCR יש גיבוי פרטי; גרסאות מנוקות יפורסמו כגרסאות חדשות.", "c_status_withdrawn": "הוסר", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "כל הגרסאות", "c_hf": "Hugging Face", "c_hf_filtered": "מסונן מול טקסט ההערכה של HeOCR, ולכן לא זהה בייט לבייט לגרסה ב־GitHub. תיקון, 2026-11-20: בדיקה מתוקנת מצאה שנשארה חפיפה; אין להשתמש בקבצים האלה למודלים שנמדדים על מערכי ההערכה של HeOCR. גרסאות מנוקות בדרך", "c_hf_same": "אותם קבצים כמו בגרסה ב־GitHub", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
+        "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_prev": "גרסה קודמת", "c_issues": "בעיות ידועות", "c_withdrawn": "הוסרה ב־{d}: הקבצים שלה חפפו לטקסט ההערכה של HeOCR", "c_withdrawn_corpus": "הוסר ב־{d}. בדיקה מתוקנת של צוות ההערכה של HeOCR מצאה שהקבצים חולקים טקסט עם מערכי ההערכה, ולכן הם הורדו מ־GitHub, מ־Hugging Face ומ־Zenodo. ל־HeOCR יש גיבוי פרטי; גרסאות מנוקות יפורסמו כגרסאות חדשות.", "c_status_withdrawn": "הוסר", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "כל הגרסאות", "c_hf": "Hugging Face", "c_hf_filtered": "בבדיקה המתוקנת נמצאו אפס רצפים משותפים של שש מילים מול 16 מאגרי הערכה, עבור קובצי הטקסט האלה", "c_hf_same": "אותם קבצים כמו בגרסה ב־GitHub", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
         "th_file": "קובץ", "th_variant": "גרסה", "th_subset": "סוג", "th_lines": "שורות", "th_works": "יצירות", "th_laws": "חוקים", "th_books": "ספרים", "th_size": "גודל",
         "c_laws": "ל־{w} מתוך {c} חוקים בקטלוג יש שורות במאגר.",
         "c_books": "לכל {w} הספרים יש שורות במאגר, בשתי הצורות. שני הקבצים, המנוקד והלא־מנוקד, מכילים את אותם פסוקים, ולכן הסיכומים למעלה סופרים אותם פעם אחת.",
@@ -119,7 +119,7 @@ T = {
         ],
         "rights_basis": "בסיס, {n}",
         "use_h": "הורדה ושימוש",
-        "use_p": "קובצי המאגר מצורפים לגרסת ה־GitHub של כל מאגר, והכרטיס, סיכומי הביקורת ואינדקס הזכויות נמצאים במאגר הקוד. כל קובץ הוא UTF-8, שורה אחת לכל רשומה, מנורמל ל־NFC וללא שורות ריקות.",
+        "use_p": "להורדת קובצי הטקסט השתמשו בקישורי הגרסאות למעלה. כרטיסי המאגרים וסיכומי SHA-256 נמצאים במאגר הקוד. כל קובץ הוא UTF-8, שורה אחת לכל רשומה, מנורמל ל־NFC וללא שורות ריקות.",
         "use_steps": "הורידו את הקבצים ובדקו אותם מול סיכומי הביקורת שפורסמו:",
         "use_gen": "השתמשו בקובץ כטקסט אימון ל־hocrsyngen, שמתעד אותו כ־<code>external:sha256:&lt;hex&gt;</code>:",
         "use_build": "או בנו מאגר מחדש מהמקור: לכל מאגר יש מדריך בנייה במאגר הקוד, למשל <a href=\"{doc}\">המדריך של פרויקט בן־יהודה</a>.",
@@ -153,6 +153,17 @@ def table(head, rows, total=None):
     return "".join(s)
 
 
+def zenodo_item(c: dict, t: dict) -> str:
+    if not (record := c.get("zenodo")):
+        return ""
+    doi = e(record["doi"])
+    link = f'<a href="https://doi.org/{doi}"><span dir="ltr">{doi}</span></a>'
+    if concept := record.get("concept_doi"):
+        concept = e(concept)
+        link += f' ({t["c_zenodo_all"]}: <a href="https://doi.org/{concept}"><span dir="ltr">{concept}</span></a>)'
+    return f'<li>{t["c_zenodo"]}: {link}</li>\n'
+
+
 def page(lang: str, R: dict) -> str:
     t = T[lang]
     pre = shell.prefix(lang)
@@ -171,7 +182,8 @@ def page(lang: str, R: dict) -> str:
     # A file that holds the same text as another file of its corpus (another form of it) is counted once.
     lines = sum(f["lines"] for c in live for f in c["files"] if f["variant"] == "il" and not f.get("same_text_as"))
     bytes_ = sum(f["bytes"] for c in live for f in c["files"] if f["variant"] == "il" and not f.get("same_text_as"))
-    works = sum(c["works_in_corpus"] for c in live)
+    works = sum(c.get("works_in_corpus", 0) for c in live)
+    all_works_known = all("works_in_corpus" in c for c in live)
     units = {c.get("unit", "works") for c in live}
     works_label = t["stat_works_laws_books"] if "books" in units else t["stat_works_laws"] if "laws" in units else t["stat_works"]
     # --- 1. What
@@ -180,8 +192,8 @@ def page(lang: str, R: dict) -> str:
         w(f"<p>{p}</p>\n")
     w('<div class="stats">'
       f'<div class="stat"><b>{n(lines)}</b><span>{t["stat_lines"]}</span></div>'
-      f'<div class="stat"><b>{n(works)}</b><span>{works_label}</span></div>'
-      f'<div class="stat"><b>{mb(lang, bytes_)}</b><span>{t["stat_bytes"]}</span></div>'
+      + (f'<div class="stat"><b>{n(works)}</b><span>{works_label}</span></div>' if all_works_known else '')
+      + f'<div class="stat"><b>{mb(lang, bytes_)}</b><span>{t["stat_bytes"]}</span></div>'
       f'<div class="stat"><b>{len(live)}</b><span>{t["stat_corpus"] if len(live) == 1 else t["stat_corpora"]}</span></div>'
       "</div>\n</section>\n")
     # --- 1b. Releases
@@ -208,11 +220,19 @@ def page(lang: str, R: dict) -> str:
             continue
         w(f'<span class="status">{e(c["release"]["tag"])}</span><span class="status">{e(rel[c["htext_release"]]["name"])}</span>\n')
         w(f'<p>{e(c["description"][lang])}</p>\n')
-        rows = [((f'<code>{e(f["name"])}</code>', False), (e(t["variant"][f["variant"]]), False),
-                 (e(t["subset"][f["subset"]]), False), (n(f["lines"]), True), (n(f["works"]), True),
-                 (mb(lang, f["bytes"]), True)) for f in c["files"]]
         unit = c.get("unit", "works")
-        w(table([t["th_file"], t["th_variant"], t["th_subset"], t["th_lines"], t[f"th_{unit}"], t["th_size"]], rows))
+        show_works = all("works" in f for f in c["files"])
+        headers = [t["th_file"], t["th_variant"], t["th_subset"], t["th_lines"]]
+        if show_works:
+            headers.append(t[f"th_{unit}"])
+        rows = []
+        for f in c["files"]:
+            row = [(f'<code>{e(f["name"])}</code>', False), (e(t["variant"][f["variant"]]), False),
+                   (e(t["subset"][f["subset"]]), False), (n(f["lines"]), True)]
+            if show_works:
+                row.append((n(f["works"]), True))
+            rows.append(row + [(mb(lang, f["bytes"]), True)])
+        w(table([*headers, t["th_size"]], rows))
         if any(f["variant"] == "il_us" for f in c["files"]):
             w(f'<p class="note">{t["variants_note"]}</p>\n')
         q = c.get("text_quality", "transcription")
@@ -222,7 +242,9 @@ def page(lang: str, R: dict) -> str:
                                                ww=n(k["words_wrong"]), sw=n(k["sample_words"]), wr=f'{k["words_wrong"] / k["sample_words"]:.1%}')
         else:
             quality = t["c_quality"][q]
-        count = (t[f"c_{unit}"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"])) if unit != "works"
+        count = ""
+        if "works_in_corpus" in c:
+            count = (t[f"c_{unit}"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"])) if unit != "works"
                  else t["c_works"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"]), u=n(c["works_in_il_us"])))
         w('<ul class="facts">\n'
           f'<li>{t["c_in"]}: {e(rel[c["htext_release"]]["name"])}</li>\n'
@@ -233,13 +255,12 @@ def page(lang: str, R: dict) -> str:
                     + (f'{e(p["tag"])}, {e(t["c_withdrawn"].format(d=p["withdrawn"]))}' if p.get("withdrawn") else f'<a href="{e(p["url"])}">{e(p["tag"])}</a>')
                     + (f' (<a href="{e(p["known_issues_url"])}">{t["c_issues"]}</a>)' if p.get("known_issues_url") else "")
                     + "</li>\n" for p in c.get("previous", []))
-          + (f'<li>{t["c_zenodo"]}: <a href="https://doi.org/{e(c["zenodo"]["doi"])}"><span dir="ltr">{e(c["zenodo"]["doi"])}</span></a> '
-             f'({t["c_zenodo_all"]}: <a href="https://doi.org/{e(c["zenodo"]["concept_doi"])}"><span dir="ltr">{e(c["zenodo"]["concept_doi"])}</span></a>)</li>\n' if c.get("zenodo") else "")
-          + (f'<li>{t["c_hf"]}: <a href="https://huggingface.co/datasets/{e(c["hf"]["repo"])}">{e(c["hf"]["repo"])}</a> '
+          + zenodo_item(c, t)
+          + (f'<li>{t["c_hf"]}: <a href="{e(c["release"]["url"] if c["hf"].get("revision") else "https://huggingface.co/datasets/" + c["hf"]["repo"])}">{e(c["hf"]["repo"])}</a> '
              f'({e(t["c_hf_filtered"] if c["hf"]["filtered"] else t["c_hf_same"])})</li>\n' if c.get("hf") else "")
           + f'<li>{e(quality)}</li>\n'
-          + f'<li>{e(count)}</li>\n'
-          "</ul>\n")
+          + (f'<li>{e(count)}</li>\n' if count else '')
+          + "</ul>\n")
     if R.get("planned"):
         w(f'<h3 id="planned">{e(t["planned_h"])}</h3>\n<p>{e(t["planned_p"])}</p>\n<ul class="facts">\n')
         for p in R["planned"]:
@@ -255,7 +276,7 @@ def page(lang: str, R: dict) -> str:
         w(f'<li><b>{e(c["source"]["name"][lang])}</b>: {e(c["rights_basis"][lang])}</li>\n')
     w("</ul>\n</section>\n")
     # --- 4. Use
-    first = live[0]
+    first = next((c for c in live if c["release"]["url"].startswith("https://github.com/")), live[0])
     sums = first["sha256sums_url"].replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/")
     w(f'<section id="use">\n<h2>{e(t["use_h"])}</h2>\n<p>{t["use_p"]}</p>\n<p>{t["use_steps"]}</p>\n')
     w("<pre><code>" + e(f"gh release download {first['release']['tag']} -R HeOCR/htext\n"
