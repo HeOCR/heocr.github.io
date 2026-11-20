@@ -22,8 +22,8 @@ RESULTS = ROOT / "benchmarks" / "results.json"
 T = {
     "en": {
         "title": "HeOCR benchmarks",
-        "desc": "How HeOCR's models and document reader compare with other open tools, per kind of Hebrew document.",
-        "lede": "How HeOCR compares with other open tools, per kind of document. Every figure gives its sample size, a 95% interval, the measure, the reference and the run it comes from. The page is built from one file, <a href=\"{json}\">results.json</a>, which is updated after each scored run.",
+        "desc": "How HeOCR reads real Hebrew pages, next to other open tools: figures from real-world held-out sets only.",
+        "lede": "How HeOCR reads real Hebrew pages, next to other open tools. Every figure gives its sample size, a 95% interval, the measure, the reference and the run it comes from. The page is built from one file, <a href=\"{json}\">results.json</a>, which is updated after each scored run.",
         "updated": "Updated {d}.",
         "lower": "lower is better", "higher": "higher is better",
         "no_data": "No data yet", "pending": "Pending",
@@ -31,6 +31,7 @@ T = {
         "pmod_t": "No data yet — reference pages are under human review. No number is shown until a reviewed set is scored.",
         "phist_h": "Historical and rabbinic printed Hebrew",
         "phist_small": "This set is small: 38 pages from 14 books. Intervals are wide and most of them overlap, so treat differences between engines as indications, not rankings.",
+        "synth_note": "Every figure on this page comes from photographs or scans of real pages. Generated (synthetic) documents are used only to develop and select models, and their figures are not reported.",
         "hand_h": "Handwriting",
         "hand_t": "No data yet — there is no scored handwriting set with real, human-checked references.",
         "hw_sub": "225 handwritten Hebrew lines by 10 writers, photographed by phone, from ivrit.ai's Hebrew handwriting OCR benchmark (test split). Held out: no HeOCR model was trained, tuned or chosen on them. Each reader gets each line image as it is.",
@@ -77,8 +78,8 @@ T = {
     },
     "he": {
         "title": "מדדי ביצועים של HeOCR",
-        "desc": "איך המודלים וקורא המסמכים של HeOCR משתווים לכלים פתוחים אחרים, לפי סוג המסמך העברי.",
-        "lede": "איך HeOCR משתווה לכלים פתוחים אחרים, לפי סוג המסמך. לכל מספר מצוינים גודל המדגם, רווח בר־סמך של 95%, המדד, מקור הטקסט הנכון וההרצה שממנה הוא בא. הדף נבנה מקובץ אחד, <a href=\"{json}\">results.json</a>, שמתעדכן אחרי כל הרצה.",
+        "desc": "איך HeOCR קורא דפים עבריים אמיתיים, לצד כלים פתוחים אחרים: מספרים מקבוצות אמיתיות שהוחזקו בצד בלבד.",
+        "lede": "איך HeOCR קורא דפים עבריים אמיתיים, לצד כלים פתוחים אחרים. לכל מספר מצוינים גודל המדגם, רווח בר־סמך של 95%, המדד, מקור הטקסט הנכון וההרצה שממנה הוא בא. הדף נבנה מקובץ אחד, <a href=\"{json}\">results.json</a>, שמתעדכן אחרי כל הרצה.",
         "updated": "עודכן {d}.",
         "lower": "נמוך יותר עדיף", "higher": "גבוה יותר עדיף",
         "no_data": "אין עדיין נתונים", "pending": "ממתין",
@@ -86,6 +87,7 @@ T = {
         "pmod_t": "אין עדיין נתונים: דפי הייחוס נמצאים בבדיקה אנושית. לא יוצג מספר עד שתיבדק ותוערך קבוצה.",
         "phist_h": "דפוס עברי היסטורי ורבני",
         "phist_small": "הקבוצה קטנה: 38 עמודים מ־14 ספרים. רווחי הסמך רחבים ורובם חופפים, ולכן יש לקרוא את ההבדלים בין המנועים כסימנים, לא כדירוג.",
+        "synth_note": "כל המספרים בדף הזה באים מצילומים או מסריקות של דפים אמיתיים. מסמכים מחוללים (סינתטיים) משמשים רק לפיתוח ולבחירת מודלים, והמספרים שלהם אינם מדווחים.",
         "hand_h": "כתב יד",
         "hand_t": "אין עדיין נתונים: אין קבוצת כתב יד מוערכת עם טקסט ייחוס אמיתי שנבדק בידי אדם.",
         "hw_sub": "225 שורות בכתב יד עברי של 10 כותבים, שצולמו בטלפון, ממבחן זיהוי כתב היד העברי של ivrit.ai (חלק המבחן). מוחזקות בצד: אף מודל של HeOCR לא אומן, כוונן או נבחר עליהן. כל קורא מקבל את תמונת השורה כפי שהיא.",
@@ -473,37 +475,36 @@ def page(lang: str, R: dict) -> str:
     t = T[lang]
     pre = shell.prefix(lang)
     json_href = f"{pre}benchmarks/results.json"
-    P, D = R["p_hist"], R["documents"]
-    verdicts = cell_verdicts(D)
-    not_run = D.get("gate", "not_run") == "not_run"
-    gate_state = cap(t["gate_not_run"] if not_run else t["gate_run"])
-    doc_interval = t.get("x_doc_interval", D["interval"])
+    P = R["p_hist"]
+    D = R.get("documents")  # generated-document results: internal only (owner rule, 2026-11-20); absent from the public file
     w = []
     w.append(shell.head(lang, e(t["title"]), e(t["desc"]), "bench"))
     w.append(shell.header(lang, "bench"))
     w.append('<main id="main" class="bench">\n')
     w.append(shell.page_head(e(t["title"]), f'<p class="lede">{t["lede"].format(json=json_href)}</p>\n'
+                                             f'<p class="note">{e(t["synth_note"])}</p>\n'
                                              f'<p class="note">{e(t["updated"].format(d=R["updated"]))}</p>'))
-    w.append(hero(t, lang, R, doc_interval))
+    if D:
+        raise SystemExit("results.json has a 'documents' block: generated-set figures are not published (owner rule 2026-11-20)")
     p_nm = P.get("status") == "not_measured"
     pm = R.get("p_mod", {}).get("status") == "scored"
     hw = R.get("handwriting", {}).get("status") == "scored"
     sections = [("p-mod", t["pmod_h"], t["pmod_scored"] if pm else t["no_data"], " scored" if pm else ""),
                 ("p-hist", t["phist_h"], t["not_measured"] if p_nm else t["scored"], "" if p_nm else " scored"),
-                ("handwriting", t["hand_h"], t["scored"] if hw else t["no_data"], " scored" if hw else ""), ("documents", t["doc_h"], t["scored"], " scored"),
+                ("handwriting", t["hand_h"], t["scored"] if hw else t["no_data"], " scored" if hw else ""),
                 ("vendors", t["vend_h"], t["pending"], "")]
-    w.append(shell.toc(lang, [(i, e(h), e(st)) for i, h, st, _ in sections] + [("gate", e(t["release_gate"]), e(gate_state))]))
-
+    w.append(shell.toc(lang, [(i, e(h), e(st)) for i, h, st, _ in sections]))
     w.append(pmod_section(t, R["p_mod"]) if pm else empty("p-mod", t["pmod_h"], t["no_data"], t["pmod_t"]))
-    # --- historical print: one grouped table, once a held-out set is scored
     if p_nm:
         w.append(empty("p-hist", t["phist_h"], t["not_measured"], t["phist_nm"]))
     else:
         w.append(phist_section(t, P))
     w.append(hand_section(t, R["handwriting"]) if hw else empty("handwriting", t["hand_h"], t["no_data"], t["hand_t"]))
-    w.extend(rest_of_page(t, lang, R, D, verdicts, not_run, gate_state, doc_interval, json_href))
+    w.append(empty("vendors", t["vend_h"], t["pending"], t["vend_t"]))
+    w.append("</main>\n")
+    w.append(shell.footer([f"<p>{t['footer']}</p>", f'<p><a href="{json_href}">results.json</a> · <a href="./">HeOCR</a></p>']))
+    w.append(shell.tail(lang))
     return "".join(w)
-
 
 def pct(v):
     return "–" if v is None else f'<bdi dir="ltr">{v:.1f}%</bdi>'
