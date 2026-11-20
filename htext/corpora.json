@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-18",
+  "updated": "2026-11-20",
   "repository": "https://github.com/HeOCR/htext",
   "corpora": [
     {
@@ -96,11 +96,15 @@
           "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md"
         }
       ],
-      "text_quality": "transcription"
+      "text_quality": "transcription",
+      "hf": {
+        "repo": "HeOCR/htext-pby",
+        "filtered": true
+      }
     },
     {
       "id": "knesset-laws",
-      "version": "v1",
+      "version": "v2",
       "unit": "laws",
       "name": {
         "en": "Knesset laws as published",
@@ -132,34 +136,45 @@
         },
         "url": "https://main.knesset.gov.il"
       },
-      "card_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/CORPUS_CARD.md",
-      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/SHA256SUMS",
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v2/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v2/SHA256SUMS",
       "release": {
-        "tag": "knesset-laws-v1",
-        "url": "https://github.com/HeOCR/htext/releases/tag/knesset-laws-v1",
-        "date": "2026-11-18"
+        "tag": "knesset-laws-v2",
+        "url": "https://github.com/HeOCR/htext/releases/tag/knesset-laws-v2",
+        "date": "2026-11-20"
       },
       "catalogue_works": 2146,
-      "works_in_corpus": 2004,
+      "works_in_corpus": 1972,
       "works_in_il_us": 0,
       "files": [
         {
-          "name": "knesset_laws_lines_plain_v1.txt",
+          "name": "knesset_laws_lines_plain_v2.txt",
           "variant": "il",
           "subset": "plain",
-          "lines": 234821,
-          "works": 2004,
-          "bytes": 10391546,
-          "sha256": "67c7a86bc8c8bb6b591b454900dbd5d6884099f4f2b94da937ead0505e0af01a"
+          "lines": 223617,
+          "works": 1972,
+          "bytes": 9853052,
+          "sha256": "790099a2e64c2e391957a2c9f306c6a8c0addd087cfd8431666165f5b4f65de1"
         }
       ],
       "htext_release": "cc0",
       "text_quality": "ocr_layer",
       "eye_check": {
-        "lines_checked": 100,
+        "lines_checked": 94,
         "lines_with_error": 9,
-        "sample_words": 454,
+        "sample_words": 428,
         "words_wrong": 9
+      },
+      "previous": [
+        {
+          "tag": "knesset-laws-v1",
+          "url": "https://github.com/HeOCR/htext/releases/tag/knesset-laws-v1",
+          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/KNOWN_ISSUES.md"
+        }
+      ],
+      "hf": {
+        "repo": "HeOCR/htext-knesset-laws",
+        "filtered": false
       }
     },
     {
@@ -228,7 +243,11 @@
         }
       ],
       "htext_release": "cc0",
-      "text_quality": "transcription"
+      "text_quality": "transcription",
+      "hf": {
+        "repo": "HeOCR/htext-tanakh",
+        "filtered": true
+      }
     }
   ],
   "planned": [],
