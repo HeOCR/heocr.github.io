@@ -97,14 +97,7 @@
         }
       ],
       "text_quality": "transcription",
-      "hf": {
-        "repo": "HeOCR/htext-pby",
-        "filtered": true
-      },
-      "zenodo": {
-        "doi": "10.5281/zenodo.24384745",
-        "concept_doi": "10.5281/zenodo.24384744"
-      }
+      "withdrawn": "2026-11-20"
     },
     {
       "id": "knesset-laws",
@@ -252,14 +245,7 @@
       ],
       "htext_release": "cc0",
       "text_quality": "transcription",
-      "hf": {
-        "repo": "HeOCR/htext-tanakh",
-        "filtered": true
-      },
-      "zenodo": {
-        "doi": "10.5281/zenodo.24384726",
-        "concept_doi": "10.5281/zenodo.24384725"
-      }
+      "withdrawn": "2026-11-20"
     }
   ],
   "planned": [],
