@@ -1,263 +1,139 @@
-"""Build benchmarks.html (Hebrew, root) and en/benchmarks.html from benchmarks/results.json.
+"""Generate the English and Hebrew benchmark status reports from the public results file."""
 
-    python3 scripts/build_benchmarks.py           # write both pages
-    python3 scripts/build_benchmarks.py --check   # exit 1 if a committed page is out of date
-
-Standard library only. The markup follows the "Bounding Box" design (design/brand-handover/site/benchmarks.html);
-styles are site.css, the shell is scripts/shell.py, and the hero chart is scripts/hero_chart.py (the handover's,
-unchanged). Every number comes from results.json (HeOCR's evaluation owner exports it after each scored run).
-"""
 from __future__ import annotations
 
-import argparse, html, json, math, re, sys
+import argparse
+import html
+import json
+import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import hero_chart as hc  # noqa: E402  (the hero chart, from the brand handover)
-import shell  # noqa: E402  (head, header, footer: one source for every page)
+import shell
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "benchmarks" / "results.json"
 
 T = {
     "en": {
-        "title": "HeOCR benchmarks",
-        "desc": "How HeOCR reads real Hebrew pages, next to other open tools: figures from real-world held-out sets only.",
-        "lede": "How HeOCR reads real Hebrew pages, next to other open tools. Every figure gives its sample size, a 95% interval, the measure, the reference and the run it comes from. The page is built from one file, <a href=\"{json}\">results.json</a>, which is updated after each scored run.",
-        "updated": "Updated {d}.",
-        "lower": "lower is better", "higher": "higher is better",
-        "no_data": "No data yet", "pending": "Pending",
-        "pmod_h": "Modern printed Hebrew",
-        "pmod_t": "No data yet — reference pages are under human review. No number is shown until a reviewed set is scored.",
-        "phist_h": "Historical and rabbinic printed Hebrew",
-        "phist_small": "This set is small: 38 pages from 14 books. Intervals are wide and most of them overlap, so treat differences between engines as indications, not rankings.",
-        "synth_note": "Every figure above the marked box at the end comes from photographs or scans of real pages. Figures on generated documents appear only inside that box.",
-        "synth_h": "Synthetic measurement: generated documents", "synth_badge": "Synthetic, not real-world performance", "synth_toc": "Synthetic",
-        "synth_box": "Everything in this box was measured on documents made by our own generators, the same generators heocr is developed against. It is a development and release-gate signal, not a measure of performance on real documents, and the generators favour heocr. For real-world results, see the sections above: printed pages photographed by phone (PS-v1), pointed print (NQ1) and handwriting.",
-        "hand_h": "Handwriting",
-        "hand_t": "No data yet — there is no scored handwriting set with real, human-checked references.",
+        "title": 'HeOCR benchmarks',
+        "desc": 'How HeOCR reads real Hebrew pages, next to other open tools: figures from real-world held-out sets only.',
+        "lede": 'How HeOCR reads real Hebrew pages, next to other open tools. Every figure gives its sample size, a 95% interval, the measure, the reference and the run it comes from. The page is built from one file, <a href="{json}">results.json</a>, which is updated after each scored run.',
+        "updated": 'Updated {d}.',
+        "lower": 'lower is better',
+        "pmod_h": 'Modern printed Hebrew',
+        "phist_h": 'Historical and rabbinic printed Hebrew',
+        "phist_small": 'This set is small: 38 pages from 14 books. Intervals are wide and most of them overlap, so treat differences between engines as indications, not rankings.',
+        "hand_h": 'Handwriting',
+        "hand_t": 'No data yet — there is no scored handwriting set with real, human-checked references.',
         "hw_sub": "225 handwritten Hebrew lines by 10 writers, photographed by phone, from ivrit.ai's Hebrew handwriting OCR benchmark (test split). Held out: no HeOCR model was trained, tuned or chosen on them. Each reader gets each line image as it is.",
         "hw_finding": "Handwriting is not supported yet. On these held-out lines every reader, ours included, gets most characters wrong. HeOCR's own model, trained on print, does worse here than stock Tesseract's model ({d} points of character error, 95% interval {lo} to {hi}).",
         "hw_caveat": "No HeOCR model is trained on handwriting. The reference text is ivrit.ai's volunteer transcription, not checked by us. With 10 writers, intervals are wide. Word error can pass 100% when a reader writes more wrong words than the line has.",
-        "hw_cols": ("Character error", "Word error", "Words found"),
-        "hw_readers": {"heocr": "heocr, one-line mode (heocr_modern_v1)", "heocr_psm3": "heocr, default settings", "heocr_stockheb": "heocr with stock Tesseract's model", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)"},
-        "hw_credit": "Data: {name} (<a href=\"{url}\">Hugging Face</a>), from <a href=\"{corpus}\">transcriptor.ivrit.ai</a>; {licence}.",
-        "doc_h": "Documents by format",
-        "doc_sub": "Generated documents with exact gold: Word files and PDFs of every kind HeOCR's document reader handles, made by our generators so the correct text is known exactly. Each table is one kind of document. heocr is developed against these sets, so they are not held out and flatter it; the release gate will score a fresh set made after its code is frozen. Release gate not yet run: these are measurements, not release verdicts.",
-        "vend_h": "Commercial OCR vendors",
-        "vend_t": "Scores pending human review of the reference pages.",
-        "engine": "Engine", "reader": "Reader", "cer": "Character error (CER)", "wer": "Word error (WER)",
-        "pages": "{p} pages, {c} books",
-        "slice": {"all": "All 38 pages", "unpointed": "Without niqqud (pointed) pages", "rabbinic": "Rabbinic print, without niqqud",
-                  "square": "Standard square type", "pointed": "Pointed text (niqqud) only"},
-        "too_small": "Only 2 pages from 1 book: no interval, shown for completeness. Every engine fails here.",
-        "not_scored": "{e} has not been scored on these pages.",
-        "f_measure": "Measure", "f_ref": "Reference", "f_licence": "Licence", "f_interval": "Interval",
-        "f_run": "Run", "f_code": "Scoring code", "f_readers": "Reader versions", "f_excluded": "Left out",
-        "phist_run": "scored {d}; scorer {repo} at {commit}",
-        "doc_run": "{run}; heocr at {commit}",
-        "doc_code": "HeOCR's evaluation repository (not yet public; it is published with the release gate)",
-        "doc_excluded": "two office-scan cases rendered with a proprietary font (their scores cannot be published), and the provisional section-number case from the label measure",
-        "docs": "{n} documents",
-        "na": "–",
-        "cells": {"DOCX": "Word (.docx)", "DOC": "Legacy Word (.doc)", "PDF T1": "PDF with a correct text layer",
-                  "PDF T2": "PDF whose text layer is in visual (reversed) order",
-                  "PDF T3": "PDF with a broken but recoverable character map",
-                  "PDF T4": "Scan with a wrong OCR text layer", "PDF T5": "Scan, image only",
-                  "PDF T6": "Text layer plus text drawn as images", "PDF spread": "Two pages on one sheet",
-                  "Scanned tables": "Scanned pages with a ruled table"},
-        "m": {"cer": "Character error", "wer": "Word error", "number_recall": "Numbers found",
-              "labels": "Section numbers correct", "rows_read": "Table rows read",
-              "rows_silent": "Rows lost without a warning", "silent_loss": "Text lost without a warning",
-              "image_word_recall": "Words in image regions found"},
-        "readers": {"heocr": "heocr", "stock": "Tesseract (tessdata_best heb)", "docling": "Docling",
-                    "markitdown": "MarkItDown", "pymupdf4llm": "PyMuPDF4LLM"},
-        "reader_note": "Each table lists the readers that handle that format. Tesseract reads images only, so it appears on scans; on PDF T6 it is scored on the image regions only.",
-        "cell_note": {"PDF T4": "T4 and T5 use the same scanned pages; heocr and Tesseract read both by OCR, so their figures match. T4 adds a wrong text layer, which the other readers use."},
-        "wer_note": "Word error counts inserted words as well as wrong and missing ones, so it can exceed 100%.",
-        "footer": "Created by <a href=\"http://www.shaypalachy.com/\">Shay Palachy Affek</a> and the HeOCR maintainers.",
-        "release_gate": "Release gate",
+        "hw_cols": ('Character error', 'Word error', 'Words found'),
+        "hw_readers": {'heocr': 'heocr, one-line mode (heocr_modern_v1)', 'heocr_psm3': 'heocr (heocr_modern_v1, PSM 3)', 'heocr_stockheb': "heocr with stock Tesseract's model", 'stock_best': 'Tesseract (tessdata_best heb)', 'stock_fast': 'Tesseract (tessdata_fast heb)'},
+        "hw_credit": 'Data: {name} (<a href="{url}">Hugging Face</a>), from <a href="{corpus}">transcriptor.ivrit.ai</a>; {licence}.',
+        "engine": 'Engine',
+        "cer": 'Character error (CER)',
+        "wer": 'Word error (WER)',
+        "pages": '{p} pages, {c} books',
+        "slice": {'all': 'All 38 pages', 'unpointed': 'Without niqqud (pointed) pages', 'rabbinic': 'Rabbinic print, without niqqud', 'square': 'Standard square type', 'pointed': 'Pointed text (niqqud) only'},
+        "too_small": 'Only 2 pages from 1 book: no interval, shown for completeness. Every engine fails here.',
+        "not_scored": '{e} has not been scored on these pages.',
+        "f_measure": 'Measure',
+        "f_ref": 'Reference',
+        "f_licence": 'Licence',
+        "f_interval": 'Interval',
+        "f_run": 'Run',
+        "f_code": 'Scoring code',
+        "phist_run": 'scored {d}; scorer {repo} at {commit}',
+        "ours": 'ours',
+        "scored": 'Scored',
+        "method": 'Method, reference and run',
+        "not_measured": 'Not measured on a held-out set yet',
+        "phist_nm": 'Not measured on a held-out set yet. The historical-print test set is waiting for volunteer references; no figure is shown until it is scored.',
+        "release_note": 'We will release models or a pipeline version once we outperform existing readers on at least one document type.',
     },
     "he": {
-        "title": "מדדי ביצועים של HeOCR",
-        "desc": "איך HeOCR קורא דפים עבריים אמיתיים, לצד כלים פתוחים אחרים: מספרים מקבוצות אמיתיות שהוחזקו בצד בלבד.",
-        "lede": "איך HeOCR קורא דפים עבריים אמיתיים, לצד כלים פתוחים אחרים. לכל מספר מצוינים גודל המדגם, רווח בר־סמך של 95%, המדד, מקור הטקסט הנכון וההרצה שממנה הוא בא. הדף נבנה מקובץ אחד, <a href=\"{json}\">results.json</a>, שמתעדכן אחרי כל הרצה.",
-        "updated": "עודכן {d}.",
-        "lower": "נמוך יותר עדיף", "higher": "גבוה יותר עדיף",
-        "no_data": "אין עדיין נתונים", "pending": "ממתין",
-        "pmod_h": "דפוס עברי מודרני",
-        "pmod_t": "אין עדיין נתונים: דפי הייחוס נמצאים בבדיקה אנושית. לא יוצג מספר עד שתיבדק ותוערך קבוצה.",
-        "phist_h": "דפוס עברי היסטורי ורבני",
-        "phist_small": "הקבוצה קטנה: 38 עמודים מ־14 ספרים. רווחי הסמך רחבים ורובם חופפים, ולכן יש לקרוא את ההבדלים בין המנועים כסימנים, לא כדירוג.",
-        "synth_note": "כל המספרים שמעל לתיבה המסומנת שבסוף הדף באים מצילומים או מסריקות של דפים אמיתיים. מספרים על מסמכים מחוללים מופיעים רק בתוך התיבה הזו.",
-        "synth_h": "מדידה סינתטית: מסמכים מחוללים", "synth_badge": "סינתטי, לא ביצועים בעולם האמיתי", "synth_toc": "סינתטי",
-        "synth_box": "כל מה שבתיבה הזו נמדד על מסמכים שיצרו המחוללים שלנו, אותם מחוללים ש־heocr מפותח מולם. זהו סימן לפיתוח ולשער השחרור, לא מדד לביצועים על מסמכים אמיתיים, והמחוללים מיטיבים עם heocr. לתוצאות מהעולם האמיתי ראו את הסעיפים שלמעלה: דפים מודפסים שצולמו בטלפון (PS-v1), דפוס מנוקד (NQ1) וכתב יד.",
-        "hand_h": "כתב יד",
-        "hand_t": "אין עדיין נתונים: אין קבוצת כתב יד מוערכת עם טקסט ייחוס אמיתי שנבדק בידי אדם.",
-        "hw_sub": "225 שורות בכתב יד עברי של 10 כותבים, שצולמו בטלפון, ממבחן זיהוי כתב היד העברי של ivrit.ai (חלק המבחן). מוחזקות בצד: אף מודל של HeOCR לא אומן, כוונן או נבחר עליהן. כל קורא מקבל את תמונת השורה כפי שהיא.",
-        "hw_finding": "כתב יד עדיין אינו נתמך. בשורות המוחזקות בצד האלה כל הקוראים, גם שלנו, טועים ברוב התווים. המודל של HeOCR, שאומן על דפוס, גרוע כאן מהמודל הרגיל של Tesseract ({d} נקודות של שגיאת תווים, רווח סמך 95% מ־{lo} עד {hi}).",
-        "hw_caveat": "אף מודל של HeOCR לא אומן על כתב יד. טקסט הייחוס הוא התעתוק של מתנדבי ivrit.ai, ולא נבדק בידינו. עם 10 כותבים רווחי הסמך רחבים. שגיאת המילים יכולה לעבור 100% כשקורא כותב יותר מילים שגויות ממספר המילים בשורה.",
-        "hw_cols": ("שגיאת תווים", "שגיאת מילים", "מילים שנמצאו"),
-        "hw_readers": {"heocr": "heocr, מצב שורה אחת (heocr_modern_v1)", "heocr_psm3": "heocr, הגדרות ברירת מחדל", "heocr_stockheb": "heocr עם המודל הרגיל של Tesseract", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)"},
-        "hw_credit": "נתונים: {name} (<a href=\"{url}\">Hugging Face</a>), מתוך <a href=\"{corpus}\">transcriptor.ivrit.ai</a>; {licence}.",
-        "doc_h": "מסמכים לפי פורמט",
-        "doc_sub": "מסמכים מחוללים עם טקסט נכון מדויק: קובצי Word וקובצי PDF מכל הסוגים שקורא המסמכים של HeOCR מטפל בהם, שנוצרו במחוללים שלנו כך שהטקסט הנכון ידוע במדויק. כל טבלה היא סוג מסמך אחד. heocr מפותח מול הקבוצות האלה, ולכן הן אינן מוחזקות בצד ומחמיאות לו; שער השחרור יעריך קבוצה חדשה שתיווצר אחרי שהקוד יוקפא. שער השחרור עוד לא הורץ: אלה מדידות, לא החלטות שחרור.",
-        "vend_h": "ספקי OCR מסחריים",
-        "vend_t": "הציונים ממתינים לבדיקה אנושית של דפי הייחוס.",
-        "engine": "מנוע", "reader": "קורא", "cer": "שגיאת תווים (CER)", "wer": "שגיאת מילים (WER)",
-        "pages": "{p} עמודים, {c} ספרים",
-        "slice": {"all": "כל 38 העמודים", "unpointed": "בלי עמודים מנוקדים", "rabbinic": "דפוס רבני, בלי ניקוד",
-                  "square": "אותיות מרובעות רגילות", "pointed": "טקסט מנוקד בלבד"},
-        "too_small": "רק 2 עמודים מספר אחד: בלי רווח סמך, מוצג לשלמות התמונה. כל המנועים נכשלים כאן.",
-        "not_scored": "{e} עוד לא הוערך על העמודים האלה.",
-        "f_measure": "מדד", "f_ref": "טקסט ייחוס", "f_licence": "רישיון", "f_interval": "רווח סמך",
-        "f_run": "הרצה", "f_code": "קוד ההערכה", "f_readers": "גרסאות הקוראים", "f_excluded": "הושמטו",
-        "phist_run": "הוערך ב־{d}; כלי ההערכה {repo} בגרסה {commit}",
-        "doc_run": "{run}; heocr בגרסה {commit}",
-        "doc_code": "מאגר ההערכה של HeOCR (עדיין לא פומבי; יפורסם עם שער השחרור)",
-        "doc_excluded": "שני מקרים של סריקות משרדיות שנוצרו בגופן קנייני (אי אפשר לפרסם את הציונים שלהם), ומקרה מספור הסעיפים הזמני ממדד מספרי הסעיפים",
-        "docs": "{n} מסמכים",
-        "na": "–",
-        "cells": {"DOCX": "Word ‏(‎.docx‏)", "DOC": "Word ישן ‏(‎.doc‏)", "PDF T1": "PDF עם שכבת טקסט תקינה",
-                  "PDF T2": "PDF ששכבת הטקסט שלו בסדר חזותי (הפוך)",
-                  "PDF T3": "PDF עם מפת תווים שבורה אך ניתנת לשחזור",
-                  "PDF T4": "סריקה עם שכבת OCR שגויה", "PDF T5": "סריקה, תמונה בלבד",
-                  "PDF T6": "שכבת טקסט ועוד טקסט שמצויר כתמונה", "PDF spread": "שני עמודים בגיליון אחד",
-                  "Scanned tables": "עמודים סרוקים עם טבלה"},
-        "m": {"cer": "שגיאת תווים", "wer": "שגיאת מילים", "number_recall": "מספרים שנמצאו",
-              "labels": "מספרי סעיפים נכונים", "rows_read": "שורות טבלה שנקראו",
-              "rows_silent": "שורות שאבדו בלי אזהרה", "silent_loss": "טקסט שאבד בלי אזהרה",
-              "image_word_recall": "מילים שנמצאו באזורי תמונה"},
-        "readers": {"heocr": "heocr", "stock": "Tesseract ‏(tessdata_best heb)", "docling": "Docling",
-                    "markitdown": "MarkItDown", "pymupdf4llm": "PyMuPDF4LLM"},
-        "reader_note": "בכל טבלה מופיעים הקוראים שמטפלים בפורמט שלה. Tesseract קורא תמונות בלבד, ולכן הוא מופיע בסריקות; ב־PDF T6 הוא מוערך על אזורי התמונה בלבד.",
-        "x_phist_set": "audit2: ‏38 עמודים מוגהים מ־14 ספרים בוויקיטקסט העברי, עם טקסט ייחוס שנבדק בידי אדם",
-        "x_phist_measure": "hocrgen evaluate-references, פרופיל primary.v1 (טקסט העמוד, יחס של סכומים על פני העמודים)",
-        "x_phist_interval": "bootstrap של 95% באשכולות לפי ספר בוויקיטקסט (2000 דגימות, seed 20261106); בלי רווח סמך מתחת ל־3 ספרים",
-        "x_doc_interval": "bootstrap של 95% על פני המסמכים (2000 דגימות, seed 0)",
-        "x_doc_ref": "קבוצות D-bench מחוללות A, B ו־C: מסמכים שנוצרו עם טקסט נכון מדויק; הטקסט מתוך רשומות (העיתון הרשמי), נחלת הכלל",
-        "x_ws": "ויקיטקסט העברי",
-        "cell_note": {"PDF T4": "T4 ו־T5 משתמשים באותם עמודים סרוקים; heocr ו־Tesseract קוראים את שניהם ב־OCR, ולכן התוצאות שלהם זהות. ב־T4 נוספת שכבת טקסט שגויה, שבה משתמשים הקוראים האחרים."},
-        "wer_note": "שגיאת מילים סופרת גם מילים שנוספו, לא רק מילים שגויות או חסרות, ולכן היא יכולה לעלות על 100%.",
-        "footer": "נוצר בידי <a href=\"http://www.shaypalachy.com/\">שי פלצ'י אפק</a> ומתחזקי HeOCR.",
-        "release_gate": "שער השחרור",
+        "title": 'מדדי ביצועים של HeOCR',
+        "desc": 'איך HeOCR קורא דפים עבריים אמיתיים, לצד כלים פתוחים אחרים: מספרים מקבוצות אמיתיות שהוחזקו בצד בלבד.',
+        "lede": 'איך HeOCR קורא דפים עבריים אמיתיים, לצד כלים פתוחים אחרים. לכל מספר מצוינים גודל המדגם, רווח בר־סמך של 95%, המדד, מקור הטקסט הנכון וההרצה שממנה הוא בא. הדף נבנה מקובץ אחד, <a href="{json}">results.json</a>, שמתעדכן אחרי כל הרצה.',
+        "updated": 'עודכן {d}.',
+        "lower": 'נמוך יותר עדיף',
+        "pmod_h": 'דפוס עברי מודרני',
+        "phist_h": 'דפוס עברי היסטורי ורבני',
+        "phist_small": 'הקבוצה קטנה: 38 עמודים מ־14 ספרים. רווחי הסמך רחבים ורובם חופפים, ולכן יש לקרוא את ההבדלים בין המנועים כסימנים, לא כדירוג.',
+        "hand_h": 'כתב יד',
+        "hand_t": 'אין עדיין נתונים: אין קבוצת כתב יד מוערכת עם טקסט ייחוס אמיתי שנבדק בידי אדם.',
+        "hw_sub": '225 שורות בכתב יד עברי של 10 כותבים, שצולמו בטלפון, ממבחן זיהוי כתב היד העברי של ivrit.ai (חלק המבחן). מוחזקות בצד: אף מודל של HeOCR לא אומן, כוונן או נבחר עליהן. כל קורא מקבל את תמונת השורה כפי שהיא.',
+        "hw_finding": 'כתב יד עדיין אינו נתמך. בשורות המוחזקות בצד האלה כל הקוראים, גם שלנו, טועים ברוב התווים. המודל של HeOCR, שאומן על דפוס, גרוע כאן מהמודל הרגיל של Tesseract ({d} נקודות של שגיאת תווים, רווח סמך 95% מ־{lo} עד {hi}).',
+        "hw_caveat": 'אף מודל של HeOCR לא אומן על כתב יד. טקסט הייחוס הוא התעתוק של מתנדבי ivrit.ai, ולא נבדק בידינו. עם 10 כותבים רווחי הסמך רחבים. שגיאת המילים יכולה לעבור 100% כשקורא כותב יותר מילים שגויות ממספר המילים בשורה.',
+        "hw_cols": ('שגיאת תווים', 'שגיאת מילים', 'מילים שנמצאו'),
+        "hw_readers": {'heocr': 'heocr, מצב שורה אחת (heocr_modern_v1)', 'heocr_psm3': 'heocr (heocr_modern_v1, PSM 3)', 'heocr_stockheb': 'heocr עם המודל הרגיל של Tesseract', 'stock_best': 'Tesseract (tessdata_best heb)', 'stock_fast': 'Tesseract (tessdata_fast heb)'},
+        "hw_credit": 'נתונים: {name} (<a href="{url}">Hugging Face</a>), מתוך <a href="{corpus}">transcriptor.ivrit.ai</a>; {licence}.',
+        "engine": 'מנוע',
+        "cer": 'שגיאת תווים (CER)',
+        "wer": 'שגיאת מילים (WER)',
+        "pages": '{p} עמודים, {c} ספרים',
+        "slice": {'all': 'כל 38 העמודים', 'unpointed': 'בלי עמודים מנוקדים', 'rabbinic': 'דפוס רבני, בלי ניקוד', 'square': 'אותיות מרובעות רגילות', 'pointed': 'טקסט מנוקד בלבד'},
+        "too_small": 'רק 2 עמודים מספר אחד: בלי רווח סמך, מוצג לשלמות התמונה. כל המנועים נכשלים כאן.',
+        "not_scored": '{e} עוד לא הוערך על העמודים האלה.',
+        "f_measure": 'מדד',
+        "f_ref": 'טקסט ייחוס',
+        "f_licence": 'רישיון',
+        "f_interval": 'רווח סמך',
+        "f_run": 'הרצה',
+        "f_code": 'קוד ההערכה',
+        "phist_run": 'הוערך ב־{d}; כלי ההערכה {repo} בגרסה {commit}',
+        "x_phist_set": 'audit2: \u200f38 עמודים מוגהים מ־14 ספרים בוויקיטקסט העברי, עם טקסט ייחוס שנבדק בידי אדם',
+        "x_phist_measure": 'hocrgen evaluate-references, פרופיל primary.v1 (טקסט העמוד, יחס של סכומים על פני העמודים)',
+        "x_phist_interval": 'bootstrap של 95% באשכולות לפי ספר בוויקיטקסט (2000 דגימות, seed 20261106); בלי רווח סמך מתחת ל־3 ספרים',
+        "x_ws": 'ויקיטקסט העברי',
+        "ours": 'שלנו',
+        "scored": 'הוערך',
+        "method": 'שיטה, טקסט ייחוס והרצה',
+        "not_measured": 'עוד לא נמדד על קבוצה מוחזקת בצד',
+        "phist_nm": 'עוד לא נמדד על קבוצה מוחזקת בצד. קבוצת המבחן של הדפוס ההיסטורי ממתינה לטקסטי ייחוס ממתנדבים; לא יוצג מספר עד שהיא תוערך.',
+        "release_note": 'לא נפרסם מודלים או גרסה של צינור העיבוד עד שנשיג תוצאות טובות יותר מהכלים הקיימים לפחות בסוג מסמך אחד.',
     },
 }
-
-# Strings new with the "Bounding Box" design (design/brand-handover/site/MARKUP.md, "New wording"): listed in the
-# redesign PR for the maintainers to edit freely. The Hebrew needs a native read.
-NEW = {
-    "en": {
-        "kicker": "Documents by format", "chart_title": "Character error by document type", "ours": "ours",
-        "lg_alt": "Best other open tool", "lg_alt_s": "the lowest of Docling, MarkItDown and PyMuPDF4LLM",
-        "lg_tess": "Stock Tesseract", "lg_tess_s": "heb, tessdata_best",
-        "run": "Run", "gate_not_run": "not run", "gate_run": "run",
-        "axis_note": "One linear axis from 0 to 100%; bars start at zero. Whiskers show the interval ({interval}). "
-                     "Where an interval is narrower than its marker, read it from the numbers beside it.",
-        "more": "Documents by format: every reader and every measure",
-        "scored": "Scored",
-        "gate_sub": "The release gate scores a fresh set, made after the code is frozen. "
-                    "Each document type then gets one verdict: supported, or not supported.",
-        "gate_count": "<strong>{d}</strong> of {n} document types have a verdict",
-        "v_supported": "Supported", "v_unsupported": "Not supported", "v_pending": "Awaiting run",
-        "method": "Method, reference and run",
-        "cell_note_legend": "A dash means the reader has no score on that measure. An empty cell means the measure does not apply to that document type. The last column holds a measure that exists for one type only; its name is in that type's heading row.",
-        "caveat_from": "heocr is developed", "fixed_from": "Release gate not yet run",
-        "doc_sub_run": "It has since run, on heocr {version}: the verdicts come from that fresh set, while the figures in these tables are the earlier development run.",
-        "gate_ran": "Run {name}: heocr {version} (commit {commit}), scored {date}. The verdict is set by the one-sided 97.5% upper bound of heocr's difference from each other reader, against a fixed margin.",
-        "gate_hero": "{s} of {n} supported",
-        "not_measured": "Not measured on a held-out set yet",
-        "pmod_scored": "Scored",
-        "ps_h": "Printed pages photographed by phone (PS-v1)",
-        "ps_sub": "12 pages of printed modern Hebrew (legislation and prose), typeset by us from public-domain texts, printed and photographed by the maintainer with three phones. Held out: no model was trained, tuned or chosen on them. Character error (lower is better) per condition; the first photo of each page per phone counts.",
-        "ps_caveat": "Not a sample of real-world documents: one printer, three phones, our own typesetting. With 12 pages, intervals are wide.",
-        "ps_cond": {"flat_A": "Flat, main phone (headline)", "flat": "Flat, all phones", "angle": "At an angle", "lowlight": "Low light", "crumpled": "Crumpled and flattened"},
-        "ps_readers": {"heocr": "heocr", "heocr_stockheb": "heocr with stock Tesseract's model", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)", "r7": "HeOCR R7", "r8b": "HeOCR R8b"},
-        "ps_finding": "On these real photos, heocr's own model is no better than stock Tesseract's model inside heocr, and heocr is slightly worse than plain Tesseract on flat photos. It finds more of the numbers.",
-        "nq_h": "Pointed print (niqqud) photographed by phone (NQ1)",
-        "nq_sub": "25 pages of modern pointed Hebrew (poetry, Tanakh, and prose pointed by Dicta's nakdan), typeset by us in open fonts, printed and photographed twice in each of two sessions. Held out. Character error is shown with niqqud counted, and with niqqud removed from both sides (letters only); marks found is the share of vowel marks read correctly.",
-        "nq_caveat": "Modern pointed print in open fonts, not old pointed books. 25 pages, one printer, one phone.",
-        "nq_cols": ("Character error, niqqud counted", "Character error, letters only", "Vowel marks found"),
-        "nq_readers": {"heocr": "heocr (heocr_modern_v1)", "heocr_oldprint": "heocr with heocr_oldprint_v1", "heocr_stockheb": "heocr with stock Tesseract's model", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)"},
-        "nq_finding": "HeOCR's own models write no niqqud: pointed text comes out unpointed, for now. On the letters alone, the default model matches stock Tesseract's model.",
-        "eff_h": "What the model adds",
-        "eff_sub": "heocr with its own model (heocr_modern_v1) against the same heocr with stock Tesseract's model, on the same generated documents. These generated documents favour heocr; see the photographed pages above, where the gain does not hold.",
-        "eff_cols": ("Document type", "Measure", "Own model", "Stock model", "Difference (95% interval)"),
-        "eff_m": {"cer": "Character error", "number_recall": "Numbers missed"}, "to": "to",
-        "hero_photos": "On real phone photos (Printed pages photographed by phone, below) the picture is different: heocr's character error is {h}% against {t}% for plain Tesseract on the headline photos, and its own model adds nothing there.",
-
-        "phist_nm": "Not measured on a held-out set yet. The historical-print test set is waiting for volunteer references; no figure is shown until it is scored.",
-        "doc_sub_heldout": "Generated documents with exact gold: Word files and PDFs of every kind HeOCR's document reader handles, made by our generators so the correct text is known exactly. Each table is one kind of document. These figures come from the release gate's fresh set: generated with new seeds after heocr {version}'s code was frozen, so heocr was never tuned on these documents. They are drawn by the same generators heocr is developed against, so a good figure means good on generated documents of this kind, not more.",
-        "doc_caveat_heldout": "Held-out set: the release gate's fresh generated documents, made after heocr {version}'s code was frozen.",
-        "why_cmp": "vs {reader}: {measure}, difference {delta}, upper bound {upper} &gt; margin {margin} points",
-        "why_veto": {"reversed_amounts": "held back by the real-document check: reversed amounts"},
-        "why_m": {"number_recall": "Numbers missed", "image_word_recall": "Words in image regions missed", "rows_read": "Table rows not read"},
-    },
-    "he": {
-        "kicker": "מסמכים לפי פורמט", "chart_title": "שגיאת תווים לפי סוג מסמך", "ours": "שלנו",
-        "lg_alt": "הכלי הפתוח האחר הטוב ביותר", "lg_alt_s": "הנמוך ביותר מבין Docling,‏ MarkItDown ו־PyMuPDF4LLM",
-        "lg_tess": "Tesseract הרגיל", "lg_tess_s": "heb, tessdata_best",
-        "run": "הרצה", "gate_not_run": "עוד לא הורץ", "gate_run": "הורץ",
-        "axis_note": "ציר ליניארי אחד, מ־0 עד 100%; הפסים מתחילים באפס. הקווים עם הקצוות מסמנים את רווח הסמך ({interval}). "
-                     "כשהרווח צר מהסמן, הוא מופיע במספרים שלצידו.",
-        "more": "מסמכים לפי פורמט: כל הקוראים וכל המדדים",
-        "scored": "הוערך",
-        "gate_sub": "שער השחרור מעריך קבוצה חדשה, שנוצרת אחרי שהקוד מוקפא. "
-                    "לכל סוג מסמך ניתנת אז החלטה אחת: נתמך או לא נתמך.",
-        "gate_count": "ל־<strong>{d}</strong> מתוך {n} סוגי מסמכים יש החלטה",
-        "v_supported": "נתמך", "v_unsupported": "לא נתמך", "v_pending": "ממתין להרצה",
-        "method": "שיטה, טקסט ייחוס והרצה",
-        "cell_note_legend": "קו מפריד פירושו שלקורא אין ציון במדד הזה. תא ריק פירושו שהמדד אינו חל על סוג המסמך הזה. בעמודה האחרונה מופיע מדד שקיים רק לסוג מסמך אחד; שמו מופיע בשורת הכותרת של אותו סוג.",
-        "caveat_from": "heocr מפותח", "fixed_from": "שער השחרור עוד לא הורץ",
-        "doc_sub_run": "מאז הוא הורץ, על heocr {version}: ההחלטות מבוססות על הקבוצה החדשה הזו, והמספרים בטבלאות האלה הם מהרצת הפיתוח הקודמת.",
-        "gate_ran": "הרצה {name}: heocr {version} (קומיט {commit}), הוערכה ב־{date}. ההחלטה נקבעת לפי הגבול העליון החד־צדדי ברמת 97.5% של ההפרש בין heocr לכל קורא אחר, מול סף קבוע.",
-        "gate_hero": "{s} מתוך {n} נתמכים",
-        "not_measured": "עוד לא נמדד על קבוצה מוחזקת בצד",
-        "pmod_scored": "הוערך",
-        "ps_h": "דפים מודפסים שצולמו בטלפון (PS-v1)",
-        "ps_sub": "12 עמודים של דפוס עברי מודרני (חקיקה ופרוזה), שסודרו אצלנו מטקסטים בנחלת הכלל, הודפסו וצולמו בידי המתחזק בשלושה טלפונים. מוחזקים בצד: שום מודל לא אומן, כוונן או נבחר עליהם. שגיאת תווים (נמוך יותר עדיף) לפי תנאי צילום; נספר הצילום הראשון של כל עמוד בכל טלפון.",
-        "ps_caveat": "לא מדגם של מסמכים מהעולם: מדפסת אחת, שלושה טלפונים, סידור שלנו. עם 12 עמודים, רווחי הסמך רחבים.",
-        "ps_cond": {"flat_A": "ישר, הטלפון הראשי (עיקרי)", "flat": "ישר, כל הטלפונים", "angle": "בזווית", "lowlight": "תאורה חלשה", "crumpled": "מקומט ומיושר"},
-        "ps_readers": {"heocr": "heocr", "heocr_stockheb": "heocr עם המודל הרגיל של Tesseract", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)", "r7": "HeOCR R7", "r8b": "HeOCR R8b"},
-        "ps_finding": "בצילומים האמיתיים האלה, המודל שלנו לא טוב מהמודל הרגיל של Tesseract בתוך heocr, ו־heocr מעט חלש מ־Tesseract לבדו בצילומים ישרים. הוא מוצא יותר מן המספרים.",
-        "nq_h": "דפוס מנוקד שצולם בטלפון (NQ1)",
-        "nq_sub": "25 עמודים של עברית מודרנית מנוקדת (שירה, תנ\"ך ופרוזה שנוקדה בנקדן של דיקטה), שסודרו אצלנו בגופנים פתוחים, הודפסו וצולמו פעמיים בכל אחד משני סבבים. מוחזקים בצד. שגיאת התווים מוצגת עם הניקוד ובלעדיו משני הצדדים (אותיות בלבד); סימני ניקוד שנמצאו הוא חלק סימני הניקוד שנקראו נכון.",
-        "nq_caveat": "דפוס מודרני מנוקד בגופנים פתוחים, לא ספרים ישנים מנוקדים. 25 עמודים, מדפסת אחת, טלפון אחד.",
-        "nq_cols": ("שגיאת תווים, עם ניקוד", "שגיאת תווים, אותיות בלבד", "סימני ניקוד שנמצאו"),
-        "nq_readers": {"heocr": "heocr (heocr_modern_v1)", "heocr_oldprint": "heocr עם heocr_oldprint_v1", "heocr_stockheb": "heocr עם המודל הרגיל של Tesseract", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)"},
-        "nq_finding": "המודלים של HeOCR לא כותבים ניקוד: בינתיים טקסט מנוקד יוצא בלי ניקוד. באותיות בלבד, מודל ברירת המחדל משתווה למודל הרגיל של Tesseract.",
-        "eff_h": "מה המודל מוסיף",
-        "eff_sub": "heocr עם המודל שלו (heocr_modern_v1) מול אותו heocr עם המודל הרגיל של Tesseract, על אותם מסמכים מחוללים. המסמכים המחוללים האלה נוחים ל־heocr; ראו את הדפים המצולמים למעלה, שם השיפור לא מחזיק.",
-        "eff_cols": ("סוג מסמך", "מדד", "המודל שלנו", "המודל הרגיל", "הפרש (רווח סמך 95%)"),
-        "eff_m": {"cer": "שגיאת תווים", "number_recall": "מספרים שהוחמצו"}, "to": "עד",
-        "hero_photos": "בצילומי טלפון אמיתיים (דפים מודפסים שצולמו בטלפון, למטה) התמונה שונה: שגיאת התווים של heocr היא {h}% מול {t}% ל־Tesseract לבדו בצילומים העיקריים, והמודל שלו לא מוסיף שם דבר.",
-
-        "phist_nm": "עוד לא נמדד על קבוצה מוחזקת בצד. קבוצת המבחן של הדפוס ההיסטורי ממתינה לטקסטי ייחוס ממתנדבים; לא יוצג מספר עד שהיא תוערך.",
-        "doc_sub_heldout": "מסמכים מחוללים עם טקסט נכון מדויק: קובצי Word וקובצי PDF מכל הסוגים שקורא המסמכים של HeOCR מטפל בהם, שנוצרו במחוללים שלנו כך שהטקסט הנכון ידוע במדויק. כל טבלה היא סוג מסמך אחד. המספרים האלה הם מהקבוצה החדשה של שער השחרור: נוצרה עם seeds חדשים אחרי שהקוד של heocr {version} הוקפא, ולכן heocr מעולם לא כוונן עליה. היא נוצרה באותם מחוללים ש־heocr מפותח מולם, ולכן מספר טוב פירושו טוב על מסמכים מחוללים מהסוג הזה, לא יותר.",
-        "doc_caveat_heldout": "קבוצה מוחזקת בצד: המסמכים המחוללים החדשים של שער השחרור, שנוצרו אחרי שהקוד של heocr {version} הוקפא.",
-        "why_cmp": "מול {reader}: {measure}, הפרש {delta}, גבול עליון {upper} &gt; סף {margin} נקודות",
-        "why_veto": {"reversed_amounts": "נעצר בבדיקת המסמכים האמיתיים: סכומים הפוכים"},
-        "why_m": {"number_recall": "מספרים שהוחמצו", "image_word_recall": "מילים שהוחמצו באזורי תמונה", "rows_read": "שורות טבלה שלא נקראו"},
-    },
-}
-for _lang in T:
-    T[_lang].update(NEW[_lang])
-
-READER_ORDER = ["heocr", "stock", "docling", "markitdown", "pymupdf4llm"]
-STD = ("cer", "wer", "number_recall", "labels", "silent_loss", "image_word_recall")  # text formats, in column order
-TBL = ("rows_read", "rows_silent", "cer", "number_recall")                            # scanned tables
-EXTRA = ("labels", "image_word_recall")  # measures that exist for one type only: the shared last column
-UP = {"number_recall", "labels", "image_word_recall", "rows_read"}                     # higher is better
-VERDICTS = {"supported": "supported", "not_supported": "unsupported", "unsupported": "unsupported"}
-ICON = {
-    "info": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6"></circle><path d="M8 7.3v3.5M8 5.1v.1"></path></svg>',
-    "supported": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.6l3 3 6-7.2"></path></svg>',
-    "unsupported": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"></path></svg>',
-    "partial": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.6"></circle><path d="M8 2.4v11.2"></path></svg>',
-    "pending": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.6"></circle><path d="M8 4.9V8l2 1.3"></path></svg>',
-}
+ICON = {"info": '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6"></circle><path d="M8 7.3v3.5M8 5.1v.1"></path></svg>'}
 NA = '<td class="num na">–</td>'
 e = html.escape
+
+
+def page(lang: str, R: dict) -> str:
+    """Build a status report from real-world held-out results only."""
+    t = T[lang]
+    json_href = f"{shell.prefix(lang)}benchmarks/results.json"
+    historical = R["p_hist"]
+    hand = R["handwriting"]
+    historical_scored = historical.get("status") == "scored"
+    handwriting_scored = hand.get("status") == "scored"
+    toc = [
+        ("p-mod", e(t["pmod_h"]), e(t["not_measured"])),
+        ("p-hist", e(t["phist_h"]), e(t["scored"] if historical_scored else t["not_measured"])),
+        ("handwriting", e(t["hand_h"]), e(t["scored"] if handwriting_scored else t["not_measured"])),
+    ]
+    historical_section = phist_section(t, historical) if historical_scored else empty(
+        "p-hist", t["phist_h"], t["not_measured"], t["phist_nm"],
+    )
+    handwriting_section = hand_section(t, hand) if handwriting_scored else empty(
+        "handwriting", t["hand_h"], t["not_measured"], t["hand_t"],
+    )
+    return "".join([
+        shell.head(lang, e(t["title"]), e(t["desc"]), "bench"),
+        shell.header(lang, "bench"),
+        '<main id="main" class="bench">\n',
+        shell.page_head(e(t["title"]), f'<p class="lede">{t["lede"].format(json=json_href)}</p>\n'
+                                       f'<p class="note">{e(t["release_note"])}</p>\n'
+                                       f'<p class="note">{e(t["updated"].format(d=R["updated"]))}</p>'),
+        shell.toc(lang, toc),
+        f'<section id="p-mod" class="wrap domain">{domain_head(e(t["pmod_h"]), e(t["not_measured"]))}</section>\n',
+        historical_section,
+        handwriting_section,
+        "</main>\n",
+        shell.footer([f'<p><a href="{json_href}">results.json</a> · <a href="./">HeOCR</a></p>']),
+        shell.tail(lang),
+    ])
 
 
 def cell_html(v, ci):
@@ -265,77 +141,6 @@ def cell_html(v, ci):
         return NA
     civ = f'<span class="ci"><bdi dir="ltr">{hc.interval(ci)}%</bdi></span>' if ci else ""
     return f'<td class="num"><span class="v"><bdi dir="ltr">{hc.pct(v)}</bdi></span>{civ}</td>'
-
-
-def verdict(kind, t, lg=False, label=None):
-    return f'<span class="verdict {kind}{" lg" if lg else ""}">{ICON[kind]}{label or t["v_" + kind]}</span>'
-
-
-def cell_verdicts(D) -> dict:
-    """{cell: 'supported' | 'unsupported'} from results.json, once eval adds verdicts after the gate."""
-    return {c: VERDICTS[v["verdict"]] for c, v in D["cells"].items() if v.get("verdict") in VERDICTS}
-
-
-def present(cell) -> set:
-    return set().union(*[set(r) - {"documents"} for r in cell["readers"].values()])
-
-
-def col_head(t, m):
-    return f'{e(t["m"][m])}<span class="dir{" up" if m in UP else ""}">{e(t["higher"] if m in UP else t["lower"])}</span>'
-
-
-def slug(code):
-    return "doc-" + code.lower().replace(" ", "-")
-
-
-def docs_tables(t, D, verdicts):
-    """Two grouped tables: the text formats and the scanned tables, one <tbody> per document type."""
-    out = []
-    cells = D["cells"]
-    for order, pick in ((STD, lambda c: "rows_read" not in present(c)), (TBL, lambda c: "rows_read" in present(c))):
-        group = {c: v for c, v in cells.items() if pick(v)}
-        if not group:
-            continue
-        cols = [m for m in order if m not in EXTRA and any(m in present(v) for v in group.values())]
-        has_extra = any(m in present(v) for v in group.values() for m in EXTRA)
-        head = [f'<th scope="col">{e(t["reader"])}</th>'] + [f'<th scope="col">{col_head(t, m)}</th>' for m in cols]
-        if has_extra:
-            head.append('<td class="thx"></td>')
-        out.append(f'<div class="tablewrap"><table>\n<thead><tr>{"".join(head)}</tr></thead>')
-        for code, cell in group.items():
-            mine = present(cell)
-            extra = next((m for m in EXTRA if m in mine), None)
-            badge = verdict(verdicts[code], t) if code in verdicts else ""
-            gnote = f'<span class="gnote">{e(t["cell_note"][code])}</span>' if code in t["cell_note"] else ""
-            colh = ""
-            if extra:
-                ns = {r[extra]["n"] for r in cell["readers"].values() if extra in r and "n" in r[extra]}
-                ntag = f'<span class="tag-n">n = {min(ns)}</span>' if len(ns) == 1 and ns != {cell["documents"]} else ""
-                colh = f'<th class="colh" scope="col">{col_head(t, extra).replace("</span>", ntag + "</span>")}</th>'
-            span = len(cols) + 1 + (1 if has_extra and not extra else 0)
-            meta = f'· {code} · {e(t["docs"].format(n=cell["documents"]))}'
-            out.append(f'<tbody>\n<tr class="group"><th colspan="{span}" scope="rowgroup" id="{slug(code)}">'
-                       f'<span class="gtitle">{e(t["cells"][code])} <span class="note">{meta}</span>{badge}{gnote}</span></th>{colh}</tr>')
-            for key in READER_ORDER:
-                if key not in cell["readers"]:
-                    continue
-                r = cell["readers"][key]
-                ours = key == "heocr"
-                label = e(t["readers"][key]) + (f'<span class="tag-ours">{e(t["ours"])}</span>' if ours else "")
-                if r.get("documents", cell["documents"]) != cell["documents"]:
-                    label += f'<span class="tag-n block">n = {r["documents"]}</span>'
-                tds = []
-                for m in cols + ([extra] if extra else [None] if has_extra else []):
-                    if m is None or m not in mine:
-                        tds.append('<td class="nap"></td>')
-                    elif m not in r:
-                        tds.append(NA)
-                    else:
-                        tds.append(cell_html(r[m]["value"], r[m]["ci95"]))
-                out.append(f'<tr{" class=\"ours\"" if ours else ""}><td>{label}</td>{"".join(tds)}</tr>')
-            out.append("</tbody>")
-        out.append("</table></div>")
-    return "\n".join(out)
 
 
 def hist_table(t, P):
@@ -373,158 +178,6 @@ def domain_head(h2, status, cls=""):
     return f'<div class="domain-head"><h2>{h2}</h2><span class="status{cls}">{status}</span></div>'
 
 
-def legend(t):
-    return ('<ul class="hc-legend">\n'
-            f'<li class="ours">{hc.legend_marker("ours")}<span><b>heocr</b> <small>{e(t["ours"])}</small></span></li>\n'
-            f'<li>{hc.legend_marker("alt")}<span><b>{e(t["lg_alt"])}</b> <small>{e(t["lg_alt_s"])}</small></span></li>\n'
-            f'<li>{hc.legend_marker("tess")}<span><b>{e(t["lg_tess"])}</b> <small>{e(t["lg_tess_s"])}</small></span></li>\n'
-            "</ul>")
-
-
-def hero_badge(t, D, not_run, gate):
-    if not_run:
-        return verdict("pending", t, label=t["release_gate"] + ": " + gate)
-    v = [c.get("verdict") for c in D["cells"].values()]
-    s = v.count("supported")
-    kind = "supported" if s == len(v) else "unsupported" if s == 0 else "partial"
-    return verdict(kind, t, label=t["release_gate"] + ": " + t["gate_hero"].format(s=s, n=len(v)))
-
-
-def photo_note(t, R):
-    """The synthetic gain never stands alone (lead, 2026-11-20): the real-photo headline sits right under it."""
-    PM = R.get("p_mod", {})
-    if PM.get("status") != "scored":
-        return ""
-    row = PM["ps_v1"]["rows"][0]["readers"]
-    return f'<p class="hc-finding warn">{ICON["info"]}<span>{e(t["hero_photos"].format(h=f"{row['heocr']['cer']:.1f}", t=f"{row['stock_best']['cer']:.1f}"))}</span></p>'
-
-
-def hero(t, lang, R, doc_interval):
-    D = R["documents"]
-    not_run = D.get("gate", "not_run") == "not_run"
-    gate = t["gate_not_run"] if not_run else t["gate_run"]
-    sub = doc_sub(t, D, not_run)
-    caveat = (t["doc_caveat_heldout"].format(version=D["gate_run"]["heocr"]) if D.get("heldout")
-              else sub[sub.index(t["caveat_from"]):])
-    svgs = hc.hero_svg(D, lang, "wide") + "\n" + hc.hero_svg(D, lang, "narrow")
-    return f'''<figure class="wrap hero-chart" id="hero">
-<div class="panel" data-tag="figure · hero">
-<p class="kicker">{e(t["kicker"])}</p>
-<div class="hc-title"><h2>{e(t["chart_title"])}</h2><span class="dir">{e(t["lower"])}</span></div>
-<p class="hc-finding">{hc.finding_sentence(D, lang)}</p>
-{photo_note(t, R)}
-{legend(t)}
-{svgs}
-<figcaption class="hc-foot">
-<p class="hc-run"><span>{e(t["run"])} <code>{e(D["run"])}</code></span><span><bdi dir="ltr">{e(R["updated"])}</bdi></span>{hero_badge(t, D, not_run, gate)}</p>
-<p class="note">{e(caveat)}</p>
-<p class="note">{e(t["axis_note"].format(interval=doc_interval))}</p>
-<p class="note"><a href="#documents">{e(t["more"])}</a></p>
-</figcaption>
-</div>
-</figure>
-'''
-
-
-def num(x):
-    return f'<bdi dir="ltr">{x:.2f}</bdi>'.replace("-", "\u2212")
-
-
-def why(t, cell):
-    """The failed comparisons of a not-supported type, from results.json's gate_failed."""
-    out = []
-    for f in cell.get("gate_failed", []):
-        if "veto" in f:
-            out.append(e(t["why_veto"][f["veto"]]))
-        else:
-            out.append(t["why_cmp"].format(reader=e(hc.READER_NAMES.get(f["baseline"], f["baseline"])), measure=e(t["why_m"].get(f["measure"], t["m"][f["measure"]])),
-                                           delta=num(f["delta"]), upper=num(f["upper_97_5"]), margin=num(f["margin"])))
-    return f'<span class="why">{"; ".join(out)}</span>' if out else ""
-
-
-def gate_block(t, lang, D, verdicts):
-    kinds = [verdicts.get(c, "pending") for c in D["cells"]]
-    strip = "".join(f'<span class="gate-cell {k}">{"" if k == "pending" else ICON[k]}</span>' for k in kinds)
-    decided = sum(k != "pending" for k in kinds)
-    if decided == len(kinds):
-        count = (f'<strong>{kinds.count("supported")}</strong>{e(t["v_supported"])}<span class="sep">·</span>'
-                 f'<strong>{kinds.count("unsupported")}</strong>{e(t["v_unsupported"])}')
-    else:
-        count = t["gate_count"].format(d=decided, n=len(kinds))
-    items = "".join(f'<li><a href="#{slug(c)}"><span class="code">{c}</span> <span class="name">{e(hc.TYPE_LABELS[lang][c])}</span>{why(t, D["cells"][c])}</a>'
-                    f'{verdict(k, t)}</li>\n' for c, k in zip(D["cells"], kinds))
-    return (f'<div class="gate-summary">\n<div class="gate-strip" aria-hidden="true">{strip}</div>\n<p class="gate-count">{count}</p>\n</div>\n'
-            f'<ul class="gate-list">\n{items}</ul>')
-
-
-def gate_ran(t, D):
-    g = D["gate_run"]
-    v = g["heocr"] + (f' ({g["heocr_note"]})' if g.get("heocr_note") else "")
-    return t["gate_ran"].format(name=g["name"], version=v, commit=g["commit"][:7], date=g["scored"])
-
-
-def doc_sub(t, D, not_run):
-    if D.get("heldout"):
-        return t["doc_sub_heldout"].format(version=D["gate_run"]["heocr"])
-    if not_run:
-        return t["doc_sub"]
-    return t["doc_sub"][:t["doc_sub"].index(t["fixed_from"])] + t["doc_sub_run"].format(version=D["gate_run"]["heocr"])
-
-
-def cap(s):
-    return s[:1].upper() + s[1:]
-
-
-def page(lang: str, R: dict) -> str:
-    """Real held-out results first; generated-document results only inside one marked synthetic box (owner rule 2026-11-20)."""
-    t = T[lang]
-    pre = shell.prefix(lang)
-    json_href = f"{pre}benchmarks/results.json"
-    P, D = R["p_hist"], R.get("documents")
-    w = []
-    w.append(shell.head(lang, e(t["title"]), e(t["desc"]), "bench"))
-    w.append(shell.header(lang, "bench"))
-    w.append('<main id="main" class="bench">\n')
-    w.append(shell.page_head(e(t["title"]), f'<p class="lede">{t["lede"].format(json=json_href)}</p>\n'
-                                             f'<p class="note">{e(t["synth_note"])}</p>\n'
-                                             f'<p class="note">{e(t["updated"].format(d=R["updated"]))}</p>'))
-    p_nm = P.get("status") == "not_measured"
-    pm = R.get("p_mod", {}).get("status") == "scored"
-    hw = R.get("handwriting", {}).get("status") == "scored"
-    sections = [("p-mod", t["pmod_h"], t["pmod_scored"] if pm else t["no_data"], " scored" if pm else ""),
-                ("p-hist", t["phist_h"], t["not_measured"] if p_nm else t["scored"], "" if p_nm else " scored"),
-                ("handwriting", t["hand_h"], t["scored"] if hw else t["no_data"], " scored" if hw else ""),
-                ("vendors", t["vend_h"], t["pending"], "")]
-    toc = [(i, e(h), e(st)) for i, h, st, _ in sections] + ([("synthetic", e(t["synth_h"]), e(t["synth_toc"]))] if D else [])
-    w.append(shell.toc(lang, toc))
-    w.append(pmod_section(t, R["p_mod"]) if pm else empty("p-mod", t["pmod_h"], t["no_data"], t["pmod_t"]))
-    if p_nm:
-        w.append(empty("p-hist", t["phist_h"], t["not_measured"], t["phist_nm"]))
-    else:
-        w.append(phist_section(t, P))
-    w.append(hand_section(t, R["handwriting"]) if hw else empty("handwriting", t["hand_h"], t["no_data"], t["hand_t"]))
-    if not D:
-        w.append(empty("vendors", t["vend_h"], t["pending"], t["vend_t"]))
-        w.append("</main>\n")
-        w.append(shell.footer([f"<p>{t['footer']}</p>", f'<p><a href="{json_href}">results.json</a> · <a href="./">HeOCR</a></p>']))
-        w.append(shell.tail(lang))
-        return "".join(w)
-    verdicts = cell_verdicts(D)
-    not_run = D.get("gate", "not_run") == "not_run"
-    gate_state = cap(t["gate_not_run"] if not_run else t["gate_run"])
-    doc_interval = t.get("x_doc_interval", D["interval"])
-    parts = rest_of_page(t, lang, R, D, verdicts, not_run, gate_state, doc_interval, json_href)
-    iv = next(i for i, x in enumerate(parts) if x.startswith('<section id="vendors"'))
-    ig = next(i for i, x in enumerate(parts) if x.startswith('<section id="gate"'))
-    assert parts[0].startswith('<section id="documents"') and iv < ig and parts[ig + 1] == "</main>\n"
-    docs, vend, gate, tail = "".join(parts[:iv]), parts[iv], parts[ig], parts[ig + 1:]
-    w.append(vend)
-    w.append(f'<div class="wrap"><aside id="synthetic" class="synthbox" aria-labelledby="synthetic-h">\n'
-             f'<div class="synth-head"><h2 id="synthetic-h">{e(t["synth_h"])}</h2><span class="synth-badge">{e(t["synth_badge"])}</span></div>\n'
-             f'<p class="synth-lede">{e(t["synth_box"])}</p>\n{docs}{gate}</aside></div>\n')
-    w.extend(tail)
-    return "".join(w)
-
 def pct(v):
     return "–" if v is None else f'<bdi dir="ltr">{v:.1f}%</bdi>'
 
@@ -533,33 +186,6 @@ def pct_ci(v, ci):
     if v is None: return NA
     c = f'<span class="ci"><bdi dir="ltr">{ci[0]:.1f}–{ci[1]:.1f}%</bdi></span>' if ci else ""
     return f'<td class="num"><span class="v"><bdi dir="ltr">{v:.1f}%</bdi></span>{c}</td>'
-
-
-def pmod_section(t, PM):
-    ps, nq = PM["ps_v1"], PM["nq1"]
-    rd = list(t["ps_readers"])
-    head = '<th scope="col"></th>' + "".join(f'<th scope="col">{e(t["ps_readers"][r])}</th>' for r in rd)
-    rows = []
-    for row in ps["rows"]:
-        tds = "".join(pct_ci(row["readers"][r]["cer"], row["readers"][r]["cer_ci95"]) for r in rd)
-        rows.append(f'<tr><th scope="row">{e(t["ps_cond"][row["id"]])} <span class="note">n = {row["pages"]}</span></th>{tds}</tr>')
-    ps_tab = f'<div class="tablewrap"><table>\n<thead><tr>{head}</tr></thead>\n<tbody>\n' + "\n".join(rows) + "\n</tbody></table></div>"
-    nr = list(t["nq_readers"]); c1, c2, c3 = t["nq_cols"]
-    nrows = []
-    for r in nr:
-        v = nq["readers"][r]
-        nrows.append(f'<tr{" class=\"ours\"" if r in ("heocr", "heocr_oldprint") else ""}><th scope="row">{e(t["nq_readers"][r])}</th>'
-                     f'{pct_ci(v["cer_kept"], v["cer_kept_ci95"])}{pct_ci(v["cer_stripped"], v["cer_stripped_ci95"])}'
-                     f'<td class="num"><span class="v">{pct(v["mark_recall"])}</span></td></tr>')
-    nq_tab = (f'<div class="tablewrap narrow"><table>\n<thead><tr><th scope="col"></th><th scope="col">{e(c1)}</th><th scope="col">{e(c2)}</th>'
-              f'<th scope="col">{e(c3)}</th></tr></thead>\n<tbody>\n' + "\n".join(nrows) + "\n</tbody></table></div>")
-    return (f'<section id="p-mod" class="wrap domain">\n{domain_head(e(t["pmod_h"]), e(t["pmod_scored"]), " scored")}\n'
-            f'<h3>{e(t["ps_h"])}</h3>\n<p class="sub">{e(t["ps_sub"])}</p>\n<p class="warn">{ICON["info"]}<span>{e(t["ps_finding"])}</span></p>\n{ps_tab}\n'
-            f'<p class="note">{e(t["ps_caveat"])}</p>\n'
-            + method(t, [(t["f_measure"], e(ps["measure"])), (t["f_interval"], e(ps["interval"])), (t["f_run"], e(ps["registration"]))]) + "\n"
-            f'<h3>{e(t["nq_h"])}</h3>\n<p class="sub">{e(t["nq_sub"])}</p>\n<p class="warn">{ICON["info"]}<span>{e(t["nq_finding"])}</span></p>\n{nq_tab}\n'
-            f'<p class="note">{e(t["nq_caveat"])}</p>\n'
-            + method(t, [(t["f_measure"], e(nq["measure"])), (t["f_interval"], e(nq["interval"])), (t["f_run"], e(nq["registration"]))]) + "\n</section>\n")
 
 
 def hand_section(t, H):
@@ -579,20 +205,6 @@ def hand_section(t, H):
             f'<p class="sub">{e(t["hw_sub"])}</p>\n<p class="warn">{ICON["info"]}<span>{e(find)}</span></p>\n{tab}\n'
             f'<p class="note">{e(t["hw_caveat"])}</p>\n<p class="note">{credit}</p>\n'
             + method(t, [(t["f_measure"], e(H["measure"])), (t["f_interval"], e(H["interval"])), (t["f_run"], e(H["registration"]))]) + "\n</section>\n")
-
-
-def effect_table(t, D):
-    M = D.get("model_effect")
-    if not M: return ""
-    a, b, c, d, f = t["eff_cols"]
-    rows = []
-    for r in M["rows"]:
-        rows.append(f'<tr><td>{e(t["cells"][r["cell"]])}</td><td>{e(t["eff_m"][r["measure"]])}</td>'
-                    f'<td class="num">{pct(r["heocr"])}</td><td class="num">{pct(r["heocr_stockheb"])}</td>'
-                    f'<td class="num"><bdi dir="ltr">{r["delta"]:+.2f}</bdi> <span class="ci"><bdi dir="ltr">{r["ci95"][0]:+.2f}</bdi> {e(t["to"])} <bdi dir="ltr">{r["ci95"][1]:+.2f}</bdi></span></td></tr>')
-    return (f'<h3>{e(t["eff_h"])}</h3>\n<p class="sub">{e(t["eff_sub"])}</p>\n<div class="tablewrap"><table>\n<thead><tr><th scope="col">{e(a)}</th>'
-            f'<th scope="col">{e(b)}</th><th scope="col">{e(c)}</th><th scope="col">{e(d)}</th><th scope="col">{e(f)}</th></tr></thead>\n<tbody>\n'
-            + "\n".join(rows) + "\n</tbody></table></div>\n")
 
 
 def phist_section(t, P):
@@ -618,41 +230,6 @@ def phist_section(t, P):
 def empty(sid, h2, status, text):
     return (f'<section id="{sid}" class="wrap domain">\n{domain_head(e(h2), e(status))}\n'
             f'<div class="empty">{e(text)}</div>\n</section>\n')
-
-
-def rest_of_page(t, lang, R, D, verdicts, not_run, gate_state, doc_interval, json_href):
-    w = []
-    # --- documents by format: two grouped tables
-    commit = re.search(r"[0-9a-f]{40}", D["heocr"])
-    commit = commit.group(0)[:7] if commit else D["heocr"]
-    dref = D["reference"]
-    vers = "; ".join(f'{e(t["readers"][k])} {e(v.get("version") or v.get("ocr", ""))}' for k, v in D["baselines"].items())
-    w.append(f'<section id="documents" class="wrap domain">\n'
-             f'{domain_head(e(t["doc_h"]), e(t["scored"]) + " <bdi dir=\"ltr\">" + e(R["updated"]) + "</bdi>", " scored")}\n'
-             f'<p class="sub">{e(doc_sub(t, D, not_run))}</p>\n{docs_tables(t, D, verdicts)}\n{effect_table(t, D)}'
-             f'<p class="legend-note">{e(t["cell_note_legend"])}</p>\n'
-             f'<p class="note">{e(t["reader_note"])}</p>\n<p class="note">{e(t["wer_note"])}</p>\n')
-    w.append(method(t, [
-        (t["f_measure"], f'<code>{e(D["measure"])}</code> (text normalised the same way for every reader; ratios of sums over documents)'
-         if lang == "en" else f'<code>{e(D["measure"])}</code> (הטקסט מנורמל באותו אופן לכל הקוראים; יחס של סכומים על פני המסמכים)'),
-        (t["f_ref"], e(t.get("x_doc_ref", f'{dref["name"]}: {dref["source"]}'))),
-        (t["f_licence"], e(dref["licence"])),
-        (t["f_interval"], e(doc_interval)),
-        (t["f_run"], e(t["doc_run"].format(run=D["run"], commit=commit))),
-        (t["f_readers"], vers),
-        (t["f_excluded"], e(t["doc_excluded"])),
-        (t["f_code"], e(t["doc_code"])),
-    ]) + "\n</section>\n")
-    w.append(empty("vendors", t["vend_h"], t["pending"], t["vend_t"]))
-    # --- release gate
-    fixed = t["doc_sub"][t["doc_sub"].index(t["fixed_from"]):] if not_run else ""
-    pend = verdict("pending", t, label=gate_state) if not_run else ""
-    w.append(f'<section id="gate" class="wrap domain">\n<div class="domain-head"><h2>{e(t["release_gate"])}</h2>{pend}</div>\n'
-             f'<p class="sub">{e(t["gate_sub"])}{" " + e(fixed) if fixed else ""}{" " + e(gate_ran(t, D)) if not not_run else ""}</p>\n{gate_block(t, lang, D, verdicts)}\n</section>\n')
-    w.append("</main>\n")
-    w.append(shell.footer([f"<p>{t['footer']}</p>", f'<p><a href="{json_href}">results.json</a> · <a href="./">HeOCR</a></p>']))
-    w.append(shell.tail(lang))
-    return w
 
 
 def main():

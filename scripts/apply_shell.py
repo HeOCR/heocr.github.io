@@ -9,12 +9,13 @@ The hand-written pages carry three marked blocks, which this script owns:
     <!-- shell:header -->  … skip link and site header …                              <!-- /shell:header -->
     <!-- shell:tail -->    … theme.js …                                               <!-- /shell:tail -->
 
-Everything else in those pages (title, description, page head, main content, footer lines) is edited by hand.
+The home pages also take their release status and introduction from this builder.
 The generated pages (benchmarks, htext) get the same blocks from their build scripts.
 """
 from __future__ import annotations
 
 import argparse
+import html
 import re
 import sys
 from pathlib import Path
@@ -24,6 +25,45 @@ import shell  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 HAND = {"home": "index.html", "rights": "rights.html"}
+HOME = {
+    "en": {
+        "intro": "Open data and tools for reading Hebrew documents, both printed and handwritten. Every dataset item has its own rights record.",
+        "models": "Models and pipeline",
+        "status": "There are no model or pipeline releases available yet.",
+        "download": "Download",
+    },
+    "he": {
+        "intro": "נתונים וכלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו.",
+        "models": "מודלים וצינור העיבוד",
+        "status": "עדיין אין גרסאות זמינות של המודלים או של צינור העיבוד.",
+        "download": "הורדה",
+    },
+}
+
+
+def home_status(lang: str, text: str) -> str:
+    t = HOME[lang]
+    intro = html.escape(t["intro"])
+    text = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{intro}">', text, count=1)
+    text = re.sub(r'<p class="lede">.*?</p>', f'<p class="lede">{intro}</p>', text, count=1, flags=re.S)
+    text = re.sub(
+        r'(<a class="btn" href="download.html">)[^<]*(</a>)',
+        lambda match: match[1] + html.escape(t["download"]) + match[2],
+        text,
+        count=1,
+    )
+    return re.sub(
+        r'^  <section id="models">.*?^  </section>',
+        lambda _: (
+            '  <section id="models">\n'
+            f'    <h2>{html.escape(t["models"])}</h2>\n'
+            f'    <p class="sub">{html.escape(t["status"])}</p>\n'
+            '  </section>'
+        ),
+        text,
+        count=1,
+        flags=re.M | re.S,
+    )
 
 
 def block(name: str, body: str) -> str:
@@ -31,6 +71,8 @@ def block(name: str, body: str) -> str:
 
 
 def render(page: str, lang: str, text: str) -> str:
+    if page == "home":
+        text = home_status(lang, text)
     title = re.search(r"<title>(.*?)</title>", text, re.S).group(1)
     desc = re.search(r'<meta name="description" content="(.*?)">', text)
     desc = desc.group(1) if desc else None

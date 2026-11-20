@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Download HeOCR</title>
-<meta name="description" content="HeOCR for macOS and Windows: Hebrew text out of PDFs, Word documents and images, fully offline.">
+<meta name="description" content="Coming soon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HeOCR">
 <meta property="og:title" content="Download HeOCR">
-<meta property="og:description" content="HeOCR for macOS and Windows: Hebrew text out of PDFs, Word documents and images, fully offline.">
+<meta property="og:description" content="Coming soon">
 <meta property="og:url" content="https://heocr.org/en/download.html">
 <meta property="og:image" content="https://heocr.org/og-image-en-1200x630.png">
 <meta property="og:image:width" content="1200">
@@ -42,53 +42,22 @@
 </div>
 </div>
 </header>
+<main id="main" class="wrap doc">
 <div class="band gridband"><div class="wrap page-head">
 <h1><span class="bb" data-tag="h1 · 0.99">Download HeOCR</span></h1>
-<p class="lede">Drop in a PDF, a Word document or an image, and get its Hebrew text out, with its headings, paragraphs and tables.</p>
+<p class="lede">Coming soon</p>
 </div></div>
-<main id="main" class="wrap doc">
-<p class="warn"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.6l5 2v4c0 3.2-2.1 5.8-5 6.8-2.9-1-5-3.6-5-6.8v-4l5-2z"></path><path d="M5.6 8l1.7 1.7L10.6 6.3"></path></svg><span><strong>Fully offline.</strong> Your files never leave your computer. The app makes no network connections and collects no data: no telemetry, no analytics, no update checks.</span></p>
 <div class="grid">
-  <div class="card"><h3>macOS</h3><p>macOS 13 or later. One app for Apple silicon and Intel. Signed with an Apple Developer ID and notarized by Apple.</p><div class="row"><a class="btn primary" href="https://github.com/HeOCR/heocr-desktop/releases/latest/download/HeOCR-0.2.0-macos.dmg">Download for macOS</a></div></div>
-  <div class="card"><h3>Windows</h3><p>Windows 10 or 11, 64-bit.</p><div class="row"><a class="btn primary" href="https://github.com/HeOCR/heocr-desktop/releases/latest/download/HeOCR-0.2.0-windows-x64.msi">Download for Windows*</a></div></div>
+<div class="card"><h3>macOS</h3><p>Coming soon</p></div>
+<div class="card"><h3>Windows</h3><p>Coming soon</p></div>
+<div class="card"><h3>Android</h3><p>Coming soon</p></div>
 </div>
-<p class="note">HeOCR&#x27;s own models write no niqqud: pointed text comes out unpointed, for now.</p>
-<p class="note">* Windows: unsigned. Windows SmartScreen will warn; choose More info → Run anyway. A signed build follows soon. <a href="https://github.com/HeOCR/heocr-desktop/releases/tag/v0.2.0">Release notes and checksum</a></p>
-<section id="what">
-<h2>What it does</h2>
-<ul>
-  <li>Opens PDF, Word (DOCX) and image files (PNG, JPEG, TIFF and more), and also Excel (XLSX), PowerPoint (PPTX) and saved web pages: drag one onto the window, or use the open button.</li>
-  <li>Shows the text right to left, with headings, paragraphs and tables, and says how each page was read: from the PDF&#x27;s own text layer, by OCR, or from the Word document.</li>
-  <li>Copies the text, or saves it as plain text, Markdown, or heocr&#x27;s full JSON record.</li>
-  <li>Shows progress page by page for long PDFs, with a Cancel button.</li>
-  <li>Its interface is in Hebrew or English, following your system, with a toggle.</li>
-</ul>
-</section>
-<section id="notes">
-<h2>Good to know</h2>
-<ul>
-  <li>OCR text is a reading, not a verified transcript: check names and numbers.</li>
-  <li>Older Word files (.doc), RTF and OpenDocument files are not supported yet: reading them needs LibreOffice, which the app does not include (its licence is copyleft). Open the file in Word or <a href="https://www.libreoffice.org">LibreOffice</a> and save it as DOCX or PDF.</li>
-  <li>Windows may warn that the installer is from an unknown publisher, because it is not yet code-signed. Choose “More info”, then “Run anyway”.</li>
-</ul>
-</section>
-<section id="code-signing">
-<h2>Code signing policy</h2>
-<p>Free code signing provided by <a href="https://about.signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a>. Only installers built by GitHub Actions from the public source are signed, and each signing is approved by hand.</p>
-<p>Team roles: committers and reviewers, Shay Palachy Affek (<a href="https://github.com/shaypal5">@shaypal5</a>), with AI coding agents that work through reviewed pull requests; approver, Shay Palachy Affek.</p>
-<p>Privacy: this program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it. HeOCR has no network feature at all.</p>
-<p><a href="https://github.com/HeOCR/heocr-desktop/blob/main/docs/code-signing-policy.md">The full policy</a></p>
-</section>
-<section id="inside">
-<h2>Inside</h2>
-<p>The app is a window around <a href="https://github.com/HeOCR/heocr">heocr</a>, HeOCR's open pipeline for Hebrew documents, with Tesseract OCR and its Hebrew model bundled. Everything in it is under a permissive licence: <a href="https://github.com/HeOCR/heocr-desktop/blob/main/THIRD_PARTY_LICENSES.md">the full list</a>. Source: <a href="https://github.com/HeOCR/heocr-desktop">HeOCR/heocr-desktop</a> (Apache-2.0).</p>
-</section>
 </main>
 <footer class="site-footer">
 <div class="wrap foot">
 <div class="foot-brand">He<b>OCR</b></div>
 <div class="foot-text">
-<p><a href="https://github.com/HeOCR/heocr-desktop">HeOCR/heocr-desktop</a> · <a href="privacy.html">Privacy policy</a> · <a href="./">HeOCR</a></p>
+
 </div>
 </div>
 </footer>

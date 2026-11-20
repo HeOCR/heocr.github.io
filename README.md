@@ -21,7 +21,7 @@ python3 scripts/apply_shell.py           # rewrite the shell blocks of the hand-
 python3 scripts/apply_shell.py --check   # fails if a hand-written page's shell differs from shell.py
 ```
 
-Edit the hand-written pages' title, page head, `<main>` and footer lines by hand; never edit inside the markers.
+The home page's introduction and model release status are maintained by `scripts/apply_shell.py`. Run the builder for changes to those sections.
 
 ## Benchmarks page
 
@@ -34,16 +34,17 @@ python3 scripts/build_benchmarks.py           # writes both pages (standard libr
 python3 scripts/build_benchmarks.py --check   # fails if a committed page does not match results.json
 ```
 
-The hero chart is drawn by `scripts/hero_chart.py` (the handover's generator, unchanged): every document type, one
-linear axis from 0 to 100%, only the readers in the file, intervals drawn and printed. Release-gate verdicts appear by
-themselves once `results.json` gives a document type `"verdict": "supported"` or `"not_supported"`; until then each
-type shows "Awaiting run".
+The benchmark pages report measurements from registered held-out sets of real documents and photographs.
+Generated or newly typeset documents are development inputs and do not appear in the public results file.
+When a document family has no eligible result, it is marked as not measured. The release note records when
+HeOCR will publish a model or pipeline version.
 
-`results.json` holds only figures that may be published:
-- figures on public references (Hebrew Wikisource);
-- figures on generated documents with exact gold.
+The download status pages are also generated:
 
-It never holds figures from private corpora, not even aggregates.
+```
+python3 scripts/build_download.py
+python3 scripts/build_download.py --check
+```
 
 ## htext page
 

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>הורדת HeOCR</title>
-<meta name="description" content="HeOCR ל־macOS ול־Windows: טקסט עברי מתוך קובצי PDF, מסמכי Word ותמונות, בלי אינטרנט.">
+<meta name="description" content="בקרוב">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HeOCR">
 <meta property="og:title" content="הורדת HeOCR">
-<meta property="og:description" content="HeOCR ל־macOS ול־Windows: טקסט עברי מתוך קובצי PDF, מסמכי Word ותמונות, בלי אינטרנט.">
+<meta property="og:description" content="בקרוב">
 <meta property="og:url" content="https://heocr.org/download.html">
 <meta property="og:image" content="https://heocr.org/og-image-he-1200x630.png">
 <meta property="og:image:width" content="1200">
@@ -42,53 +42,22 @@
 </div>
 </div>
 </header>
+<main id="main" class="wrap doc">
 <div class="band gridband"><div class="wrap page-head">
 <h1><span class="bb" data-tag="h1 · 0.99">הורדת HeOCR</span></h1>
-<p class="lede">גוררים קובץ PDF, מסמך Word או תמונה, ומקבלים את הטקסט העברי שבו, עם הכותרות, הפסקאות והטבלאות.</p>
+<p class="lede">בקרוב</p>
 </div></div>
-<main id="main" class="wrap doc">
-<p class="warn"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.6l5 2v4c0 3.2-2.1 5.8-5 6.8-2.9-1-5-3.6-5-6.8v-4l5-2z"></path><path d="M5.6 8l1.7 1.7L10.6 6.3"></path></svg><span><strong>עובד במלואו בלי אינטרנט.</strong> הקבצים שלכם לא יוצאים מהמחשב. האפליקציה אינה מתחברת לרשת ואינה אוספת נתונים: בלי טלמטריה, בלי אנליטיקה, בלי בדיקת עדכונים.</span></p>
 <div class="grid">
-  <div class="card"><h3>macOS</h3><p>macOS 13 ואילך. אפליקציה אחת למעבדי Apple ול־Intel. חתומה ב־Apple Developer ID ומאושרת (notarized) על ידי Apple.</p><div class="row"><a class="btn primary" href="https://github.com/HeOCR/heocr-desktop/releases/latest/download/HeOCR-0.2.0-macos.dmg">הורדה ל־macOS</a></div></div>
-  <div class="card"><h3>Windows</h3><p>Windows 10 או 11, ‏64 סיביות.</p><div class="row"><a class="btn primary" href="https://github.com/HeOCR/heocr-desktop/releases/latest/download/HeOCR-0.2.0-windows-x64.msi">הורדה ל־Windows*</a></div></div>
+<div class="card"><h3>macOS</h3><p>בקרוב</p></div>
+<div class="card"><h3>Windows</h3><p>בקרוב</p></div>
+<div class="card"><h3>Android</h3><p>בקרוב</p></div>
 </div>
-<p class="note">המודלים של HeOCR לא כותבים ניקוד: בינתיים טקסט מנוקד יוצא בלי ניקוד.</p>
-<p class="note">* Windows: לא חתום. ‏SmartScreen של Windows יזהיר; בחרו „מידע נוסף” ואז „הפעל בכל זאת”. גרסה חתומה תגיע בקרוב. <a href="https://github.com/HeOCR/heocr-desktop/releases/tag/v0.2.0">הערות הגרסה וסכום הביקורת</a></p>
-<section id="what">
-<h2>מה היא עושה</h2>
-<ul>
-  <li>פותחת קובצי PDF, ‏Word ‏(DOCX) ותמונות (PNG, ‏JPEG, ‏TIFF ועוד), וגם Excel ‏(XLSX), ‏PowerPoint ‏(PPTX) ודפי אינטרנט שמורים: גוררים קובץ לחלון, או לוחצים על כפתור הפתיחה.</li>
-  <li>מציגה את הטקסט מימין לשמאל, עם כותרות, פסקאות וטבלאות, ואומרת איך נקרא כל עמוד: משכבת הטקסט של ה־PDF, בזיהוי תווים, או ממסמך ה־Word.</li>
-  <li>מעתיקה את הטקסט, או שומרת אותו כטקסט פשוט, כ־Markdown או כרשומת ה־JSON המלאה של heocr.</li>
-  <li>מציגה התקדמות עמוד אחר עמוד בקובצי PDF ארוכים, עם כפתור ביטול.</li>
-  <li>הממשק בעברית או באנגלית, לפי שפת המערכת, עם מעבר בין השפות.</li>
-</ul>
-</section>
-<section id="notes">
-<h2>כדאי לדעת</h2>
-<ul>
-  <li>טקסט מזיהוי תווים הוא קריאה ולא תמלול מאומת: בדקו שמות ומספרים.</li>
-  <li>קובצי Word ישנים (‎.doc), ‏RTF וקובצי OpenDocument עדיין לא נתמכים: קריאתם דורשת את LibreOffice, שאינו כלול באפליקציה (הרישיון שלו הוא קופילפט). פתחו את הקובץ ב־Word או ב־<a href="https://www.libreoffice.org">LibreOffice</a> ושמרו אותו כ־DOCX או כ־PDF.</li>
-  <li>ייתכן ש־Windows יזהיר שהמתקין ממפרסם לא מוכר, כי הוא עדיין לא חתום. בחרו „מידע נוסף” ואז „הפעל בכל זאת”.</li>
-</ul>
-</section>
-<section id="code-signing">
-<h2>מדיניות חתימת קוד</h2>
-<p>חתימת קוד חינמית באדיבות <a href="https://about.signpath.io">SignPath.io</a>, תעודה מאת <a href="https://signpath.org">SignPath Foundation</a>. נחתמים רק מתקינים שנבנו ב־GitHub Actions מקוד המקור הפומבי, וכל חתימה מאושרת ידנית.</p>
-<p>תפקידים בצוות: כותבי קוד ובודקים, שי פלצ'י אפק (<a href="https://github.com/shaypal5">@shaypal5</a>), עם סוכני קוד מבוססי בינה מלאכותית שעובדים דרך בקשות משיכה שנבדקות; מאשר חתימות, שי פלצ'י אפק.</p>
-<p>פרטיות: התוכנה לא תעביר מידע למערכות אחרות ברשת, אלא אם המשתמש או מי שמתקין או מפעיל אותה ביקשו זאת במפורש. ל־HeOCR אין שום יכולת רשת.</p>
-<p><a href="https://github.com/HeOCR/heocr-desktop/blob/main/docs/code-signing-policy.md">המדיניות המלאה</a></p>
-</section>
-<section id="inside">
-<h2>מה בפנים</h2>
-<p>האפליקציה היא חלון סביב <a href="https://github.com/HeOCR/heocr">heocr</a>, צינור הקוד הפתוח של HeOCR למסמכים בעברית, עם מנוע זיהוי התווים Tesseract והמודל העברי שלו. כל מה שבתוכה ברישיון מתירני: <a href="https://github.com/HeOCR/heocr-desktop/blob/main/THIRD_PARTY_LICENSES.md">הרשימה המלאה</a>. קוד המקור: <a href="https://github.com/HeOCR/heocr-desktop">HeOCR/heocr-desktop</a> ‏(Apache-2.0).</p>
-</section>
 </main>
 <footer class="site-footer">
 <div class="wrap foot">
 <div class="foot-brand">He<b>OCR</b></div>
 <div class="foot-text">
-<p><a href="https://github.com/HeOCR/heocr-desktop">HeOCR/heocr-desktop</a> · <a href="privacy.html">מדיניות פרטיות</a> · <a href="./">HeOCR</a></p>
+
 </div>
 </div>
 </footer>

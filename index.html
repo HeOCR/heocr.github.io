@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HeOCR בעברית</title>
-<meta name="description" content="HeOCR: נתונים, כלים ומודלים פתוחים ונקיים מבחינת זכויות לקריאת עברית מודפסת וכתובה ביד.">
+<meta name="description" content="נתונים וכלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו.">
 <!-- shell:head -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HeOCR">
 <meta property="og:title" content="HeOCR בעברית">
-<meta property="og:description" content="HeOCR: נתונים, כלים ומודלים פתוחים ונקיים מבחינת זכויות לקריאת עברית מודפסת וכתובה ביד.">
+<meta property="og:description" content="נתונים וכלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו.">
 <meta property="og:url" content="https://heocr.org/">
 <meta property="og:image" content="https://heocr.org/og-image-he-1200x630.png">
 <meta property="og:image:width" content="1200">
@@ -50,12 +50,12 @@
 <div class="wrap">
 <p class="tag" lang="en" dir="ltr">Hebrew OCR, open to all</p>
 <h1><span class="bb" data-tag="h1 · 0.99">HeOCR</span></h1>
-<p class="lede">נתונים, כלים ומודלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו, והכול מתפרסם ברישיונות פתוחים.</p>
+<p class="lede">נתונים וכלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו.</p>
 <div class="links">
       <a class="btn" href="https://github.com/HeOCR">GitHub</a>
       <a class="btn" href="https://huggingface.co/HeOCR">Hugging Face</a>
       <a class="btn" href="https://zenodo.org/communities/heocr">Zenodo</a>
-      <a class="btn" href="download.html">הורדת האפליקציה</a>
+      <a class="btn" href="download.html">הורדה</a>
       <a class="btn primary" href="benchmarks.html">מדדי ביצועים</a>
       <a class="btn" href="rights.html">זכויות והסרה</a>
     </div>
@@ -70,30 +70,8 @@
 <main id="main" class="wrap home">
 
   <section id="models">
-    <h2>שימוש ב־HeOCR</h2>
-    <p class="sub">במה להשתמש היום כדי להוציא טקסט עברי ממסמכים.</p>
-    <div class="grid">
-      <div class="card">
-        <h3><a href="https://github.com/HeOCR/heocr"><bdi>heocr</bdi></a> · צינור העיבוד</h3>
-        <p>טקסט עברי, כותרות וטבלאות מכל מסמך: PDF, ‏Word, ‏Excel, ‏PowerPoint, דפי אינטרנט וסריקות. הוא קורא את שכבת הטקסט של ה־PDF כשאפשר לסמוך עליה, ומריץ OCR כשאי אפשר, ומתעד עמוד אחר עמוד מה עשה ומה לא הצליח לקרוא. <code>pip install heocr</code> (ב־PyPI החל מגרסה 0.1.0; עד אז, התקנה מהמאגר).</p>
-        <div class="meta"><span>Apache-2.0</span><span>Python</span></div>
-        <div class="row">
-          <a href="https://github.com/HeOCR/heocr">GitHub</a>
-          <a href="benchmarks.html">מדדי ביצועים</a>
-        </div>
-      </div>
-      <div class="card">
-        <h3><bdi>R7</bdi> · OCR לדפוס עברי ישן</h3>
-        <p>מודל ה־OCR שאנחנו ממליצים עליו לספרים סרוקים ולדפוס ישן. עוד לא נמדד על קבוצה מוחזקת בצד: קבוצת המבחן של הדפוס ההיסטורי ממתינה לטקסטי ייחוס ממתנדבים. ב־heocr משתמשים בו עם <code>--ocr-model heocr_r7</code>, וב־Tesseract עם <code>-l heocr_r7</code>.</p>
-        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
-        <div class="row">
-          <a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">Hugging Face</a>
-          <a href="https://doi.org/10.5281/zenodo.24126449">DOI ב־Zenodo</a>
-          <a href="benchmarks.html">מדדי ביצועים</a>
-        </div>
-      </div>
-    </div>
-    <p class="note">מודלים קודמים ומודלי בסיס למחקר נשארים זמינים באופן פתוח ב־<a href="https://huggingface.co/HeOCR">Hugging Face</a> וב־<a href="https://zenodo.org/communities/heocr">Zenodo</a>.</p>
+    <h2>מודלים וצינור העיבוד</h2>
+    <p class="sub">עדיין אין גרסאות זמינות של המודלים או של צינור העיבוד.</p>
   </section>
 
   <section id="datasets">
