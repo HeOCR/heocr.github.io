@@ -31,7 +31,9 @@ T = {
         "pmod_t": "No data yet — reference pages are under human review. No number is shown until a reviewed set is scored.",
         "phist_h": "Historical and rabbinic printed Hebrew",
         "phist_small": "This set is small: 38 pages from 14 books. Intervals are wide and most of them overlap, so treat differences between engines as indications, not rankings.",
-        "synth_note": "Every figure on this page comes from photographs or scans of real pages. Generated (synthetic) documents are used only to develop and select models, and their figures are not reported.",
+        "synth_note": "Every figure above the marked box at the end comes from photographs or scans of real pages. Figures on generated documents appear only inside that box.",
+        "synth_h": "Synthetic measurement: generated documents", "synth_badge": "Synthetic, not real-world performance", "synth_toc": "Synthetic",
+        "synth_box": "Everything in this box was measured on documents made by our own generators, the same generators heocr is developed against. It is a development and release-gate signal, not a measure of performance on real documents, and the generators favour heocr. For real-world results, see the sections above: printed pages photographed by phone (PS-v1), pointed print (NQ1) and handwriting.",
         "hand_h": "Handwriting",
         "hand_t": "No data yet — there is no scored handwriting set with real, human-checked references.",
         "hw_sub": "225 handwritten Hebrew lines by 10 writers, photographed by phone, from ivrit.ai's Hebrew handwriting OCR benchmark (test split). Held out: no HeOCR model was trained, tuned or chosen on them. Each reader gets each line image as it is.",
@@ -87,7 +89,9 @@ T = {
         "pmod_t": "אין עדיין נתונים: דפי הייחוס נמצאים בבדיקה אנושית. לא יוצג מספר עד שתיבדק ותוערך קבוצה.",
         "phist_h": "דפוס עברי היסטורי ורבני",
         "phist_small": "הקבוצה קטנה: 38 עמודים מ־14 ספרים. רווחי הסמך רחבים ורובם חופפים, ולכן יש לקרוא את ההבדלים בין המנועים כסימנים, לא כדירוג.",
-        "synth_note": "כל המספרים בדף הזה באים מצילומים או מסריקות של דפים אמיתיים. מסמכים מחוללים (סינתטיים) משמשים רק לפיתוח ולבחירת מודלים, והמספרים שלהם אינם מדווחים.",
+        "synth_note": "כל המספרים שמעל לתיבה המסומנת שבסוף הדף באים מצילומים או מסריקות של דפים אמיתיים. מספרים על מסמכים מחוללים מופיעים רק בתוך התיבה הזו.",
+        "synth_h": "מדידה סינתטית: מסמכים מחוללים", "synth_badge": "סינתטי, לא ביצועים בעולם האמיתי", "synth_toc": "סינתטי",
+        "synth_box": "כל מה שבתיבה הזו נמדד על מסמכים שיצרו המחוללים שלנו, אותם מחוללים ש־heocr מפותח מולם. זהו סימן לפיתוח ולשער השחרור, לא מדד לביצועים על מסמכים אמיתיים, והמחוללים מיטיבים עם heocr. לתוצאות מהעולם האמיתי ראו את הסעיפים שלמעלה: דפים מודפסים שצולמו בטלפון (PS-v1), דפוס מנוקד (NQ1) וכתב יד.",
         "hand_h": "כתב יד",
         "hand_t": "אין עדיין נתונים: אין קבוצת כתב יד מוערכת עם טקסט ייחוס אמיתי שנבדק בידי אדם.",
         "hw_sub": "225 שורות בכתב יד עברי של 10 כותבים, שצולמו בטלפון, ממבחן זיהוי כתב היד העברי של ivrit.ai (חלק המבחן). מוחזקות בצד: אף מודל של HeOCR לא אומן, כוונן או נבחר עליהן. כל קורא מקבל את תמונת השורה כפי שהיא.",
@@ -472,11 +476,11 @@ def cap(s):
 
 
 def page(lang: str, R: dict) -> str:
+    """Real held-out results first; generated-document results only inside one marked synthetic box (owner rule 2026-11-20)."""
     t = T[lang]
     pre = shell.prefix(lang)
     json_href = f"{pre}benchmarks/results.json"
-    P = R["p_hist"]
-    D = R.get("documents")  # generated-document results: internal only (owner rule, 2026-11-20); absent from the public file
+    P, D = R["p_hist"], R.get("documents")
     w = []
     w.append(shell.head(lang, e(t["title"]), e(t["desc"]), "bench"))
     w.append(shell.header(lang, "bench"))
@@ -484,8 +488,6 @@ def page(lang: str, R: dict) -> str:
     w.append(shell.page_head(e(t["title"]), f'<p class="lede">{t["lede"].format(json=json_href)}</p>\n'
                                              f'<p class="note">{e(t["synth_note"])}</p>\n'
                                              f'<p class="note">{e(t["updated"].format(d=R["updated"]))}</p>'))
-    if D:
-        raise SystemExit("results.json has a 'documents' block: generated-set figures are not published (owner rule 2026-11-20)")
     p_nm = P.get("status") == "not_measured"
     pm = R.get("p_mod", {}).get("status") == "scored"
     hw = R.get("handwriting", {}).get("status") == "scored"
@@ -493,17 +495,34 @@ def page(lang: str, R: dict) -> str:
                 ("p-hist", t["phist_h"], t["not_measured"] if p_nm else t["scored"], "" if p_nm else " scored"),
                 ("handwriting", t["hand_h"], t["scored"] if hw else t["no_data"], " scored" if hw else ""),
                 ("vendors", t["vend_h"], t["pending"], "")]
-    w.append(shell.toc(lang, [(i, e(h), e(st)) for i, h, st, _ in sections]))
+    toc = [(i, e(h), e(st)) for i, h, st, _ in sections] + ([("synthetic", e(t["synth_h"]), e(t["synth_toc"]))] if D else [])
+    w.append(shell.toc(lang, toc))
     w.append(pmod_section(t, R["p_mod"]) if pm else empty("p-mod", t["pmod_h"], t["no_data"], t["pmod_t"]))
     if p_nm:
         w.append(empty("p-hist", t["phist_h"], t["not_measured"], t["phist_nm"]))
     else:
         w.append(phist_section(t, P))
     w.append(hand_section(t, R["handwriting"]) if hw else empty("handwriting", t["hand_h"], t["no_data"], t["hand_t"]))
-    w.append(empty("vendors", t["vend_h"], t["pending"], t["vend_t"]))
-    w.append("</main>\n")
-    w.append(shell.footer([f"<p>{t['footer']}</p>", f'<p><a href="{json_href}">results.json</a> · <a href="./">HeOCR</a></p>']))
-    w.append(shell.tail(lang))
+    if not D:
+        w.append(empty("vendors", t["vend_h"], t["pending"], t["vend_t"]))
+        w.append("</main>\n")
+        w.append(shell.footer([f"<p>{t['footer']}</p>", f'<p><a href="{json_href}">results.json</a> · <a href="./">HeOCR</a></p>']))
+        w.append(shell.tail(lang))
+        return "".join(w)
+    verdicts = cell_verdicts(D)
+    not_run = D.get("gate", "not_run") == "not_run"
+    gate_state = cap(t["gate_not_run"] if not_run else t["gate_run"])
+    doc_interval = t.get("x_doc_interval", D["interval"])
+    parts = rest_of_page(t, lang, R, D, verdicts, not_run, gate_state, doc_interval, json_href)
+    iv = next(i for i, x in enumerate(parts) if x.startswith('<section id="vendors"'))
+    ig = next(i for i, x in enumerate(parts) if x.startswith('<section id="gate"'))
+    assert parts[0].startswith('<section id="documents"') and iv < ig and parts[ig + 1] == "</main>\n"
+    docs, vend, gate, tail = "".join(parts[:iv]), parts[iv], parts[ig], parts[ig + 1:]
+    w.append(vend)
+    w.append(f'<div class="wrap"><aside id="synthetic" class="synthbox" aria-labelledby="synthetic-h">\n'
+             f'<div class="synth-head"><h2 id="synthetic-h">{e(t["synth_h"])}</h2><span class="synth-badge">{e(t["synth_badge"])}</span></div>\n'
+             f'<p class="synth-lede">{e(t["synth_box"])}</p>\n{docs}{gate}</aside></div>\n')
+    w.extend(tail)
     return "".join(w)
 
 def pct(v):
