@@ -33,6 +33,12 @@ T = {
         "phist_small": "This set is small: 38 pages from 14 books. Intervals are wide and most of them overlap, so treat differences between engines as indications, not rankings.",
         "hand_h": "Handwriting",
         "hand_t": "No data yet — there is no scored handwriting set with real, human-checked references.",
+        "hw_sub": "225 handwritten Hebrew lines by 10 writers, photographed by phone, from ivrit.ai's Hebrew handwriting OCR benchmark (test split). Held out: no HeOCR model was trained, tuned or chosen on them. Each reader gets each line image as it is.",
+        "hw_finding": "Handwriting is not supported yet. On these held-out lines every reader, ours included, gets most characters wrong. HeOCR's own model, trained on print, does worse here than stock Tesseract's model ({d} points of character error, 95% interval {lo} to {hi}).",
+        "hw_caveat": "No HeOCR model is trained on handwriting. The reference text is ivrit.ai's volunteer transcription, not checked by us. With 10 writers, intervals are wide. Word error can pass 100% when a reader writes more wrong words than the line has.",
+        "hw_cols": ("Character error", "Word error", "Words found"),
+        "hw_readers": {"heocr": "heocr, one-line mode (heocr_modern_v1)", "heocr_psm3": "heocr, default settings", "heocr_stockheb": "heocr with stock Tesseract's model", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)"},
+        "hw_credit": "Data: {name} (<a href=\"{url}\">Hugging Face</a>), from <a href=\"{corpus}\">transcriptor.ivrit.ai</a>; {licence}.",
         "doc_h": "Documents by format",
         "doc_sub": "Generated documents with exact gold: Word files and PDFs of every kind HeOCR's document reader handles, made by our generators so the correct text is known exactly. Each table is one kind of document. heocr is developed against these sets, so they are not held out and flatter it; the release gate will score a fresh set made after its code is frozen. Release gate not yet run: these are measurements, not release verdicts.",
         "vend_h": "Commercial OCR vendors",
@@ -82,6 +88,12 @@ T = {
         "phist_small": "הקבוצה קטנה: 38 עמודים מ־14 ספרים. רווחי הסמך רחבים ורובם חופפים, ולכן יש לקרוא את ההבדלים בין המנועים כסימנים, לא כדירוג.",
         "hand_h": "כתב יד",
         "hand_t": "אין עדיין נתונים: אין קבוצת כתב יד מוערכת עם טקסט ייחוס אמיתי שנבדק בידי אדם.",
+        "hw_sub": "225 שורות בכתב יד עברי של 10 כותבים, שצולמו בטלפון, ממבחן זיהוי כתב היד העברי של ivrit.ai (חלק המבחן). מוחזקות בצד: אף מודל של HeOCR לא אומן, כוונן או נבחר עליהן. כל קורא מקבל את תמונת השורה כפי שהיא.",
+        "hw_finding": "כתב יד עדיין אינו נתמך. בשורות המוחזקות בצד האלה כל הקוראים, גם שלנו, טועים ברוב התווים. המודל של HeOCR, שאומן על דפוס, גרוע כאן מהמודל הרגיל של Tesseract ({d} נקודות של שגיאת תווים, רווח סמך 95% מ־{lo} עד {hi}).",
+        "hw_caveat": "אף מודל של HeOCR לא אומן על כתב יד. טקסט הייחוס הוא התעתוק של מתנדבי ivrit.ai, ולא נבדק בידינו. עם 10 כותבים רווחי הסמך רחבים. שגיאת המילים יכולה לעבור 100% כשקורא כותב יותר מילים שגויות ממספר המילים בשורה.",
+        "hw_cols": ("שגיאת תווים", "שגיאת מילים", "מילים שנמצאו"),
+        "hw_readers": {"heocr": "heocr, מצב שורה אחת (heocr_modern_v1)", "heocr_psm3": "heocr, הגדרות ברירת מחדל", "heocr_stockheb": "heocr עם המודל הרגיל של Tesseract", "stock_best": "Tesseract (tessdata_best heb)", "stock_fast": "Tesseract (tessdata_fast heb)"},
+        "hw_credit": "נתונים: {name} (<a href=\"{url}\">Hugging Face</a>), מתוך <a href=\"{corpus}\">transcriptor.ivrit.ai</a>; {licence}.",
         "doc_h": "מסמכים לפי פורמט",
         "doc_sub": "מסמכים מחוללים עם טקסט נכון מדויק: קובצי Word וקובצי PDF מכל הסוגים שקורא המסמכים של HeOCR מטפל בהם, שנוצרו במחוללים שלנו כך שהטקסט הנכון ידוע במדויק. כל טבלה היא סוג מסמך אחד. heocr מפותח מול הקבוצות האלה, ולכן הן אינן מוחזקות בצד ומחמיאות לו; שער השחרור יעריך קבוצה חדשה שתיווצר אחרי שהקוד יוקפא. שער השחרור עוד לא הורץ: אלה מדידות, לא החלטות שחרור.",
         "vend_h": "ספקי OCR מסחריים",
@@ -474,9 +486,10 @@ def page(lang: str, R: dict) -> str:
     w.append(hero(t, lang, R, doc_interval))
     p_nm = P.get("status") == "not_measured"
     pm = R.get("p_mod", {}).get("status") == "scored"
+    hw = R.get("handwriting", {}).get("status") == "scored"
     sections = [("p-mod", t["pmod_h"], t["pmod_scored"] if pm else t["no_data"], " scored" if pm else ""),
                 ("p-hist", t["phist_h"], t["not_measured"] if p_nm else t["scored"], "" if p_nm else " scored"),
-                ("handwriting", t["hand_h"], t["no_data"], ""), ("documents", t["doc_h"], t["scored"], " scored"),
+                ("handwriting", t["hand_h"], t["scored"] if hw else t["no_data"], " scored" if hw else ""), ("documents", t["doc_h"], t["scored"], " scored"),
                 ("vendors", t["vend_h"], t["pending"], "")]
     w.append(shell.toc(lang, [(i, e(h), e(st)) for i, h, st, _ in sections] + [("gate", e(t["release_gate"]), e(gate_state))]))
 
@@ -486,7 +499,7 @@ def page(lang: str, R: dict) -> str:
         w.append(empty("p-hist", t["phist_h"], t["not_measured"], t["phist_nm"]))
     else:
         w.append(phist_section(t, P))
-    w.append(empty("handwriting", t["hand_h"], t["no_data"], t["hand_t"]))
+    w.append(hand_section(t, R["handwriting"]) if hw else empty("handwriting", t["hand_h"], t["no_data"], t["hand_t"]))
     w.extend(rest_of_page(t, lang, R, D, verdicts, not_run, gate_state, doc_interval, json_href))
     return "".join(w)
 
@@ -526,6 +539,25 @@ def pmod_section(t, PM):
             f'<h3>{e(t["nq_h"])}</h3>\n<p class="sub">{e(t["nq_sub"])}</p>\n<p class="warn">{ICON["info"]}<span>{e(t["nq_finding"])}</span></p>\n{nq_tab}\n'
             f'<p class="note">{e(t["nq_caveat"])}</p>\n'
             + method(t, [(t["f_measure"], e(nq["measure"])), (t["f_interval"], e(nq["interval"])), (t["f_run"], e(nq["registration"]))]) + "\n</section>\n")
+
+
+def hand_section(t, H):
+    c1, c2, c3 = t["hw_cols"]; src = H["source"]; me = H["model_effect"]
+    rows = []
+    for r, lab in t["hw_readers"].items():
+        v = H["readers"][r]
+        rows.append(f'<tr{" class=\"ours\"" if r.startswith("heocr") and r != "heocr_stockheb" else ""}><th scope="row">{e(lab)}</th>'
+                    f'{pct_ci(v["cer"], v["cer_ci95"])}<td class="num"><span class="v">{pct(v["wer"])}</span></td>'
+                    f'<td class="num"><span class="v">{pct(v["coverage"])}</span></td></tr>')
+    tab = (f'<div class="tablewrap narrow"><table>\n<thead><tr><th scope="col"></th><th scope="col">{e(c1)}</th><th scope="col">{e(c2)}</th>'
+           f'<th scope="col">{e(c3)}</th></tr></thead>\n<tbody>\n' + "\n".join(rows) + "\n</tbody></table></div>")
+    find = t["hw_finding"].format(d=f'{me["delta_cer"]:+.1f}', lo=f'{me["ci95"][0]:+.1f}', hi=f'{me["ci95"][1]:+.1f}')
+    credit = t["hw_credit"].format(name=e(src["name"]), url=e(src["url"]), corpus=e(src["corpus_url"]), licence=e(src["licence"]))
+    return (f'<section id="handwriting" class="wrap domain">\n'
+            f'{domain_head(e(t["hand_h"]), e(t["scored"]) + " <bdi dir=\"ltr\">" + e(H["scored"]) + "</bdi>", " scored")}\n'
+            f'<p class="sub">{e(t["hw_sub"])}</p>\n<p class="warn">{ICON["info"]}<span>{e(find)}</span></p>\n{tab}\n'
+            f'<p class="note">{e(t["hw_caveat"])}</p>\n<p class="note">{credit}</p>\n'
+            + method(t, [(t["f_measure"], e(H["measure"])), (t["f_interval"], e(H["interval"])), (t["f_run"], e(H["registration"]))]) + "\n</section>\n")
 
 
 def effect_table(t, D):

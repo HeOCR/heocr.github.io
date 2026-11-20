@@ -69,7 +69,7 @@
 </figcaption>
 </div>
 </figure>
-<nav class="wrap" aria-label="On this page"><div class="toc"><a href="#p-mod">Modern printed Hebrew<small>Scored</small></a><a href="#p-hist">Historical and rabbinic printed Hebrew<small>Not measured on a held-out set yet</small></a><a href="#handwriting">Handwriting<small>No data yet</small></a><a href="#documents">Documents by format<small>Scored</small></a><a href="#vendors">Commercial OCR vendors<small>Pending</small></a><a href="#gate">Release gate<small>Run</small></a></div></nav>
+<nav class="wrap" aria-label="On this page"><div class="toc"><a href="#p-mod">Modern printed Hebrew<small>Scored</small></a><a href="#p-hist">Historical and rabbinic printed Hebrew<small>Not measured on a held-out set yet</small></a><a href="#handwriting">Handwriting<small>Scored</small></a><a href="#documents">Documents by format<small>Scored</small></a><a href="#vendors">Commercial OCR vendors<small>Pending</small></a><a href="#gate">Release gate<small>Run</small></a></div></nav>
 <section id="p-mod" class="wrap domain">
 <div class="domain-head"><h2>Modern printed Hebrew</h2><span class="status scored">Scored</span></div>
 <h3>Printed pages photographed by phone (PS-v1)</h3>
@@ -110,8 +110,23 @@
 <div class="empty">Not measured on a held-out set yet. The historical-print test set is waiting for volunteer references; no figure is shown until it is scored.</div>
 </section>
 <section id="handwriting" class="wrap domain">
-<div class="domain-head"><h2>Handwriting</h2><span class="status">No data yet</span></div>
-<div class="empty">No data yet — there is no scored handwriting set with real, human-checked references.</div>
+<div class="domain-head"><h2>Handwriting</h2><span class="status scored">Scored <bdi dir="ltr">2026-11-20</bdi></span></div>
+<p class="sub">225 handwritten Hebrew lines by 10 writers, photographed by phone, from ivrit.ai&#x27;s Hebrew handwriting OCR benchmark (test split). Held out: no HeOCR model was trained, tuned or chosen on them. Each reader gets each line image as it is.</p>
+<p class="warn"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6"></circle><path d="M8 7.3v3.5M8 5.1v.1"></path></svg><span>Handwriting is not supported yet. On these held-out lines every reader, ours included, gets most characters wrong. HeOCR&#x27;s own model, trained on print, does worse here than stock Tesseract&#x27;s model (+6.5 points of character error, 95% interval +4.5 to +8.7).</span></p>
+<div class="tablewrap narrow"><table>
+<thead><tr><th scope="col"></th><th scope="col">Character error</th><th scope="col">Word error</th><th scope="col">Words found</th></tr></thead>
+<tbody>
+<tr class="ours"><th scope="row">heocr, one-line mode (heocr_modern_v1)</th><td class="num"><span class="v"><bdi dir="ltr">83.1%</bdi></span><span class="ci"><bdi dir="ltr">79.3–88.0%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">114.2%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.7%</bdi></span></td></tr>
+<tr class="ours"><th scope="row">heocr, default settings</th><td class="num"><span class="v"><bdi dir="ltr">82.4%</bdi></span><span class="ci"><bdi dir="ltr">78.6–87.1%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">118.7%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.7%</bdi></span></td></tr>
+<tr><th scope="row">heocr with stock Tesseract&#x27;s model</th><td class="num"><span class="v"><bdi dir="ltr">76.6%</bdi></span><span class="ci"><bdi dir="ltr">71.8–82.6%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">114.7%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.8%</bdi></span></td></tr>
+<tr><th scope="row">Tesseract (tessdata_best heb)</th><td class="num"><span class="v"><bdi dir="ltr">75.4%</bdi></span><span class="ci"><bdi dir="ltr">71.0–80.4%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">111.8%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.5%</bdi></span></td></tr>
+<tr><th scope="row">Tesseract (tessdata_fast heb)</th><td class="num"><span class="v"><bdi dir="ltr">79.3%</bdi></span><span class="ci"><bdi dir="ltr">76.0–83.3%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">113.5%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.0%</bdi></span></td></tr>
+</tbody></table></div>
+<p class="note">No HeOCR model is trained on handwriting. The reference text is ivrit.ai&#x27;s volunteer transcription, not checked by us. With 10 writers, intervals are wide. Word error can pass 100% when a reader writes more wrong words than the line has.</p>
+<p class="note">Data: ivrit.ai Hebrew handwriting OCR benchmark (<a href="https://huggingface.co/datasets/ivrit-ai/hebrew-handwriting-ocr-benchmark">Hugging Face</a>), from <a href="https://transcriptor.ivrit.ai">transcriptor.ivrit.ai</a>; CC BY 4.0 under the ivrit.ai licence; held privately for evaluation only; not covered by any HeOCR licence.</p>
+<details class="method"><summary>Method, reference and run</summary>
+<ul class="facts"><li><strong>Measure:</strong> line CER and WER under line_fold_v1, ratio of sums over all 225 lines, blank outputs included; words found = mean share of a line&#x27;s reference words present in the output</li><li><strong>Interval:</strong> 95% percentile bootstrap over the 10 writers (2,000 resamples, seed 0)</li><li><strong>Run:</strong> ivritai_hw_lines_v0_2026-11-20; one registered run 2026-11-20 (heocr 0.2.0rc1)</li></ul>
+</details>
 </section>
 <section id="documents" class="wrap domain">
 <div class="domain-head"><h2>Documents by format</h2><span class="status scored">Scored <bdi dir="ltr">2026-11-20</bdi></span></div>
