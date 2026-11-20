@@ -47,7 +47,7 @@ T = {
         "c_in": "Release",
         "planned_h": "Planned sources",
         "planned_p": "Sources being prepared. Each is published only after its rights are checked entry by entry.",
-        "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_prev": "Earlier version", "c_issues": "known issues", "c_hf": "Hugging Face", "c_hf_filtered": "without the lines that overlap HeOCR's evaluation text, so not byte-identical to the GitHub release", "c_hf_same": "the same files as the GitHub release", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
+        "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_prev": "Earlier version", "c_issues": "known issues", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "all versions", "c_hf": "Hugging Face", "c_hf_filtered": "without the lines that overlap HeOCR's evaluation text, so not byte-identical to the GitHub release", "c_hf_same": "the same files as the GitHub release", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
         "th_file": "File", "th_variant": "Variant", "th_subset": "Subset", "th_lines": "Lines", "th_works": "Works", "th_laws": "Laws", "th_books": "Books", "th_size": "Size",
         "c_laws": "{w} of {c} laws in the catalogue have lines in this corpus.",
         "c_books": "All {w} books have lines in this corpus, in both forms. The pointed and plain files hold the same verses, so the totals above count them once.",
@@ -101,7 +101,7 @@ T = {
         "c_in": "גרסת htext",
         "planned_h": "מקורות מתוכננים",
         "planned_p": "מקורות בהכנה. כל אחד מתפרסם רק אחרי שזכויותיו נבדקו פריט אחר פריט.",
-        "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_prev": "גרסה קודמת", "c_issues": "בעיות ידועות", "c_hf": "Hugging Face", "c_hf_filtered": "בלי השורות שחופפות לטקסט ההערכה של HeOCR, ולכן לא זהה בייט לבייט לגרסה ב־GitHub", "c_hf_same": "אותם קבצים כמו בגרסה ב־GitHub", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
+        "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_prev": "גרסה קודמת", "c_issues": "בעיות ידועות", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "כל הגרסאות", "c_hf": "Hugging Face", "c_hf_filtered": "בלי השורות שחופפות לטקסט ההערכה של HeOCR, ולכן לא זהה בייט לבייט לגרסה ב־GitHub", "c_hf_same": "אותם קבצים כמו בגרסה ב־GitHub", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
         "th_file": "קובץ", "th_variant": "גרסה", "th_subset": "סוג", "th_lines": "שורות", "th_works": "יצירות", "th_laws": "חוקים", "th_books": "ספרים", "th_size": "גודל",
         "c_laws": "ל־{w} מתוך {c} חוקים בקטלוג יש שורות במאגר.",
         "c_books": "לכל {w} הספרים יש שורות במאגר, בשתי הצורות. שני הקבצים, המנוקד והלא־מנוקד, מכילים את אותם פסוקים, ולכן הסיכומים למעלה סופרים אותם פעם אחת.",
@@ -223,6 +223,8 @@ def page(lang: str, R: dict) -> str:
           + "".join(f'<li>{t["c_prev"]}: <a href="{e(p["url"])}">{e(p["tag"])}</a>'
                     + (f' (<a href="{e(p["known_issues_url"])}">{t["c_issues"]}</a>)' if p.get("known_issues_url") else "")
                     + "</li>\n" for p in c.get("previous", []))
+          + (f'<li>{t["c_zenodo"]}: <a href="https://doi.org/{e(c["zenodo"]["doi"])}"><span dir="ltr">{e(c["zenodo"]["doi"])}</span></a> '
+             f'({t["c_zenodo_all"]}: <a href="https://doi.org/{e(c["zenodo"]["concept_doi"])}"><span dir="ltr">{e(c["zenodo"]["concept_doi"])}</span></a>)</li>\n' if c.get("zenodo") else "")
           + (f'<li>{t["c_hf"]}: <a href="https://huggingface.co/datasets/{e(c["hf"]["repo"])}">{e(c["hf"]["repo"])}</a> '
              f'({e(t["c_hf_filtered"] if c["hf"]["filtered"] else t["c_hf_same"])})</li>\n' if c.get("hf") else "")
           + f'<li>{e(quality)}</li>\n'
