@@ -1,0 +1,305 @@
+{
+  "updated": "2026-11-20",
+  "repository": "https://github.com/HeOCR/htext",
+  "corpora": [
+    {
+      "id": "pby",
+      "version": "v3",
+      "name": {
+        "en": "Project Ben-Yehuda public-domain lines",
+        "he": "שורות בנחלת הכלל מפרויקט בן־יהודה"
+      },
+      "source": {
+        "name": {
+          "en": "Project Ben-Yehuda",
+          "he": "פרויקט בן־יהודה"
+        },
+        "url": "https://benyehuda.org"
+      },
+      "description": {
+        "en": "Prose, articles, memoirs, letters, fables, poetry, reference works and drama transcribed by Project Ben-Yehuda volunteers, cut into lines, plain and with niqqud.",
+        "he": "פרוזה, מאמרים, זיכרונות, מכתבים, משלים, שירה, ספרות עיון ומחזות שהקלידו מתנדבי פרויקט בן־יהודה, חתוכים לשורות, עם ניקוד ובלעדיו."
+      },
+      "rights_basis": {
+        "en": "Public domain in Israel: every author and every translator died at least 71 years before the build year (2026), with death years from Wikidata or, where Wikidata has none, from a reviewed source such as the author's PBY page. US status is recorded per work: public domain in the US when the transcribed edition appeared before 1931.",
+        "he": "נחלת הכלל בישראל: כל מחבר וכל מתרגם נפטרו 71 שנה לפחות לפני שנת הבנייה (2026), לפי שנות פטירה מוויקינתונים, ובהיעדרן ממקור שנבדק, כמו דף המחבר בפרויקט בן־יהודה. המעמד בארה\"ב מתועד לכל יצירה: נחלת הכלל בארה\"ב כשהמהדורה שהוקלדה יצאה לפני 1931."
+      },
+      "source_licence": {
+        "en": "Public domain (PBY's dump licence)",
+        "he": "נחלת הכלל (רישיון המאגר של פרויקט בן־יהודה)"
+      },
+      "credit": {
+        "text": {
+          "en": "Project Ben-Yehuda volunteers",
+          "he": "מתנדבי פרויקט בן־יהודה"
+        },
+        "url": "https://benyehuda.org"
+      },
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v3/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v3/SHA256SUMS",
+      "release": {
+        "tag": "pby-v3",
+        "url": "https://github.com/HeOCR/htext/releases/tag/pby-v3",
+        "date": "2026-11-18"
+      },
+      "catalogue_works": 26455,
+      "works_in_corpus": 25267,
+      "works_in_il_us": 701,
+      "files": [
+        {
+          "name": "pby_lines_il_plain_v3.txt",
+          "variant": "il",
+          "subset": "plain",
+          "lines": 12278848,
+          "works": 16409,
+          "bytes": 558952843,
+          "sha256": "f033b0aaf76c84dfe9b6ff61dabbbc59d45c0080ada226f9a7180f9a0215bef0"
+        },
+        {
+          "name": "pby_lines_il_niqqud_v3.txt",
+          "variant": "il",
+          "subset": "niqqud",
+          "lines": 1680290,
+          "works": 15738,
+          "bytes": 119885597,
+          "sha256": "d436f87dd54be6a71070f2b1bcaa33dc8d575963d5de6bc8a968ad9c7591083d"
+        },
+        {
+          "name": "pby_lines_il_us_plain_v3.txt",
+          "variant": "il_us",
+          "subset": "plain",
+          "lines": 407456,
+          "works": 564,
+          "bytes": 18956168,
+          "sha256": "8de0454dfd135ff2987db8964e30e397f9d295f1335b995560e57764a2d961f0"
+        },
+        {
+          "name": "pby_lines_il_us_niqqud_v3.txt",
+          "variant": "il_us",
+          "subset": "niqqud",
+          "lines": 18613,
+          "works": 325,
+          "bytes": 1325641,
+          "sha256": "162e6fbd83762b0921d13375ca17726ca7335ebe9009554547f1ff8c345ec5b8"
+        }
+      ],
+      "htext_release": "cc0",
+      "previous": [
+        {
+          "tag": "pby-v2",
+          "url": "https://github.com/HeOCR/htext/releases/tag/pby-v2",
+          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v2/KNOWN_ISSUES.md"
+        },
+        {
+          "tag": "pby-v1",
+          "url": "https://github.com/HeOCR/htext/releases/tag/pby-v1",
+          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md"
+        }
+      ],
+      "text_quality": "transcription",
+      "withdrawn": "2026-11-20"
+    },
+    {
+      "id": "knesset-laws",
+      "version": "v2",
+      "unit": "laws",
+      "name": {
+        "en": "Knesset laws as published",
+        "he": "חוקי הכנסת כפי שפורסמו"
+      },
+      "source": {
+        "name": {
+          "en": "The Knesset of Israel",
+          "he": "כנסת ישראל"
+        },
+        "url": "https://main.knesset.gov.il"
+      },
+      "description": {
+        "en": "The enacted laws of the first eight Knessets (1949–1977), as printed in Reshumot (Sefer HaChukim), cut into lines, with margin notes as lines of their own.",
+        "he": "החוקים שחוקקו שמונה הכנסות הראשונות (1949–1977), כפי שנדפסו ברשומות (ספר החוקים), חתוכים לשורות, עם הערות השוליים כשורות נפרדות."
+      },
+      "rights_basis": {
+        "en": "Laws are not protected by copyright in Israel (section 6 of the Copyright Act 2007). US status is not assessed.",
+        "he": "חוקים אינם מוגנים בזכות יוצרים בישראל (סעיף 6 לחוק זכות יוצרים, התשס\"ח-2007). המעמד בארה\"ב לא נבדק."
+      },
+      "source_licence": {
+        "en": "Not protected: Israel Copyright Act 2007, section 6",
+        "he": "לא מוגן: חוק זכות יוצרים, סעיף 6"
+      },
+      "credit": {
+        "text": {
+          "en": "The Knesset of Israel (Knesset database, laws as published in Reshumot)",
+          "he": "כנסת ישראל (מאגר הכנסת, החוקים כפי שפורסמו ברשומות)"
+        },
+        "url": "https://main.knesset.gov.il"
+      },
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v2/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v2/SHA256SUMS",
+      "release": {
+        "tag": "knesset-laws-v2",
+        "url": "https://github.com/HeOCR/htext/releases/tag/knesset-laws-v2",
+        "date": "2026-11-20"
+      },
+      "catalogue_works": 2146,
+      "works_in_corpus": 1972,
+      "works_in_il_us": 0,
+      "files": [
+        {
+          "name": "knesset_laws_lines_plain_v2.txt",
+          "variant": "il",
+          "subset": "plain",
+          "lines": 223617,
+          "works": 1972,
+          "bytes": 9853052,
+          "sha256": "790099a2e64c2e391957a2c9f306c6a8c0addd087cfd8431666165f5b4f65de1"
+        }
+      ],
+      "htext_release": "cc0",
+      "text_quality": "ocr_layer",
+      "eye_check": {
+        "lines_checked": 94,
+        "lines_with_error": 9,
+        "sample_words": 428,
+        "words_wrong": 9
+      },
+      "previous": [
+        {
+          "tag": "knesset-laws-v1",
+          "known_issues_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/KNOWN_ISSUES.md",
+          "withdrawn": "2026-11-20"
+        }
+      ],
+      "hf": {
+        "repo": "HeOCR/htext-knesset-laws",
+        "filtered": false
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24384730",
+        "concept_doi": "10.5281/zenodo.24384729"
+      }
+    },
+    {
+      "id": "tanakh",
+      "version": "v1",
+      "unit": "books",
+      "name": {
+        "en": "Tanakh: the Westminster Leningrad Codex",
+        "he": "תנ\"ך: כתב יד לנינגרד (WLC)"
+      },
+      "source": {
+        "name": {
+          "en": "Westminster Leningrad Codex, via the Open Scriptures Hebrew Bible",
+          "he": "כתב יד לנינגרד בגרסת וסטמינסטר, דרך Open Scriptures Hebrew Bible"
+        },
+        "url": "https://github.com/openscriptures/morphhb"
+      },
+      "description": {
+        "en": "The Hebrew Bible, all 39 books, as the Westminster Leningrad Codex (WLC 4.20) gives it, cut into lines in two forms: with niqqud (no cantillation) and plain.",
+        "he": "התנ\"ך, כל 39 הספרים, כפי שהוא מופיע בכתב יד לנינגרד בגרסת וסטמינסטר (WLC 4.20), חתוך לשורות בשתי צורות: מנוקד (בלי טעמים) ובלי ניקוד."
+      },
+      "rights_basis": {
+        "en": "The Leningrad Codex is about a thousand years old, and the WLC text is in the public domain (\"The text of the WLC remains in the Public Domain\", OSHB). Public domain in Israel and in the US. Only the words are used; OSHB's CC BY lemma and morphology layers are not. The edition is WLC, not UXLC.",
+        "he": "כתב יד לנינגרד בן כאלף שנה, וטקסט ה־WLC בנחלת הכלל (\"The text of the WLC remains in the Public Domain\", ‏OSHB). נחלת הכלל בישראל ובארה\"ב. נלקחות רק המילים, בלי שכבות הלמות והמורפולוגיה של OSHB שברישיון CC BY. המהדורה היא WLC ולא UXLC."
+      },
+      "source_licence": {
+        "en": "Public domain",
+        "he": "נחלת הכלל"
+      },
+      "credit": {
+        "text": {
+          "en": "Westminster Leningrad Codex (public domain), via the Open Scriptures Hebrew Bible",
+          "he": "כתב יד לנינגרד בגרסת וסטמינסטר (נחלת הכלל), דרך Open Scriptures Hebrew Bible"
+        },
+        "url": "https://github.com/openscriptures/morphhb"
+      },
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/SHA256SUMS",
+      "release": {
+        "tag": "tanakh-v1",
+        "url": "https://github.com/HeOCR/htext/releases/tag/tanakh-v1",
+        "date": "2026-11-18"
+      },
+      "catalogue_works": 39,
+      "works_in_corpus": 39,
+      "works_in_il_us": 39,
+      "files": [
+        {
+          "name": "tanakh_lines_niqqud_v1.txt",
+          "variant": "il",
+          "subset": "niqqud",
+          "lines": 58120,
+          "works": 39,
+          "bytes": 4631929,
+          "sha256": "3c7cd4579f6c5a352848862a0fcab5a46b4f56516cef08104c31d591ec60909f"
+        },
+        {
+          "name": "tanakh_lines_plain_v1.txt",
+          "variant": "il",
+          "subset": "plain",
+          "lines": 58074,
+          "works": 39,
+          "bytes": 2681470,
+          "sha256": "954a0ad534b464356e4b948bf088d3e13192cf8061b6b22f0a75d156a78d71af",
+          "same_text_as": "tanakh_lines_niqqud_v1.txt"
+        }
+      ],
+      "htext_release": "cc0",
+      "text_quality": "transcription",
+      "withdrawn": "2026-11-20"
+    }
+  ],
+  "planned": [],
+  "releases": [
+    {
+      "id": "cc0",
+      "name": "htext-cc0",
+      "status": "published",
+      "licence": {
+        "name": "CC0 1.0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "contents": {
+        "en": "Public-domain text, CC0 text, and official texts that are not protected by copyright (laws, regulations, Knesset records, under section 6 of the Israeli Copyright Act).",
+        "he": "טקסט בנחלת הכלל, טקסט ב־CC0, וטקסטים רשמיים שאינם מוגנים בזכות יוצרים (חוקים, תקנות ודברי הכנסת, לפי סעיף 6 לחוק זכות יוצרים)."
+      },
+      "allows": {
+        "en": "Any use, with no conditions. This is the default release for training and benchmarks.",
+        "he": "כל שימוש, בלי תנאים. זו הגרסה ברירת המחדל לאימון ולמדדי ביצועים."
+      }
+    },
+    {
+      "id": "by",
+      "name": "htext-by",
+      "status": "planned",
+      "licence": {
+        "name": "CC BY 4.0 (per source)",
+        "url": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contents": {
+        "en": "Text whose source licence asks only for attribution (CC BY or equivalent).",
+        "he": "טקסט שרישיון המקור שלו דורש ייחוס בלבד (CC BY או מקביל)."
+      },
+      "allows": {
+        "en": "Any use, as long as you credit the sources. Each entry carries its credit line, and the release ships a consolidated NOTICE.",
+        "he": "כל שימוש, בתנאי שנותנים קרדיט למקורות. לכל פריט יש שורת קרדיט, והגרסה כוללת קובץ NOTICE מרוכז."
+      }
+    },
+    {
+      "id": "by-sa",
+      "name": "htext-by-sa",
+      "status": "planned",
+      "licence": {
+        "name": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      "contents": {
+        "en": "Share-alike text, mainly Hebrew Wikisource transcriptions and Sefaria versions licensed CC BY-SA.",
+        "he": "טקסט בשיתוף זהה, בעיקר תעתיקי ויקיטקסט העברית וגרסאות ספריא ברישיון CC BY-SA."
+      },
+      "allows": {
+        "en": "Any use, with credit, and anything you share that adapts the text must be under CC BY-SA too.",
+        "he": "כל שימוש, עם קרדיט, וכל עיבוד של הטקסט שמשותף הלאה חייב להיות גם הוא ב־CC BY-SA."
+      }
+    }
+  ]
+}

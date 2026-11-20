@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HeOCR benchmarks</title>
+<meta name="description" content="How HeOCR reads real Hebrew pages, next to other open tools: figures from real-world held-out sets only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css">
+<script>(function(){try{if(localStorage.getItem("heocr-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}})()</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HeOCR">
+<meta property="og:title" content="HeOCR benchmarks">
+<meta property="og:description" content="How HeOCR reads real Hebrew pages, next to other open tools: figures from real-world held-out sets only.">
+<meta property="og:url" content="https://heocr.org/en/benchmarks.html">
+<meta property="og:image" content="https://heocr.org/og-image-en-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://heocr.org/en/benchmarks.html">
+<link rel="alternate" hreflang="he" href="https://heocr.org/benchmarks.html">
+<link rel="alternate" hreflang="en" href="https://heocr.org/en/benchmarks.html">
+<link rel="alternate" hreflang="x-default" href="https://heocr.org/benchmarks.html">
+</head>
+<body class="site">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap bar">
+<a class="brand" href="./" aria-label="HeOCR"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="7" width="34" height="34" class="lg-box sw2"></rect><rect x="4" y="4" width="6" height="6" class="lg-h"></rect><rect x="38" y="4" width="6" height="6" class="lg-h"></rect><rect x="4" y="38" width="6" height="6" class="lg-h"></rect><rect x="38" y="38" width="6" height="6" class="lg-h"></rect><path d="M16 18H32V32.5" class="lg-ink sw45"></path><path d="M16 24.5V32.5" class="lg-ink sw45"></path></svg><span dir="ltr">He<b>OCR</b></span></a>
+<nav class="site-nav" aria-label="Site"><a href="benchmarks.html" aria-current="page">Benchmarks</a><a href="htext.html">htext</a><a href="download.html">Download</a><a href="rights.html">Rights &amp; takedown</a></nav>
+<div class="tools">
+<div class="lang-toggle" role="group" aria-label="Language / שפה">
+<span aria-current="page" lang="en">English</span>
+        <a href="../benchmarks.html" lang="he" hreflang="he">עברית</a>
+</div>
+<button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><svg class="ico i-moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.6A5.6 5.6 0 0 1 6.4 3 5.6 5.6 0 1 0 13 9.6z"></path></svg><svg class="ico i-sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"></circle><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"></path></svg><span class="label">Night mode</span></button>
+</div>
+</div>
+</header>
+<main id="main" class="bench">
+<div class="band gridband"><div class="wrap page-head">
+<h1><span class="bb" data-tag="h1 · 0.99">HeOCR benchmarks</span></h1>
+<p class="lede">How HeOCR reads real Hebrew pages, next to other open tools. Every figure gives its sample size, a 95% interval, the measure, the reference and the run it comes from. The page is built from one file, <a href="../benchmarks/results.json">results.json</a>, which is updated after each scored run.</p>
+<p class="note">We will release models or a pipeline version once we outperform existing readers on at least one document type.</p>
+<p class="note">Updated 2026-11-20.</p>
+</div></div>
+<nav class="wrap" aria-label="On this page"><div class="toc"><a href="#p-mod">Modern printed Hebrew<small>Not measured on a held-out set yet</small></a><a href="#p-hist">Historical and rabbinic printed Hebrew<small>Not measured on a held-out set yet</small></a><a href="#handwriting">Handwriting<small>Scored</small></a></div></nav>
+<section id="p-mod" class="wrap domain"><div class="domain-head"><h2>Modern printed Hebrew</h2><span class="status">Not measured on a held-out set yet</span></div></section>
+<section id="p-hist" class="wrap domain">
+<div class="domain-head"><h2>Historical and rabbinic printed Hebrew</h2><span class="status">Not measured on a held-out set yet</span></div>
+<div class="empty">Not measured on a held-out set yet. The historical-print test set is waiting for volunteer references; no figure is shown until it is scored.</div>
+</section>
+<section id="handwriting" class="wrap domain">
+<div class="domain-head"><h2>Handwriting</h2><span class="status scored">Scored <bdi dir="ltr">2026-11-20</bdi></span></div>
+<p class="sub">225 handwritten Hebrew lines by 10 writers, photographed by phone, from ivrit.ai&#x27;s Hebrew handwriting OCR benchmark (test split). Held out: no HeOCR model was trained, tuned or chosen on them. Each reader gets each line image as it is.</p>
+<p class="warn"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6"></circle><path d="M8 7.3v3.5M8 5.1v.1"></path></svg><span>Handwriting is not supported yet. On these held-out lines every reader, ours included, gets most characters wrong. HeOCR&#x27;s own model, trained on print, does worse here than stock Tesseract&#x27;s model (+6.5 points of character error, 95% interval +4.5 to +8.7).</span></p>
+<div class="tablewrap narrow"><table>
+<thead><tr><th scope="col"></th><th scope="col">Character error</th><th scope="col">Word error</th><th scope="col">Words found</th></tr></thead>
+<tbody>
+<tr class="ours"><th scope="row">heocr, one-line mode (heocr_modern_v1)</th><td class="num"><span class="v"><bdi dir="ltr">83.1%</bdi></span><span class="ci"><bdi dir="ltr">79.3–88.0%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">114.2%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.7%</bdi></span></td></tr>
+<tr class="ours"><th scope="row">heocr (heocr_modern_v1, PSM 3)</th><td class="num"><span class="v"><bdi dir="ltr">82.4%</bdi></span><span class="ci"><bdi dir="ltr">78.6–87.1%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">118.7%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.7%</bdi></span></td></tr>
+<tr><th scope="row">heocr with stock Tesseract&#x27;s model</th><td class="num"><span class="v"><bdi dir="ltr">76.6%</bdi></span><span class="ci"><bdi dir="ltr">71.8–82.6%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">114.7%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.8%</bdi></span></td></tr>
+<tr><th scope="row">Tesseract (tessdata_best heb)</th><td class="num"><span class="v"><bdi dir="ltr">75.4%</bdi></span><span class="ci"><bdi dir="ltr">71.0–80.4%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">111.8%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.5%</bdi></span></td></tr>
+<tr><th scope="row">Tesseract (tessdata_fast heb)</th><td class="num"><span class="v"><bdi dir="ltr">79.3%</bdi></span><span class="ci"><bdi dir="ltr">76.0–83.3%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">113.5%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.0%</bdi></span></td></tr>
+</tbody></table></div>
+<p class="note">No HeOCR model is trained on handwriting. The reference text is ivrit.ai&#x27;s volunteer transcription, not checked by us. With 10 writers, intervals are wide. Word error can pass 100% when a reader writes more wrong words than the line has.</p>
+<p class="note">Data: ivrit.ai Hebrew handwriting OCR benchmark (<a href="https://huggingface.co/datasets/ivrit-ai/hebrew-handwriting-ocr-benchmark">Hugging Face</a>), from <a href="https://transcriptor.ivrit.ai">transcriptor.ivrit.ai</a>; CC BY 4.0 under the ivrit.ai licence; held privately for evaluation only; not covered by any HeOCR licence.</p>
+<details class="method"><summary>Method, reference and run</summary>
+<ul class="facts"><li><strong>Measure:</strong> line CER and WER under line_fold_v1, ratio of sums over all 225 lines, blank outputs included; words found = mean share of a line&#x27;s reference words present in the output</li><li><strong>Interval:</strong> 95% percentile bootstrap over the 10 writers (2,000 resamples, seed 0)</li><li><strong>Run:</strong> ivritai_hw_lines_v0_2026-11-20; one registered run 2026-11-20 (heocr 0.2.0rc1; heocr 0.2.0 (identical to 0.2.0rc1, verified by wheel diff): byte-identical outputs, addendum 1)</li></ul>
+</details>
+</section>
+</main>
+<footer class="site-footer">
+<div class="wrap foot">
+<div class="foot-brand">He<b>OCR</b></div>
+<div class="foot-text">
+<p><a href="../benchmarks/results.json">results.json</a> · <a href="./">HeOCR</a></p>
+</div>
+</div>
+</footer>
+<script src="../theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HeOCR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script>(function(){try{if(localStorage.getItem("heocr-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}})()</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body class="site">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap bar">
+<a class="brand" href="./" aria-label="HeOCR"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="7" width="34" height="34" class="lg-box sw2"></rect><rect x="4" y="4" width="6" height="6" class="lg-h"></rect><rect x="38" y="4" width="6" height="6" class="lg-h"></rect><rect x="4" y="38" width="6" height="6" class="lg-h"></rect><rect x="38" y="38" width="6" height="6" class="lg-h"></rect><path d="M16 18H32V32.5" class="lg-ink sw45"></path><path d="M16 24.5V32.5" class="lg-ink sw45"></path></svg><span dir="ltr">He<b>OCR</b></span></a>
+<nav class="site-nav" aria-label="Site"><a href="benchmarks.html">Benchmarks</a><a href="htext.html">htext</a><a href="rights.html">Rights &amp; takedown</a></nav>
+<div class="tools">
+<div class="lang-toggle" role="group" aria-label="Language / שפה">
+<span aria-current="page" lang="en">English</span>
+        <a href="he/" lang="he" hreflang="he">עברית</a>
+</div>
+<button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><svg class="ico i-moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.6A5.6 5.6 0 0 1 6.4 3 5.6 5.6 0 1 0 13 9.6z"></path></svg><svg class="ico i-sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"></circle><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"></path></svg><span class="label">Night mode</span></button>
+</div>
+</div>
+</header>
+<div class="home-hero band gridband">
+<div class="wrap">
+<p class="he">זיהוי טקסט עברי, פתוח לכולם</p>
+<h1><span class="bb" data-tag="h1 · 0.99">HeOCR</span></h1>
+<p class="lede">Open data, tools and models for reading Hebrew documents, both printed and handwritten. Every dataset item has its own rights record, and everything is published under open licences.</p>
+<div class="links">
+      <a class="btn" href="https://github.com/HeOCR">GitHub</a>
+      <a class="btn" href="https://huggingface.co/HeOCR">Hugging Face</a>
+      <a class="btn" href="https://zenodo.org/communities/heocr">Zenodo</a>
+      <a class="btn primary" href="benchmarks.html">Benchmarks</a>
+      <a class="btn" href="rights.html">Rights &amp; takedown</a>
+    </div>
+<div class="flow" aria-label="How the parts fit together">
+      <span class="step">Public-domain scans &amp; text</span> →
+      <span class="step">Generators</span> →
+      <span class="step">Datasets</span> →
+      <span class="step">Trained models</span>
+    </div>
+</div>
+</div>
+<main id="main" class="wrap home">
+
+  <section id="real-print">
+    <h2>Reading real printed books</h2>
+    <p class="sub">Old printed Hebrew is where open OCR is weakest. We pair public-domain scans of a book with <a href="https://benyehuda.org">Project Ben-Yehuda</a>'s typed text of the same edition. That gives exact line-level training examples from real pages. Scans come from the <a href="https://www.nli.org.il">National Library of Israel</a>'s free-use collection and from public-domain scans on the <a href="https://archive.org">Internet Archive</a> and <a href="https://commons.wikimedia.org">Wikimedia Commons</a>. Every published line will keep its source record and its rights justification.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>R7 · Tesseract fine-tune, more books</h3>
+        <p>Same recipe as R6, on 95k real lines from 30 public-domain books: 7 National Library of Israel scans and 23 university-library scans on the Internet Archive. It reads single lines better than R6, with about a quarter fewer character errors on held-out books. On the same 38 pages, page-level error is a tie with R6: 20.9% character error and 39.3% word error, against 22.6% and 47.3% for stock Tesseract. R6 remains valid. Use <code>-l heocr_r7</code>.</p>
+        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24126449">Zenodo DOI</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>R6 · Tesseract fine-tune</h3>
+        <p>Google's open <code>tessdata_best</code> Hebrew model, fine-tuned on 13.6k real lines from National Library of Israel scans. We scored it on 38 real book pages with human-checked text (Hebrew Wikisource): 20.9% character error, against 22.6% for stock Tesseract, and 40.7% word error against 47.3%. That is a real gain, but a small one. Use it as a drop-in replacement for Tesseract's <code>heb</code>: <code>-l heocr_r6</code>.</p>
+        <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r6-tesseract-heb">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24109989">Zenodo DOI</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Real-scan line data</h3>
+        <p>Line images from real scans, each paired with its edition text. Each line records its book, scan record, source library and rights justification, so any item can be traced or removed.</p>
+        <div class="meta"><span>CC0</span><span>in preparation</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="models">
+    <h2>Models</h2>
+    <p class="sub">A three-step <a href="https://kraken.re">kraken</a> pipeline for modern Hebrew document pages: find the lines, put them in reading order, then read them. These are research baselines trained only on synthetic pages. On real scanned print they are much weaker; the real-book work above addresses this.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>R4d · Segmentation</h3>
+        <p>Finds text-line baselines and polygons, plus eight region types such as title, body, stamp, signature and table cells.</p>
+        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r4d-segmentation">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24023070">Zenodo DOI</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>A1 · Reading order</h3>
+        <p>Orders a page's lines using each line's position and region type.</p>
+        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-a1-reading-order">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24023072">Zenodo DOI</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>R3h · Recognition</h3>
+        <p>Reads printed and handwriting-style Hebrew lines, including digits, Latin letters and punctuation.</p>
+        <div class="meta"><span>Apache-2.0</span><span>kraken 7</span></div>
+        <div class="row">
+          <a href="https://huggingface.co/HeOCR/heocr-r3h-recognition">Hugging Face</a>
+          <a href="https://doi.org/10.5281/zenodo.24023074">Zenodo DOI</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="datasets">
+    <h2>Datasets</h2>
+    <p class="sub">Each dataset is built only from material that can be redistributed and reused, including for machine learning. Rights are recorded for each item, not assumed for a whole collection.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hash">HASH</a></h3>
+        <p>Hebrew Archive of Scanned Handwriting: scanned handwritten Hebrew-script documents from the 18th century onward, including letters, notebooks, drafts and forms.</p>
+        <div class="meta"><span>198 scans</span><span>48 sources</span><span>metadata CC0</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="htext.html">htext</a></h3>
+        <p>Public-domain Hebrew text for training, starting with lines from <a href="https://benyehuda.org">Project Ben-Yehuda</a> works, plain and with niqqud. Each work is flagged as public domain in Israel and/or the US.</p>
+        <div class="meta"><span>CC0</span><a href="https://github.com/HeOCR/htext">GitHub</a><a href="https://github.com/HeOCR/htext/releases/tag/pby-v1">release pby-v1</a></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hletterscript">hletterscript</a></h3>
+        <p>Cropped handwritten Hebrew letters, grouped by writer and taken from public-domain scans. Used to make synthetic handwriting.</p>
+        <div class="meta"><span>seed set</span><span>metadata CC0</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/heocr-datasets">HeOCR</a> &amp; <a href="https://github.com/HeOCR/HeOCRsynth">HeOCRsynth</a></h3>
+        <p>The main OCR/HTR datasets: one mixing real and synthetic pages, and one synthetic only. Both are exported by hocrgen once its release checks pass.</p>
+        <div class="meta"><span>in preparation</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sources">
+    <h2>Sources &amp; credit</h2>
+    <p class="sub">We use public-domain works only, and each item keeps its source and credit. See <a href="rights.html">rights &amp; takedown</a> for how rights are checked.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://www.nli.org.il">National Library of Israel</a></h3>
+        <p>Scans of public-domain books from its "public domain, free use" collection. Credited on every item as "From the collections of the National Library of Israel / <span dir="rtl" lang="he">מאוסף הספרייה הלאומית</span>", with the record number.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://archive.org">Internet Archive</a> &amp; <a href="https://commons.wikimedia.org">Wikimedia Commons</a></h3>
+        <p>Public-domain book scans made by university libraries, such as the University of Toronto, and by Google for libraries. Each item keeps its identifier, who scanned it and its rights evidence. Google's cover pages and watermarks are removed.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://benyehuda.org">Project Ben-Yehuda</a></h3>
+        <p>Volunteer-typed, public-domain texts of the same editions. They supply the exact text for each scanned line, and the training text for synthetic pages.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://he.wikisource.org">Hebrew Wikisource</a></h3>
+        <p>Proofread transcriptions of scanned pages. We use them for evaluation, with each page checked by a human. Their text is CC BY-SA.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tools">
+    <h2>Generators &amp; pipelines</h2>
+    <p class="sub">The code that builds the datasets and trains the models. All of it is MIT-licensed.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a></h3>
+        <p>Synthetic Hebrew page generator. It renders printed and handwriting-style pages, with line annotations and right-to-left metadata, from CC0 training text and open fonts.</p>
+        <div class="meta"><span>Python</span><span>MIT</span><span>text CC0</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hletterscriptgen">hletterscriptgen</a></h3>
+        <p>Extracts per-writer letter sets from HASH scans and human-reviewed glyph annotations.</p>
+        <div class="meta"><span>Python</span><span>MIT</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hocrgen">hocrgen</a></h3>
+        <p>Dataset operations and release checks: acquisition, rights, review, deduplication, splits, benchmarks and export to the public datasets.</p>
+        <div class="meta"><span>Python</span><span>MIT</span></div>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/heocr-engine">heocr-engine</a></h3>
+        <p>Training, evaluation and release code for the models above, plus a local Tesseract baseline with a reproducible prediction format.</p>
+        <div class="meta"><span>Python</span><span>kraken</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer class="site-footer">
+<div class="wrap foot">
+<div class="foot-brand">He<b>OCR</b></div>
+<div class="foot-text">
+<p>Created by <a href="http://www.shaypalachy.com/">Shay Palachy Affek</a> and the HeOCR maintainers.</p>
+<p>Code under MIT, models under Apache-2.0, and HeOCR-written data under CC0. Third-party items keep their own per-item rights.</p>
+<p>Hebrew text credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a>. Scans: the <a href="https://www.nli.org.il">National Library of Israel</a> and the libraries whose scans are on the <a href="https://archive.org">Internet Archive</a>.</p>
+<p><a href="rights.html">Rights &amp; takedown</a></p>
+</div>
+</div>
+</footer>
+<script src="theme.js"></script>
+</body>
+</html>

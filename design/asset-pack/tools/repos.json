@@ -1,0 +1,82 @@
+{
+  "_note": "One line per repository, Hebrew and English, supplied by each repository's maintainer through the lead (2026-11-20). Edit and re-run make_assets.py.",
+  "repos": {
+    "heocr": {
+      "en": "Python package and CLI: Hebrew text out of PDFs, Office files, web pages, scans and photos.",
+      "he": "חבילת פייתון וכלי שורת פקודה: טקסט עברי מקובצי PDF, אופיס, דפי אינטרנט, סריקות וצילומים."
+    },
+    "heocr-desktop": {
+      "en": "HeOCR's apps for Mac, Windows and Android: Hebrew text out of documents, fully offline.",
+      "he": "האפליקציות של HeOCR למק, לווינדוס ולאנדרואיד: טקסט עברי ממסמכים, בלי אינטרנט."
+    },
+    "heocr-review": {
+      "en": "Check and correct Hebrew text against page scans, line by line.",
+      "he": "בודקים ומתקנים טקסט עברי מול סריקות של דפים, שורה אחר שורה."
+    },
+    "htext": {
+      "en": "Public-domain and openly licensed Hebrew text, for training Hebrew OCR.",
+      "he": "טקסט עברי בנחלת הכלל וברישיון פתוח, לאימון OCR בעברית."
+    },
+    "hocrsyngen": {
+      "en": "A generator of synthetic Hebrew OCR training data: lines and pages.",
+      "he": "מחולל נתונים סינתטיים לאימון זיהוי טקסט עברי: שורות ועמודים."
+    },
+    "hdocsyngen": {
+      "en": "A generator of synthetic Hebrew documents: Office files and PDFs, with exact structure.",
+      "he": "מחולל מסמכים סינתטיים בעברית: קובצי Office ו-PDF, עם מבנה מדויק."
+    },
+    "heocr-engine": {
+      "en": "The models: training and packaging Hebrew OCR models.",
+      "he": "המודלים: אימון ואריזה של מודלי זיהוי טקסט עברי."
+    },
+    "heocr-compute": {
+      "en": "Runs HeOCR's training jobs on rented machines: open data only, within a budget.",
+      "he": "מריץ את עבודות האימון של HeOCR על מכונות שכורות: מידע פתוח בלבד, בתוך תקציב."
+    }
+  },
+  "badges": {
+    "hebrew-first": {
+      "en": "Hebrew-first",
+      "he": "עברית תחילה"
+    },
+    "offline": {
+      "en": "offline",
+      "he": "בלי אינטרנט"
+    },
+    "open-data-cc0": {
+      "en": "open data · CC0",
+      "he": "מידע פתוח · CC0"
+    },
+    "apache-2": {
+      "en": "Apache-2.0",
+      "he": "Apache-2.0"
+    }
+  },
+  "model_line": {
+    "en": "Hebrew OCR model for Tesseract",
+    "he": "מודל זיהוי טקסט עברי ל־Tesseract"
+  },
+  "models": [
+    {
+      "name": "heocr-modern-v1-tesseract-heb",
+      "licence": "Apache-2.0"
+    },
+    {
+      "name": "heocr-oldprint-v1-tesseract-heb",
+      "licence": "Apache-2.0"
+    }
+  ],
+  "datasets": [
+    {
+      "name": "htext",
+      "licence": "CC0 (data) · MIT (code)",
+      "en": "Hebrew text dataset release",
+      "he": "גרסה של מאגר טקסט עברי"
+    }
+  ],
+  "post_example": {
+    "version": "v0.0.0",
+    "en": "One line about what this release brings.",
+    "he": "שורה אחת על מה שהגרסה הזאת מביאה."
+  }
+}

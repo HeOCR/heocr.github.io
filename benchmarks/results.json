@@ -1,0 +1,80 @@
+{
+ "schema": "heocr_site_benchmarks.v0",
+ "updated": "2026-11-20",
+ "p_mod": {"status": "not_measured"},
+ "handwriting": {
+  "status": "scored",
+  "scored": "2026-11-20",
+  "set": "ivritai-hw-bench-lines-v0: 225 handwritten Hebrew lines by 10 writers (phone photos), ivrit.ai Hebrew handwriting OCR benchmark, test split",
+  "registration": "ivritai_hw_lines_v0_2026-11-20; one registered run 2026-11-20 (heocr 0.2.0rc1; heocr 0.2.0 (identical to 0.2.0rc1, verified by wheel diff): byte-identical outputs, addendum 1)",
+  "measure": "line CER and WER under line_fold_v1, ratio of sums over all 225 lines, blank outputs included; words found = mean share of a line's reference words present in the output",
+  "interval": "95% percentile bootstrap over the 10 writers (2,000 resamples, seed 0)",
+  "source": {
+   "name": "ivrit.ai Hebrew handwriting OCR benchmark",
+   "url": "https://huggingface.co/datasets/ivrit-ai/hebrew-handwriting-ocr-benchmark",
+   "corpus_url": "https://transcriptor.ivrit.ai",
+   "licence": "CC BY 4.0 under the ivrit.ai licence; held privately for evaluation only; not covered by any HeOCR licence"
+  },
+  "readers": {
+   "heocr": {
+    "cer": 83.1,
+    "cer_ci95": [
+     79.3,
+     88.0
+    ],
+    "wer": 114.2,
+    "coverage": 1.7
+   },
+   "heocr_psm3": {
+    "cer": 82.4,
+    "cer_ci95": [
+     78.6,
+     87.1
+    ],
+    "wer": 118.7,
+    "coverage": 1.7
+   },
+   "heocr_stockheb": {
+    "cer": 76.6,
+    "cer_ci95": [
+     71.8,
+     82.6
+    ],
+    "wer": 114.7,
+    "coverage": 1.8
+   },
+   "stock_best": {
+    "cer": 75.4,
+    "cer_ci95": [
+     71.0,
+     80.4
+    ],
+    "wer": 111.8,
+    "coverage": 1.5
+   },
+   "stock_fast": {
+    "cer": 79.3,
+    "cer_ci95": [
+     76.0,
+     83.3
+    ],
+    "wer": 113.5,
+    "coverage": 1.0
+   }
+  },
+  "model_effect": {
+   "delta_cer": 6.5,
+   "ci95": [
+    4.5,
+    8.7
+   ]
+  }
+ },
+ "p_hist": {
+  "status": "not_measured",
+  "note": "no held-out P-hist set scored yet; the P-hist test waits for volunteer references"
+ },
+ "vendors": {
+  "status": "pending_review"
+ }
+}
