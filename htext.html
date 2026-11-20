@@ -45,7 +45,7 @@
 <div class="band gridband"><div class="wrap page-head">
 <h1><span class="bb" data-tag="h1 · 0.99">htext</span></h1>
 <p class="lede">טקסט עברי ברישיונות פתוחים לאימון מנועי הזיהוי של HeOCR, חתוך לשורות, עם ניקוד ובלעדיו: בראש ובראשונה טקסט בנחלת הכלל, וטקסט בייחוס ובשיתוף זהה בגרסאות נפרדות. לכל יצירה או מסמך יש רישום זכויות משלו: מעמדו בישראל ובארה"ב, הרישיון שלו ושורת הקרדיט שלו. htext מתפרסם בשלוש גרסאות, אחת לכל רישיון, כדי שתוכלו לבחור את התנאים שמתאימים לכם; גרסת הליבה היא CC0 ואפשר להשתמש בה בלי תנאים.</p>
-<p class="note">עודכן ב־2026-11-18. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href="htext/corpora.json">corpora.json</a>.</p>
+<p class="note">עודכן ב־2026-11-20. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href="htext/corpora.json">corpora.json</a>.</p>
 </div></div>
 <nav class="wrap" aria-label="בעמוד זה"><div class="toc"><a href="#what">מה זה htext</a><a href="#releases">גרסאות</a><a href="#corpora">מאגרים</a><a href="#rights">זכויות</a><a href="#use">הורדה ושימוש</a><a href="#credit">קרדיט</a><a href="#licence">רישיון</a></div></nav>
 <main id="main" class="wrap doc ht">
@@ -53,7 +53,7 @@
 <h2>מה זה htext</h2>
 <p>htext אוסף טקסט עברי שזכויותיו ברורות דיין לפרסום פתוח, והופך אותו לשורות אימון עבור <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, מחולל העמודים הסינתטיים של HeOCR. המחולל מצייר כל שורה על עמודים סינתטיים, כך שמנועי הזיהוי לומדים אוצר מילים, כתיב ופיסוק עבריים אמיתיים, ולא רק טקסט מומצא.</p>
 <p>לכל מקור יש בונה משלו, מאגר משלו וכרטיס משלו. בנייה קוראת עותק נעוץ של המקור, מחשבת זכויות לכל פריט, מנקה וחותכת את הטקסט, ובודקת ששום שורה אינה חופפת לטקסט ההערכה של HeOCR. רק הקבצים שהכרטיס מונה מתפרסמים.</p>
-<div class="stats"><div class="stat"><b>14,252,079</b><span>שורות</span></div><div class="stat"><b>27,310</b><span>יצירות, חוקים וספרים</span></div><div class="stat"><b><span dir="ltr">693.9 MB</span></b><span>טקסט</span></div><div class="stat"><b>3</b><span>מאגרים</span></div></div>
+<div class="stats"><div class="stat"><b>14,240,875</b><span>שורות</span></div><div class="stat"><b>27,278</b><span>יצירות, חוקים וספרים</span></div><div class="stat"><b><span dir="ltr">693.3 MB</span></b><span>טקסט</span></div><div class="stat"><b>3</b><span>מאגרים</span></div></div>
 </section>
 <section id="releases">
 <h2>גרסאות</h2>
@@ -101,24 +101,27 @@
 <li>כרטיס המאגר: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v3/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
 <li>גרסה קודמת: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v2">pby-v2</a> (<a href="https://github.com/HeOCR/htext/blob/main/data/pby/v2/KNOWN_ISSUES.md">בעיות ידועות</a>)</li>
 <li>גרסה קודמת: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v1">pby-v1</a> (<a href="https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md">בעיות ידועות</a>)</li>
+<li>Hugging Face: <a href="https://huggingface.co/datasets/HeOCR/htext-pby">HeOCR/htext-pby</a> (בלי השורות שחופפות לטקסט ההערכה של HeOCR, ולכן לא זהה בייט לבייט לגרסה ב־GitHub)</li>
 <li>טקסט: הוקלד בידי אנשים.</li>
 <li>ל־25,267 מתוך 26,455 יצירות בקטלוג יש שורות במאגר; ל־701 מהן גם בגרסת ישראל + ארה&quot;ב.</li>
 </ul>
 <h3 id="knesset-laws">חוקי הכנסת כפי שפורסמו</h3>
-<span class="status">knesset-laws-v1</span><span class="status">htext-cc0</span>
+<span class="status">knesset-laws-v2</span><span class="status">htext-cc0</span>
 <p>החוקים שחוקקו שמונה הכנסות הראשונות (1949–1977), כפי שנדפסו ברשומות (ספר החוקים), חתוכים לשורות, עם הערות השוליים כשורות נפרדות.</p>
 <div class="tablewrap"><table>
 <thead><tr><th>קובץ</th><th>גרסה</th><th>סוג</th><th>שורות</th><th>חוקים</th><th>גודל</th></tr></thead>
 <tbody>
-<tr><td><code>knesset_laws_lines_plain_v1.txt</code></td><td>ישראל</td><td>ללא ניקוד</td><td class="num">234,821</td><td class="num">2,004</td><td class="num"><span dir="ltr">10.4 MB</span></td></tr>
+<tr><td><code>knesset_laws_lines_plain_v2.txt</code></td><td>ישראל</td><td>ללא ניקוד</td><td class="num">223,617</td><td class="num">1,972</td><td class="num"><span dir="ltr">9.9 MB</span></td></tr>
 </tbody></table></div>
 <ul class="facts">
 <li>גרסת htext: htext-cc0</li>
 <li>מקור: <a href="https://main.knesset.gov.il">כנסת ישראל</a> (לא מוגן: חוק זכות יוצרים, סעיף 6)</li>
-<li>גרסה: <a href="https://github.com/HeOCR/htext/releases/tag/knesset-laws-v1">knesset-laws-v1</a>, 2026-11-18</li>
-<li>כרטיס המאגר: <a href="https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
-<li>טקסט: שכבת ה־OCR של הסריקות, מסוננת מול מילון. בבדיקה בעין של 100 שורות אקראיות מול הסריקות נמצאה טעות ב־9 (9%), ו־9 מילים שגויות מתוך 454 (2.0%).</li>
-<li>ל־2,004 מתוך 2,146 חוקים בקטלוג יש שורות במאגר.</li>
+<li>גרסה: <a href="https://github.com/HeOCR/htext/releases/tag/knesset-laws-v2">knesset-laws-v2</a>, 2026-11-20</li>
+<li>כרטיס המאגר: <a href="https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v2/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>גרסה קודמת: <a href="https://github.com/HeOCR/htext/releases/tag/knesset-laws-v1">knesset-laws-v1</a> (<a href="https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v1/KNOWN_ISSUES.md">בעיות ידועות</a>)</li>
+<li>Hugging Face: <a href="https://huggingface.co/datasets/HeOCR/htext-knesset-laws">HeOCR/htext-knesset-laws</a> (אותם קבצים כמו בגרסה ב־GitHub)</li>
+<li>טקסט: שכבת ה־OCR של הסריקות, מסוננת מול מילון. בבדיקה בעין של 94 שורות אקראיות מול הסריקות נמצאה טעות ב־9 (10%), ו־9 מילים שגויות מתוך 428 (2.1%).</li>
+<li>ל־1,972 מתוך 2,146 חוקים בקטלוג יש שורות במאגר.</li>
 </ul>
 <h3 id="tanakh">תנ&quot;ך: כתב יד לנינגרד (WLC)</h3>
 <span class="status">tanakh-v1</span><span class="status">htext-cc0</span>
@@ -134,6 +137,7 @@
 <li>מקור: <a href="https://github.com/openscriptures/morphhb">כתב יד לנינגרד בגרסת וסטמינסטר, דרך Open Scriptures Hebrew Bible</a> (נחלת הכלל)</li>
 <li>גרסה: <a href="https://github.com/HeOCR/htext/releases/tag/tanakh-v1">tanakh-v1</a>, 2026-11-18</li>
 <li>כרטיס המאגר: <a href="https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>Hugging Face: <a href="https://huggingface.co/datasets/HeOCR/htext-tanakh">HeOCR/htext-tanakh</a> (בלי השורות שחופפות לטקסט ההערכה של HeOCR, ולכן לא זהה בייט לבייט לגרסה ב־GitHub)</li>
 <li>טקסט: הוקלד בידי אנשים.</li>
 <li>לכל 39 הספרים יש שורות במאגר, בשתי הצורות. שני הקבצים, המנוקד והלא־מנוקד, מכילים את אותם פסוקים, ולכן הסיכומים למעלה סופרים אותם פעם אחת.</li>
 </ul>
