@@ -153,6 +153,17 @@ def table(head, rows, total=None):
     return "".join(s)
 
 
+def zenodo_item(c: dict, t: dict) -> str:
+    if not (record := c.get("zenodo")):
+        return ""
+    doi = e(record["doi"])
+    link = f'<a href="https://doi.org/{doi}"><span dir="ltr">{doi}</span></a>'
+    if concept := record.get("concept_doi"):
+        concept = e(concept)
+        link += f' ({t["c_zenodo_all"]}: <a href="https://doi.org/{concept}"><span dir="ltr">{concept}</span></a>)'
+    return f'<li>{t["c_zenodo"]}: {link}</li>\n'
+
+
 def page(lang: str, R: dict) -> str:
     t = T[lang]
     pre = shell.prefix(lang)
@@ -244,8 +255,7 @@ def page(lang: str, R: dict) -> str:
                     + (f'{e(p["tag"])}, {e(t["c_withdrawn"].format(d=p["withdrawn"]))}' if p.get("withdrawn") else f'<a href="{e(p["url"])}">{e(p["tag"])}</a>')
                     + (f' (<a href="{e(p["known_issues_url"])}">{t["c_issues"]}</a>)' if p.get("known_issues_url") else "")
                     + "</li>\n" for p in c.get("previous", []))
-          + (f'<li>{t["c_zenodo"]}: <a href="https://doi.org/{e(c["zenodo"]["doi"])}"><span dir="ltr">{e(c["zenodo"]["doi"])}</span></a> '
-             f'({t["c_zenodo_all"]}: <a href="https://doi.org/{e(c["zenodo"]["concept_doi"])}"><span dir="ltr">{e(c["zenodo"]["concept_doi"])}</span></a>)</li>\n' if c.get("zenodo") else "")
+          + zenodo_item(c, t)
           + (f'<li>{t["c_hf"]}: <a href="{e(c["release"]["url"] if c["hf"].get("revision") else "https://huggingface.co/datasets/" + c["hf"]["repo"])}">{e(c["hf"]["repo"])}</a> '
              f'({e(t["c_hf_filtered"] if c["hf"]["filtered"] else t["c_hf_same"])})</li>\n' if c.get("hf") else "")
           + f'<li>{e(quality)}</li>\n'
