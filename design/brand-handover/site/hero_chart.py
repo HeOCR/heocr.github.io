@@ -55,7 +55,7 @@ STR = {
         "no_measure": "no character-error score; see table",
         "aria": "Character error by document type, lower is better. {finding} "
                 "All figures are in the Documents by format tables below.",
-        "lowest_all": "heocr has the lowest character error on all {m} document types that another tool also reads",
+        "lowest_all": "[placeholder finding sentence]",
         "lowest_some": "heocr has the lowest character error on {k} of the {m} document types that another tool also reads",
         "clear_all": ", with no overlap between 95% intervals.",
         "clear_some": "; its 95% interval is clear of every other reader on {c} of them.",
@@ -73,7 +73,7 @@ STR = {
         "no_measure": "אין ציון שגיאת תווים; ראו בטבלה",
         "aria": "שגיאת תווים לפי סוג מסמך, נמוך יותר עדיף. {finding} "
                 "כל המספרים מופיעים בטבלאות של מסמכים לפי פורמט למטה.",
-        "lowest_all": "ל־‎heocr‏ שגיאת התווים הנמוכה ביותר בכל {m} סוגי המסמכים שגם כלי אחר קורא",
+        "lowest_all": "[משפט ממצא לדוגמה]",
         "lowest_some": "ל־‎heocr‏ שגיאת התווים הנמוכה ביותר ב־{k} מתוך {m} סוגי המסמכים שגם כלי אחר קורא",
         "clear_all": ", בלי חפיפה בין רווחי הסמך של 95%.",
         "clear_some": "; ב־{c} מהם רווח הסמך שלו אינו חופף לאף קורא אחר.",
