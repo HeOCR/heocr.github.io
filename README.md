@@ -39,6 +39,8 @@ Generated or newly typeset documents are development inputs and do not appear in
 When a document family has no eligible result, it is marked as not measured. The release note records when
 HeOCR will publish a model or pipeline version.
 
+The maintainer approved the four new Hebrew release-status strings on 2026-11-20: “All strings approved”.
+
 The download status pages are also generated:
 
 ```
