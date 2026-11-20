@@ -53,7 +53,7 @@
 <h2>מה זה htext</h2>
 <p>htext אוסף טקסט עברי שזכויותיו ברורות דיין לפרסום פתוח, והופך אותו לשורות אימון עבור <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, מחולל העמודים הסינתטיים של HeOCR. המחולל מצייר כל שורה על עמודים סינתטיים, כך שמנועי הזיהוי לומדים אוצר מילים, כתיב ופיסוק עבריים אמיתיים, ולא רק טקסט מומצא.</p>
 <p>לכל מקור יש בונה משלו, מאגר משלו וכרטיס משלו. בנייה קוראת עותק נעוץ של המקור, מחשבת זכויות לכל פריט, מנקה וחותכת את הטקסט, ובודקת ששום שורה אינה חופפת לטקסט ההערכה של HeOCR. רק הקבצים שהכרטיס מונה מתפרסמים.</p>
-<div class="stats"><div class="stat"><b>223,617</b><span>שורות</span></div><div class="stat"><b>1,972</b><span>יצירות וחוקים</span></div><div class="stat"><b><span dir="ltr">9.9 MB</span></b><span>טקסט</span></div><div class="stat"><b>1</b><span>מאגר</span></div></div>
+<div class="stats"><div class="stat"><b>13,891,509</b><span>שורות</span></div><div class="stat"><b><span dir="ltr">677.1 MB</span></b><span>טקסט</span></div><div class="stat"><b>3</b><span>מאגרים</span></div></div>
 </section>
 <section id="releases">
 <h2>גרסאות</h2>
@@ -83,12 +83,26 @@
 <section id="corpora">
 <h2>מאגרים</h2>
 <h3 id="pby">שורות בנחלת הכלל מפרויקט בן־יהודה</h3>
-<span class="status">הוסר</span><span class="status">htext-cc0</span>
-<p>פרוזה, מאמרים, זיכרונות, מכתבים, משלים, שירה, ספרות עיון ומחזות שהקלידו מתנדבי פרויקט בן־יהודה, חתוכים לשורות, עם ניקוד ובלעדיו.</p>
-<p class="note">הוסר ב־2026-11-20. בדיקה מתוקנת של צוות ההערכה של HeOCR מצאה שהקבצים חולקים טקסט עם מערכי ההערכה, ולכן הם הורדו מ־GitHub, מ־Hugging Face ומ־Zenodo. ל־HeOCR יש גיבוי פרטי; גרסאות מנוקות יפורסמו כגרסאות חדשות.</p>
+<span class="status">pby-v3.1</span><span class="status">htext-cc0</span>
+<p>פרוזה, מאמרים, זיכרונות, מכתבים, משלים, שירה, ספרות עיון ומחזות שהקלידו מתנדבי פרויקט בן־יהודה, חתוכים לשורות, עם ניקוד ובלעדיו. גרסה 3.1 כוללת רק את הגרסאות הישראליות. הגרסאות לישראל ולארה״ב זמינות בגרסאות 2.1 ו־1.1.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>קובץ</th><th>גרסה</th><th>סוג</th><th>שורות</th><th>גודל</th></tr></thead>
+<tbody>
+<tr><td><code>pby_lines_il_plain_v3.txt</code></td><td>ישראל</td><td>ללא ניקוד</td><td class="num">11,937,498</td><td class="num"><span dir="ltr">543.4 MB</span></td></tr>
+<tr><td><code>pby_lines_il_niqqud_v3.txt</code></td><td>ישראל</td><td>מנוקד</td><td class="num">1,672,711</td><td class="num"><span dir="ltr">119.3 MB</span></td></tr>
+</tbody></table></div>
 <ul class="facts">
+<li>גרסת htext: htext-cc0</li>
 <li>מקור: <a href="https://benyehuda.org">פרויקט בן־יהודה</a> (נחלת הכלל (רישיון המאגר של פרויקט בן־יהודה))</li>
-<li>גרסה: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v3">pby-v3</a> (בעיות ידועות: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v3/KNOWN_ISSUES.md">KNOWN_ISSUES.md</a>)</li>
+<li>גרסה: <a href="https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v3.1">pby-v3.1</a>, 2026-11-20</li>
+<li>כרטיס המאגר: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v3.1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>גרסה קודמת: <a href="https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v2.1">pby-v2.1</a></li>
+<li>גרסה קודמת: <a href="https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v1.1">pby-v1.1</a></li>
+<li>גרסה קודמת: pby-v3, הוסרה ב־2026-11-20: הקבצים שלה חפפו לטקסט ההערכה של HeOCR</li>
+<li>גרסה קודמת: pby-v2, הוסרה ב־2026-11-20: הקבצים שלה חפפו לטקסט ההערכה של HeOCR (<a href="https://github.com/HeOCR/htext/blob/main/data/pby/v2/KNOWN_ISSUES.md">בעיות ידועות</a>)</li>
+<li>גרסה קודמת: pby-v1, הוסרה ב־2026-11-20: הקבצים שלה חפפו לטקסט ההערכה של HeOCR (<a href="https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md">בעיות ידועות</a>)</li>
+<li>Hugging Face: <a href="https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v3.1">HeOCR/htext-pby</a> (בבדיקה המתוקנת נמצאו אפס רצפים משותפים של שש מילים מול 16 מאגרי הערכה, עבור קובצי הטקסט האלה)</li>
+<li>טקסט: הוקלד בידי אנשים.</li>
 </ul>
 <h3 id="knesset-laws">חוקי הכנסת כפי שפורסמו</h3>
 <span class="status">knesset-laws-v2</span><span class="status">htext-cc0</span>
@@ -110,12 +124,22 @@
 <li>ל־1,972 מתוך 2,146 חוקים בקטלוג יש שורות במאגר.</li>
 </ul>
 <h3 id="tanakh">תנ&quot;ך: כתב יד לנינגרד (WLC)</h3>
-<span class="status">הוסר</span><span class="status">htext-cc0</span>
-<p>התנ&quot;ך, כל 39 הספרים, כפי שהוא מופיע בכתב יד לנינגרד בגרסת וסטמינסטר (WLC 4.20), חתוך לשורות בשתי צורות: מנוקד (בלי טעמים) ובלי ניקוד.</p>
-<p class="note">הוסר ב־2026-11-20. בדיקה מתוקנת של צוות ההערכה של HeOCR מצאה שהקבצים חולקים טקסט עם מערכי ההערכה, ולכן הם הורדו מ־GitHub, מ־Hugging Face ומ־Zenodo. ל־HeOCR יש גיבוי פרטי; גרסאות מנוקות יפורסמו כגרסאות חדשות.</p>
+<span class="status">tanakh-v1.1</span><span class="status">htext-cc0</span>
+<p>שורות מסוננות מכתב יד לנינגרד בגרסת וסטמינסטר (WLC 4.20), עם ניקוד ובלי ניקוד, ללא טעמים.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>קובץ</th><th>גרסה</th><th>סוג</th><th>שורות</th><th>גודל</th></tr></thead>
+<tbody>
+<tr><td><code>tanakh_lines_plain_v1.txt</code></td><td>ישראל</td><td>ללא ניקוד</td><td class="num">57,637</td><td class="num"><span dir="ltr">2.7 MB</span></td></tr>
+<tr><td><code>tanakh_lines_niqqud_v1.txt</code></td><td>ישראל</td><td>מנוקד</td><td class="num">57,683</td><td class="num"><span dir="ltr">4.6 MB</span></td></tr>
+</tbody></table></div>
 <ul class="facts">
+<li>גרסת htext: htext-cc0</li>
 <li>מקור: <a href="https://github.com/openscriptures/morphhb">כתב יד לנינגרד בגרסת וסטמינסטר, דרך Open Scriptures Hebrew Bible</a> (נחלת הכלל)</li>
-<li>גרסה: <a href="https://github.com/HeOCR/htext/releases/tag/tanakh-v1">tanakh-v1</a> (בעיות ידועות: <a href="https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/KNOWN_ISSUES.md">KNOWN_ISSUES.md</a>)</li>
+<li>גרסה: <a href="https://huggingface.co/datasets/HeOCR/htext-tanakh/tree/tanakh-v1.1">tanakh-v1.1</a>, 2026-11-20</li>
+<li>כרטיס המאגר: <a href="https://github.com/HeOCR/htext/blob/main/data/tanakh/v1.1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>גרסה קודמת: tanakh-v1, הוסרה ב־2026-11-20: הקבצים שלה חפפו לטקסט ההערכה של HeOCR</li>
+<li>Hugging Face: <a href="https://huggingface.co/datasets/HeOCR/htext-tanakh/tree/tanakh-v1.1">HeOCR/htext-tanakh</a> (בבדיקה המתוקנת נמצאו אפס רצפים משותפים של שש מילים מול 16 מאגרי הערכה, עבור קובצי הטקסט האלה)</li>
+<li>טקסט: הוקלד בידי אנשים.</li>
 </ul>
 </section>
 <section id="rights">
@@ -131,7 +155,7 @@
 </section>
 <section id="use">
 <h2>הורדה ושימוש</h2>
-<p>קובצי המאגר מצורפים לגרסת ה־GitHub של כל מאגר, והכרטיס, סיכומי הביקורת ואינדקס הזכויות נמצאים במאגר הקוד. כל קובץ הוא UTF-8, שורה אחת לכל רשומה, מנורמל ל־NFC וללא שורות ריקות.</p>
+<p>להורדת קובצי הטקסט השתמשו בקישורי הגרסאות למעלה. כרטיסי המאגרים וסיכומי SHA-256 נמצאים במאגר הקוד. כל קובץ הוא UTF-8, שורה אחת לכל רשומה, מנורמל ל־NFC וללא שורות ריקות.</p>
 <p>הורידו את הקבצים ובדקו אותם מול סיכומי הביקורת שפורסמו:</p>
 <pre><code>gh release download knesset-laws-v2 -R HeOCR/htext
 curl -LO https://raw.githubusercontent.com/HeOCR/htext/main/data/knesset_laws/v2/SHA256SUMS

@@ -53,7 +53,7 @@
 <h2>What htext is</h2>
 <p>htext collects Hebrew text whose rights are clear enough to publish openly, and turns it into training lines for <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, HeOCR's synthetic page generator. The generator renders each line onto synthetic pages, so the recognizers learn real Hebrew vocabulary, spelling and punctuation, not only made-up text.</p>
 <p>Each source has its own builder, its own corpus and its own card. A build reads a pinned copy of the source, computes rights per entry, cleans and cuts the text, and checks that no line overlaps HeOCR's evaluation text. Only the files a card lists are published.</p>
-<div class="stats"><div class="stat"><b>223,617</b><span>lines</span></div><div class="stat"><b>1,972</b><span>works and laws</span></div><div class="stat"><b><span dir="ltr">9.9 MB</span></b><span>of text</span></div><div class="stat"><b>1</b><span>corpus</span></div></div>
+<div class="stats"><div class="stat"><b>13,891,509</b><span>lines</span></div><div class="stat"><b><span dir="ltr">677.1 MB</span></b><span>of text</span></div><div class="stat"><b>3</b><span>corpora</span></div></div>
 </section>
 <section id="releases">
 <h2>Releases</h2>
@@ -83,12 +83,26 @@
 <section id="corpora">
 <h2>Corpora</h2>
 <h3 id="pby">Project Ben-Yehuda public-domain lines</h3>
-<span class="status">withdrawn</span><span class="status">htext-cc0</span>
-<p>Prose, articles, memoirs, letters, fables, poetry, reference works and drama transcribed by Project Ben-Yehuda volunteers, cut into lines, plain and with niqqud.</p>
-<p class="note">Withdrawn 2026-11-20. A corrected check by HeOCR&#x27;s evaluation found that these files share text with its evaluation sets, so they were taken down from GitHub, Hugging Face and Zenodo. HeOCR keeps a private backup; decontaminated versions will be published as new versions.</p>
+<span class="status">pby-v3.1</span><span class="status">htext-cc0</span>
+<p>Prose, articles, memoirs, letters, fables, poetry, reference works and drama transcribed by Project Ben-Yehuda volunteers, cut into lines, plain and with niqqud. Version 3.1 includes only the Israel variants. The Israel + US variants are available in v2.1 and v1.1.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Variant</th><th>Subset</th><th>Lines</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>pby_lines_il_plain_v3.txt</code></td><td>Israel</td><td>plain</td><td class="num">11,937,498</td><td class="num"><span dir="ltr">543.4 MB</span></td></tr>
+<tr><td><code>pby_lines_il_niqqud_v3.txt</code></td><td>Israel</td><td>niqqud</td><td class="num">1,672,711</td><td class="num"><span dir="ltr">119.3 MB</span></td></tr>
+</tbody></table></div>
 <ul class="facts">
+<li>Release: htext-cc0</li>
 <li>Source: <a href="https://benyehuda.org">Project Ben-Yehuda</a> (Public domain (PBY&#x27;s dump licence))</li>
-<li>Release: <a href="https://github.com/HeOCR/htext/releases/tag/pby-v3">pby-v3</a> (known issues: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v3/KNOWN_ISSUES.md">KNOWN_ISSUES.md</a>)</li>
+<li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v3.1">pby-v3.1</a>, 2026-11-20</li>
+<li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v3.1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>Earlier version: <a href="https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v2.1">pby-v2.1</a></li>
+<li>Earlier version: <a href="https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v1.1">pby-v1.1</a></li>
+<li>Earlier version: pby-v3, withdrawn 2026-11-20: its files overlapped HeOCR&#x27;s evaluation text</li>
+<li>Earlier version: pby-v2, withdrawn 2026-11-20: its files overlapped HeOCR&#x27;s evaluation text (<a href="https://github.com/HeOCR/htext/blob/main/data/pby/v2/KNOWN_ISSUES.md">known issues</a>)</li>
+<li>Earlier version: pby-v1, withdrawn 2026-11-20: its files overlapped HeOCR&#x27;s evaluation text (<a href="https://github.com/HeOCR/htext/blob/main/data/pby/v1/KNOWN_ISSUES.md">known issues</a>)</li>
+<li>Hugging Face: <a href="https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v3.1">HeOCR/htext-pby</a> (Corrected check: zero shared 6-grams across 16 evaluation pools for these exact text files)</li>
+<li>Text: transcribed by people.</li>
 </ul>
 <h3 id="knesset-laws">Knesset laws as published</h3>
 <span class="status">knesset-laws-v2</span><span class="status">htext-cc0</span>
@@ -110,12 +124,22 @@
 <li>1,972 of 2,146 laws in the catalogue have lines in this corpus.</li>
 </ul>
 <h3 id="tanakh">Tanakh: the Westminster Leningrad Codex</h3>
-<span class="status">withdrawn</span><span class="status">htext-cc0</span>
-<p>The Hebrew Bible, all 39 books, as the Westminster Leningrad Codex (WLC 4.20) gives it, cut into lines in two forms: with niqqud (no cantillation) and plain.</p>
-<p class="note">Withdrawn 2026-11-20. A corrected check by HeOCR&#x27;s evaluation found that these files share text with its evaluation sets, so they were taken down from GitHub, Hugging Face and Zenodo. HeOCR keeps a private backup; decontaminated versions will be published as new versions.</p>
+<span class="status">tanakh-v1.1</span><span class="status">htext-cc0</span>
+<p>Filtered lines of the Westminster Leningrad Codex (WLC 4.20), plain and with niqqud (without cantillation).</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Variant</th><th>Subset</th><th>Lines</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>tanakh_lines_plain_v1.txt</code></td><td>Israel</td><td>plain</td><td class="num">57,637</td><td class="num"><span dir="ltr">2.7 MB</span></td></tr>
+<tr><td><code>tanakh_lines_niqqud_v1.txt</code></td><td>Israel</td><td>niqqud</td><td class="num">57,683</td><td class="num"><span dir="ltr">4.6 MB</span></td></tr>
+</tbody></table></div>
 <ul class="facts">
+<li>Release: htext-cc0</li>
 <li>Source: <a href="https://github.com/openscriptures/morphhb">Westminster Leningrad Codex, via the Open Scriptures Hebrew Bible</a> (Public domain)</li>
-<li>Release: <a href="https://github.com/HeOCR/htext/releases/tag/tanakh-v1">tanakh-v1</a> (known issues: <a href="https://github.com/HeOCR/htext/blob/main/data/tanakh/v1/KNOWN_ISSUES.md">KNOWN_ISSUES.md</a>)</li>
+<li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-tanakh/tree/tanakh-v1.1">tanakh-v1.1</a>, 2026-11-20</li>
+<li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/tanakh/v1.1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>Earlier version: tanakh-v1, withdrawn 2026-11-20: its files overlapped HeOCR&#x27;s evaluation text</li>
+<li>Hugging Face: <a href="https://huggingface.co/datasets/HeOCR/htext-tanakh/tree/tanakh-v1.1">HeOCR/htext-tanakh</a> (Corrected check: zero shared 6-grams across 16 evaluation pools for these exact text files)</li>
+<li>Text: transcribed by people.</li>
 </ul>
 </section>
 <section id="rights">
@@ -131,7 +155,7 @@
 </section>
 <section id="use">
 <h2>Download and use</h2>
-<p>The corpus files are assets of each corpus's GitHub release, and the card, checksums and rights index are in the repository. Every file is UTF-8 with one line per row, NFC normalised, with no blank lines.</p>
+<p>Use the release links above to download the text files. The corpus cards and SHA-256 checksums are in the source repository. Every file is UTF-8 with one line per row, NFC normalised, with no blank lines.</p>
 <p>Download the files and check them against the published checksums:</p>
 <pre><code>gh release download knesset-laws-v2 -R HeOCR/htext
 curl -LO https://raw.githubusercontent.com/HeOCR/htext/main/data/knesset_laws/v2/SHA256SUMS
