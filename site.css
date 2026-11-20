@@ -24,6 +24,10 @@
   --ok-soft: #e7f4ec;
   --no: #a12a22;
   --no-soft: #fbe9e7;
+  /* synthetic-measurement box (owner rule 2026-11-20): amber, apart from accent and ok/no */
+  --synth-soft: #fff6e0;
+  --synth-line: #c98a12;
+  --synth-ink: #6b4200;
 
   --font-display: "JetBrains Mono", "Noto Sans Hebrew", ui-monospace, monospace;
   --font-body: "Noto Sans Hebrew", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
@@ -63,6 +67,9 @@
   --ok-soft: #18281f;
   --no: #ee9a8b;
   --no-soft: #31201c;
+  --synth-soft: #2a2210;
+  --synth-line: #b98a2e;
+  --synth-ink: #f0c46a;
 }
 
 /* ---------- 2. Base ---------- */
@@ -411,3 +418,13 @@ pre code { background: none; padding: 0; white-space: pre; }
   .hero-chart .panel::after, .hero-chart .panel[data-tag]::before { display: none; }
   .home-hero { padding-block: 44px 30px; }
 }
+
+/* ---------- Synthetic-measurement box (benchmarks) ---------- */
+.synthbox { background: var(--synth-soft); border: 2px dashed var(--synth-line); border-radius: var(--radius); padding: 16px 20px 8px; margin: 36px 0 12px; }
+.synthbox .wrap { max-width: none; padding-inline: 0; }
+.synth-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.synth-head h2 { margin: 0; color: var(--synth-ink); }
+.synth-badge { font-family: var(--font-mono); font-size: var(--fs-micro); text-transform: uppercase; letter-spacing: .04em; color: var(--synth-ink); border: 1px solid var(--synth-line); border-radius: var(--radius-sm); padding: 2px 8px; }
+.synth-lede { max-width: 46em; margin: 10px 0 6px; }
+.synthbox .domain-head { border-top-color: var(--synth-line); }
+@media (max-width: 640px) { .synthbox { padding: 12px 12px 6px; } }
