@@ -94,6 +94,9 @@
         "repo": "HeOCR/htext-pby",
         "revision": "pby-v3.1",
         "filtered": true
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24398596"
       }
     },
     {
@@ -249,6 +252,9 @@
         "repo": "HeOCR/htext-tanakh",
         "revision": "tanakh-v1.1",
         "filtered": true
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24398530"
       }
     }
   ],
