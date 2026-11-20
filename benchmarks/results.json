@@ -1,8 +1,458 @@
 {
  "schema": "heocr_site_benchmarks.v0",
- "updated": "2026-11-19",
+ "updated": "2026-11-20",
  "p_mod": {
-  "status": "no_data"
+  "status": "scored",
+  "ps_v1": {
+   "set": "PS-v1: 12 pages of printed modern Hebrew (legislation and prose), typeset by HeOCR from public-domain texts, printed and photographed by the maintainer with three phones in four conditions",
+   "registration": "print_scan_PS-v1_2026-11-18, amendments 1–2; one registered run 2026-11-20",
+   "measure": "page CER and number recall under line_fold_v1, ratio of sums over pages",
+   "interval": "95% percentile bootstrap over pages (2,000 resamples, seed 0)",
+   "caveat": "Not a sample of real-world documents: one printer, three phones, our typesetting. 12 pages: intervals are wide.",
+   "rows": [
+    {
+     "id": "flat_A",
+     "pages": 12,
+     "frames": 12,
+     "readers": {
+      "heocr": {
+       "cer": 14.08,
+       "cer_ci95": [
+        6.55,
+        24.64
+       ],
+       "number_recall": 76.83
+      },
+      "heocr_stockheb": {
+       "cer": 14.0,
+       "cer_ci95": [
+        7.11,
+        23.94
+       ],
+       "number_recall": 76.83
+      },
+      "stock_best": {
+       "cer": 13.12,
+       "cer_ci95": [
+        6.02,
+        23.06
+       ],
+       "number_recall": 69.92
+      },
+      "stock_fast": {
+       "cer": 13.07,
+       "cer_ci95": [
+        6.01,
+        22.65
+       ],
+       "number_recall": 69.92
+      },
+      "r7": {
+       "cer": 17.18,
+       "cer_ci95": [
+        9.8,
+        28.0
+       ],
+       "number_recall": 34.55
+      },
+      "r8b": {
+       "cer": 16.79,
+       "cer_ci95": [
+        9.3,
+        27.56
+       ],
+       "number_recall": 56.91
+      }
+     },
+     "heocr_minus_stock": {
+      "cer_points": 0.96,
+      "ci": [
+       -0.28,
+       2.6
+      ],
+      "frames": 12,
+      "pages": 12
+     },
+     "heocr_minus_stockheb": {
+      "cer_points": 0.08,
+      "ci": [
+       -0.74,
+       1.28
+      ],
+      "frames": 12,
+      "pages": 12
+     }
+    },
+    {
+     "id": "flat",
+     "pages": 12,
+     "frames": 36,
+     "readers": {
+      "heocr": {
+       "cer": 34.34,
+       "cer_ci95": [
+        24.96,
+        43.83
+       ],
+       "number_recall": 63.69
+      },
+      "heocr_stockheb": {
+       "cer": 33.8,
+       "cer_ci95": [
+        24.65,
+        43.05
+       ],
+       "number_recall": 63.41
+      },
+      "stock_best": {
+       "cer": 30.72,
+       "cer_ci95": [
+        22.39,
+        38.48
+       ],
+       "number_recall": 59.21
+      },
+      "stock_fast": {
+       "cer": 30.34,
+       "cer_ci95": [
+        21.94,
+        38.18
+       ],
+       "number_recall": 58.94
+      },
+      "r7": {
+       "cer": 33.84,
+       "cer_ci95": [
+        25.11,
+        42.65
+       ],
+       "number_recall": 31.98
+      },
+      "r8b": {
+       "cer": 34.93,
+       "cer_ci95": [
+        25.81,
+        44.13
+       ],
+       "number_recall": 47.56
+      }
+     },
+     "heocr_minus_stock": {
+      "cer_points": 3.61,
+      "ci": [
+       1.46,
+       6.27
+      ],
+      "frames": 36,
+      "pages": 12
+     },
+     "heocr_minus_stockheb": {
+      "cer_points": 0.54,
+      "ci": [
+       -0.5,
+       2.08
+      ],
+      "frames": 36,
+      "pages": 12
+     }
+    },
+    {
+     "id": "angle",
+     "pages": 12,
+     "frames": 36,
+     "readers": {
+      "heocr": {
+       "cer": 29.67,
+       "cer_ci95": [
+        22.71,
+        38.94
+       ],
+       "number_recall": 73.44
+      },
+      "heocr_stockheb": {
+       "cer": 28.64,
+       "cer_ci95": [
+        21.6,
+        37.77
+       ],
+       "number_recall": 66.26
+      },
+      "stock_best": {
+       "cer": 33.79,
+       "cer_ci95": [
+        26.94,
+        42.69
+       ],
+       "number_recall": 50.68
+      },
+      "stock_fast": {
+       "cer": 33.42,
+       "cer_ci95": [
+        26.67,
+        42.21
+       ],
+       "number_recall": 54.34
+      },
+      "r7": {
+       "cer": 38.08,
+       "cer_ci95": [
+        31.56,
+        46.7
+       ],
+       "number_recall": 21.82
+      },
+      "r8b": {
+       "cer": 39.23,
+       "cer_ci95": [
+        32.71,
+        47.78
+       ],
+       "number_recall": 36.18
+      }
+     },
+     "heocr_minus_stock": {
+      "cer_points": -4.12,
+      "ci": [
+       -10.64,
+       1.21
+      ],
+      "frames": 36,
+      "pages": 12
+     },
+     "heocr_minus_stockheb": {
+      "cer_points": 1.03,
+      "ci": [
+       0.33,
+       1.84
+      ],
+      "frames": 36,
+      "pages": 12
+     }
+    },
+    {
+     "id": "lowlight",
+     "pages": 12,
+     "frames": 36,
+     "readers": {
+      "heocr": {
+       "cer": 43.95,
+       "cer_ci95": [
+        35.89,
+        52.84
+       ],
+       "number_recall": 55.69
+      },
+      "heocr_stockheb": {
+       "cer": 43.52,
+       "cer_ci95": [
+        35.47,
+        52.21
+       ],
+       "number_recall": 53.39
+      },
+      "stock_best": {
+       "cer": 39.16,
+       "cer_ci95": [
+        32.0,
+        47.83
+       ],
+       "number_recall": 45.53
+      },
+      "stock_fast": {
+       "cer": 39.32,
+       "cer_ci95": [
+        32.17,
+        47.63
+       ],
+       "number_recall": 45.93
+      },
+      "r7": {
+       "cer": 42.65,
+       "cer_ci95": [
+        35.35,
+        51.3
+       ],
+       "number_recall": 19.11
+      },
+      "r8b": {
+       "cer": 42.17,
+       "cer_ci95": [
+        34.8,
+        50.91
+       ],
+       "number_recall": 34.96
+      }
+     },
+     "heocr_minus_stock": {
+      "cer_points": 4.79,
+      "ci": [
+       -0.8,
+       10.33
+      ],
+      "frames": 36,
+      "pages": 12
+     },
+     "heocr_minus_stockheb": {
+      "cer_points": 0.43,
+      "ci": [
+       -0.03,
+       1.15
+      ],
+      "frames": 36,
+      "pages": 12
+     }
+    },
+    {
+     "id": "crumpled",
+     "pages": 12,
+     "frames": 36,
+     "readers": {
+      "heocr": {
+       "cer": 33.62,
+       "cer_ci95": [
+        22.78,
+        46.46
+       ],
+       "number_recall": 64.91
+      },
+      "heocr_stockheb": {
+       "cer": 33.1,
+       "cer_ci95": [
+        22.78,
+        45.31
+       ],
+       "number_recall": 58.13
+      },
+      "stock_best": {
+       "cer": 32.27,
+       "cer_ci95": [
+        24.03,
+        42.26
+       ],
+       "number_recall": 55.01
+      },
+      "stock_fast": {
+       "cer": 33.07,
+       "cer_ci95": [
+        25.11,
+        42.81
+       ],
+       "number_recall": 56.1
+      },
+      "r7": {
+       "cer": 36.42,
+       "cer_ci95": [
+        27.73,
+        46.82
+       ],
+       "number_recall": 25.61
+      },
+      "r8b": {
+       "cer": 36.87,
+       "cer_ci95": [
+        27.73,
+        47.8
+       ],
+       "number_recall": 42.68
+      }
+     },
+     "heocr_minus_stock": {
+      "cer_points": 1.35,
+      "ci": [
+       -1.97,
+       5.18
+      ],
+      "frames": 36,
+      "pages": 12
+     },
+     "heocr_minus_stockheb": {
+      "cer_points": 0.52,
+      "ci": [
+       -0.09,
+       1.34
+      ],
+      "frames": 36,
+      "pages": 12
+     }
+    }
+   ]
+  },
+  "nq1": {
+   "set": "NQ1: 25 pages of modern pointed print in open fonts (poetry, Tanakh, prose pointed by Dicta's nakdan), typeset by HeOCR, printed and photographed twice per page in two sessions by the maintainer",
+   "registration": "niqqud_print_v1_2026-11-19, amendments 1–3; one registered run 2026-11-20",
+   "measure": "page CER with niqqud kept and with niqqud removed on both sides, under line_fold_v1; marks found = reference vowel marks matched on the aligned letter",
+   "interval": "95% cluster bootstrap over works (2,000 resamples, seed 0)",
+   "caveat": "Modern pointed print in open fonts, not old pointed books. 25 pages; one printer, one phone.",
+   "readers": {
+    "heocr": {
+     "cer_kept": 55.97,
+     "cer_kept_ci95": [
+      53.93,
+      58.31
+     ],
+     "cer_stripped": 30.1,
+     "cer_stripped_ci95": [
+      26.67,
+      33.96
+     ],
+     "mark_recall": 0.0
+    },
+    "heocr_oldprint": {
+     "cer_kept": 58.27,
+     "cer_kept_ci95": [
+      55.94,
+      60.88
+     ],
+     "cer_stripped": 33.81,
+     "cer_stripped_ci95": [
+      29.99,
+      38.01
+     ],
+     "mark_recall": 0.0
+    },
+    "heocr_stockheb": {
+     "cer_kept": 45.82,
+     "cer_kept_ci95": [
+      43.22,
+      48.75
+     ],
+     "cer_stripped": 29.49,
+     "cer_stripped_ci95": [
+      26.19,
+      33.26
+     ],
+     "mark_recall": 23.95
+    },
+    "stock_best": {
+     "cer_kept": 43.66,
+     "cer_kept_ci95": [
+      41.34,
+      46.19
+     ],
+     "cer_stripped": 25.82,
+     "cer_stripped_ci95": [
+      22.43,
+      29.41
+     ],
+     "mark_recall": 24.56
+    },
+    "stock_fast": {
+     "cer_kept": 40.27,
+     "cer_kept_ci95": [
+      37.83,
+      43.0
+     ],
+     "cer_stripped": 25.66,
+     "cer_stripped_ci95": [
+      22.38,
+      29.07
+     ],
+     "mark_recall": 32.57
+    }
+   },
+   "captures": 101,
+   "pages": 25
+  }
  },
  "handwriting": {
   "status": "no_data"
@@ -14,8 +464,8 @@
  "documents": {
   "status": "scored",
   "gate": "run",
-  "run": "gate-rc1-synth",
-  "heocr": "heocr 0.1.0rc1 @ HeOCR/heocr 57e58deb3a230a86b07e9fdf110223cac9fbf471 (the release candidate, gate amendment 6)",
+  "run": "gate-rc2-synth-r2",
+  "heocr": "heocr 0.2.0rc1 from PyPI, heocr-0.2.0rc1-py3-none-any.whl sha256 45241dcba385cb82b5ef19840a8aaef983a674cbd9c1b7e46bd2f29b8398849c (tag v0.2.0rc1, HeOCR/heocr 9d99d5ef33135e3fba24413f27fa704d16a0d805; the release candidate, gate amendment 7)",
   "baselines": {
    "stock": {
     "ocr": "tesseract 5.5, heb tessdata_best e12c65a (sha256 dbaa827a), psm 3, pages at 300 dpi gray (pdftoppm)"
@@ -51,18 +501,18 @@
      "heocr": {
       "documents": 80,
       "cer": {
-       "value": 0.003,
+       "value": 0.0025,
        "ci95": [
-        0.0021,
-        0.0038
+        0.0017,
+        0.0033
        ],
        "n": 80
       },
       "wer": {
-       "value": 0.0036,
+       "value": 0.0029,
        "ci95": [
-        0.0026,
-        0.0046
+        0.002,
+        0.0039
        ],
        "n": 80
       },
@@ -75,9 +525,9 @@
        "n": 80
       },
       "labels": {
-       "value": 1.0,
+       "value": 0.9994,
        "ci95": [
-        1.0,
+        0.998,
         1.0
        ],
        "n": 60
@@ -86,34 +536,34 @@
      "docling": {
       "documents": 80,
       "cer": {
-       "value": 0.0328,
+       "value": 0.0325,
        "ci95": [
-        0.0284,
-        0.0371
+        0.0285,
+        0.0367
        ],
        "n": 80
       },
       "wer": {
-       "value": 0.0806,
+       "value": 0.084,
        "ci95": [
-        0.0726,
-        0.0884
+        0.0761,
+        0.0917
        ],
        "n": 80
       },
       "number_recall": {
-       "value": 0.9387,
+       "value": 0.9351,
        "ci95": [
-        0.9188,
-        0.9558
+        0.9152,
+        0.9519
        ],
        "n": 80
       },
       "labels": {
-       "value": 0.0791,
+       "value": 0.0671,
        "ci95": [
-        0.061,
-        0.0997
+        0.0489,
+        0.0875
        ],
        "n": 60
       }
@@ -121,34 +571,34 @@
      "markitdown": {
       "documents": 80,
       "cer": {
-       "value": 0.0405,
+       "value": 0.0401,
        "ci95": [
-        0.0358,
-        0.0449
+        0.0356,
+        0.0447
        ],
        "n": 80
       },
       "wer": {
-       "value": 0.0751,
+       "value": 0.0781,
        "ci95": [
-        0.0702,
-        0.0794
+        0.073,
+        0.083
        ],
        "n": 80
       },
       "number_recall": {
-       "value": 0.7732,
+       "value": 0.7698,
        "ci95": [
-        0.7365,
-        0.8074
+        0.7327,
+        0.8038
        ],
        "n": 80
       },
       "labels": {
-       "value": 0.0292,
+       "value": 0.0259,
        "ci95": [
-        0.0219,
-        0.0381
+        0.0194,
+        0.0335
        ],
        "n": 60
       }
@@ -162,26 +612,26 @@
      "heocr": {
       "documents": 40,
       "cer": {
-       "value": 0.0077,
+       "value": 0.0074,
        "ci95": [
-        0.006,
-        0.0094
+        0.0058,
+        0.0091
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.0194,
+       "value": 0.0204,
        "ci95": [
-        0.0142,
-        0.0247
+        0.0154,
+        0.0257
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.9141,
+       "value": 0.9093,
        "ci95": [
-        0.8833,
-        0.9418
+        0.8823,
+        0.9342
        ],
        "n": 40
       }
@@ -190,25 +640,25 @@
     "verdict": "supported"
    },
    "PDF T1": {
-    "documents": 316,
+    "documents": 317,
     "readers": {
      "heocr": {
-      "documents": 316,
+      "documents": 317,
       "cer": {
        "value": 0.0002,
        "ci95": [
-        0.0002,
-        0.0003
+        0.0001,
+        0.0002
        ],
-       "n": 316
+       "n": 317
       },
       "wer": {
        "value": 0.002,
        "ci95": [
-        0.0016,
-        0.0025
+        0.0015,
+        0.0024
        ],
-       "n": 316
+       "n": 317
       },
       "number_recall": {
        "value": 1.0,
@@ -216,155 +666,155 @@
         1.0,
         1.0
        ],
-       "n": 316
+       "n": 317
       },
       "silent_loss": {
-       "value": 0.0002,
+       "value": 0.0001,
        "ci95": [
-        0.0002,
-        0.0003
+        0.0001,
+        0.0002
        ],
-       "n": 316
+       "n": 317
       }
      },
      "stock": {
       "documents": 80,
       "cer": {
-       "value": 0.0856,
+       "value": 0.0926,
        "ci95": [
-        0.0788,
-        0.0931
+        0.0853,
+        0.1006
        ],
        "n": 80
       },
       "wer": {
-       "value": 0.169,
+       "value": 0.181,
        "ci95": [
-        0.1571,
-        0.1816
+        0.169,
+        0.194
        ],
        "n": 80
       },
       "number_recall": {
-       "value": 0.4723,
+       "value": 0.4544,
        "ci95": [
-        0.4549,
-        0.4891
+        0.4403,
+        0.4681
        ],
        "n": 80
       },
       "silent_loss": {
-       "value": 0.0786,
+       "value": 0.0844,
        "ci95": [
-        0.0727,
-        0.0853
+        0.0783,
+        0.0912
        ],
        "n": 80
       }
      },
      "docling": {
-      "documents": 316,
+      "documents": 317,
       "cer": {
-       "value": 0.2157,
+       "value": 0.2182,
        "ci95": [
-        0.1922,
-        0.2418
+        0.1954,
+        0.2431
        ],
-       "n": 316
+       "n": 317
       },
       "wer": {
-       "value": 0.7253,
+       "value": 0.7544,
        "ci95": [
-        0.7141,
-        0.7367
+        0.744,
+        0.7653
        ],
-       "n": 316
+       "n": 317
       },
       "number_recall": {
-       "value": 0.9663,
+       "value": 0.9686,
        "ci95": [
-        0.9558,
-        0.9756
+        0.9588,
+        0.9775
        ],
-       "n": 316
+       "n": 317
       },
       "silent_loss": {
-       "value": 0.135,
+       "value": 0.1338,
        "ci95": [
-        0.1094,
-        0.1643
+        0.1088,
+        0.162
        ],
-       "n": 316
+       "n": 317
       }
      },
      "markitdown": {
-      "documents": 316,
+      "documents": 317,
       "cer": {
-       "value": 0.5671,
+       "value": 0.5387,
        "ci95": [
-        0.535,
-        0.5981
+        0.5073,
+        0.5692
        ],
-       "n": 316
+       "n": 317
       },
       "wer": {
-       "value": 0.7359,
+       "value": 0.7053,
        "ci95": [
-        0.6969,
-        0.7718
+        0.6678,
+        0.7408
        ],
-       "n": 316
+       "n": 317
       },
       "number_recall": {
-       "value": 0.9906,
+       "value": 0.9891,
        "ci95": [
-        0.9874,
-        0.9934
+        0.9856,
+        0.9923
        ],
-       "n": 316
+       "n": 317
       },
       "silent_loss": {
-       "value": 0.4091,
+       "value": 0.3855,
        "ci95": [
-        0.3854,
-        0.4325
+        0.3629,
+        0.4083
        ],
-       "n": 316
+       "n": 317
       }
      },
      "pymupdf4llm": {
-      "documents": 316,
+      "documents": 317,
       "cer": {
-       "value": 0.3212,
+       "value": 0.3214,
        "ci95": [
-        0.3156,
-        0.3265
+        0.3152,
+        0.328
        ],
-       "n": 316
+       "n": 317
       },
       "wer": {
-       "value": 0.4561,
+       "value": 0.4617,
        "ci95": [
-        0.4472,
-        0.4649
+        0.4524,
+        0.4713
        ],
-       "n": 316
+       "n": 317
       },
       "number_recall": {
-       "value": 0.9106,
+       "value": 0.9103,
        "ci95": [
-        0.9058,
-        0.9156
+        0.9061,
+        0.9145
        ],
-       "n": 316
+       "n": 317
       },
       "silent_loss": {
-       "value": 0.2176,
+       "value": 0.2144,
        "ci95": [
-        0.2133,
-        0.2221
+        0.2101,
+        0.2188
        ],
-       "n": 316
+       "n": 317
       }
      }
     },
@@ -378,16 +828,16 @@
       "cer": {
        "value": 0.0002,
        "ci95": [
-        0.0001,
-        0.0005
+        0.0,
+        0.0003
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.0005,
+       "value": 0.0004,
        "ci95": [
         0.0001,
-        0.0009
+        0.0008
        ],
        "n": 40
       },
@@ -400,10 +850,10 @@
        "n": 40
       },
       "silent_loss": {
-       "value": 0.0002,
+       "value": 0.0001,
        "ci95": [
-        0.0001,
-        0.0004
+        0.0,
+        0.0003
        ],
        "n": 40
       }
@@ -411,34 +861,34 @@
      "docling": {
       "documents": 40,
       "cer": {
-       "value": 0.1064,
+       "value": 0.111,
        "ci95": [
-        0.0966,
-        0.1161
+        0.1023,
+        0.1196
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.1904,
+       "value": 0.1983,
        "ci95": [
-        0.1789,
-        0.2023
+        0.1878,
+        0.2084
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.9551,
+       "value": 0.9539,
        "ci95": [
-        0.9441,
-        0.9645
+        0.9471,
+        0.9607
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.0697,
+       "value": 0.071,
        "ci95": [
-        0.0628,
-        0.0769
+        0.0647,
+        0.0776
        ],
        "n": 40
       }
@@ -446,17 +896,17 @@
      "markitdown": {
       "documents": 40,
       "cer": {
-       "value": 0.7828,
+       "value": 0.7829,
        "ci95": [
-        0.7799,
-        0.7858
+        0.7803,
+        0.7852
        ],
        "n": 40
       },
       "wer": {
        "value": 0.987,
        "ci95": [
-        0.9848,
+        0.9845,
         0.9892
        ],
        "n": 40
@@ -470,10 +920,10 @@
        "n": 40
       },
       "silent_loss": {
-       "value": 0.6088,
+       "value": 0.62,
        "ci95": [
-        0.5846,
-        0.6354
+        0.592,
+        0.6472
        ],
        "n": 40
       }
@@ -481,34 +931,34 @@
      "pymupdf4llm": {
       "documents": 40,
       "cer": {
-       "value": 0.7117,
+       "value": 0.709,
        "ci95": [
-        0.7087,
-        0.7145
+        0.7053,
+        0.7128
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.9142,
+       "value": 0.9136,
        "ci95": [
-        0.912,
-        0.9163
+        0.9103,
+        0.9168
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 1.0,
+       "value": 0.9997,
        "ci95": [
-        1.0,
+        0.9991,
         1.0
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.5155,
+       "value": 0.5075,
        "ci95": [
-        0.5056,
-        0.5269
+        0.4968,
+        0.5181
        ],
        "n": 40
       }
@@ -517,130 +967,25 @@
     "verdict": "supported"
    },
    "PDF T3": {
-    "documents": 146,
+    "documents": 151,
     "readers": {
      "heocr": {
-      "documents": 146,
+      "documents": 151,
       "cer": {
-       "value": 0.0016,
+       "value": 0.0011,
        "ci95": [
-        0.001,
-        0.0024
+        0.0008,
+        0.0015
        ],
-       "n": 146
+       "n": 151
       },
       "wer": {
-       "value": 0.0063,
+       "value": 0.0048,
        "ci95": [
-        0.0043,
-        0.0086
+        0.0035,
+        0.0063
        ],
-       "n": 146
-      },
-      "number_recall": {
-       "value": 0.9987,
-       "ci95": [
-        0.9963,
-        1.0
-       ],
-       "n": 146
-      },
-      "silent_loss": {
-       "value": 0.0014,
-       "ci95": [
-        0.001,
-        0.0019
-       ],
-       "n": 146
-      }
-     },
-     "stock": {
-      "documents": 66,
-      "cer": {
-       "value": 0.0925,
-       "ci95": [
-        0.085,
-        0.1004
-       ],
-       "n": 66
-      },
-      "wer": {
-       "value": 0.1942,
-       "ci95": [
-        0.1816,
-        0.2077
-       ],
-       "n": 66
-      },
-      "number_recall": {
-       "value": 0.4693,
-       "ci95": [
-        0.4507,
-        0.4874
-       ],
-       "n": 66
-      },
-      "silent_loss": {
-       "value": 0.0847,
-       "ci95": [
-        0.0785,
-        0.0916
-       ],
-       "n": 66
-      }
-     },
-     "docling": {
-      "documents": 146,
-      "cer": {
-       "value": 0.787,
-       "ci95": [
-        0.7056,
-        0.8721
-       ],
-       "n": 146
-      },
-      "wer": {
-       "value": 2.7656,
-       "ci95": [
-        2.5173,
-        3.0334
-       ],
-       "n": 146
-      },
-      "number_recall": {
-       "value": 0.9952,
-       "ci95": [
-        0.9927,
-        0.9974
-       ],
-       "n": 146
-      },
-      "silent_loss": {
-       "value": 0.4064,
-       "ci95": [
-        0.3587,
-        0.4554
-       ],
-       "n": 146
-      }
-     },
-     "markitdown": {
-      "documents": 146,
-      "cer": {
-       "value": 0.7071,
-       "ci95": [
-        0.667,
-        0.7453
-       ],
-       "n": 146
-      },
-      "wer": {
-       "value": 0.882,
-       "ci95": [
-        0.8417,
-        0.9216
-       ],
-       "n": 146
+       "n": 151
       },
       "number_recall": {
        "value": 1.0,
@@ -648,50 +993,155 @@
         1.0,
         1.0
        ],
-       "n": 146
+       "n": 151
       },
       "silent_loss": {
-       "value": 0.5915,
+       "value": 0.001,
        "ci95": [
-        0.5541,
-        0.6288
+        0.0007,
+        0.0014
        ],
-       "n": 146
+       "n": 151
+      }
+     },
+     "stock": {
+      "documents": 71,
+      "cer": {
+       "value": 0.0995,
+       "ci95": [
+        0.0926,
+        0.1065
+       ],
+       "n": 71
+      },
+      "wer": {
+       "value": 0.2057,
+       "ci95": [
+        0.1943,
+        0.2165
+       ],
+       "n": 71
+      },
+      "number_recall": {
+       "value": 0.4501,
+       "ci95": [
+        0.4349,
+        0.4645
+       ],
+       "n": 71
+      },
+      "silent_loss": {
+       "value": 0.0896,
+       "ci95": [
+        0.0844,
+        0.0949
+       ],
+       "n": 71
+      }
+     },
+     "docling": {
+      "documents": 151,
+      "cer": {
+       "value": 0.7668,
+       "ci95": [
+        0.6845,
+        0.8496
+       ],
+       "n": 151
+      },
+      "wer": {
+       "value": 2.7267,
+       "ci95": [
+        2.473,
+        2.9767
+       ],
+       "n": 151
+      },
+      "number_recall": {
+       "value": 0.9967,
+       "ci95": [
+        0.9953,
+        0.998
+       ],
+       "n": 151
+      },
+      "silent_loss": {
+       "value": 0.3925,
+       "ci95": [
+        0.3448,
+        0.4404
+       ],
+       "n": 151
+      }
+     },
+     "markitdown": {
+      "documents": 151,
+      "cer": {
+       "value": 0.6712,
+       "ci95": [
+        0.63,
+        0.7114
+       ],
+       "n": 151
+      },
+      "wer": {
+       "value": 0.8512,
+       "ci95": [
+        0.8071,
+        0.8939
+       ],
+       "n": 151
+      },
+      "number_recall": {
+       "value": 1.0,
+       "ci95": [
+        1.0,
+        1.0
+       ],
+       "n": 151
+      },
+      "silent_loss": {
+       "value": 0.5652,
+       "ci95": [
+        0.5262,
+        0.6018
+       ],
+       "n": 151
       }
      },
      "pymupdf4llm": {
-      "documents": 146,
+      "documents": 151,
       "cer": {
-       "value": 0.6574,
+       "value": 0.6508,
        "ci95": [
-        0.6161,
-        0.7016
+        0.6073,
+        0.6921
        ],
-       "n": 146
+       "n": 151
       },
       "wer": {
-       "value": 0.8745,
+       "value": 0.8731,
        "ci95": [
-        0.8116,
-        0.9485
+        0.8093,
+        0.9446
        ],
-       "n": 146
+       "n": 151
       },
       "number_recall": {
-       "value": 0.9499,
+       "value": 0.9481,
        "ci95": [
-        0.942,
-        0.9573
+        0.9411,
+        0.9554
        ],
-       "n": 146
+       "n": 151
       },
       "silent_loss": {
-       "value": 0.5371,
+       "value": 0.5284,
        "ci95": [
-        0.4978,
-        0.5804
+        0.4875,
+        0.5676
        ],
-       "n": 146
+       "n": 151
       }
      }
     },
@@ -703,34 +1153,34 @@
      "heocr": {
       "documents": 40,
       "cer": {
-       "value": 0.0577,
+       "value": 0.0126,
        "ci95": [
-        0.0283,
-        0.1126
+        0.011,
+        0.0144
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.1373,
+       "value": 0.0434,
        "ci95": [
-        0.0753,
-        0.2549
+        0.0397,
+        0.0474
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.7881,
+       "value": 0.948,
        "ci95": [
-        0.7589,
-        0.8161
+        0.9387,
+        0.9572
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.0208,
+       "value": 0.0086,
        "ci95": [
-        0.0156,
-        0.0283
+        0.0074,
+        0.0101
        ],
        "n": 40
       }
@@ -738,34 +1188,34 @@
      "stock": {
       "documents": 40,
       "cer": {
-       "value": 0.08,
+       "value": 0.0856,
        "ci95": [
-        0.0698,
-        0.0896
+        0.0745,
+        0.0986
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.1454,
+       "value": 0.1559,
        "ci95": [
-        0.1299,
-        0.1606
+        0.1404,
+        0.1725
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.4751,
+       "value": 0.4616,
        "ci95": [
-        0.4517,
-        0.4982
+        0.4429,
+        0.4803
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.0737,
+       "value": 0.0788,
        "ci95": [
-        0.0647,
-        0.0826
+        0.0692,
+        0.0903
        ],
        "n": 40
       }
@@ -773,34 +1223,34 @@
      "docling": {
       "documents": 40,
       "cer": {
-       "value": 0.8145,
+       "value": 0.8125,
        "ci95": [
-        0.8109,
-        0.8181
+        0.8079,
+        0.8167
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.9736,
+       "value": 0.9743,
        "ci95": [
-        0.9715,
-        0.9759
+        0.9722,
+        0.9764
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.6919,
+       "value": 0.6995,
        "ci95": [
-        0.6669,
-        0.7149
+        0.6685,
+        0.7272
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.7933,
+       "value": 0.7803,
        "ci95": [
-        0.7857,
-        0.8
+        0.77,
+        0.7908
        ],
        "n": 40
       }
@@ -808,34 +1258,34 @@
      "markitdown": {
       "documents": 40,
       "cer": {
-       "value": 0.8136,
+       "value": 0.8084,
        "ci95": [
-        0.8012,
-        0.8246
+        0.794,
+        0.8221
        ],
        "n": 40
       },
       "wer": {
-       "value": 1.0208,
+       "value": 1.028,
        "ci95": [
-        1.0124,
-        1.0295
+        1.018,
+        1.0377
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.1646,
+       "value": 0.1538,
        "ci95": [
-        0.146,
-        0.1841
+        0.1245,
+        0.1848
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.6593,
+       "value": 0.6634,
        "ci95": [
-        0.6395,
-        0.6799
+        0.6424,
+        0.6844
        ],
        "n": 40
       }
@@ -843,49 +1293,40 @@
      "pymupdf4llm": {
       "documents": 40,
       "cer": {
-       "value": 0.8084,
+       "value": 0.8097,
        "ci95": [
-        0.8008,
-        0.8156
+        0.8,
+        0.8181
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.9966,
+       "value": 0.9961,
        "ci95": [
-        0.994,
-        0.9996
+        0.9935,
+        0.9998
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.1456,
+       "value": 0.1351,
        "ci95": [
-        0.1279,
-        0.1646
+        0.1102,
+        0.1616
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.6192,
+       "value": 0.6125,
        "ci95": [
-        0.6066,
-        0.6344
+        0.5999,
+        0.6262
        ],
        "n": 40
       }
      }
     },
-    "verdict": "not_supported",
-    "gate_failed": [
-     {
-      "baseline": "stock",
-      "measure": "cer",
-      "delta": -2.225,
-      "upper_97_5": 3.633,
-      "margin": 0.5
-     }
-    ]
+    "verdict": "supported"
    },
    "PDF T5": {
     "documents": 40,
@@ -893,34 +1334,34 @@
      "heocr": {
       "documents": 40,
       "cer": {
-       "value": 0.0547,
+       "value": 0.0126,
        "ci95": [
-        0.0274,
-        0.1093
+        0.011,
+        0.0144
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.1332,
+       "value": 0.0434,
        "ci95": [
-        0.0735,
-        0.2514
+        0.0397,
+        0.0474
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.7911,
+       "value": 0.948,
        "ci95": [
-        0.7619,
-        0.8182
+        0.9387,
+        0.9572
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.0179,
+       "value": 0.0086,
        "ci95": [
-        0.0151,
-        0.0207
+        0.0074,
+        0.0101
        ],
        "n": 40
       }
@@ -928,34 +1369,34 @@
      "stock": {
       "documents": 40,
       "cer": {
-       "value": 0.08,
+       "value": 0.0856,
        "ci95": [
-        0.0698,
-        0.0896
+        0.0745,
+        0.0986
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.1454,
+       "value": 0.1559,
        "ci95": [
-        0.1299,
-        0.1606
+        0.1404,
+        0.1725
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.4751,
+       "value": 0.4616,
        "ci95": [
-        0.4517,
-        0.4982
+        0.4429,
+        0.4803
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.0737,
+       "value": 0.0788,
        "ci95": [
-        0.0647,
-        0.0826
+        0.0692,
+        0.0903
        ],
        "n": 40
       }
@@ -963,34 +1404,34 @@
      "docling": {
       "documents": 40,
       "cer": {
-       "value": 0.841,
+       "value": 0.8377,
        "ci95": [
-        0.8355,
-        0.8469
+        0.832,
+        0.8432
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.9713,
+       "value": 0.9724,
        "ci95": [
-        0.9691,
-        0.9736
+        0.9702,
+        0.9745
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.6804,
+       "value": 0.6919,
        "ci95": [
-        0.6526,
-        0.7051
+        0.6596,
+        0.7204
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.8228,
+       "value": 0.8147,
        "ci95": [
-        0.8148,
-        0.8305
+        0.8036,
+        0.8248
        ],
        "n": 40
       }
@@ -1033,56 +1474,40 @@
      "pymupdf4llm": {
       "documents": 40,
       "cer": {
-       "value": 0.8292,
+       "value": 0.8293,
        "ci95": [
-        0.8275,
-        0.8311
+        0.8274,
+        0.8312
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.9904,
+       "value": 0.9916,
        "ci95": [
-        0.9888,
-        0.9924
+        0.9898,
+        0.994
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.7338,
+       "value": 0.7219,
        "ci95": [
-        0.6993,
-        0.7666
+        0.6964,
+        0.7478
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.7857,
+       "value": 0.7784,
        "ci95": [
-        0.78,
-        0.7921
+        0.7718,
+        0.7849
        ],
        "n": 40
       }
      }
     },
-    "verdict": "not_supported",
-    "gate_failed": [
-     {
-      "baseline": "stock",
-      "measure": "cer",
-      "delta": -3.385,
-      "upper_97_5": 0.514,
-      "margin": 0.5
-     },
-     {
-      "baseline": "pymupdf4llm",
-      "measure": "number_recall",
-      "delta": 3.113,
-      "upper_97_5": 9.407,
-      "margin": 1.0
-     }
-    ]
+    "verdict": "supported"
    },
    "PDF T6": {
     "documents": 40,
@@ -1090,42 +1515,42 @@
      "heocr": {
       "documents": 40,
       "cer": {
-       "value": 0.0023,
+       "value": 0.0013,
        "ci95": [
-        0.0008,
-        0.0044
+        0.0001,
+        0.0031
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.0034,
+       "value": 0.0015,
        "ci95": [
-        0.0019,
-        0.0055
+        0.0002,
+        0.0033
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.9967,
+       "value": 0.9992,
        "ci95": [
-        0.9944,
-        0.9985
+        0.9976,
+        1.0
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.0014,
+       "value": 0.0012,
        "ci95": [
         0.0001,
-        0.0034
+        0.0031
        ],
        "n": 40
       },
       "image_word_recall": {
-       "value": 0.9575,
+       "value": 0.9802,
        "ci95": [
-        0.9249,
-        0.9807
+        0.9473,
+        1.0
        ],
        "n": 40
       }
@@ -1133,10 +1558,10 @@
      "stock": {
       "documents": 40,
       "image_word_recall": {
-       "value": 0.6187,
+       "value": 0.5821,
        "ci95": [
-        0.5879,
-        0.6606
+        0.5538,
+        0.6163
        ],
        "n": 40
       }
@@ -1144,42 +1569,42 @@
      "docling": {
       "documents": 40,
       "cer": {
-       "value": 0.1335,
+       "value": 0.1413,
        "ci95": [
-        0.126,
-        0.1416
+        0.1344,
+        0.1483
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.682,
+       "value": 0.7214,
        "ci95": [
-        0.661,
-        0.7032
+        0.7011,
+        0.7412
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.9985,
+       "value": 0.9977,
        "ci95": [
-        0.9964,
-        1.0
+        0.9957,
+        0.9994
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.0456,
+       "value": 0.0518,
        "ci95": [
-        0.039,
-        0.0521
+        0.0463,
+        0.0576
        ],
        "n": 40
       },
       "image_word_recall": {
-       "value": 0.6753,
+       "value": 0.6825,
        "ci95": [
-        0.6119,
-        0.7383
+        0.6279,
+        0.733
        ],
        "n": 40
       }
@@ -1187,42 +1612,42 @@
      "markitdown": {
       "documents": 40,
       "cer": {
-       "value": 0.4434,
+       "value": 0.4399,
        "ci95": [
-        0.3574,
-        0.5285
+        0.3563,
+        0.5248
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.5796,
+       "value": 0.5788,
        "ci95": [
-        0.4742,
-        0.684
+        0.4784,
+        0.6813
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.8921,
+       "value": 0.8869,
        "ci95": [
-        0.8762,
-        0.907
+        0.8706,
+        0.9014
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.3224,
+       "value": 0.3126,
        "ci95": [
-        0.2607,
-        0.3844
+        0.2562,
+        0.3721
        ],
        "n": 40
       },
       "image_word_recall": {
-       "value": 0.1547,
+       "value": 0.161,
        "ci95": [
-        0.0982,
-        0.2174
+        0.1073,
+        0.2155
        ],
        "n": 40
       }
@@ -1230,42 +1655,42 @@
      "pymupdf4llm": {
       "documents": 40,
       "cer": {
-       "value": 0.3319,
+       "value": 0.3292,
        "ci95": [
-        0.3179,
-        0.3453
+        0.3135,
+        0.344
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.4454,
+       "value": 0.4466,
        "ci95": [
-        0.428,
-        0.463
+        0.4279,
+        0.4631
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.8031,
+       "value": 0.7945,
        "ci95": [
-        0.7858,
-        0.8207
+        0.777,
+        0.8119
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.2395,
+       "value": 0.2371,
        "ci95": [
-        0.2241,
-        0.2549
+        0.2232,
+        0.2521
        ],
        "n": 40
       },
       "image_word_recall": {
-       "value": 0.2538,
+       "value": 0.2536,
        "ci95": [
-        0.1953,
-        0.3161
+        0.2036,
+        0.3039
        ],
        "n": 40
       }
@@ -1286,16 +1711,16 @@
       "cer": {
        "value": 0.0002,
        "ci95": [
-        0.0001,
-        0.0005
+        0.0,
+        0.0003
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.0005,
+       "value": 0.0004,
        "ci95": [
         0.0001,
-        0.0009
+        0.0008
        ],
        "n": 40
       },
@@ -1308,10 +1733,10 @@
        "n": 40
       },
       "silent_loss": {
-       "value": 0.0002,
+       "value": 0.0001,
        "ci95": [
         0.0,
-        0.0004
+        0.0003
        ],
        "n": 40
       }
@@ -1319,34 +1744,34 @@
      "docling": {
       "documents": 40,
       "cer": {
-       "value": 0.7177,
+       "value": 0.7497,
        "ci95": [
-        0.6629,
-        0.7605
+        0.704,
+        0.7875
        ],
        "n": 40
       },
       "wer": {
-       "value": 1.2141,
+       "value": 1.2749,
        "ci95": [
-        1.1583,
-        1.2564
+        1.2317,
+        1.3107
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.9976,
+       "value": 0.9977,
        "ci95": [
-        0.9945,
-        1.0
+        0.9953,
+        0.9997
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.0431,
+       "value": 0.0436,
        "ci95": [
-        0.0358,
-        0.0501
+        0.0378,
+        0.0495
        ],
        "n": 40
       }
@@ -1354,18 +1779,18 @@
      "markitdown": {
       "documents": 40,
       "cer": {
-       "value": 0.7474,
+       "value": 0.7644,
        "ci95": [
-        0.7072,
-        0.7793
+        0.7286,
+        0.7921
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.9175,
+       "value": 0.9515,
        "ci95": [
-        0.8638,
-        0.9604
+        0.9076,
+        0.986
        ],
        "n": 40
       },
@@ -1378,10 +1803,10 @@
        "n": 40
       },
       "silent_loss": {
-       "value": 0.2538,
+       "value": 0.2746,
        "ci95": [
-        0.1954,
-        0.3149
+        0.2175,
+        0.3356
        ],
        "n": 40
       }
@@ -1389,34 +1814,34 @@
      "pymupdf4llm": {
       "documents": 40,
       "cer": {
-       "value": 0.7462,
+       "value": 0.7526,
        "ci95": [
-        0.7091,
-        0.7734
+        0.7247,
+        0.7755
        ],
        "n": 40
       },
       "wer": {
-       "value": 0.9145,
+       "value": 0.9292,
        "ci95": [
-        0.8683,
-        0.9493
+        0.894,
+        0.958
        ],
        "n": 40
       },
       "number_recall": {
-       "value": 0.9099,
+       "value": 0.9084,
        "ci95": [
-        0.8956,
-        0.9242
+        0.8975,
+        0.9197
        ],
        "n": 40
       },
       "silent_loss": {
-       "value": 0.2037,
+       "value": 0.2012,
        "ci95": [
-        0.192,
-        0.2144
+        0.1899,
+        0.2124
        ],
        "n": 40
       }
@@ -1430,34 +1855,34 @@
      "heocr": {
       "documents": 120,
       "cer": {
-       "value": 0.0138,
+       "value": 0.0038,
        "ci95": [
-        0.0117,
-        0.0162
+        0.0032,
+        0.0044
        ],
        "n": 120
       },
       "number_recall": {
-       "value": 0.9764,
+       "value": 0.9952,
        "ci95": [
-        0.9711,
-        0.9815
+        0.9931,
+        0.9972
        ],
        "n": 120
       },
       "rows_read": {
-       "value": 0.9585,
+       "value": 0.9974,
        "ci95": [
-        0.9462,
-        0.9702
+        0.9939,
+        1.0
        ],
        "n": 120
       },
       "rows_silent": {
-       "value": 0.0006,
+       "value": 0.0,
        "ci95": [
         0.0,
-        0.0019
+        0.0
        ],
        "n": 120
       }
@@ -1465,34 +1890,34 @@
      "stock": {
       "documents": 120,
       "cer": {
-       "value": 0.5947,
+       "value": 0.5591,
        "ci95": [
-        0.5697,
-        0.6188
+        0.5292,
+        0.5872
        ],
        "n": 120
       },
       "number_recall": {
-       "value": 0.1326,
+       "value": 0.133,
        "ci95": [
-        0.124,
-        0.1408
+        0.1243,
+        0.1416
        ],
        "n": 120
       },
       "rows_read": {
-       "value": 0.0226,
+       "value": 0.0317,
        "ci95": [
-        0.0144,
-        0.0309
+        0.0224,
+        0.0414
        ],
        "n": 120
       },
       "rows_silent": {
-       "value": 0.9774,
+       "value": 0.9683,
        "ci95": [
-        0.9691,
-        0.9856
+        0.9586,
+        0.9776
        ],
        "n": 120
       }
@@ -1500,34 +1925,34 @@
      "docling": {
       "documents": 120,
       "cer": {
-       "value": 0.6969,
+       "value": 0.7062,
        "ci95": [
-        0.6925,
-        0.7011
+        0.702,
+        0.7108
        ],
        "n": 120
       },
       "number_recall": {
-       "value": 0.9607,
+       "value": 0.9494,
        "ci95": [
-        0.9538,
-        0.9669
+        0.942,
+        0.9564
        ],
        "n": 120
       },
       "rows_read": {
-       "value": 0.0232,
+       "value": 0.0258,
        "ci95": [
-        0.0172,
-        0.0295
+        0.0194,
+        0.0331
        ],
        "n": 120
       },
       "rows_silent": {
-       "value": 0.9768,
+       "value": 0.9742,
        "ci95": [
-        0.9705,
-        0.9828
+        0.9669,
+        0.9806
        ],
        "n": 120
       }
@@ -1570,18 +1995,18 @@
      "pymupdf4llm": {
       "documents": 120,
       "cer": {
-       "value": 0.9092,
+       "value": 0.9112,
        "ci95": [
-        0.906,
-        0.9124
+        0.9074,
+        0.9153
        ],
        "n": 120
       },
       "number_recall": {
-       "value": 0.0319,
+       "value": 0.0321,
        "ci95": [
-        0.0258,
-        0.0386
+        0.0267,
+        0.0375
        ],
        "n": 120
       },
@@ -1607,15 +2032,92 @@
    }
   },
   "gate_run": {
-   "name": "gate-rc1",
-   "heocr": "0.1.0rc1",
-   "commit": "57e58deb3a230a86b07e9fdf110223cac9fbf471",
-   "scored": "2026-11-19",
-   "set": "a fresh generated set, seeded after the code was frozen (registration amendment 6)",
+   "name": "gate-rc2",
+   "heocr": "0.2.0rc1",
+   "commit": "9d99d5ef33135e3fba24413f27fa704d16a0d805",
+   "scored": "2026-11-20",
+   "set": "a fresh generated set, seeded after the code was frozen (registration amendment 7, seed commit babc949)",
    "rule": "a type is supported when, against every applicable baseline and gate measure, the one-sided 97.5% upper bound of the paired document bootstrap of heocr minus baseline (larger = worse for heocr) is within the registered margin; a reference-free check on the real test split can then hold a type back",
    "units": "points"
   },
-  "heldout": true
+  "heldout": true,
+  "model_effect": {
+   "what": "heocr with its default model (heocr_modern_v1) against the same heocr with stock tessdata_best heb, on the same documents; paired document bootstrap, 10,000 resamples, two-sided 95%",
+   "rows": [
+    {
+     "cell": "PDF T4",
+     "measure": "cer",
+     "docs": 40,
+     "heocr": 1.257,
+     "heocr_stockheb": 3.269,
+     "delta": -2.012,
+     "ci95": [
+      -2.266,
+      -1.748
+     ]
+    },
+    {
+     "cell": "PDF T4",
+     "measure": "number_recall",
+     "docs": 40,
+     "heocr": 5.201,
+     "heocr_stockheb": 22.696,
+     "delta": -17.496,
+     "ci95": [
+      -19.583,
+      -15.458
+     ]
+    },
+    {
+     "cell": "PDF T6",
+     "measure": "cer",
+     "docs": 40,
+     "heocr": 0.127,
+     "heocr_stockheb": 0.189,
+     "delta": -0.062,
+     "ci95": [
+      -0.095,
+      -0.032
+     ]
+    },
+    {
+     "cell": "PDF T6",
+     "measure": "number_recall",
+     "docs": 40,
+     "heocr": 0.085,
+     "heocr_stockheb": 0.311,
+     "delta": -0.226,
+     "ci95": [
+      -0.388,
+      -0.085
+     ]
+    },
+    {
+     "cell": "Scanned tables",
+     "measure": "cer",
+     "docs": 120,
+     "heocr": 0.377,
+     "heocr_stockheb": 1.427,
+     "delta": -1.05,
+     "ci95": [
+      -1.234,
+      -0.87
+     ]
+    },
+    {
+     "cell": "Scanned tables",
+     "measure": "number_recall",
+     "docs": 120,
+     "heocr": 0.485,
+     "heocr_stockheb": 2.182,
+     "delta": -1.697,
+     "ci95": [
+      -2.113,
+      -1.297
+     ]
+    }
+   ]
+  }
  },
  "vendors": {
   "status": "pending_review"
