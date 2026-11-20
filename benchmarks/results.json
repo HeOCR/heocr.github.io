@@ -458,7 +458,7 @@
   "status": "scored",
   "scored": "2026-11-20",
   "set": "ivritai-hw-bench-lines-v0: 225 handwritten Hebrew lines by 10 writers (phone photos), ivrit.ai Hebrew handwriting OCR benchmark, test split",
-  "registration": "ivritai_hw_lines_v0_2026-11-20; one registered run 2026-11-20 (heocr 0.2.0rc1)",
+  "registration": "ivritai_hw_lines_v0_2026-11-20; one registered run 2026-11-20 (heocr 0.2.0rc1; heocr 0.2.0 (identical to rc1, wheel-diff #131): byte-identical outputs, addendum 1)",
   "measure": "line CER and WER under line_fold_v1, ratio of sums over all 225 lines, blank outputs included; words found = mean share of a line's reference words present in the output",
   "interval": "95% percentile bootstrap over the 10 writers (2,000 resamples, seed 0)",
   "source": {
@@ -530,7 +530,7 @@
   "status": "scored",
   "gate": "run",
   "run": "gate-rc2-synth-r2",
-  "heocr": "heocr 0.2.0rc1 from PyPI, heocr-0.2.0rc1-py3-none-any.whl sha256 45241dcba385cb82b5ef19840a8aaef983a674cbd9c1b7e46bd2f29b8398849c (tag v0.2.0rc1, HeOCR/heocr 9d99d5ef33135e3fba24413f27fa704d16a0d805; the release candidate, gate amendment 7)",
+  "heocr": "heocr 0.2.0 (identical to rc1, wheel-diff #131); measured as heocr 0.2.0rc1 from PyPI, heocr-0.2.0rc1-py3-none-any.whl sha256 45241dcba385cb82b5ef19840a8aaef983a674cbd9c1b7e46bd2f29b8398849c (tag v0.2.0rc1, HeOCR/heocr 9d99d5ef33135e3fba24413f27fa704d16a0d805; the release candidate, gate amendment 7)",
   "baselines": {
    "stock": {
     "ocr": "tesseract 5.5, heb tessdata_best e12c65a (sha256 dbaa827a), psm 3, pages at 300 dpi gray (pdftoppm)"
@@ -2098,12 +2098,13 @@
   },
   "gate_run": {
    "name": "gate-rc2",
-   "heocr": "0.2.0rc1",
+   "heocr": "0.2.0",
    "commit": "9d99d5ef33135e3fba24413f27fa704d16a0d805",
    "scored": "2026-11-20",
    "set": "a fresh generated set, seeded after the code was frozen (registration amendment 7, seed commit babc949)",
    "rule": "a type is supported when, against every applicable baseline and gate measure, the one-sided 97.5% upper bound of the paired document bootstrap of heocr minus baseline (larger = worse for heocr) is within the registered margin; a reference-free check on the real test split can then hold a type back",
-   "units": "points"
+   "units": "points",
+   "heocr_note": "identical to rc1, wheel-diff #131"
   },
   "heldout": true,
   "model_effect": {
