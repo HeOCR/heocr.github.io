@@ -55,6 +55,7 @@
       <div class="card">
         <h3>R7 · Tesseract fine-tune, more books</h3>
         <p>Same recipe as R6, on 95k real lines from 30 public-domain books: 7 National Library of Israel scans and 23 university-library scans on the Internet Archive. It reads single lines better than R6, with about a quarter fewer character errors on held-out books. On the same 38 pages, page-level error is a tie with R6: 20.9% character error and 39.3% word error, against 22.6% and 47.3% for stock Tesseract. R6 remains valid. Use <code>-l heocr_r7</code>.</p>
+        <p>R7 checkpoint selection used 7,092 development rows from two sources now reserved in line_verify. R7 and its verified descendants carry that exposure. Comparisons on those sources are selection-exposed.</p>
         <div class="meta"><span>Apache-2.0</span><span>Tesseract 5</span></div>
         <div class="row">
           <a href="https://huggingface.co/HeOCR/heocr-r7-tesseract-heb">Hugging Face</a>
