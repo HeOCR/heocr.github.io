@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HeOCR benchmarks</title>
-<meta name="description" content="How HeOCR reads real Hebrew pages, next to other open tools: figures from real-world held-out sets only.">
+<meta name="description" content="Real-world held-out benchmarks, with open sets first.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HeOCR">
 <meta property="og:title" content="HeOCR benchmarks">
-<meta property="og:description" content="How HeOCR reads real Hebrew pages, next to other open tools: figures from real-world held-out sets only.">
+<meta property="og:description" content="Real-world held-out benchmarks, with open sets first.">
 <meta property="og:url" content="https://heocr.org/en/benchmarks.html">
 <meta property="og:image" content="https://heocr.org/og-image-en-1200x630.png">
 <meta property="og:image:width" content="1200">
@@ -45,41 +45,31 @@
 <main id="main" class="bench">
 <div class="band gridband"><div class="wrap page-head">
 <h1><span class="bb" data-tag="h1 · 0.99">HeOCR benchmarks</span></h1>
-<p class="lede">How HeOCR reads real Hebrew pages, next to other open tools. Every figure gives its sample size, a 95% interval, the measure, the reference and the run it comes from. The page is built from one file, <a href="../benchmarks/results.json">results.json</a>, which is updated after each scored run.</p>
-<p class="note">We will release models or a pipeline version once we outperform existing readers on at least one document type.</p>
-<p class="note">Updated 2026-11-20.</p>
+<p class="lede">Real-world held-out benchmarks, with open sets first.</p><p><a href="methodology.html">Read the benchmark methodology</a></p>
 </div></div>
-<nav class="wrap" aria-label="On this page"><div class="toc"><a href="#p-mod">Modern printed Hebrew<small>Not measured on a held-out set yet</small></a><a href="#p-hist">Historical and rabbinic printed Hebrew<small>Not measured on a held-out set yet</small></a><a href="#handwriting">Handwriting<small>Scored</small></a></div></nav>
-<section id="p-mod" class="wrap domain"><div class="domain-head"><h2>Modern printed Hebrew</h2><span class="status">Not measured on a held-out set yet</span></div></section>
-<section id="p-hist" class="wrap domain">
-<div class="domain-head"><h2>Historical and rabbinic printed Hebrew</h2><span class="status">Not measured on a held-out set yet</span></div>
-<div class="empty">Not measured on a held-out set yet. The historical-print test set is waiting for volunteer references; no figure is shown until it is scored.</div>
-</section>
-<section id="handwriting" class="wrap domain">
-<div class="domain-head"><h2>Handwriting</h2><span class="status scored">Scored <bdi dir="ltr">2026-11-20</bdi></span></div>
-<p class="sub">225 handwritten Hebrew lines by 10 writers, photographed by phone, from ivrit.ai&#x27;s Hebrew handwriting OCR benchmark (test split). Held out: no HeOCR model was trained, tuned or chosen on them. Each reader gets each line image as it is.</p>
-<p class="warn"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6"></circle><path d="M8 7.3v3.5M8 5.1v.1"></path></svg><span>Handwriting is not supported yet. On these held-out lines every reader, ours included, gets most characters wrong. HeOCR&#x27;s own model, trained on print, does worse here than stock Tesseract&#x27;s model (+6.5 points of character error, 95% interval +4.5 to +8.7).</span></p>
-<div class="tablewrap narrow"><table>
-<thead><tr><th scope="col"></th><th scope="col">Character error</th><th scope="col">Word error</th><th scope="col">Words found</th></tr></thead>
-<tbody>
-<tr class="ours"><th scope="row">heocr, one-line mode (heocr_modern_v1)</th><td class="num"><span class="v"><bdi dir="ltr">83.1%</bdi></span><span class="ci"><bdi dir="ltr">79.3–88.0%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">114.2%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.7%</bdi></span></td></tr>
-<tr class="ours"><th scope="row">heocr (heocr_modern_v1, PSM 3)</th><td class="num"><span class="v"><bdi dir="ltr">82.4%</bdi></span><span class="ci"><bdi dir="ltr">78.6–87.1%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">118.7%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.7%</bdi></span></td></tr>
-<tr><th scope="row">heocr with stock Tesseract&#x27;s model</th><td class="num"><span class="v"><bdi dir="ltr">76.6%</bdi></span><span class="ci"><bdi dir="ltr">71.8–82.6%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">114.7%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.8%</bdi></span></td></tr>
-<tr><th scope="row">Tesseract (tessdata_best heb)</th><td class="num"><span class="v"><bdi dir="ltr">75.4%</bdi></span><span class="ci"><bdi dir="ltr">71.0–80.4%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">111.8%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.5%</bdi></span></td></tr>
-<tr><th scope="row">Tesseract (tessdata_fast heb)</th><td class="num"><span class="v"><bdi dir="ltr">79.3%</bdi></span><span class="ci"><bdi dir="ltr">76.0–83.3%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">113.5%</bdi></span></td><td class="num"><span class="v"><bdi dir="ltr">1.0%</bdi></span></td></tr>
+<nav class="wrap" aria-label="On this page"><div class="toc"><a href="#open">Open held-out sets</a><a href="#closed">Closed held-out sets</a></div></nav>
+<section id="open" class="wrap domain"><h2>Open held-out sets</h2><p class="sub">The headline results will use publishable images and references from multiple sources, so others can reproduce them.</p><div class="tablewrap"><table><thead><tr><th scope="col">Category</th><th scope="col">Held-out result</th></tr></thead><tbody><tr><th scope="row">Modern printed, unpointed</th><td>Not measured on a held-out set yet</td></tr>
+<tr><th scope="row">Modern printed, pointed</th><td>Not measured on a held-out set yet</td></tr>
+<tr><th scope="row">Modern handwriting</th><td>Not measured on a held-out set yet</td></tr>
+<tr><th scope="row">Historical printed, unpointed</th><td>Not measured on a held-out set yet</td></tr>
+<tr><th scope="row">Historical printed, pointed</th><td>Not measured on a held-out set yet</td></tr>
+<tr><th scope="row">Historical handwriting</th><td>Not measured on a held-out set yet</td></tr>
 </tbody></table></div>
-<p class="note">No HeOCR model is trained on handwriting. The reference text is ivrit.ai&#x27;s volunteer transcription, not checked by us. With 10 writers, intervals are wide. Word error can pass 100% when a reader writes more wrong words than the line has.</p>
-<p class="note">Data: ivrit.ai Hebrew handwriting OCR benchmark (<a href="https://huggingface.co/datasets/ivrit-ai/hebrew-handwriting-ocr-benchmark">Hugging Face</a>), from <a href="https://transcriptor.ivrit.ai">transcriptor.ivrit.ai</a>; CC BY 4.0 under the ivrit.ai licence; held privately for evaluation only; not covered by any HeOCR licence.</p>
-<details class="method"><summary>Method, reference and run</summary>
-<ul class="facts"><li><strong>Measure:</strong> line CER and WER under line_fold_v1, ratio of sums over all 225 lines, blank outputs included; words found = mean share of a line&#x27;s reference words present in the output</li><li><strong>Interval:</strong> 95% percentile bootstrap over the 10 writers (2,000 resamples, seed 0)</li><li><strong>Run:</strong> ivritai_hw_lines_v0_2026-11-20; one registered run 2026-11-20 (heocr 0.2.0rc1; heocr 0.2.0 (identical to 0.2.0rc1, verified by wheel diff): byte-identical outputs, addendum 1)</li></ul>
-</details>
 </section>
-</main>
+<section id="closed" class="wrap domain"><details class="method"><summary>Closed held-out sets</summary><p>Closed sets may include private sources. They will also be reported, but cannot be independently reproduced in full.</p><div class="tablewrap"><table><thead><tr><th scope="col">Category</th><th scope="col">Held-out result</th></tr></thead><tbody><tr><th scope="row">Modern printed, unpointed</th><td>Not measured on a held-out set yet</td></tr>
+<tr><th scope="row">Modern printed, pointed</th><td>Not measured on a held-out set yet</td></tr>
+<tr><th scope="row">Modern handwriting</th><td>Not measured on a held-out set yet</td></tr>
+<tr><th scope="row">Historical printed, unpointed</th><td>Not measured on a held-out set yet</td></tr>
+<tr><th scope="row">Historical printed, pointed</th><td>Not measured on a held-out set yet</td></tr>
+<tr><th scope="row">Historical handwriting</th><td>Not measured on a held-out set yet</td></tr>
+</tbody></table></div>
+</details></section>
+<p class="wrap note">Results and comparisons will be added after eligible held-out scoring and review.</p></main>
 <footer class="site-footer">
 <div class="wrap foot">
 <div class="foot-brand">He<b>OCR</b></div>
 <div class="foot-text">
-<p><a href="../benchmarks/results.json">results.json</a> · <a href="./">HeOCR</a></p>
+<p><a href="./">HeOCR</a></p>
 </div>
 </div>
 </footer>
