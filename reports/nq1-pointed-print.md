@@ -14,6 +14,7 @@
 |---|---|---|---|
 | heocr (heocr_modern_v1) | 56.0% | 30.1% | 0% |
 | heocr with heocr_oldprint_v1 | 58.3% | 33.8% | 0% |
+| HeOCR oldprint-v1 inherits R7 checkpoint-selection exposure to 7,092 development rows from two sources now reserved in line_verify. Comparisons on those sources are selection-exposed. | | | |
 | heocr with stock Tesseract's model | 45.8% | 29.5% | 24% |
 | Tesseract (tessdata_best heb) | 43.7% | 25.8% | 25% |
 | Tesseract (tessdata_fast heb) | 40.3% | 25.7% | 33% |
