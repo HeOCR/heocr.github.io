@@ -45,7 +45,7 @@
 <div class="band gridband"><div class="wrap page-head">
 <h1><span class="bb" data-tag="h1 · 0.99">htext</span></h1>
 <p class="lede">Openly licensed Hebrew text for training HeOCR's recognizers, cut into lines, plain and with niqqud: public-domain text first, and attribution and share-alike text in their own releases. Every work or document carries its own rights record: its status in Israel and in the US, its licence and its credit line. htext is published as three releases, one per licence, so you can pick the terms you need; the core release is CC0 and can be used without conditions.</p>
-<p class="note">Updated 2026-11-20. Figures come from each corpus card and are rebuilt from <a href="../htext/corpora.json">corpora.json</a>.</p>
+<p class="note">Updated 2026-11-21. Figures come from each corpus card and are rebuilt from <a href="../htext/corpora.json">corpora.json</a>.</p>
 </div></div>
 <nav class="wrap" aria-label="On this page"><div class="toc"><a href="#what">What htext is</a><a href="#releases">Releases</a><a href="#corpora">Corpora</a><a href="#rights">Rights</a><a href="#use">Download and use</a><a href="#credit">Credit</a><a href="#licence">Licence</a></div></nav>
 <main id="main" class="wrap doc ht">
@@ -53,7 +53,7 @@
 <h2>What htext is</h2>
 <p>htext collects Hebrew text whose rights are clear enough to publish openly, and turns it into training lines for <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, HeOCR's synthetic page generator. The generator renders each line onto synthetic pages, so the recognizers learn real Hebrew vocabulary, spelling and punctuation, not only made-up text.</p>
 <p>Each source has its own builder, its own corpus and its own card. A build reads a pinned copy of the source, computes rights per entry, cleans and cuts the text, and checks that no line overlaps HeOCR's evaluation text. Only the files a card lists are published.</p>
-<div class="stats"><div class="stat"><b>13,891,509</b><span>lines</span></div><div class="stat"><b><span dir="ltr">677.1 MB</span></b><span>of text</span></div><div class="stat"><b>3</b><span>corpora</span></div></div>
+<div class="stats"><div class="stat"><b>45,281,942</b><span>lines</span></div><div class="stat"><b><span dir="ltr">2,167.1 MB</span></b><span>of text</span></div><div class="stat"><b>5</b><span>corpora</span></div></div>
 </section>
 <section id="releases">
 <h2>Releases</h2>
@@ -73,9 +73,9 @@
 <li>Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 (per source)</a></li>
 </ul>
 <h3>htext-by-sa</h3>
-<span class="status">planned</span><span class="status">CC BY-SA 4.0</span>
+<span class="status">published</span><span class="status">CC BY-SA 4.0</span>
 <ul class="facts">
-<li>Contains: Share-alike text, mainly Hebrew Wikisource transcriptions and Sefaria versions licensed CC BY-SA.</li>
+<li>Contains: Historical transcriptions from Hebrew Wikisource.</li>
 <li>You may: Any use, with credit, and anything you share that adapts the text must be under CC BY-SA too.</li>
 <li>Licence: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
 </ul>
@@ -92,7 +92,7 @@
 <tr><td><code>pby_lines_il_niqqud_v3.txt</code></td><td>Israel</td><td>niqqud</td><td class="num">1,672,711</td><td class="num"><span dir="ltr">119.3 MB</span></td></tr>
 </tbody></table></div>
 <ul class="facts">
-<li>Release: htext-cc0</li>
+<li>Release: htext-cc0 (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>)</li>
 <li>Source: <a href="https://benyehuda.org">Project Ben-Yehuda</a> (Public domain (PBY&#x27;s dump licence))</li>
 <li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-pby/tree/pby-v3.1">pby-v3.1</a>, 2026-11-20</li>
 <li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/pby/v3.1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
@@ -114,7 +114,7 @@
 <tr><td><code>knesset_laws_lines_plain_v2.txt</code></td><td>Israel</td><td>plain</td><td class="num">223,617</td><td class="num">1,972</td><td class="num"><span dir="ltr">9.9 MB</span></td></tr>
 </tbody></table></div>
 <ul class="facts">
-<li>Release: htext-cc0</li>
+<li>Release: htext-cc0 (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>)</li>
 <li>Source: <a href="https://main.knesset.gov.il">The Knesset of Israel</a> (Not protected: Israel Copyright Act 2007, section 6)</li>
 <li>Release: <a href="https://github.com/HeOCR/htext/releases/tag/knesset-laws-v2">knesset-laws-v2</a>, 2026-11-20</li>
 <li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/knesset_laws/v2/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
@@ -134,7 +134,7 @@
 <tr><td><code>tanakh_lines_niqqud_v1.txt</code></td><td>Israel</td><td>niqqud</td><td class="num">57,683</td><td class="num"><span dir="ltr">4.6 MB</span></td></tr>
 </tbody></table></div>
 <ul class="facts">
-<li>Release: htext-cc0</li>
+<li>Release: htext-cc0 (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>)</li>
 <li>Source: <a href="https://github.com/openscriptures/morphhb">Westminster Leningrad Codex, via the Open Scriptures Hebrew Bible</a> (Public domain)</li>
 <li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-tanakh/tree/tanakh-v1.1">tanakh-v1.1</a>, 2026-11-20</li>
 <li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/tanakh/v1.1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
@@ -142,6 +142,39 @@
 <li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24398530"><span dir="ltr">10.5281/zenodo.24398530</span></a></li>
 <li>Hugging Face: <a href="https://huggingface.co/datasets/HeOCR/htext-tanakh/tree/tanakh-v1.1">HeOCR/htext-tanakh</a> (Corrected check: zero shared 6-grams across 16 evaluation pools for these exact text files)</li>
 <li>Text: transcribed by people.</li>
+</ul>
+<h3 id="wikisource">Hebrew Wikisource historical lines</h3>
+<span class="status">wikisource-v1</span><span class="status">htext-by-sa</span>
+<p>Unproofread transcriptions of Mesillat Yesharim, Reshit Chokhmah and Sefer HaChinukh from pinned Wikisource revisions, cut into plain and pointed lines. The print editions were not collated.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Subset</th><th>Lines</th><th>Articles</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>wikisource_plain_v1.txt</code></td><td>plain</td><td class="num">71,452</td><td class="num">685</td><td class="num"><span dir="ltr">3.3 MB</span></td></tr>
+<tr><td><code>wikisource_niqqud_v1.txt</code></td><td>niqqud</td><td class="num">767</td><td class="num">1</td><td class="num"><span dir="ltr">0.1 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>Release: htext-by-sa (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>)</li>
+<li>Source: <a href="https://he.wikisource.org">Hebrew Wikisource</a> (CC BY-SA 4.0)</li>
+<li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/tree/wikisource-v1">wikisource-v1</a>, 2026-11-21</li>
+<li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/wikisource/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24415189"><span dir="ltr">10.5281/zenodo.24415189</span></a> (all versions: <a href="https://doi.org/10.5281/zenodo.24415188"><span dir="ltr">10.5281/zenodo.24415188</span></a>)</li>
+</ul>
+<h3 id="knesset-plenary">Knesset plenary proceedings</h3>
+<span class="status">knesset-plenary-v1</span><span class="status">htext-cc0</span>
+<p>Text from the OCR layer of printed plenary proceedings for Knessets 1–8 through 1975, and born-digital transcriptions for Knessets 13–25.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Subset</th><th>Lines</th><th>Sittings</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>knesset_plenary_lines_ocr_v1.txt</code></td><td>OCR layer</td><td class="num">10,521,382</td><td class="num">3,513</td><td class="num"><span dir="ltr">494.4 MB</span></td></tr>
+<tr><td><code>knesset_plenary_lines_transcription_v1.txt</code></td><td>transcription</td><td class="num">20,796,832</td><td class="num">3,331</td><td class="num"><span dir="ltr">992.2 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>Release: htext-cc0 (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>)</li>
+<li>Source: <a href="https://main.knesset.gov.il">The Knesset of Israel</a> (Official texts (Israel Copyright Act, section 6))</li>
+<li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-knesset-plenary/tree/knesset-plenary-v1">knesset-plenary-v1</a>, 2026-11-21</li>
+<li>Corpus card: <a href="https://github.com/HeOCR/htext/blob/main/data/knesset_plenary/v1/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24415187"><span dir="ltr">10.5281/zenodo.24415187</span></a> (all versions: <a href="https://doi.org/10.5281/zenodo.24415186"><span dir="ltr">10.5281/zenodo.24415186</span></a>)</li>
+<li>The private-name filter removed 848,303 lines before publication.</li>
 </ul>
 </section>
 <section id="rights">
@@ -153,6 +186,8 @@
 <li><b>Project Ben-Yehuda</b>: Public domain in Israel: every author and every translator died at least 71 years before the build year (2026), with death years from Wikidata or, where Wikidata has none, from a reviewed source such as the author&#x27;s PBY page. US status is recorded per work: public domain in the US when the transcribed edition appeared before 1931.</li>
 <li><b>The Knesset of Israel</b>: Laws are not protected by copyright in Israel (section 6 of the Copyright Act 2007). US status is not assessed.</li>
 <li><b>Westminster Leningrad Codex, via the Open Scriptures Hebrew Bible</b>: The Leningrad Codex is about a thousand years old, and the WLC text is in the public domain (&quot;The text of the WLC remains in the Public Domain&quot;, OSHB). Public domain in Israel and in the US. Only the words are used; OSHB&#x27;s CC BY lemma and morphology layers are not. The edition is WLC, not UXLC.</li>
+<li><b>Hebrew Wikisource</b>: Distributed under CC BY-SA 4.0. See the NOTICE and rights index for attribution by revision.</li>
+<li><b>The Knesset of Israel</b>: Official texts under section 6 of the Israeli Copyright Act. US status was not assessed.</li>
 </ul>
 </section>
 <section id="use">
@@ -168,10 +203,12 @@ grep -E &#x27;_v2\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
 </section>
 <section id="credit">
 <h2>Credit</h2>
-<p>Credit is not required by the licence, but some sources ask for it, and HeOCR gives it. Please carry these lines into any dataset or model card that uses a corpus:</p>
+<p>Follow the attribution terms for CC BY and CC BY-SA material. For CC0 material, HeOCR also asks that you carry these acknowledgements into dataset or model cards:</p>
 <p class="credit">Credit: <a href="https://benyehuda.org">Project Ben-Yehuda volunteers</a></p>
 <p class="credit">Credit: <a href="https://main.knesset.gov.il">The Knesset of Israel (Knesset database, laws as published in Reshumot)</a></p>
 <p class="credit">Credit: <a href="https://github.com/openscriptures/morphhb">Westminster Leningrad Codex (public domain), via the Open Scriptures Hebrew Bible</a></p>
+<p class="credit">Credit: <a href="https://github.com/HeOCR/htext/blob/main/data/wikisource/v1/NOTICE.md">Hebrew Wikisource contributors</a></p>
+<p class="credit">Credit: <a href="https://main.knesset.gov.il">The Knesset of Israel (Knesset database, plenary records, Divrei ha-Knesset)</a></p>
 </section>
 <section id="licence">
 <h2>Licence</h2>
