@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benchmark methodology</title>
+<meta name="description" content="How we plan to build and report real-world held-out sets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css">
+<script>(function(){try{if(localStorage.getItem("heocr-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}})()</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HeOCR">
+<meta property="og:title" content="Benchmark methodology">
+<meta property="og:description" content="How we plan to build and report real-world held-out sets.">
+<meta property="og:url" content="https://heocr.org/en/methodology.html">
+<meta property="og:image" content="https://heocr.org/og-image-en-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://heocr.org/en/methodology.html">
+<link rel="alternate" hreflang="he" href="https://heocr.org/methodology.html">
+<link rel="alternate" hreflang="en" href="https://heocr.org/en/methodology.html">
+<link rel="alternate" hreflang="x-default" href="https://heocr.org/methodology.html">
+</head>
+<body class="site">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap bar">
+<a class="brand" href="./" aria-label="HeOCR"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="7" width="34" height="34" class="lg-box sw2"></rect><rect x="4" y="4" width="6" height="6" class="lg-h"></rect><rect x="38" y="4" width="6" height="6" class="lg-h"></rect><rect x="4" y="38" width="6" height="6" class="lg-h"></rect><rect x="38" y="38" width="6" height="6" class="lg-h"></rect><path d="M16 18H32V32.5" class="lg-ink sw45"></path><path d="M16 24.5V32.5" class="lg-ink sw45"></path></svg><span dir="ltr">He<b>OCR</b></span></a>
+<nav class="site-nav" aria-label="Site"><a href="benchmarks.html">Benchmarks</a><a href="htext.html">htext</a><a href="download.html">Download</a><a href="rights.html">Rights &amp; takedown</a></nav>
+<div class="tools">
+<div class="lang-toggle" role="group" aria-label="Language / שפה">
+<span aria-current="page" lang="en">English</span>
+        <a href="../methodology.html" lang="he" hreflang="he">עברית</a>
+</div>
+<button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><svg class="ico i-moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.6A5.6 5.6 0 0 1 6.4 3 5.6 5.6 0 1 0 13 9.6z"></path></svg><svg class="ico i-sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"></circle><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"></path></svg><span class="label">Night mode</span></button>
+</div>
+</div>
+</header>
+<div class="band gridband"><div class="wrap page-head">
+<h1><span class="bb" data-tag="h1 · 0.99">Benchmark methodology</span></h1>
+<p class="lede">How we plan to build and report real-world held-out sets.</p>
+</div></div>
+<main id="main" class="wrap doc">
+<section><h2>Open and closed sets</h2><p>Each category has an open and a closed held-out set. Open sets use publishable images and references from multiple sources and are the headline benchmark. Closed sets may include private sources; we report them separately and give them less prominence because they cannot be fully reproduced independently.</p><p>Sets are registered before scoring and use real-world examples representative of the problem, with reference text. Generated material is for development, never evaluation. Only registered held-out results are reported as performance.</p></section>
+<section><h2>Source separation</h2><p>A source is assigned to training or test, never both. Evaluation material is held out from training, tuning and model selection. Set documentation will describe sources, licences, reference creation, sampling and limitations without disclosing private material.</p></section>
+<section><h2>Contamination policy v2</h2><p>The same image, physical source or edition is excluded from training when it is in a test set. The same text in another format may be used in training; it is tagged. Results will be reported both including and excluding those tagged examples, with the distinction made clear.</p></section>
+<section><h2>Launch criterion</h2><p>Only registered open held-out sets of real documents count toward launch. HeOCR must achieve a state-of-the-art result in at least one of the six categories, with a character error rate (CER) at least 3% lower in relative terms than that of every eligible registered comparator in that category.</p><p>The primary target is modern printed unpointed Hebrew. Release also requires the project owner&#x27;s approval.</p></section>
+<p><a href="benchmarks.html">Benchmark tables</a></p></main>
+<footer class="site-footer">
+<div class="wrap foot">
+<div class="foot-brand">He<b>OCR</b></div>
+<div class="foot-text">
+<p><a href="./">HeOCR</a></p>
+</div>
+</div>
+</footer>
+<script src="../theme.js"></script>
+</body>
+</html>
