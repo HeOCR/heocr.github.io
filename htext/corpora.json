@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-20",
+  "updated": "2026-11-21",
   "repository": "https://github.com/HeOCR/htext",
   "corpora": [
     {
@@ -256,6 +256,145 @@
       "zenodo": {
         "doi": "10.5281/zenodo.24398530"
       }
+    },
+    {
+      "id": "wikisource",
+      "version": "v1",
+      "unit": "pages",
+      "name": {
+        "en": "Hebrew Wikisource historical lines",
+        "he": "שורות היסטוריות מוויקיטקסט העברית"
+      },
+      "source": {
+        "name": {
+          "en": "Hebrew Wikisource",
+          "he": "ויקיטקסט העברית"
+        },
+        "url": "https://he.wikisource.org"
+      },
+      "description": {
+        "en": "Unproofread transcriptions of Mesillat Yesharim, Reshit Chokhmah and Sefer HaChinukh from pinned Wikisource revisions, cut into plain and pointed lines. The print editions were not collated.",
+        "he": "תעתיקים שלא עברו הגהה של מסילת ישרים, ראשית חכמה וספר החינוך, מגרסאות מקובעות בוויקיטקסט, מחולקים לשורות עם ניקוד ובלעדיו. התעתיקים לא הושוו למהדורות הדפוס."
+      },
+      "rights_basis": {
+        "en": "Distributed under CC BY-SA 4.0. See the NOTICE and rights index for attribution by revision.",
+        "he": "מופץ ברישיון CC BY-SA 4.0. הייחוס לכל גרסה של ערך מופיע בקובץ NOTICE ובאינדקס הזכויות."
+      },
+      "source_licence": {
+        "en": "CC BY-SA 4.0",
+        "he": "CC BY-SA 4.0"
+      },
+      "credit": {
+        "text": {
+          "en": "Hebrew Wikisource contributors",
+          "he": "תורמי ויקיטקסט העברית"
+        },
+        "url": "https://github.com/HeOCR/htext/blob/main/data/wikisource/v1/NOTICE.md"
+      },
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/wikisource/v1/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/wikisource/v1/SHA256SUMS",
+      "release": {
+        "tag": "wikisource-v1",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/tree/wikisource-v1",
+        "date": "2026-11-21"
+      },
+      "files": [
+        {
+          "name": "wikisource_plain_v1.txt",
+          "subset": "plain",
+          "lines": 71452,
+          "pages": 685,
+          "bytes": 3328490,
+          "sha256": "f734f6484d767ff6c2f43d049923794756545f4c97349b18338df22ad3069769"
+        },
+        {
+          "name": "wikisource_niqqud_v1.txt",
+          "subset": "niqqud",
+          "lines": 767,
+          "pages": 1,
+          "bytes": 60993,
+          "sha256": "057ca4d684ed874d29efded4f9a384ff01465edba8217f9497b4f5c6227d6075"
+        }
+      ],
+      "htext_release": "by-sa",
+      "hf": {
+        "repo": "HeOCR/htext-wikisource",
+        "revision": "wikisource-v1"
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24415189",
+        "concept_doi": "10.5281/zenodo.24415188"
+      }
+    },
+    {
+      "id": "knesset-plenary",
+      "version": "v1",
+      "unit": "sittings",
+      "name": {
+        "en": "Knesset plenary proceedings",
+        "he": "פרוטוקולים של מליאת הכנסת"
+      },
+      "source": {
+        "name": {
+          "en": "The Knesset of Israel",
+          "he": "כנסת ישראל"
+        },
+        "url": "https://main.knesset.gov.il"
+      },
+      "description": {
+        "en": "Text from the OCR layer of printed plenary proceedings for Knessets 1–8 through 1975, and born-digital transcriptions for Knessets 13–25.",
+        "he": "טקסט משכבת ה־OCR של הפרוטוקולים המודפסים של מליאת הכנסת בכנסות ה־1–8 עד 1975, ותעתיקים של הפרוטוקולים הדיגיטליים של הכנסות ה־13–25."
+      },
+      "rights_basis": {
+        "en": "Official texts under section 6 of the Israeli Copyright Act. US status was not assessed.",
+        "he": "טקסטים רשמיים לפי סעיף 6 לחוק זכות יוצרים בישראל. המעמד בארה״ב לא נבדק."
+      },
+      "source_licence": {
+        "en": "Official texts (Israel Copyright Act, section 6)",
+        "he": "טקסטים רשמיים (סעיף 6 לחוק זכות יוצרים)"
+      },
+      "credit": {
+        "text": {
+          "en": "The Knesset of Israel (Knesset database, plenary records, Divrei ha-Knesset)",
+          "he": "כנסת ישראל (מאגר הכנסת, פרוטוקולי המליאה, דברי הכנסת)"
+        },
+        "url": "https://main.knesset.gov.il"
+      },
+      "card_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_plenary/v1/CORPUS_CARD.md",
+      "sha256sums_url": "https://github.com/HeOCR/htext/blob/main/data/knesset_plenary/v1/SHA256SUMS",
+      "release": {
+        "tag": "knesset-plenary-v1",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-knesset-plenary/tree/knesset-plenary-v1",
+        "date": "2026-11-21"
+      },
+      "files": [
+        {
+          "name": "knesset_plenary_lines_ocr_v1.txt",
+          "subset": "ocr_layer",
+          "lines": 10521382,
+          "sittings": 3513,
+          "bytes": 494392084,
+          "sha256": "04671359681dd633d05fe5aae3aeb3b8e474719b2c23b33a7ece856e81bd33c9"
+        },
+        {
+          "name": "knesset_plenary_lines_transcription_v1.txt",
+          "subset": "transcription",
+          "lines": 20796832,
+          "sittings": 3331,
+          "bytes": 992225164,
+          "sha256": "85d24964ef03a22db8c2971ddf07069bc12f30190fdca86296c20ce94fbebeda"
+        }
+      ],
+      "htext_release": "cc0",
+      "hf": {
+        "repo": "HeOCR/htext-knesset-plenary",
+        "revision": "knesset-plenary-v1"
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24415187",
+        "concept_doi": "10.5281/zenodo.24415186"
+      },
+      "privacy_lines_dropped": 848303
     }
   ],
   "planned": [],
@@ -297,14 +436,14 @@
     {
       "id": "by-sa",
       "name": "htext-by-sa",
-      "status": "planned",
+      "status": "published",
       "licence": {
         "name": "CC BY-SA 4.0",
         "url": "https://creativecommons.org/licenses/by-sa/4.0/"
       },
       "contents": {
-        "en": "Share-alike text, mainly Hebrew Wikisource transcriptions and Sefaria versions licensed CC BY-SA.",
-        "he": "טקסט בשיתוף זהה, בעיקר תעתיקי ויקיטקסט העברית וגרסאות ספריא ברישיון CC BY-SA."
+        "en": "Historical transcriptions from Hebrew Wikisource.",
+        "he": "תעתיקים היסטוריים מוויקיטקסט העברית."
       },
       "allows": {
         "en": "Any use, with credit, and anything you share that adapts the text must be under CC BY-SA too.",

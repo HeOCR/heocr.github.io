@@ -49,13 +49,15 @@ T = {
         "planned_p": "Sources being prepared. Each is published only after its rights are checked entry by entry.",
         "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_prev": "Earlier version", "c_issues": "known issues", "c_withdrawn": "withdrawn {d}: its files overlapped HeOCR's evaluation text", "c_withdrawn_corpus": "Withdrawn {d}. A corrected check by HeOCR's evaluation found that these files share text with its evaluation sets, so they were taken down from GitHub, Hugging Face and Zenodo. HeOCR keeps a private backup; decontaminated versions will be published as new versions.", "c_status_withdrawn": "withdrawn", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "all versions", "c_hf": "Hugging Face", "c_hf_filtered": "Corrected check: zero shared 6-grams across 16 evaluation pools for these exact text files", "c_hf_same": "the same files as the GitHub release", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
         "th_file": "File", "th_variant": "Variant", "th_subset": "Subset", "th_lines": "Lines", "th_works": "Works", "th_laws": "Laws", "th_books": "Books", "th_size": "Size",
+        "th_pages": "Articles", "th_sittings": "Sittings",
+        "c_privacy": "The private-name filter removed {lines} lines before publication.",
         "c_laws": "{w} of {c} laws in the catalogue have lines in this corpus.",
         "c_books": "All {w} books have lines in this corpus, in both forms. The pointed and plain files hold the same verses, so the totals above count them once.",
         "c_quality": {"transcription": "Text: transcribed by people.",
                       "ocr_layer": "Text: the OCR layer of the scans, filtered against a lexicon. An eye check of {k} random lines against the scans found an error in {l} ({lr}) and {ww} wrong words of {sw} ({wr})."},
         "total": "Total",
         "variant": {"il": "Israel", "il_us": "Israel + US"},
-        "subset": {"plain": "plain", "niqqud": "niqqud"},
+        "subset": {"plain": "plain", "niqqud": "niqqud", "ocr_layer": "OCR layer", "transcription": "transcription"},
         "variants_note": "<b>Israel</b>: every line comes from a work that is public domain in Israel. <b>Israel + US</b>: the subset that is also public domain in the US. <b>niqqud</b> lines are pointed; <b>plain</b> lines carry no points.",
         "rights_h": "Rights",
         "rights_p": [
@@ -70,7 +72,7 @@ T = {
         "use_gen": "Use a file as training text for hocrsyngen, which records it as <code>external:sha256:&lt;hex&gt;</code>:",
         "use_build": "Or rebuild a corpus from its source: each corpus has a build guide in the repository, for example <a href=\"{doc}\">the PBY guide</a>.",
         "credit_h": "Credit",
-        "credit_p": "Credit is not required by the licence, but some sources ask for it, and HeOCR gives it. Please carry these lines into any dataset or model card that uses a corpus:",
+        "credit_p": "Follow the attribution terms for CC BY and CC BY-SA material. For CC0 material, HeOCR also asks that you carry these acknowledgements into dataset or model cards:",
         "licence_h": "Licence",
         "licence_p": "Each release carries its own licence, listed under <a href=\"#releases\">Releases</a>; the CC BY and CC BY-SA terms bind the source text. HeOCR's own processing and metadata, meaning the rights and line indexes, exclusion lists, cards and checksums, are dedicated to the public domain under <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a> in every release, as far as they can be separated from the text. The builder code is under the <a href=\"https://github.com/HeOCR/htext/blob/main/LICENSE\">MIT licence</a>.",
         "footer": "Created by <a href=\"http://www.shaypalachy.com/\">Shay Palachy Affek</a> and the HeOCR maintainers.",
@@ -103,13 +105,15 @@ T = {
         "planned_p": "מקורות בהכנה. כל אחד מתפרסם רק אחרי שזכויותיו נבדקו פריט אחר פריט.",
         "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_prev": "גרסה קודמת", "c_issues": "בעיות ידועות", "c_withdrawn": "הוסרה ב־{d}: הקבצים שלה חפפו לטקסט ההערכה של HeOCR", "c_withdrawn_corpus": "הוסר ב־{d}. בדיקה מתוקנת של צוות ההערכה של HeOCR מצאה שהקבצים חולקים טקסט עם מערכי ההערכה, ולכן הם הורדו מ־GitHub, מ־Hugging Face ומ־Zenodo. ל־HeOCR יש גיבוי פרטי; גרסאות מנוקות יפורסמו כגרסאות חדשות.", "c_status_withdrawn": "הוסר", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "כל הגרסאות", "c_hf": "Hugging Face", "c_hf_filtered": "בבדיקה המתוקנת נמצאו אפס רצפים משותפים של שש מילים מול 16 מאגרי הערכה, עבור קובצי הטקסט האלה", "c_hf_same": "אותם קבצים כמו בגרסה ב־GitHub", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
         "th_file": "קובץ", "th_variant": "גרסה", "th_subset": "סוג", "th_lines": "שורות", "th_works": "יצירות", "th_laws": "חוקים", "th_books": "ספרים", "th_size": "גודל",
+        "th_pages": "ערכים", "th_sittings": "ישיבות",
+        "c_privacy": "מסנן השמות של אנשים פרטיים הסיר {lines} שורות לפני הפרסום.",
         "c_laws": "ל־{w} מתוך {c} חוקים בקטלוג יש שורות במאגר.",
         "c_books": "לכל {w} הספרים יש שורות במאגר, בשתי הצורות. שני הקבצים, המנוקד והלא־מנוקד, מכילים את אותם פסוקים, ולכן הסיכומים למעלה סופרים אותם פעם אחת.",
         "c_quality": {"transcription": "טקסט: הוקלד בידי אנשים.",
                       "ocr_layer": "טקסט: שכבת ה־OCR של הסריקות, מסוננת מול מילון. בבדיקה בעין של {k} שורות אקראיות מול הסריקות נמצאה טעות ב־{l} ({lr}), ו־{ww} מילים שגויות מתוך {sw} ({wr})."},
         "total": "סה\"כ",
         "variant": {"il": "ישראל", "il_us": "ישראל + ארה\"ב"},
-        "subset": {"plain": "ללא ניקוד", "niqqud": "מנוקד"},
+        "subset": {"plain": "ללא ניקוד", "niqqud": "מנוקד", "ocr_layer": "שכבת OCR", "transcription": "תעתיק"},
         "variants_note": "<b>ישראל</b>: כל שורה לקוחה מיצירה שבנחלת הכלל בישראל. <b>ישראל + ארה\"ב</b>: תת־הקבוצה שבנחלת הכלל גם בארה\"ב. שורות <b>מנוקדות</b> כוללות ניקוד; שורות <b>ללא ניקוד</b> אינן כוללות.",
         "rights_h": "זכויות",
         "rights_p": [
@@ -124,7 +128,7 @@ T = {
         "use_gen": "השתמשו בקובץ כטקסט אימון ל־hocrsyngen, שמתעד אותו כ־<code>external:sha256:&lt;hex&gt;</code>:",
         "use_build": "או בנו מאגר מחדש מהמקור: לכל מאגר יש מדריך בנייה במאגר הקוד, למשל <a href=\"{doc}\">המדריך של פרויקט בן־יהודה</a>.",
         "credit_h": "קרדיט",
-        "credit_p": "הרישיון אינו מחייב קרדיט, אבל חלק מהמקורות מבקשים אותו, ו־HeOCR נותן אותו. אנא העבירו את השורות האלה לכל כרטיס מאגר נתונים או מודל שמשתמש במאגר:",
+        "credit_p": "יש לפעול לפי תנאי הייחוס של רישיונות CC BY ו־CC BY-SA. גם בשימוש בחומר ברישיון CC0, ‏HeOCR מבקש לציין את הקרדיט בכרטיס מאגר הנתונים או המודל:",
         "licence_h": "רישיון",
         "licence_p": "לכל גרסה יש רישיון משלה, כמפורט תחת <a href=\"#releases\">גרסאות</a>; תנאי CC BY ו־CC BY-SA חלים על טקסט המקור. העיבוד והמטא־דאטה של HeOCR, כלומר אינדקסי הזכויות והשורות, רשימות ההחרגה, הכרטיסים וסיכומי הביקורת, מוקדשים לנחלת הכלל ברישיון <a href=\"https://creativecommons.org/publicdomain/zero/1.0/deed.he\">CC0 1.0</a> בכל הגרסאות, ככל שאפשר להפריד אותם מהטקסט. קוד הבנייה ברישיון <a href=\"https://github.com/HeOCR/htext/blob/main/LICENSE\">MIT</a>.",
         "footer": "נוצר בידי <a href=\"http://www.shaypalachy.com/\">שי פלצ'י אפק</a> ומתחזקי HeOCR.",
@@ -178,10 +182,10 @@ def page(lang: str, R: dict) -> str:
                                       f'<p class="note">{t["updated"].format(d=e(R["updated"]), json=json_href)}</p>'))
     w(shell.toc(lang, [(i, e(h), None) for i, h in t["toc"]]))
     w('<main id="main" class="wrap doc ht">\n')
-    # --- totals: the "il" variant holds every published line; il_us is its subset
-    # A file that holds the same text as another file of its corpus (another form of it) is counted once.
-    lines = sum(f["lines"] for c in live for f in c["files"] if f["variant"] == "il" and not f.get("same_text_as"))
-    bytes_ = sum(f["bytes"] for c in live for f in c["files"] if f["variant"] == "il" and not f.get("same_text_as"))
+    # Count full-coverage files once. The IL+US variant and alternate forms repeat text.
+    full_files = [f for c in live for f in c["files"] if f.get("variant") != "il_us" and not f.get("same_text_as")]
+    lines = sum(f["lines"] for f in full_files)
+    bytes_ = sum(f["bytes"] for f in full_files)
     works = sum(c.get("works_in_corpus", 0) for c in live)
     all_works_known = all("works_in_corpus" in c for c in live)
     units = {c.get("unit", "works") for c in live}
@@ -221,33 +225,43 @@ def page(lang: str, R: dict) -> str:
         w(f'<span class="status">{e(c["release"]["tag"])}</span><span class="status">{e(rel[c["htext_release"]]["name"])}</span>\n')
         w(f'<p>{e(c["description"][lang])}</p>\n')
         unit = c.get("unit", "works")
-        show_works = all("works" in f for f in c["files"])
-        headers = [t["th_file"], t["th_variant"], t["th_subset"], t["th_lines"]]
-        if show_works:
+        count_key = "works" if unit in {"works", "laws", "books"} else unit
+        show_counts = all(count_key in f for f in c["files"])
+        show_variant = any("variant" in f for f in c["files"])
+        headers = [t["th_file"]]
+        if show_variant:
+            headers.append(t["th_variant"])
+        headers.extend([t["th_subset"], t["th_lines"]])
+        if show_counts:
             headers.append(t[f"th_{unit}"])
         rows = []
         for f in c["files"]:
-            row = [(f'<code>{e(f["name"])}</code>', False), (e(t["variant"][f["variant"]]), False),
-                   (e(t["subset"][f["subset"]]), False), (n(f["lines"]), True)]
-            if show_works:
-                row.append((n(f["works"]), True))
+            row = [(f'<code>{e(f["name"])}</code>', False)]
+            if show_variant:
+                row.append((e(t["variant"].get(f.get("variant"), "—")), False))
+            row.extend([(e(t["subset"][f["subset"]]), False), (n(f["lines"]), True)])
+            if show_counts:
+                row.append((n(f[count_key]), True))
             rows.append(row + [(mb(lang, f["bytes"]), True)])
         w(table([*headers, t["th_size"]], rows))
-        if any(f["variant"] == "il_us" for f in c["files"]):
+        if any(f.get("variant") == "il_us" for f in c["files"]):
             w(f'<p class="note">{t["variants_note"]}</p>\n')
-        q = c.get("text_quality", "transcription")
+        q = c.get("text_quality")
         if q == "ocr_layer":
             k = c["eye_check"]
             quality = t["c_quality"][q].format(k=n(k["lines_checked"]), l=n(k["lines_with_error"]), lr=f'{k["lines_with_error"] / k["lines_checked"]:.0%}',
                                                ww=n(k["words_wrong"]), sw=n(k["sample_words"]), wr=f'{k["words_wrong"] / k["sample_words"]:.1%}')
         else:
-            quality = t["c_quality"][q]
+            quality = t["c_quality"][q] if q else ""
         count = ""
         if "works_in_corpus" in c:
             count = (t[f"c_{unit}"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"])) if unit != "works"
                  else t["c_works"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"]), u=n(c["works_in_il_us"])))
+        release = rel[c["htext_release"]]
+        licence = release["licence"]
+        hf = c.get("hf", {})
         w('<ul class="facts">\n'
-          f'<li>{t["c_in"]}: {e(rel[c["htext_release"]]["name"])}</li>\n'
+          f'<li>{t["c_in"]}: {e(release["name"])} (<a href="{e(licence["url"])}">{e(licence["name"])}</a>)</li>\n'
           f'<li>{t["c_source"]}: <a href="{e(c["source"]["url"])}">{e(c["source"]["name"][lang])}</a> ({e(c["source_licence"][lang])})</li>\n'
           f'<li>{t["c_release"]}: <a href="{e(c["release"]["url"])}">{e(c["release"]["tag"])}</a>, {e(c["release"]["date"])}</li>\n'
           f'<li>{t["c_card"]}: <a href="{e(c["card_url"])}">CORPUS_CARD.md</a></li>\n'
@@ -256,10 +270,12 @@ def page(lang: str, R: dict) -> str:
                     + (f' (<a href="{e(p["known_issues_url"])}">{t["c_issues"]}</a>)' if p.get("known_issues_url") else "")
                     + "</li>\n" for p in c.get("previous", []))
           + zenodo_item(c, t)
-          + (f'<li>{t["c_hf"]}: <a href="{e(c["release"]["url"] if c["hf"].get("revision") else "https://huggingface.co/datasets/" + c["hf"]["repo"])}">{e(c["hf"]["repo"])}</a> '
-             f'({e(t["c_hf_filtered"] if c["hf"]["filtered"] else t["c_hf_same"])})</li>\n' if c.get("hf") else "")
-          + f'<li>{e(quality)}</li>\n'
+          + (f'<li>{t["c_hf"]}: <a href="{e(c["release"]["url"] if hf.get("revision") else "https://huggingface.co/datasets/" + hf["repo"])}">{e(hf["repo"])}</a> '
+             f'({e(t["c_hf_filtered"] if hf["filtered"] else t["c_hf_same"])})</li>\n' if "filtered" in hf else "")
+          + (f'<li>{e(quality)}</li>\n' if quality else '')
           + (f'<li>{e(count)}</li>\n' if count else '')
+          + (f'<li>{e(t["c_privacy"].format(lines=n(c["privacy_lines_dropped"])))}</li>\n'
+             if "privacy_lines_dropped" in c else '')
           + "</ul>\n")
     if R.get("planned"):
         w(f'<h3 id="planned">{e(t["planned_h"])}</h3>\n<p>{e(t["planned_p"])}</p>\n<ul class="facts">\n')
@@ -308,12 +324,25 @@ def import_card(R: dict, cid: str, path: Path) -> None:
     entry = next((c for c in R["corpora"] if c["id"] == cid), None)
     if entry is None:
         sys.exit(f"no corpus '{cid}' in corpora.json: add its entry (names, source, rights, credit, release) first")
-    entry["files"] = [{"name": k, "variant": v["variant"], "subset": v["subset"], "lines": v["lines"],
-                       "works": v["works"], "bytes": v["bytes"], "sha256": v["sha256"]} for k, v in card["files"].items()]
+    previous = {f["name"]: f for f in entry["files"]}
+    files = []
+    for name, info in card["files"].items():
+        row = {**previous.get(name, {}), "name": name}
+        row.update({k: info[k] for k in ("lines", "bytes", "sha256")})
+        row.update({k: info[k] for k in ("variant", "subset", "works", "pages", "sittings") if k in info})
+        if "text_quality" in info:
+            row.setdefault("subset", info["text_quality"])
+        files.append(row)
+    entry["files"] = files
     rights = card.get("rights", {})
-    entry["catalogue_works"] = card["source"].get("catalogue_rows", entry.get("catalogue_works"))
-    entry["works_in_corpus"] = rights.get("works_in_corpus", entry.get("works_in_corpus"))
-    entry["works_in_il_us"] = rights.get("works_in_il_us", entry.get("works_in_il_us"))
+    if "catalogue_rows" in card["source"]:
+        entry["catalogue_works"] = card["source"]["catalogue_rows"]
+    for key in ("works_in_corpus", "works_in_il_us"):
+        if key in rights:
+            entry[key] = rights[key]
+    privacy = card.get("privacy", {})
+    if "lines_dropped" in privacy:
+        entry["privacy_lines_dropped"] = privacy["lines_dropped"]
 
 
 def main():
