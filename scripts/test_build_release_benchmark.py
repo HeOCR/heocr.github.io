@@ -52,8 +52,9 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertEqual(opened.count("Example Reader 10"), 12)
             self.assertEqual(opened.count('role="region"'), 12)
             self.assertIn(t["carrier_count"].format(carriers=0), opened)
-            self.assertEqual(closed.count("Example Reader "), 1)
-            self.assertIn("90.00%", closed)
+            self.assertNotIn("Example Reader ", closed)
+            self.assertNotIn("90.00%", output)
+            self.assertIn(t["closed_missing"], closed)
             self.assertIn(t["published"].format(public=16, registered=17), opened)
             self.assertNotIn("launch conditions", output.lower())
             self.assertIn(builder.DATASET, opened)
@@ -80,7 +81,7 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertNotIn('id="uc-w"', layout)
             populated = builder.page(lang, data)
             self.assertIn(builder.T[lang]["scope_pending"], populated)
-            self.assertIn('id="uc-w"', populated)
+            self.assertNotIn('id="uc-w"', populated)
             self.assertNotIn(builder.DATASET, populated)
 
     def test_rejects_missing_carrier_and_mismatched_readers(self):

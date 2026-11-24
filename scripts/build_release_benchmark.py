@@ -32,16 +32,14 @@ T = {
             "Handwriting (weighted)",
         ],
         "method": "Read the benchmark methodology", "preview": "Layout preview. Release figures are pending.",
-        "open_result": "P-mod-open v0 results", "closed_result": "UC-W aggregates", "dataset": "Download the benchmark dataset",
+        "open_result": "P-mod-open v0 results", "dataset": "Download the benchmark dataset", "closed_missing": "No figure published here",
         "pages": "{pages} registered pages · {carriers} scored carriers",
         "scope_pending": "The public dataset scope is pending source-rights review. The figures use the registered scope.",
         "carrier_count": "{carriers} carriers", "published": "The public dataset includes {public} of the {registered} scored pages. The figures use the registered scope.",
-        "closed_pages": "{pages} pages in {reports} reports · {fields} reference field values",
-        "recall": "Field recall", "hits": "Values found", "delta": "Change vs. Rivok full (percentage points)",
-        "numbers": "Numbers missed", "higher": "Higher field recall is better.",
+        "numbers": "Numbers missed",
         "views": {"all": "All reference positions", "filtered": "Common independently verified positions without known project training overlap"},
         "carriers": {"pooled": "All carriers", "archive": "Archive", "phone-a": "Phone A", "issuer-render": "Issuer render", "issuer-scan": "Issuer scan", "phone-b": "Phone B", "scanner": "Scanner"},
-        "reader": "Reader", "cer": "Character error rate", "wer": "Word error rate", "interval": "95% confidence interval",
+        "reader": "Reader", "cer": "Character error rate", "wer": "Word error rate",
         "lower": "Lower error rates are better.",
     },
     "he": {
@@ -61,25 +59,23 @@ T = {
             "כתב יד (משוקלל)",
         ],
         "method": "לשיטת בניית המבחנים", "preview": "תצוגה מקדימה של המבנה. נתוני ההערכה יתווספו לקראת הפרסום.",
-        "open_result": "תוצאות P-mod-open v0", "closed_result": "תוצאות מצרפיות של UC-W", "dataset": "להורדת מערך המבחן",
+        "open_result": "תוצאות P-mod-open v0", "dataset": "להורדת מערך המבחן", "closed_missing": "אין כאן תוצאה שפורסמה",
         "pages": "{pages} עמודים רשומים · {carriers} גרסאות מקור שנבדקו",
         "scope_pending": "היקף מערך הנתונים הציבורי ייקבע לאחר בדיקת זכויות המקור. התוצאות מחושבות לפי הקבוצה הרשומה.",
         "carrier_count": "{carriers} גרסאות מקור", "published": "מערך הנתונים הציבורי כולל {public} מתוך {registered} העמודים שהוערכו. התוצאות מחושבות לפי הקבוצה הרשומה.",
-        "closed_pages": "{pages} עמודים ב־{reports} דוחות · {fields} ערכי ייחוס בשדות",
-        "recall": "שיעור זיהוי ערכי שדות", "hits": "ערכים שזוהו", "delta": "הפרש לעומת Rivok המלא (נקודות אחוז)",
-        "numbers": "מספרים שלא זוהו", "higher": "שיעור זיהוי גבוה יותר עדיף.",
+        "numbers": "מספרים שלא זוהו",
         "views": {"all": "כל המיקומים בטקסט הייחוס", "filtered": "מיקומים משותפים שאומתו באופן עצמאי וללא חפיפה ידועה לאימון הפרויקט"},
         "carriers": {"pooled": "כל גרסאות המקור", "archive": "ארכיון", "phone-a": "טלפון א׳", "issuer-render": "תצוגה ממוחשבת של הגוף המפרסם", "issuer-scan": "סריקה של הגוף המפרסם", "phone-b": "טלפון ב׳", "scanner": "סורק"},
-        "reader": "מנוע זיהוי", "cer": "שיעור שגיאות תווים", "wer": "שיעור שגיאות מילים", "interval": "רווח סמך של 95%",
+        "reader": "מנוע זיהוי", "cer": "שיעור שגיאות תווים", "wer": "שיעור שגיאות מילים",
         "lower": "שיעור שגיאות נמוך יותר עדיף.",
     },
 }
 
 
-def category_table(t, scored_link="", preview=False):
+def category_table(t, scored_link="", *, missing=None, preview=False):
     rows = []
+    missing = "—" if preview else e(missing or t["missing"])
     for index, name in enumerate(t["categories"]):
-        missing = "—" if preview else e(t["missing"])
         result = scored_link if index == 0 and scored_link else missing
         rows.append(f'<tr><th scope="row">{e(name)}</th><td>{result}</td></tr>\n')
     return (
@@ -92,14 +88,10 @@ def numbers(value):
     return f'<bdi dir="ltr">{value}</bdi>'
 
 
-def metric_cell(t, value, *, suffix="%", interval=None, detail=""):
-    score = numbers(f"{value:.2f}{suffix}")
-    ci = ""
-    if interval is not None:
-        lo, hi = interval
-        ci = f'<span class="ci stack" title="{e(t["interval"])}">{numbers(f"{lo:.2f}–{hi:.2f}{suffix}")}</span>'
-    note = f'<span class="tag-n block">{numbers(detail)}</span>' if detail else ""
-    return f'<td class="num"><span class="v">{score}</span>{ci}{note}</td>'
+def error_rate_cell(value, edits, denominator):
+    percentage = numbers(f"{Decimal(value) * 100:.2f}%")
+    counts = numbers(f"{edits:,} / {denominator:,}")
+    return f'<td class="num"><span class="v">{percentage}</span><span class="tag-n block">{counts}</span></td>'
 
 
 def result_table(t, heading_id, caption, level, columns, rows):
@@ -117,10 +109,10 @@ def link(target, label):
     return f'<a href="{target}">{e(label)}</a>'
 
 
-def open_rows(t, rows):
+def open_rows(rows):
     for row in rows:
-        cer = metric_cell(t, Decimal(row["cer"]) * 100, detail=f'{row["edits"]:,} / {row["chars"]:,}')
-        wer = metric_cell(t, Decimal(row["wer"]) * 100, detail=f'{row["word_edits"]:,} / {row["words"]:,}')
+        cer = error_rate_cell(row["cer"], row["edits"], row["chars"])
+        wer = error_rate_cell(row["wer"], row["word_edits"], row["words"])
         numeric = numbers(f'{row["missed_numbers"]:,} / {row["ref_numbers"]:,}')
         yield row["reader"], f'{cer}{wer}<td class="num">{numeric}</td>'
 
@@ -142,38 +134,17 @@ def open_results(t, data, public_pages):
         for carrier, group in groups.items():
             title = f'{t["carriers"][carrier]} · {t["carrier_count"].format(carriers=group["carriers"])}'
             if group["readers"]:
-                out.append(result_table(t, f"{heading}-{carrier}", title, 5, ("cer", "wer", "numbers"), open_rows(t, group["readers"])))
+                out.append(result_table(t, f"{heading}-{carrier}", title, 5, ("cer", "wer", "numbers"), open_rows(group["readers"])))
             else:
                 out.append(f'<p class="note">{e(title)}</p>')
         out.append("</section>")
     return "".join(out)
 
 
-def closed_rows(t, rows):
-    for row in rows:
-        hits = numbers(f'{row["hits"]:,}')
-        recall = metric_cell(t, row["field_recall_pct"], interval=row["ci95"])
-        delta = '<td class="num">—</td>'
-        if "delta_vs_rivok_full_pp" in row:
-            delta = metric_cell(t, row["delta_vs_rivok_full_pp"], suffix="", interval=row["paired_ci95_vs_rivok_full"])
-        yield row["reader"], f'<td class="num">{hits}</td>{recall}{delta}'
-
-
-def closed_results(t, data):
-    scope = e(t["closed_pages"].format(pages=data["pages"], reports=data["reports"], fields=f'{data["field_value_occurrences"]:,}'))
-    return (
-        f'<section id="uc-w"><p>{scope}. {e(t["higher"])}</p>'
-        + result_table(t, "uc-w-results", t["closed_result"], 3, ("hits", "recall", "delta"), closed_rows(t, data["results"]))
-        + "</section>"
-    )
-
-
 def page(lang, data, public_pages=None):
     t = T[lang]
     open_link = link("#p-mod-open", t["open_result"]) if data is not None else ""
-    closed_link = link("#uc-w", t["closed_result"]) if data is not None else ""
     open_panel = open_results(t, data["open"], public_pages) if data is not None else ""
-    closed_panel = closed_results(t, data["closed"]) if data is not None else ""
     preview_note = f'<p class="note">{e(t["preview"])}</p>' if data is None else ""
     return "".join([
         shell.head(lang, e(t["title"]), e(t["lede"]), "bench"), shell.header(lang, "bench"),
@@ -183,7 +154,7 @@ def page(lang, data, public_pages=None):
         f'<section id="open" class="wrap domain"><h2>{e(t["open"])}</h2><p class="sub">{e(t["open_text"])}</p>',
         category_table(t, open_link, preview=data is None), open_panel, "</section>\n",
         f'<section id="closed" class="wrap domain"><details class="method"><summary>{e(t["closed"])}</summary><p>{e(t["closed_text"])}</p>',
-        category_table(t, closed_link, preview=data is None), closed_panel, "</details></section>\n",
+        category_table(t, missing=t["closed_missing"], preview=data is None), "</details></section>\n",
         '</main>\n', shell.footer(['<p><a href="./">HeOCR</a></p>']), shell.tail(lang),
     ])
 

@@ -71,7 +71,7 @@ python3 scripts/build_release_benchmark.py --out-dir ../preview --check
 
 For a release preview, add `--release-data /path/to/approved-aggregates.json --sha256 <digest>` to both commands.
 The builder accepts eval's `heocr.benchmark.scores.v1` export, containing page CER and WER for ten
-readers in both registered views, per carrier and pooled, plus the closed field-recall aggregates.
+readers in both registered views, per carrier and pooled. It renders the registered P-mod-open v0 figures. The closed table reserves space for future published results.
 It validates the reader and carrier panels, denominator arithmetic, and byte identity before rendering.
 The public tables distinguish the two phone streams with the aliases Phone A and Phone B.
 
