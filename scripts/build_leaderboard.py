@@ -7,7 +7,10 @@ import json
 from pathlib import Path
 
 import shell
-from leaderboard_results import CATEGORIES, DATASET, READER_TYPES, RESULTS_REPO, STRATA, VIEWS, percentage, ranked, validate
+from leaderboard_results import (
+    CATEGORIES, DATASET, EFFICIENCY_EXECUTIONS, EFFICIENCY_PLATFORMS,
+    READER_TYPES, RESULTS_REPO, STRATA, VIEWS, percentage, ranked, validate,
+)
 
 SITE = Path(__file__).resolve().parents[1]
 SPACE = "https://huggingface.co/spaces/HeOCR/hebrew-ocr-leaderboard"
@@ -100,6 +103,65 @@ def diagnostics(data, lang):
     return "".join(sections)
 
 
+EFFICIENCY_COPY = {
+    "en": {
+        "title": "Reader efficiency",
+        "note": "Each local run covers all 65 public v0 carrier images. Paddle efficiency uses ONNX CPU. Its accuracy run used CUDA. Ubuntu runner costs are projections at $0.36/hour. Gemini lists public Vertex token rates. A dash marks an unavailable value.",
+        "columns": ("Reader", "Execution", "Images / runs", "Pages/min", "Peak RSS (MiB)",
+                    "Marginal API USD / 1,000 pages", "Runner hours / 1,000 pages", "Runner USD / 1,000 pages",
+                    "Input / output USD per 1M tokens"),
+        "source": "Pinned measurements and method",
+    },
+    "he": {
+        "title": "יעילות מנועי הזיהוי",
+        "note": "כל הרצה מקומית כוללת את כל 65 התמונות הציבוריות של v0. יעילות Paddle נמדדה ב־ONNX על המעבד. הדיוק נמדד ב־CUDA. עלויות Ubuntu הן אומדן לפי 0.36 דולר לשעה. עבור Gemini מוצגים מחירי המחירון של Vertex לטוקנים. מקף מציין נתון שאינו זמין.",
+        "columns": ("מנוע זיהוי", "סביבת הרצה", "תמונות / הרצות", "עמודים בדקה", "זיכרון מרבי (MiB)",
+                    "עלות API שולית ל־1,000 עמודים ($)", "שעות ריצה ל־1,000 עמודים", "עלות ריצה ל־1,000 עמודים ($)",
+                    "מחיר קלט / פלט למיליון טוקנים ($)"),
+        "source": "מקור המדידות ושיטת המדידה",
+    },
+}
+
+
+def efficiency(data, lang):
+    panel = data.get("efficiency")
+    if not panel:
+        return ""
+    copy = EFFICIENCY_COPY[lang]
+    local = int(lang == "he")
+    readers = {row["id"]: row["reader"] for row in data["rows"]}
+    numbers = (
+        ("pages_per_minute", ".2f"), ("peak_rss_mib", ".2f"),
+        ("marginal_usd_per_1000", ".2f"), ("runner_hours_per_1000", ".3f"),
+        ("runner_usd_per_1000", ".5f"),
+    )
+    heads = "".join(f'<th scope="col">{e(label)}</th>' for label in copy["columns"])
+    parts = [f'<section class="wrap domain" id="efficiency"><h2>{e(copy["title"])}</h2><p>{e(copy["note"])}</p>']
+    for platform, labels in EFFICIENCY_PLATFORMS.items():
+        title_id = f"efficiency-{platform}"
+        body = []
+        for measure in panel["rows"]:
+            if measure["platform"] != platform:
+                continue
+            execution = EFFICIENCY_EXECUTIONS[measure["execution"]][local + 1]
+            counts = "—" if measure["pages"] is None else f'{measure["pages"]} / {measure["repetitions"]}'
+            stats = [format(measure[key], fmt) if measure[key] is not None else "—" for key, fmt in numbers]
+            input_rate, output_rate = measure["api_input_usd_per_million"], measure["api_output_usd_per_million"]
+            rates = "—" if input_rate is None else f"{input_rate:.2f} / {output_rate:.2f}"
+            cells = "".join(f"<td><bdi>{e(value)}</bdi></td>" for value in (execution, counts, *stats, rates))
+            reader = readers[measure["reader_id"]]
+            if measure["execution"] == "onnx-cpu":
+                reader = reader.removesuffix(" (CUDA)")
+            body.append(f'<tr><th scope="row"><bdi>{e(reader)}</bdi></th>{cells}</tr>')
+        if body:
+            parts.append(f'<h3 id="{title_id}"><bdi>{e(labels[local])}</bdi></h3>'
+                         f'<div class="tablewrap" role="region" tabindex="0" aria-labelledby="{title_id}">'
+                         f'<table><thead><tr>{heads}</tr></thead><tbody>{"".join(body)}</tbody></table></div>')
+    url = f'https://github.com/HeOCR/heocr-bench/tree/{panel["source_commit"]}/efficiency'
+    parts.append(f'<p><a href="{url}">{e(copy["source"])}</a></p></section>')
+    return "".join(parts)
+
+
 def page(lang, data):
     t = COPY[lang]
     index = int(lang == "he")
@@ -107,6 +169,8 @@ def page(lang, data):
     links = " · ".join(f'<a href="{url}">{e(t[key])}</a>' for key, url in (
         ("dataset", HF_DATASET), ("results", HF_RESULTS), ("space", SPACE), ("submit", "#how-to-submit"),
     ))
+    if data.get("efficiency"):
+        links += f' · <a href="#efficiency">{e(EFFICIENCY_COPY[lang]["title"])}</a>'
     intro = f'<p class="lede">{e(t["intro"])}</p><p>{links}</p><p class="note">{e(t["notice"])}</p>'
     categories = [(key, f"<bdi>{key}</bdi> · {e(label[index])}", e(t["coming"]) if key != "C1" else None)
                   for key, label in CATEGORIES.items()]
@@ -133,6 +197,7 @@ def page(lang, data):
         "</details>",
         diagnostics(data, lang),
         "</section>",
+        efficiency(data, lang),
         pending,
         submission,
         "</main>",
