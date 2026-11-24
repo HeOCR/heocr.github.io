@@ -53,6 +53,27 @@ class LeaderboardTest(unittest.TestCase):
             self.assertIn("12.94%", page)
             self.assertIn("22.20%", page)
 
+    def test_api_diagnostics_render_separate_matched_and_masked_scores(self):
+        from leaderboard_results import ARTWORK_MASK_NOTICE, read_results
+
+        data = read_results(builder.SITE / "leaderboard/results.json")
+        expected = {
+            "Google Cloud Vision": ("16.35%", "13.59%"),
+            "Google Document AI Enterprise OCR": ("18.46%", "14.61%"),
+            "Claude Haiku 5.5": ("8.34%", "4.60%"),
+        }
+        for lang in ("en", "he"):
+            with self.subTest(lang=lang):
+                page = builder.page(lang, data)
+                ranked_table = builder.table(data, "filtered", lang)
+                for reader, (matched, masked) in expected.items():
+                    diagnostic = page.split(f"<h3><bdi>{reader} ·", 1)[1].split("</section>", 1)[0]
+                    self.assertIn("commercial API", diagnostic)
+                    self.assertIn(ARTWORK_MASK_NOTICE, diagnostic)
+                    self.assertIn(f"<td>56</td><td>{matched}</td>", diagnostic)
+                    self.assertIn(f"<td>9</td><td>{masked}</td>", diagnostic)
+                    self.assertNotIn(reader, ranked_table)
+
     def test_missing_baseline_cannot_render(self):
         data = fixture()
         data["rows"].pop()
