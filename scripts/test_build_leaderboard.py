@@ -83,7 +83,8 @@ class LeaderboardTest(unittest.TestCase):
                 page = builder.page(lang, data)
                 diagnostic = page.split("<h3><bdi>Claude Haiku 4.5 ·", 1)[1].split("</section>", 1)[0]
                 self.assertIn("commercial API", diagnostic)
-                self.assertIn("Haiku 4.5 hit the output cap on 11 carriers.", diagnostic)
+                self.assertIn("64/65 Haiku 4.5 replies were Hebrew-dominant", diagnostic)
+                self.assertIn("1 Latin-dominant. 11 hit the output cap.", diagnostic)
                 self.assertIn("<td>56</td><td>98.94%</td>", diagnostic)
                 self.assertIn("<td>9</td><td>159.20%</td>", diagnostic)
                 self.assertNotIn("Claude Haiku 4.5", builder.table(data, "filtered", lang))
