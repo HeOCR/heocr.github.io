@@ -120,26 +120,30 @@ class LeaderboardTest(unittest.TestCase):
                 self.assertIn(f'<bdi>{status}</bdi>', page)
                 self.assertIn(f'href="{builder.SUBMIT}"', page)
 
-    def test_efficiency_renders_each_host_and_distinguishes_api_prices(self):
-        from leaderboard_results import read_results
+    def test_efficiency_renders_cpu_hosts_and_registered_api_separately(self):
+        from leaderboard_results import API_TIMING_LABEL, read_results
 
         data = read_results(builder.SITE / "leaderboard/results.json")
         for lang in ("en", "he"):
             with self.subTest(lang=lang):
                 panel = builder.efficiency(data, lang)
-                self.assertEqual(panel.count('scope="row"'), 12)
-                self.assertEqual(panel.count("<bdi>65 / 1</bdi>"), 5)
-                self.assertEqual(panel.count("<bdi>65 / 3</bdi>"), 5)
-                self.assertIn("<bdi>17.23</bdi>", panel)
-                self.assertIn("<bdi>10.47</bdi>", panel)
-                self.assertIn("ONNX", panel)
-                self.assertIn("CUDA", panel)
-                self.assertNotIn("PaddleOCR (CUDA)", panel)
-                gemini = panel.split("<bdi>Gemini (Vertex)</bdi>")
-                self.assertEqual(len(gemini), 3)
-                for row in gemini[1:]:
-                    self.assertEqual(row.split("</tr>", 1)[0].count("<bdi>—</bdi>"), 6)
-                    self.assertIn("<bdi>0.75 / 3.75</bdi>", row.split("</tr>", 1)[0])
+                local, api = panel.split('id="efficiency-registered-api"', 1)
+                self.assertEqual(local.count('scope="row"'), 10)
+                self.assertEqual(api.count('scope="row"'), 5)
+                self.assertEqual(local.count("<bdi>65 / 1</bdi>"), 5)
+                self.assertEqual(local.count("<bdi>65 / 3</bdi>"), 5)
+                self.assertIn("<bdi>17.23</bdi>", local)
+                self.assertIn("<bdi>10.47</bdi>", local)
+                self.assertIn("ONNX", local)
+                self.assertIn("CUDA", local)
+                self.assertNotIn("PaddleOCR (CUDA)", local)
+                self.assertNotIn("Gemini (Vertex)", local)
+                self.assertIn(API_TIMING_LABEL, api)
+                gemini = api.split("<bdi>Gemini (Vertex)</bdi>", 1)[1].split("</tr>", 1)[0]
+                self.assertEqual(gemini.count("<bdi>—</bdi>"), 7)
+                self.assertIn("<bdi>0.75 / 3.75</bdi>", gemini)
+                self.assertIn("<bdi>0.458222</bdi>", api)
+                self.assertIn("<bdi>4.629431</bdi>", api)
 
     def test_missing_baseline_cannot_render(self):
         data = fixture()
