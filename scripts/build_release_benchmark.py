@@ -32,7 +32,7 @@ T = {
             "Handwriting (weighted)",
         ],
         "method": "Read the benchmark methodology", "preview": "Layout preview. Release figures are pending.",
-        "open_result": "P-mod-open v0 results", "dataset": "Download the benchmark dataset", "closed_missing": "No figure published here",
+        "open_result": "P-mod-open v0 results", "dataset": "Download the benchmark dataset", "doi": "Cite the dataset (Zenodo DOI)", "closed_missing": "No figure published here",
         "pages": "{pages} registered pages · {carriers} scored carriers",
         "scope_pending": "The public dataset scope is pending source-rights review. The figures use the registered scope.",
         "carrier_count": "{carriers} carriers", "published": "The public dataset includes {public} of the {registered} scored pages. The figures use the registered scope.",
@@ -59,7 +59,7 @@ T = {
             "כתב יד (משוקלל)",
         ],
         "method": "לשיטת בניית המבחנים", "preview": "תצוגה מקדימה של המבנה. נתוני ההערכה יתווספו לקראת הפרסום.",
-        "open_result": "תוצאות P-mod-open v0", "dataset": "להורדת מערך המבחן", "closed_missing": "אין כאן תוצאה שפורסמה",
+        "open_result": "תוצאות P-mod-open v0", "dataset": "להורדת מערך המבחן", "doi": "ציטוט מערך הנתונים (Zenodo DOI)", "closed_missing": "אין כאן תוצאה שפורסמה",
         "pages": "{pages} עמודים רשומים · {carriers} גרסאות מקור שנבדקו",
         "scope_pending": "היקף מערך הנתונים הציבורי ייקבע לאחר בדיקת זכויות המקור. התוצאות מחושבות לפי הקבוצה הרשומה.",
         "carrier_count": "{carriers} גרסאות מקור", "published": "מערך הנתונים הציבורי כולל {public} מתוך {registered} העמודים שהוערכו. התוצאות מחושבות לפי הקבוצה הרשומה.",
@@ -123,7 +123,8 @@ def open_results(t, data, public_pages):
     if public_pages is None:
         out.extend([f'<p>{scope}</p>', f'<p class="note">{e(t["scope_pending"])}</p>'])
     else:
-        out.append(f'<p>{scope} · {link(DATASET, t["dataset"])}</p>')
+        citation = link(benchmark_release_data.PMOD_OPEN_V0_DOI_URL, t["doi"])
+        out.append(f'<p>{scope} · {link(DATASET, t["dataset"])} · {citation}</p>')
         if public_pages != data["pages"]:
             note = t["published"].format(public=public_pages, registered=data["pages"])
             out.append(f'<p class="note">{e(note)}</p>')

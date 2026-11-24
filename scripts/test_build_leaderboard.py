@@ -31,6 +31,7 @@ class LeaderboardTest(unittest.TestCase):
             self.assertIn('id="C6"', page)
             self.assertIn(f'href="{builder.SUBMIT}"', page)
             self.assertIn(f'href="{builder.SPACE}"', page)
+            self.assertIn(f'href="{builder.PMOD_OPEN_V0_DOI_URL}"', page)
             other = "../leaderboard.html" if lang == "en" else "en/leaderboard.html"
             self.assertIn(f'href="{other}"', page)
 
