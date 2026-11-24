@@ -1007,7 +1007,7 @@
             }
           }
         },
-        "notice": "56 carriers match the original scored pixels. Nine artwork-masked carriers are a separate diagnostic. Haiku 4.5 hit the output cap on 11 carriers.",
+        "notice": "56 carriers match the original scored pixels. Nine artwork-masked carriers are a separate diagnostic. 64/65 Haiku 4.5 replies were Hebrew-dominant (median 100% Hebrew letters), 1 Latin-dominant. 11 hit the output cap.",
         "paired_carriers": 56
       },
       "id": "claude-haiku-4-5-v0",

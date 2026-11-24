@@ -38,7 +38,9 @@ DIAGNOSTIC_NOTICES = {
     "google-document-ai-ocr-v21-v0": ARTWORK_MASK_NOTICE,
     "claude-haiku-5-5-v0": ARTWORK_MASK_NOTICE,
     "claude-haiku-4-5-v0": (
-        ARTWORK_MASK_NOTICE + " Haiku 4.5 hit the output cap on 11 carriers."
+        ARTWORK_MASK_NOTICE
+        + " 64/65 Haiku 4.5 replies were Hebrew-dominant (median 100% Hebrew letters), 1 Latin-dominant."
+        " 11 hit the output cap."
     ),
 }
 SHA = re.compile(r"[a-f0-9]{64}")
