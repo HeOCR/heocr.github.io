@@ -939,6 +939,147 @@
           }
         }
       }
+    },
+    {
+      "category": "C1",
+      "date": "2026-11-24",
+      "diagnostic": {
+        "masked_carriers": 9,
+        "masked_views": {
+          "all": {
+            "archive": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-render": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-scan": {
+              "chars": 0,
+              "edits": 0
+            },
+            "phone-a": {
+              "chars": 4189,
+              "edits": 2555
+            },
+            "phone-b": {
+              "chars": 4189,
+              "edits": 10455
+            },
+            "pooled": {
+              "chars": 12567,
+              "edits": 19446
+            },
+            "scanner": {
+              "chars": 4189,
+              "edits": 6436
+            }
+          },
+          "filtered": {
+            "archive": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-render": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-scan": {
+              "chars": 0,
+              "edits": 0
+            },
+            "phone-a": {
+              "chars": 3111,
+              "edits": 1710
+            },
+            "phone-b": {
+              "chars": 3111,
+              "edits": 8921
+            },
+            "pooled": {
+              "chars": 9333,
+              "edits": 14858
+            },
+            "scanner": {
+              "chars": 3111,
+              "edits": 4227
+            }
+          }
+        },
+        "notice": "56 carriers match the original scored pixels. Nine artwork-masked carriers are a separate diagnostic. Haiku 4.5 hit the output cap on 11 carriers.",
+        "paired_carriers": 56
+      },
+      "id": "claude-haiku-4-5-v0",
+      "licence": "Proprietary (Anthropic commercial terms)",
+      "reader": "Claude Haiku 4.5",
+      "scorer_version": "heocr-bench 0.1.0",
+      "submission_sha256": null,
+      "type": "commercial API",
+      "verified": true,
+      "version": "claude-haiku-4-5-20251001",
+      "views": {
+        "all": {
+          "archive": {
+            "chars": 5352,
+            "edits": 10307
+          },
+          "issuer-render": {
+            "chars": 13964,
+            "edits": 6541
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 20615,
+            "edits": 10200
+          },
+          "phone-b": {
+            "chars": 20615,
+            "edits": 24564
+          },
+          "pooled": {
+            "chars": 81161,
+            "edits": 74849
+          },
+          "scanner": {
+            "chars": 20615,
+            "edits": 23237
+          }
+        },
+        "filtered": {
+          "archive": {
+            "chars": 4697,
+            "edits": 9752
+          },
+          "issuer-render": {
+            "chars": 11455,
+            "edits": 5190
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 15020,
+            "edits": 7256
+          },
+          "phone-b": {
+            "chars": 15020,
+            "edits": 19007
+          },
+          "pooled": {
+            "chars": 61212,
+            "edits": 60565
+          },
+          "scanner": {
+            "chars": 15020,
+            "edits": 19360
+          }
+        }
+      }
     }
   ],
   "schema": "heocr.leaderboard.results.v1"

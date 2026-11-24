@@ -37,6 +37,9 @@ DIAGNOSTIC_NOTICES = {
     "google-vision-document-text-v0": ARTWORK_MASK_NOTICE,
     "google-document-ai-ocr-v21-v0": ARTWORK_MASK_NOTICE,
     "claude-haiku-5-5-v0": ARTWORK_MASK_NOTICE,
+    "claude-haiku-4-5-v0": (
+        ARTWORK_MASK_NOTICE + " Haiku 4.5 hit the output cap on 11 carriers."
+    ),
 }
 SHA = re.compile(r"[a-f0-9]{64}")
 ROW_ID = re.compile(r"[a-z0-9-]{1,64}")
