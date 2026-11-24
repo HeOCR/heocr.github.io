@@ -25,6 +25,7 @@ FONTS = ("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;7
 PAGES = {
     "home": "index.html",
     "bench": "benchmarks.html",
+    "methodology": "methodology.html",
     "htext": "htext.html",
     "rights": "rights.html",
     "download": "download.html",
