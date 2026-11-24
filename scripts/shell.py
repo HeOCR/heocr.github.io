@@ -30,13 +30,14 @@ PAGES = {
     "download": "download.html",
     "privacy": "privacy.html",  # linked from the Download page, not in the header
 }
+LINKED_PAGES = PAGES | {"leaderboard": "leaderboard.html"}
 LANG_DIR = {"he": "", "en": "en/"}  # Hebrew is the default language: the root
 LANGS = ("he", "en")
 
 
 def site_path(lang: str, page: str) -> str:
     """Path of ``page`` in ``lang`` relative to the site root, e.g. ``en/htext.html``."""
-    return LANG_DIR[lang] + PAGES[page]
+    return LANG_DIR[lang] + LINKED_PAGES[page]
 
 
 NAV = ("bench", "htext", "download", "rights")
@@ -70,7 +71,7 @@ def prefix(lang: str) -> str:
 
 def _rel(lang: str, target_lang: str, page: str) -> str:
     """Link from a page in ``lang`` to ``page`` in ``target_lang``."""
-    name = PAGES[page]
+    name = LINKED_PAGES[page]
     if name == "index.html":
         name = ""
     if lang == target_lang:

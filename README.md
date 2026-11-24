@@ -59,3 +59,17 @@ python3 scripts/build_htext.py --import-card pby path/to/htext/data/pby/v1/corpu
 python3 scripts/build_htext.py           # writes both pages (standard library only)
 python3 scripts/build_htext.py --check   # fails if a committed page does not match corpora.json
 ```
+
+## Leaderboard preview
+
+The leaderboard renderer consumes the same versioned `results.json` as the
+Gradio Space. Stage both language variants outside this checkout.
+
+```sh
+python3 scripts/build_leaderboard.py --results /path/to/results.json --sha256 <digest> --out-dir ../preview
+python3 scripts/build_leaderboard.py --results /path/to/results.json --sha256 <digest> --out-dir ../preview --check
+```
+
+The renderer checks the full aggregate schema and displays both registered score
+views. Open category sections and scorer/version metadata are generated from
+the shared contract. Activate the reviewed site output and dataset together.
