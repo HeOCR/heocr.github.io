@@ -151,6 +151,7 @@ def validate_document_types(panel, rows):
 EFFICIENCY_PLATFORMS = {
     "m4-cpu": ("Apple M4 CPU", "מעבד Apple M4"),
     "github-ubuntu-cpu": ("GitHub Ubuntu CPU", "מעבד GitHub Ubuntu"),
+    "registered-api": ("Registered API runs", "הרצות API רשומות"),
 }
 EFFICIENCY_EXECUTIONS = {
     "native-tesseract": ("measured", "Native Tesseract · measured", "נמדד · Tesseract מקומי"),
@@ -162,6 +163,42 @@ MEASUREMENTS = (
     "marginal_usd_per_1000", "runner_hours_per_1000", "runner_usd_per_1000",
 )
 TOKEN_RATES = ("api_input_usd_per_million", "api_output_usd_per_million")
+API_TIMING_LABEL = "from registered run; network-bound, not comparable to local CPU"
+API_EXECUTIONS = {
+    "vertex-global-https": ("Vertex global", "Vertex גלובלי"),
+    "vision-document-text-detection": ("Vision Document Text Detection", "Vision Document Text Detection"),
+    "document-ai-enterprise-ocr": ("Document AI Enterprise OCR", "Document AI Enterprise OCR"),
+    "anthropic-message-batch": ("Anthropic Message Batches", "Anthropic Message Batches"),
+}
+API_STATUSES = {
+    (False, False): ("list-price-only", "list prices only", "מחירי מחירון בלבד"),
+    (True, False): ("registered-cost-only", "list cost from usage", "עלות מחירון לפי שימוש מדווח"),
+    (False, True): ("registered-timing-only", "recorded timing", "תזמון מדווח"),
+    (True, True): ("registered", "list cost and timing", "עלות מחירון ותזמון"),
+}
+API_TIMING_NUMBERS = ("api_pages_per_minute", "api_mean_request_latency_seconds", "api_timed_pages")
+API_NUMBERS = ("api_usd_per_1000_units", *API_TIMING_NUMBERS)
+API_TEXT = ("api_registration", "api_timing_scope", "api_timing_label")
+
+
+def validate_registered_api(row):
+    has_timing = row["api_timing_scope"] is not None
+    has_cost = row["marginal_usd_per_1000"] is not None
+    if (row["execution"] not in API_EXECUTIONS
+            or row["status"] != API_STATUSES[has_cost, has_timing][0]
+            or row["api_timing_label"] != API_TIMING_LABEL
+            or not isinstance(row["api_registration"], str)
+            or not re.fullmatch(r"#[1-9][0-9]*", row["api_registration"])
+            or any(row[name] is not None for name in ("pages_per_minute", "runner_hours_per_1000", "runner_usd_per_1000"))):
+        raise ValueError("Invalid registered API efficiency scope")
+    if has_timing:
+        if (not text(row["api_timing_scope"], 96) or type(row["api_timed_pages"]) is not int
+                or not 0 < row["api_timed_pages"] <= row["pages"]
+                or not any(row[name] is not None for name in API_TIMING_NUMBERS[:2])):
+            raise ValueError("Invalid registered API timing")
+    elif any(row[name] is not None for name in API_TIMING_NUMBERS):
+        raise ValueError("Registered API timing requires its recorded scope")
+
 
 
 def validate_efficiency(table, reader_ids):
@@ -173,17 +210,28 @@ def validate_efficiency(table, reader_ids):
     pairs = set()
     fields = {"reader_id", "platform", "execution", "status", *MEASUREMENTS, *TOKEN_RATES}
     for row in table["rows"]:
-        if not isinstance(row, dict) or row.keys() != fields:
+        if not isinstance(row, dict) or not isinstance(row.get("platform"), str):
+            raise ValueError("Invalid efficiency row fields")
+        registered = row["platform"] == "registered-api"
+        if row.keys() != (fields | {*API_NUMBERS, *API_TEXT} if registered else fields):
             raise ValueError("Invalid efficiency row fields")
         key = row["reader_id"], row["platform"]
-        execution = EFFICIENCY_EXECUTIONS.get(row["execution"])
-        if (key[0] not in reader_ids or key[1] not in EFFICIENCY_PLATFORMS
-                or key in pairs or execution is None or row["status"] != execution[0]):
+        if (not all(isinstance(row[name], str) for name in ("reader_id", "execution", "status"))
+                or key[0] not in reader_ids or key[1] not in EFFICIENCY_PLATFORMS or key in pairs):
             raise ValueError("Invalid or repeated efficiency join")
         pairs.add(key)
+        numbers = (*MEASUREMENTS, *TOKEN_RATES, *API_NUMBERS) if registered else (*MEASUREMENTS, *TOKEN_RATES)
         if any(v is not None and (type(v) not in (float, int) or not isfinite(v) or v < 0)
-               for v in (row[name] for name in (*MEASUREMENTS, *TOKEN_RATES))):
+               for v in (row[name] for name in numbers)):
             raise ValueError("Invalid efficiency value")
+        if registered:
+            if any(type(row[name]) is not int or row[name] < 1 for name in ("pages", "repetitions")):
+                raise ValueError("Missing registered API run coverage")
+            validate_registered_api(row)
+            continue
+        execution = EFFICIENCY_EXECUTIONS.get(row["execution"])
+        if execution is None or row["status"] != execution[0]:
+            raise ValueError("Invalid local efficiency execution")
         if row["status"] == "list-price-only":
             if any(row[name] is not None for name in MEASUREMENTS) or any(row[name] is None for name in TOKEN_RATES):
                 raise ValueError("A list-price-only row cannot contain measurements")

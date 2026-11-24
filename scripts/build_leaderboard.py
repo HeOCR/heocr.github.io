@@ -9,8 +9,9 @@ from pathlib import Path
 import shell
 from benchmark_release_data import PMOD_OPEN_V0_DOI_URL
 from leaderboard_results import (
-    CATEGORIES, DATASET, EFFICIENCY_EXECUTIONS, EFFICIENCY_PLATFORMS,
-    DOCUMENT_TYPES, READER_TYPES, RESULTS_REPO, STRATA, TYPE_CAPTURES, TYPE_SCOPES, VIEWS,
+    API_EXECUTIONS, API_STATUSES, API_TIMING_LABEL, CATEGORIES, DATASET,
+    DOCUMENT_TYPES, EFFICIENCY_EXECUTIONS, EFFICIENCY_PLATFORMS,
+    READER_TYPES, RESULTS_REPO, STRATA, TYPE_CAPTURES, TYPE_SCOPES, VIEWS,
     percentage, ranked, validate,
 )
 
@@ -108,21 +109,54 @@ def diagnostics(data, lang):
 EFFICIENCY_COPY = {
     "en": {
         "title": "Reader efficiency",
-        "note": "Each local run covers all 65 public v0 carrier images. Paddle efficiency uses ONNX CPU. Its accuracy run used CUDA. Ubuntu runner costs are projections at $0.36/hour. Gemini lists public Vertex token rates. A dash marks an unavailable value.",
+        "note": "Each local run covers all 65 public v0 carrier images. Paddle efficiency uses ONNX CPU. Its accuracy run used CUDA. Ubuntu runner costs are projections at $0.36/hour. A dash marks an unavailable value.",
         "columns": ("Reader", "Execution", "Images / runs", "Pages/min", "Peak RSS (MiB)",
-                    "Marginal API USD / 1,000 pages", "Runner hours / 1,000 pages", "Runner USD / 1,000 pages",
-                    "Input / output USD per 1M tokens"),
+                    "Marginal API USD / 1,000 pages", "Runner hours / 1,000 pages", "Runner USD / 1,000 pages"),
+        "api_columns": ("Reader", "Execution", "Run", "Images / runs", "List USD / 1,000 pages",
+                        "Input / output USD per 1M tokens", "USD / 1,000 API units", "API pages/min",
+                        "Mean request latency (s)", "Timed pages", "Timing scope", "Client peak RSS (MiB)"),
         "source": "Pinned measurements and method",
     },
     "he": {
         "title": "יעילות מנועי הזיהוי",
-        "note": "כל הרצה מקומית כוללת את כל 65 התמונות הציבוריות של v0. יעילות Paddle נמדדה ב־ONNX על המעבד. הדיוק נמדד ב־CUDA. עלויות Ubuntu הן אומדן לפי 0.36 דולר לשעה. עבור Gemini מוצגים מחירי המחירון של Vertex לטוקנים. מקף מציין נתון שאינו זמין.",
+        "note": "כל הרצה מקומית כוללת את כל 65 התמונות הציבוריות של v0. יעילות Paddle נמדדה ב־ONNX על המעבד. הדיוק נמדד ב־CUDA. עלויות Ubuntu הן אומדן לפי 0.36 דולר לשעה. מקף מציין נתון שאינו זמין.",
         "columns": ("מנוע זיהוי", "סביבת הרצה", "תמונות / הרצות", "עמודים בדקה", "זיכרון מרבי (MiB)",
-                    "עלות API שולית ל־1,000 עמודים ($)", "שעות ריצה ל־1,000 עמודים", "עלות ריצה ל־1,000 עמודים ($)",
-                    "מחיר קלט / פלט למיליון טוקנים ($)"),
+                    "עלות API שולית ל־1,000 עמודים ($)", "שעות ריצה ל־1,000 עמודים", "עלות ריצה ל־1,000 עמודים ($)"),
+        "api_columns": ("מנוע זיהוי", "סביבת הרצה", "הרצה רשומה", "תמונות / הרצות", "עלות מחירון ל־1,000 עמודים ($)",
+                        "מחיר קלט / פלט למיליון טוקנים ($)", "מחיר ל־1,000 יחידות API ($)", "עמודי API בדקה",
+                        "זמן ממוצע לבקשה (שניות)", "עמודים שנמדדו", "היקף התזמון", "זיכרון שיא בצד הלקוח (MiB)"),
         "source": "מקור המדידות ושיטת המדידה",
     },
 }
+
+
+def format_measure(value, fmt):
+    return format(value, fmt) if value is not None else "—"
+
+
+def efficiency_cells(measure, local):
+    counts = "—" if measure["pages"] is None else f'{measure["pages"]} / {measure["repetitions"]}'
+    if measure["platform"] == "registered-api":
+        status = API_STATUSES[measure["marginal_usd_per_1000"] is not None, measure["api_timing_scope"] is not None]
+        execution = f'{API_EXECUTIONS[measure["execution"]][local]} · {status[local + 1]}'
+        input_rate, output_rate = (measure["api_input_usd_per_million"], measure["api_output_usd_per_million"])
+        rates = "—" if input_rate is output_rate is None else " / ".join(
+            format_measure(value, ".2f") for value in (input_rate, output_rate)
+        )
+        return (execution, measure["api_registration"], counts,
+                format_measure(measure["marginal_usd_per_1000"], ".6f"), rates,
+                format_measure(measure["api_usd_per_1000_units"], ".2f"),
+                format_measure(measure["api_pages_per_minute"], ".2f"),
+                format_measure(measure["api_mean_request_latency_seconds"], ".3f"),
+                format_measure(measure["api_timed_pages"], "d"), measure["api_timing_scope"] or "—",
+                format_measure(measure["peak_rss_mib"], ".2f"))
+    execution = EFFICIENCY_EXECUTIONS[measure["execution"]][local + 1]
+    numbers = (
+        ("pages_per_minute", ".2f"), ("peak_rss_mib", ".2f"),
+        ("marginal_usd_per_1000", ".2f"), ("runner_hours_per_1000", ".3f"),
+        ("runner_usd_per_1000", ".5f"),
+    )
+    return (execution, counts, *(format_measure(measure[key], fmt) for key, fmt in numbers))
 
 
 def efficiency(data, lang):
@@ -132,12 +166,6 @@ def efficiency(data, lang):
     copy = EFFICIENCY_COPY[lang]
     local = int(lang == "he")
     readers = {row["id"]: row["reader"] for row in data["rows"]}
-    numbers = (
-        ("pages_per_minute", ".2f"), ("peak_rss_mib", ".2f"),
-        ("marginal_usd_per_1000", ".2f"), ("runner_hours_per_1000", ".3f"),
-        ("runner_usd_per_1000", ".5f"),
-    )
-    heads = "".join(f'<th scope="col">{e(label)}</th>' for label in copy["columns"])
     parts = [f'<section class="wrap domain" id="efficiency"><h2>{e(copy["title"])}</h2><p>{e(copy["note"])}</p>']
     for platform, labels in EFFICIENCY_PLATFORMS.items():
         title_id = f"efficiency-{platform}"
@@ -145,19 +173,19 @@ def efficiency(data, lang):
         for measure in panel["rows"]:
             if measure["platform"] != platform:
                 continue
-            execution = EFFICIENCY_EXECUTIONS[measure["execution"]][local + 1]
-            counts = "—" if measure["pages"] is None else f'{measure["pages"]} / {measure["repetitions"]}'
-            stats = [format(measure[key], fmt) if measure[key] is not None else "—" for key, fmt in numbers]
-            input_rate, output_rate = measure["api_input_usd_per_million"], measure["api_output_usd_per_million"]
-            rates = "—" if input_rate is None else f"{input_rate:.2f} / {output_rate:.2f}"
-            cells = "".join(f"<td><bdi>{e(value)}</bdi></td>" for value in (execution, counts, *stats, rates))
+            values = efficiency_cells(measure, local)
+            cells = "".join(f"<td><bdi>{e(value)}</bdi></td>" for value in values)
             reader = readers[measure["reader_id"]]
             if measure["execution"] == "onnx-cpu":
                 reader = reader.removesuffix(" (CUDA)")
             body.append(f'<tr><th scope="row"><bdi>{e(reader)}</bdi></th>{cells}</tr>')
         if body:
-            parts.append(f'<h3 id="{title_id}"><bdi>{e(labels[local])}</bdi></h3>'
-                         f'<div class="tablewrap" role="region" tabindex="0" aria-labelledby="{title_id}">'
+            kind = "api_columns" if platform == "registered-api" else "columns"
+            heads = "".join(f'<th scope="col">{e(label)}</th>' for label in copy[kind])
+            parts.append(f'<h3 id="{title_id}"><bdi>{e(labels[local])}</bdi></h3>')
+            if platform == "registered-api":
+                parts.append(f'<p class="note"><bdi lang="en">{e(API_TIMING_LABEL)}</bdi></p>')
+            parts.append(f'<div class="tablewrap" role="region" tabindex="0" aria-labelledby="{title_id}">'
                          f'<table><thead><tr>{heads}</tr></thead><tbody>{"".join(body)}</tbody></table></div>')
     url = f'https://github.com/HeOCR/heocr-bench/tree/{panel["source_commit"]}/efficiency'
     parts.append(f'<p><a href="{url}">{e(copy["source"])}</a></p></section>')
