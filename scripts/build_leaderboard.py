@@ -9,7 +9,8 @@ from pathlib import Path
 import shell
 from leaderboard_results import (
     CATEGORIES, DATASET, EFFICIENCY_EXECUTIONS, EFFICIENCY_PLATFORMS,
-    READER_TYPES, RESULTS_REPO, STRATA, VIEWS, percentage, ranked, validate,
+    DOCUMENT_TYPES, READER_TYPES, RESULTS_REPO, STRATA, TYPE_CAPTURES, TYPE_SCOPES, VIEWS,
+    percentage, ranked, validate,
 )
 
 SITE = Path(__file__).resolve().parents[1]
@@ -162,6 +163,62 @@ def efficiency(data, lang):
     return "".join(parts)
 
 
+TYPE_COPY = {
+    "en": (
+        "CER by document type and capture",
+        "Gazette groups pages by source and overlaps the layout groups. Scores show CER and carrier count. "
+        "Masked carriers are shown separately.",
+        "Reader", "reference builder",
+    ),
+    "he": (
+        "שיעור שגיאות תווים לפי סוג מסמך ולכידה",
+        "הקבוצה ״רשומות״ כוללת עמודים לפי מקורם וחופפת לקבוצות לפי פריסה. "
+        "לצד כל ציון מוצג מספר הלכידות. לכידות עם מיסוך מוצגות בנפרד.",
+        "מנוע זיהוי", "השתתף בבניית הייחוס",
+    ),
+}
+
+
+def document_types(data, lang):
+    panel = data.get("document_types")
+    if not panel:
+        return ""
+    index = int(lang == "he")
+    title, note, reader_label, bias = TYPE_COPY[lang]
+    columns = (reader_label, *(label[index] for label in TYPE_CAPTURES.values()))
+    headings = "".join(f'<th scope="col">{e(label)}</th>' for label in columns)
+    parts = [f'<section class="wrap domain" id="document-types"><h2>{e(title)}</h2><p>{e(note)}</p>']
+    for scope, (count, *names) in TYPE_SCOPES.items():
+        parts.append(f'<details class="method"{" open" if scope == "matched" else ""}>'
+                     f'<summary>{e(names[index])} · {count}</summary>')
+        for view, labels in VIEWS.items():
+            parts.append(f'<details class="method"{" open" if view == "filtered" else ""}>'
+                         f'<summary>{e(labels[index])}</summary>')
+            for code, label in DOCUMENT_TYPES.items():
+                rows = []
+                for reader in panel["readers"]:
+                    metrics = reader["scopes"].get(scope, {}).get(view, {}).get(code)
+                    if not metrics:
+                        continue
+                    name = reader["reader"]
+                    if reader.get("reference_builder"):
+                        name += f" · {bias}"
+                    cells = []
+                    for cap in TYPE_CAPTURES:
+                        metric = metrics.get(cap)
+                        cells.append(f'{percentage(metric)} · {metric["carriers"]}' if metric else "—")
+                    fields = "".join(f'<td><bdi>{e(value)}</bdi></td>' for value in cells)
+                    rows.append(f'<tr><th scope="row"><bdi>{e(name)}</bdi></th>{fields}</tr>')
+                if rows:
+                    ident = f"type-{scope}-{view}-{code}"
+                    parts.append(f'<h3 id="{ident}">{e(label[index])}</h3>'
+                                 f'<div class="tablewrap" role="region" tabindex="0" aria-labelledby="{ident}">'
+                                 f'<table><thead><tr>{headings}</tr></thead><tbody>{"".join(rows)}</tbody></table></div>')
+            parts.append("</details>")
+        parts.append("</details>")
+    return "".join(parts) + "</section>"
+
+
 def page(lang, data):
     t = COPY[lang]
     index = int(lang == "he")
@@ -171,6 +228,8 @@ def page(lang, data):
     ))
     if data.get("efficiency"):
         links += f' · <a href="#efficiency">{e(EFFICIENCY_COPY[lang]["title"])}</a>'
+    if data.get("document_types"):
+        links += f' · <a href="#document-types">{e(TYPE_COPY[lang][0])}</a>'
     intro = f'<p class="lede">{e(t["intro"])}</p><p>{links}</p><p class="note">{e(t["notice"])}</p>'
     categories = [(key, f"<bdi>{key}</bdi> · {e(label[index])}", e(t["coming"]) if key != "C1" else None)
                   for key, label in CATEGORIES.items()]
@@ -197,6 +256,7 @@ def page(lang, data):
         "</details>",
         diagnostics(data, lang),
         "</section>",
+        document_types(data, lang),
         efficiency(data, lang),
         pending,
         submission,
