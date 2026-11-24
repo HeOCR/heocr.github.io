@@ -58,6 +58,20 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertNotIn("launch conditions", output.lower())
             self.assertIn(builder.DATASET, opened)
 
+    def test_public_phone_aliases_preserve_the_legacy_aggregate_rows(self):
+        sample = example()
+        data = release.validate(sample)
+        for groups in sample["modern_print"]["views"].values():
+            groups["iphone"] = groups.pop("phone-a")
+            groups["pixel"] = groups.pop("phone-b")
+        self.assertEqual(release.validate(sample), data)
+        for lang in builder.T:
+            output = builder.page(lang, data)
+            self.assertIn('id="p-mod-open-all-phone-a"', output)
+            self.assertIn('id="p-mod-open-filtered-phone-b"', output)
+            self.assertNotIn("iphone", output.casefold())
+            self.assertNotIn("pixel", output.casefold())
+
     def test_layout_preview_and_pending_rights(self):
         data = release.validate(example())
         for lang in builder.T:

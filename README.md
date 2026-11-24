@@ -73,6 +73,7 @@ For a release preview, add `--release-data /path/to/approved-aggregates.json --s
 The builder accepts eval's `heocr.benchmark.scores.v1` export, containing page CER and WER for ten
 readers in both registered views, per carrier and pooled, plus the closed field-recall aggregates.
 It validates the reader and carrier panels, denominator arithmetic, and byte identity before rendering.
+The public tables distinguish the two phone streams with the aliases Phone A and Phone B.
 
 Once the redistribution scope is approved, add `--public-pages <count>` to render the dataset link and
 disclose any exclusions from the public copy. Scores always use the registered measurement scope.

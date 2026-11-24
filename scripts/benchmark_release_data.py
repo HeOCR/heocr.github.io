@@ -10,7 +10,9 @@ from pathlib import Path
 
 SCHEMA = "heocr.benchmark.scores.v1"
 VIEW_IDS = ("all", "filtered")
-CARRIER_IDS = ("pooled", "archive", "iphone", "issuer-render", "issuer-scan", "pixel", "scanner")
+CARRIER_IDS = ("pooled", "archive", "phone-a", "issuer-render", "issuer-scan", "phone-b", "scanner")
+PRIVATE_CARRIER_IDS = {"phone-a": "iphone", "phone-b": "pixel"}
+LEGACY_CARRIERS = tuple(PRIVATE_CARRIER_IDS.get(key, key) for key in CARRIER_IDS)
 
 
 def require(condition, where):
@@ -77,10 +79,12 @@ def open_panel(value, names):
     panel = None
     for view_id in VIEW_IDS:
         groups = value["views"][view_id]
-        fields(groups, " ".join(CARRIER_IDS), "view carrier coverage")
+        legacy = isinstance(groups, dict) and groups.keys() == set(LEGACY_CARRIERS)
+        keys = LEGACY_CARRIERS if legacy else CARRIER_IDS
+        fields(groups, " ".join(keys), "view carrier coverage")
         views[view_id] = {}
-        for group_id in CARRIER_IDS:
-            group = groups[group_id]
+        for group_id, source_key in zip(CARRIER_IDS, keys, strict=True):
+            group = groups[source_key]
             fields(group, "carriers readers", "carrier result")
             count(group["carriers"], "carriers")
             rows = group["readers"]
@@ -94,7 +98,7 @@ def open_panel(value, names):
             require(len(reader_ids) == 10 and (panel is None or panel == reader_ids), "open reader panel")
             panel = reader_ids
             views[view_id][group_id] = {"carriers": group["carriers"], "readers": rows}
-        actual = sum(groups[key]["carriers"] for key in CARRIER_IDS if key != "pooled")
+        actual = sum(groups[key]["carriers"] for key in keys if key != "pooled")
         require(actual == groups["pooled"]["carriers"] == value["carriers"], "carrier census")
     return {"pages": value["pages"], "carriers": value["carriers"], "views": views}
 
