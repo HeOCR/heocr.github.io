@@ -89,6 +89,21 @@ class LeaderboardTest(unittest.TestCase):
                 self.assertIn("<td>9</td><td>159.20%</td>", diagnostic)
                 self.assertNotIn("Claude Haiku 4.5", builder.table(data, "filtered", lang))
 
+    def test_submission_guide_and_unverified_row_are_bilingual(self):
+        data = fixture()
+        row = {**data["rows"][0], "id": "a" * 64, "submission_sha256": "a" * 64,
+               "type": "closed weights", "verified": False}
+        data["rows"].append(row)
+        for lang, heading, status in (
+            ("en", "How to submit", "Self-submitted, unverified"),
+            ("he", "איך מגישים תוצאות?", "הוגש עצמאית, טרם אומת"),
+        ):
+            with self.subTest(lang=lang):
+                page = builder.page(lang, validate(data))
+                self.assertIn(f'id="how-to-submit"><h2>{heading}</h2>', page)
+                self.assertIn(f'<bdi>{status}</bdi>', page)
+                self.assertIn(f'href="{builder.SUBMIT}"', page)
+
     def test_missing_baseline_cannot_render(self):
         data = fixture()
         data["rows"].pop()

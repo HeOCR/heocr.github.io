@@ -30,7 +30,10 @@ VIEWS = {
     "filtered": ("Common filtered positions", "מיקומים משותפים לאחר סינון"),
     "all": ("All reference positions", "כל המיקומים בטקסט הייחוס"),
 }
-READER_TYPES = {"open weights": "משקולות פתוחות", "API": "API", "commercial API": "API מסחרי"}
+READER_TYPES = {
+    "open weights": "משקולות פתוחות", "closed weights": "משקולות סגורות",
+    "API": "API", "commercial API": "API מסחרי",
+}
 BIAS_NOTICE = "same model family took part in building v0 references (biased comparator)"
 ARTWORK_MASK_NOTICE = '56 carriers match the original scored pixels. Nine artwork-masked carriers are a separate diagnostic.'
 DIAGNOSTIC_NOTICES = {
