@@ -1,0 +1,1591 @@
+{
+  "modern_print": {
+    "aggregate_sha256": "8ad149e53d08a0f26d030bf29757ec981ab60c9e29fecca300b492830ad913f5",
+    "carriers": 65,
+    "category_order": 1,
+    "dataset": "P-mod-open v0",
+    "issue_clusters": 14,
+    "line_cer": null,
+    "metric": "page_cer",
+    "pages": 31,
+    "score_scope": "Original registered one-shot measured roster. Redistribution may cover a subset.",
+    "view_labels": {
+      "all": "All reference positions",
+      "filtered": "Common independently verified positions without known project training overlap"
+    },
+    "views": {
+      "all": {
+        "archive": {
+          "carriers": 5,
+          "readers": [
+            {
+              "cer": 0.46917040358744394,
+              "chars": 5352,
+              "edits": 2511,
+              "missed_numbers": 11,
+              "reader": "heocr-stock",
+              "ref_numbers": 50,
+              "wer": 0.7779868297271872,
+              "word_edits": 827,
+              "words": 1063
+            },
+            {
+              "cer": 0.4321748878923767,
+              "chars": 5352,
+              "edits": 2313,
+              "missed_numbers": 10,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 50,
+              "wer": 0.6641580432737535,
+              "word_edits": 706,
+              "words": 1063
+            },
+            {
+              "cer": 0.46057548579970103,
+              "chars": 5352,
+              "edits": 2465,
+              "missed_numbers": 11,
+              "reader": "heocr-120k",
+              "ref_numbers": 50,
+              "wer": 0.6876763875823142,
+              "word_edits": 731,
+              "words": 1063
+            },
+            {
+              "cer": 0.4639387144992526,
+              "chars": 5352,
+              "edits": 2483,
+              "missed_numbers": 10,
+              "reader": "heocr-40k",
+              "ref_numbers": 50,
+              "wer": 0.6886171213546566,
+              "word_edits": 732,
+              "words": 1063
+            },
+            {
+              "cer": 0.4665545590433483,
+              "chars": 5352,
+              "edits": 2497,
+              "missed_numbers": 29,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 50,
+              "wer": 0.6857949200376293,
+              "word_edits": 729,
+              "words": 1063
+            },
+            {
+              "cer": 0.45422272047832585,
+              "chars": 5352,
+              "edits": 2431,
+              "missed_numbers": 26,
+              "reader": "tessdata-best",
+              "ref_numbers": 50,
+              "wer": 0.7826904985888994,
+              "word_edits": 832,
+              "words": 1063
+            },
+            {
+              "cer": 0.46207025411061287,
+              "chars": 5352,
+              "edits": 2473,
+              "missed_numbers": 23,
+              "reader": "tessdata-fast",
+              "ref_numbers": 50,
+              "wer": 0.7714016933207902,
+              "word_edits": 820,
+              "words": 1063
+            },
+            {
+              "cer": 0.4232062780269058,
+              "chars": 5352,
+              "edits": 2265,
+              "missed_numbers": 11,
+              "reader": "rivok-full",
+              "ref_numbers": 50,
+              "wer": 0.6415804327375353,
+              "word_edits": 682,
+              "words": 1063
+            },
+            {
+              "cer": 0.42133781763826605,
+              "chars": 5352,
+              "edits": 2255,
+              "missed_numbers": 12,
+              "reader": "rivok-lite",
+              "ref_numbers": 50,
+              "wer": 0.6481655691439323,
+              "word_edits": 689,
+              "words": 1063
+            },
+            {
+              "cer": 0.4280642750373692,
+              "chars": 5352,
+              "edits": 2291,
+              "missed_numbers": 7,
+              "reader": "paddle",
+              "ref_numbers": 50,
+              "wer": 0.6904985888993415,
+              "word_edits": 734,
+              "words": 1063
+            }
+          ]
+        },
+        "issuer-render": {
+          "carriers": 9,
+          "readers": [
+            {
+              "cer": 0.16127184187911772,
+              "chars": 13964,
+              "edits": 2252,
+              "missed_numbers": 89,
+              "reader": "heocr-stock",
+              "ref_numbers": 355,
+              "wer": 0.2609569762766385,
+              "word_edits": 649,
+              "words": 2487
+            },
+            {
+              "cer": 0.15360928100830706,
+              "chars": 13964,
+              "edits": 2145,
+              "missed_numbers": 62,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 355,
+              "wer": 0.22919179734620024,
+              "word_edits": 570,
+              "words": 2487
+            },
+            {
+              "cer": 0.15690346605557148,
+              "chars": 13964,
+              "edits": 2191,
+              "missed_numbers": 49,
+              "reader": "heocr-120k",
+              "ref_numbers": 355,
+              "wer": 0.2320064334539606,
+              "word_edits": 577,
+              "words": 2487
+            },
+            {
+              "cer": 0.15325121741621311,
+              "chars": 13964,
+              "edits": 2140,
+              "missed_numbers": 47,
+              "reader": "heocr-40k",
+              "ref_numbers": 355,
+              "wer": 0.22838761560112586,
+              "word_edits": 568,
+              "words": 2487
+            },
+            {
+              "cer": 0.18963047837295904,
+              "chars": 13964,
+              "edits": 2648,
+              "missed_numbers": 52,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 355,
+              "wer": 0.29392842782468837,
+              "word_edits": 731,
+              "words": 2487
+            },
+            {
+              "cer": 0.15489830993984532,
+              "chars": 13964,
+              "edits": 2163,
+              "missed_numbers": 130,
+              "reader": "tessdata-best",
+              "ref_numbers": 355,
+              "wer": 0.26457579412947324,
+              "word_edits": 658,
+              "words": 2487
+            },
+            {
+              "cer": 0.15131767401890575,
+              "chars": 13964,
+              "edits": 2113,
+              "missed_numbers": 114,
+              "reader": "tessdata-fast",
+              "ref_numbers": 355,
+              "wer": 0.25371934057096907,
+              "word_edits": 631,
+              "words": 2487
+            },
+            {
+              "cer": 0.13355771985104556,
+              "chars": 13964,
+              "edits": 1865,
+              "missed_numbers": 43,
+              "reader": "rivok-full",
+              "ref_numbers": 355,
+              "wer": 0.1958182549256132,
+              "word_edits": 487,
+              "words": 2487
+            },
+            {
+              "cer": 0.14021770266399314,
+              "chars": 13964,
+              "edits": 1958,
+              "missed_numbers": 63,
+              "reader": "rivok-lite",
+              "ref_numbers": 355,
+              "wer": 0.20506634499396864,
+              "word_edits": 510,
+              "words": 2487
+            },
+            {
+              "cer": 0.2874534517330278,
+              "chars": 13964,
+              "edits": 4014,
+              "missed_numbers": 53,
+              "reader": "paddle",
+              "ref_numbers": 355,
+              "wer": 0.5207076799356655,
+              "word_edits": 1295,
+              "words": 2487
+            }
+          ]
+        },
+        "issuer-scan": {
+          "carriers": 0,
+          "readers": []
+        },
+        "phone-a": {
+          "carriers": 17,
+          "readers": [
+            {
+              "cer": 0.19771004676665055,
+              "chars": 24804,
+              "edits": 4904,
+              "missed_numbers": 133,
+              "reader": "heocr-stock",
+              "ref_numbers": 529,
+              "wer": 0.32002768804799264,
+              "word_edits": 1387,
+              "words": 4334
+            },
+            {
+              "cer": 0.1799709724238026,
+              "chars": 24804,
+              "edits": 4464,
+              "missed_numbers": 61,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 529,
+              "wer": 0.2514997692662667,
+              "word_edits": 1090,
+              "words": 4334
+            },
+            {
+              "cer": 0.18380099983873568,
+              "chars": 24804,
+              "edits": 4559,
+              "missed_numbers": 58,
+              "reader": "heocr-120k",
+              "ref_numbers": 529,
+              "wer": 0.2648823257960314,
+              "word_edits": 1148,
+              "words": 4334
+            },
+            {
+              "cer": 0.18561522335107242,
+              "chars": 24804,
+              "edits": 4604,
+              "missed_numbers": 54,
+              "reader": "heocr-40k",
+              "ref_numbers": 529,
+              "wer": 0.2609598523304107,
+              "word_edits": 1131,
+              "words": 4334
+            },
+            {
+              "cer": 0.1969440412836639,
+              "chars": 24804,
+              "edits": 4885,
+              "missed_numbers": 115,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 529,
+              "wer": 0.31633594831564377,
+              "word_edits": 1371,
+              "words": 4334
+            },
+            {
+              "cer": 0.20355587808417996,
+              "chars": 24804,
+              "edits": 5049,
+              "missed_numbers": 250,
+              "reader": "tessdata-best",
+              "ref_numbers": 529,
+              "wer": 0.33802491924319333,
+              "word_edits": 1465,
+              "words": 4334
+            },
+            {
+              "cer": 0.19621835187872924,
+              "chars": 24804,
+              "edits": 4867,
+              "missed_numbers": 218,
+              "reader": "tessdata-fast",
+              "ref_numbers": 529,
+              "wer": 0.33364097831102907,
+              "word_edits": 1446,
+              "words": 4334
+            },
+            {
+              "cer": 0.18787292372198033,
+              "chars": 24804,
+              "edits": 4660,
+              "missed_numbers": 67,
+              "reader": "rivok-full",
+              "ref_numbers": 529,
+              "wer": 0.24550069220119983,
+              "word_edits": 1064,
+              "words": 4334
+            },
+            {
+              "cer": 0.19484760522496372,
+              "chars": 24804,
+              "edits": 4833,
+              "missed_numbers": 90,
+              "reader": "rivok-lite",
+              "ref_numbers": 529,
+              "wer": 0.2720350715274573,
+              "word_edits": 1179,
+              "words": 4334
+            },
+            {
+              "cer": 0.180857926140945,
+              "chars": 24804,
+              "edits": 4486,
+              "missed_numbers": 61,
+              "reader": "paddle",
+              "ref_numbers": 529,
+              "wer": 0.4088601753576373,
+              "word_edits": 1772,
+              "words": 4334
+            }
+          ]
+        },
+        "phone-b": {
+          "carriers": 17,
+          "readers": [
+            {
+              "cer": 0.21359458151910982,
+              "chars": 24804,
+              "edits": 5298,
+              "missed_numbers": 128,
+              "reader": "heocr-stock",
+              "ref_numbers": 529,
+              "wer": 0.3329487771112137,
+              "word_edits": 1443,
+              "words": 4334
+            },
+            {
+              "cer": 0.20085470085470086,
+              "chars": 24804,
+              "edits": 4982,
+              "missed_numbers": 42,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 529,
+              "wer": 0.28426395939086296,
+              "word_edits": 1232,
+              "words": 4334
+            },
+            {
+              "cer": 0.2054104176745686,
+              "chars": 24804,
+              "edits": 5095,
+              "missed_numbers": 50,
+              "reader": "heocr-120k",
+              "ref_numbers": 529,
+              "wer": 0.30064605445316106,
+              "word_edits": 1303,
+              "words": 4334
+            },
+            {
+              "cer": 0.20456378003547815,
+              "chars": 24804,
+              "edits": 5074,
+              "missed_numbers": 44,
+              "reader": "heocr-40k",
+              "ref_numbers": 529,
+              "wer": 0.29580064605445316,
+              "word_edits": 1282,
+              "words": 4334
+            },
+            {
+              "cer": 0.23266408643767134,
+              "chars": 24804,
+              "edits": 5771,
+              "missed_numbers": 100,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 529,
+              "wer": 0.39109367789570837,
+              "word_edits": 1695,
+              "words": 4334
+            },
+            {
+              "cer": 0.21512659248508306,
+              "chars": 24804,
+              "edits": 5336,
+              "missed_numbers": 244,
+              "reader": "tessdata-best",
+              "ref_numbers": 529,
+              "wer": 0.34794646977388094,
+              "word_edits": 1508,
+              "words": 4334
+            },
+            {
+              "cer": 0.21432027092404451,
+              "chars": 24804,
+              "edits": 5316,
+              "missed_numbers": 206,
+              "reader": "tessdata-fast",
+              "ref_numbers": 529,
+              "wer": 0.34702353484079373,
+              "word_edits": 1504,
+              "words": 4334
+            },
+            {
+              "cer": 0.21129656507015,
+              "chars": 24804,
+              "edits": 5241,
+              "missed_numbers": 76,
+              "reader": "rivok-full",
+              "ref_numbers": 529,
+              "wer": 0.28772496538994,
+              "word_edits": 1247,
+              "words": 4334
+            },
+            {
+              "cer": 0.21379616190936945,
+              "chars": 24804,
+              "edits": 5303,
+              "missed_numbers": 85,
+              "reader": "rivok-lite",
+              "ref_numbers": 529,
+              "wer": 0.30595293031841253,
+              "word_edits": 1326,
+              "words": 4334
+            },
+            {
+              "cer": 0.1796484437993872,
+              "chars": 24804,
+              "edits": 4456,
+              "missed_numbers": 80,
+              "reader": "paddle",
+              "ref_numbers": 529,
+              "wer": 0.4213197969543147,
+              "word_edits": 1826,
+              "words": 4334
+            }
+          ]
+        },
+        "pooled": {
+          "carriers": 65,
+          "readers": [
+            {
+              "cer": 0.21945416524411063,
+              "chars": 93728,
+              "edits": 20569,
+              "missed_numbers": 543,
+              "reader": "heocr-stock",
+              "ref_numbers": 1992,
+              "wer": 0.3559690671822136,
+              "word_edits": 5892,
+              "words": 16552
+            },
+            {
+              "cer": 0.20415457494025266,
+              "chars": 93728,
+              "edits": 19135,
+              "missed_numbers": 230,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 1992,
+              "wer": 0.2946471725471242,
+              "word_edits": 4877,
+              "words": 16552
+            },
+            {
+              "cer": 0.2113349265961079,
+              "chars": 93728,
+              "edits": 19808,
+              "missed_numbers": 235,
+              "reader": "heocr-120k",
+              "ref_numbers": 1992,
+              "wer": 0.3124697921701305,
+              "word_edits": 5172,
+              "words": 16552
+            },
+            {
+              "cer": 0.2103213554114032,
+              "chars": 93728,
+              "edits": 19713,
+              "missed_numbers": 217,
+              "reader": "heocr-40k",
+              "ref_numbers": 1992,
+              "wer": 0.3073344610923151,
+              "word_edits": 5087,
+              "words": 16552
+            },
+            {
+              "cer": 0.2320757937862752,
+              "chars": 93728,
+              "edits": 21752,
+              "missed_numbers": 425,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 1992,
+              "wer": 0.3791686805219913,
+              "word_edits": 6276,
+              "words": 16552
+            },
+            {
+              "cer": 0.211612325025606,
+              "chars": 93728,
+              "edits": 19834,
+              "missed_numbers": 923,
+              "reader": "tessdata-best",
+              "ref_numbers": 1992,
+              "wer": 0.36207104881585306,
+              "word_edits": 5993,
+              "words": 16552
+            },
+            {
+              "cer": 0.20880633321952885,
+              "chars": 93728,
+              "edits": 19571,
+              "missed_numbers": 809,
+              "reader": "tessdata-fast",
+              "ref_numbers": 1992,
+              "wer": 0.3573586273562107,
+              "word_edits": 5915,
+              "words": 16552
+            },
+            {
+              "cer": 0.1970595766473199,
+              "chars": 93728,
+              "edits": 18470,
+              "missed_numbers": 309,
+              "reader": "rivok-full",
+              "ref_numbers": 1992,
+              "wer": 0.27730787820202996,
+              "word_edits": 4590,
+              "words": 16552
+            },
+            {
+              "cer": 0.2036958006145442,
+              "chars": 93728,
+              "edits": 19092,
+              "missed_numbers": 423,
+              "reader": "rivok-lite",
+              "ref_numbers": 1992,
+              "wer": 0.3014137264378927,
+              "word_edits": 4989,
+              "words": 16552
+            },
+            {
+              "cer": 0.20868897234551043,
+              "chars": 93728,
+              "edits": 19560,
+              "missed_numbers": 279,
+              "reader": "paddle",
+              "ref_numbers": 1992,
+              "wer": 0.444478008699855,
+              "word_edits": 7357,
+              "words": 16552
+            }
+          ]
+        },
+        "scanner": {
+          "carriers": 17,
+          "readers": [
+            {
+              "cer": 0.22593130140299952,
+              "chars": 24804,
+              "edits": 5604,
+              "missed_numbers": 182,
+              "reader": "heocr-stock",
+              "ref_numbers": 529,
+              "wer": 0.3659437009690817,
+              "word_edits": 1586,
+              "words": 4334
+            },
+            {
+              "cer": 0.21089340428963071,
+              "chars": 24804,
+              "edits": 5231,
+              "missed_numbers": 55,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 529,
+              "wer": 0.2951084448546378,
+              "word_edits": 1279,
+              "words": 4334
+            },
+            {
+              "cer": 0.22165779712949524,
+              "chars": 24804,
+              "edits": 5498,
+              "missed_numbers": 67,
+              "reader": "heocr-120k",
+              "ref_numbers": 529,
+              "wer": 0.3260267651130595,
+              "word_edits": 1413,
+              "words": 4334
+            },
+            {
+              "cer": 0.2181906144170295,
+              "chars": 24804,
+              "edits": 5412,
+              "missed_numbers": 62,
+              "reader": "heocr-40k",
+              "ref_numbers": 529,
+              "wer": 0.31702814951545916,
+              "word_edits": 1374,
+              "words": 4334
+            },
+            {
+              "cer": 0.2399209804870182,
+              "chars": 24804,
+              "edits": 5951,
+              "missed_numbers": 129,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 529,
+              "wer": 0.4037840332256576,
+              "word_edits": 1750,
+              "words": 4334
+            },
+            {
+              "cer": 0.19573455894210612,
+              "chars": 24804,
+              "edits": 4855,
+              "missed_numbers": 273,
+              "reader": "tessdata-best",
+              "ref_numbers": 529,
+              "wer": 0.35302261190586065,
+              "word_edits": 1530,
+              "words": 4334
+            },
+            {
+              "cer": 0.19359780680535396,
+              "chars": 24804,
+              "edits": 4802,
+              "missed_numbers": 248,
+              "reader": "tessdata-fast",
+              "ref_numbers": 529,
+              "wer": 0.3493308721735118,
+              "word_edits": 1514,
+              "words": 4334
+            },
+            {
+              "cer": 0.17896307047250443,
+              "chars": 24804,
+              "edits": 4439,
+              "missed_numbers": 112,
+              "reader": "rivok-full",
+              "ref_numbers": 529,
+              "wer": 0.2561144439317028,
+              "word_edits": 1110,
+              "words": 4334
+            },
+            {
+              "cer": 0.19121915820029028,
+              "chars": 24804,
+              "edits": 4743,
+              "missed_numbers": 173,
+              "reader": "rivok-lite",
+              "ref_numbers": 529,
+              "wer": 0.29649284725426855,
+              "word_edits": 1285,
+              "words": 4334
+            },
+            {
+              "cer": 0.17388324463796162,
+              "chars": 24804,
+              "edits": 4313,
+              "missed_numbers": 78,
+              "reader": "paddle",
+              "ref_numbers": 529,
+              "wer": 0.3991693585602215,
+              "word_edits": 1730,
+              "words": 4334
+            }
+          ]
+        }
+      },
+      "filtered": {
+        "archive": {
+          "carriers": 5,
+          "readers": [
+            {
+              "cer": 0.4319778582073664,
+              "chars": 4697,
+              "edits": 2029,
+              "missed_numbers": 8,
+              "reader": "heocr-stock",
+              "ref_numbers": 45,
+              "wer": 0.7591006423982869,
+              "word_edits": 709,
+              "words": 934
+            },
+            {
+              "cer": 0.4013199914839259,
+              "chars": 4697,
+              "edits": 1885,
+              "missed_numbers": 8,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 45,
+              "wer": 0.6381156316916489,
+              "word_edits": 596,
+              "words": 934
+            },
+            {
+              "cer": 0.42921013412816694,
+              "chars": 4697,
+              "edits": 2016,
+              "missed_numbers": 9,
+              "reader": "heocr-120k",
+              "ref_numbers": 45,
+              "wer": 0.6723768736616702,
+              "word_edits": 628,
+              "words": 934
+            },
+            {
+              "cer": 0.4309133489461358,
+              "chars": 4697,
+              "edits": 2024,
+              "missed_numbers": 8,
+              "reader": "heocr-40k",
+              "ref_numbers": 45,
+              "wer": 0.6745182012847966,
+              "word_edits": 630,
+              "words": 934
+            },
+            {
+              "cer": 0.434958484138812,
+              "chars": 4697,
+              "edits": 2043,
+              "missed_numbers": 26,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 45,
+              "wer": 0.6648822269807281,
+              "word_edits": 621,
+              "words": 934
+            },
+            {
+              "cer": 0.4187779433681073,
+              "chars": 4697,
+              "edits": 1967,
+              "missed_numbers": 22,
+              "reader": "tessdata-best",
+              "ref_numbers": 45,
+              "wer": 0.7665952890792291,
+              "word_edits": 716,
+              "words": 934
+            },
+            {
+              "cer": 0.4362358952522887,
+              "chars": 4697,
+              "edits": 2049,
+              "missed_numbers": 20,
+              "reader": "tessdata-fast",
+              "ref_numbers": 45,
+              "wer": 0.7708779443254818,
+              "word_edits": 720,
+              "words": 934
+            },
+            {
+              "cer": 0.39322972109857357,
+              "chars": 4697,
+              "edits": 1847,
+              "missed_numbers": 10,
+              "reader": "rivok-full",
+              "ref_numbers": 45,
+              "wer": 0.6306209850107066,
+              "word_edits": 589,
+              "words": 934
+            },
+            {
+              "cer": 0.39344262295081966,
+              "chars": 4697,
+              "edits": 1848,
+              "missed_numbers": 11,
+              "reader": "rivok-lite",
+              "ref_numbers": 45,
+              "wer": 0.6381156316916489,
+              "word_edits": 596,
+              "words": 934
+            },
+            {
+              "cer": 0.3957845433255269,
+              "chars": 4697,
+              "edits": 1859,
+              "missed_numbers": 5,
+              "reader": "paddle",
+              "ref_numbers": 45,
+              "wer": 0.683083511777302,
+              "word_edits": 638,
+              "words": 934
+            }
+          ]
+        },
+        "issuer-render": {
+          "carriers": 9,
+          "readers": [
+            {
+              "cer": 0.1336534264513313,
+              "chars": 11455,
+              "edits": 1531,
+              "missed_numbers": 53,
+              "reader": "heocr-stock",
+              "ref_numbers": 206,
+              "wer": 0.22636688809402147,
+              "word_edits": 443,
+              "words": 1957
+            },
+            {
+              "cer": 0.12797904845045832,
+              "chars": 11455,
+              "edits": 1466,
+              "missed_numbers": 35,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 206,
+              "wer": 0.20235053653551355,
+              "word_edits": 396,
+              "words": 1957
+            },
+            {
+              "cer": 0.1326931470973374,
+              "chars": 11455,
+              "edits": 1520,
+              "missed_numbers": 25,
+              "reader": "heocr-120k",
+              "ref_numbers": 206,
+              "wer": 0.20797138477261115,
+              "word_edits": 407,
+              "words": 1957
+            },
+            {
+              "cer": 0.12832824094281972,
+              "chars": 11455,
+              "edits": 1470,
+              "missed_numbers": 23,
+              "reader": "heocr-40k",
+              "ref_numbers": 206,
+              "wer": 0.2013285641287685,
+              "word_edits": 394,
+              "words": 1957
+            },
+            {
+              "cer": 0.1631601920558708,
+              "chars": 11455,
+              "edits": 1869,
+              "missed_numbers": 16,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 206,
+              "wer": 0.26622381195707717,
+              "word_edits": 521,
+              "words": 1957
+            },
+            {
+              "cer": 0.13077258838934963,
+              "chars": 11455,
+              "edits": 1498,
+              "missed_numbers": 59,
+              "reader": "tessdata-best",
+              "ref_numbers": 206,
+              "wer": 0.22534491568727644,
+              "word_edits": 441,
+              "words": 1957
+            },
+            {
+              "cer": 0.12701876909646442,
+              "chars": 11455,
+              "edits": 1455,
+              "missed_numbers": 45,
+              "reader": "tessdata-fast",
+              "ref_numbers": 206,
+              "wer": 0.21614716402657128,
+              "word_edits": 423,
+              "words": 1957
+            },
+            {
+              "cer": 0.11872544740288084,
+              "chars": 11455,
+              "edits": 1360,
+              "missed_numbers": 24,
+              "reader": "rivok-full",
+              "ref_numbers": 206,
+              "wer": 0.18088911599386817,
+              "word_edits": 354,
+              "words": 1957
+            },
+            {
+              "cer": 0.12265386294194675,
+              "chars": 11455,
+              "edits": 1405,
+              "missed_numbers": 34,
+              "reader": "rivok-lite",
+              "ref_numbers": 206,
+              "wer": 0.18650996423096577,
+              "word_edits": 365,
+              "words": 1957
+            },
+            {
+              "cer": 0.28092536010475777,
+              "chars": 11455,
+              "edits": 3218,
+              "missed_numbers": 36,
+              "reader": "paddle",
+              "ref_numbers": 206,
+              "wer": 0.5298926928972918,
+              "word_edits": 1037,
+              "words": 1957
+            }
+          ]
+        },
+        "issuer-scan": {
+          "carriers": 0,
+          "readers": []
+        },
+        "phone-a": {
+          "carriers": 17,
+          "readers": [
+            {
+              "cer": 0.13965032265181182,
+              "chars": 18131,
+              "edits": 2532,
+              "missed_numbers": 102,
+              "reader": "heocr-stock",
+              "ref_numbers": 326,
+              "wer": 0.2704422526248807,
+              "word_edits": 850,
+              "words": 3143
+            },
+            {
+              "cer": 0.11819535602007611,
+              "chars": 18131,
+              "edits": 2143,
+              "missed_numbers": 68,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 326,
+              "wer": 0.19662742602608974,
+              "word_edits": 618,
+              "words": 3143
+            },
+            {
+              "cer": 0.12420715900943136,
+              "chars": 18131,
+              "edits": 2252,
+              "missed_numbers": 66,
+              "reader": "heocr-120k",
+              "ref_numbers": 326,
+              "wer": 0.2071269487750557,
+              "word_edits": 651,
+              "words": 3143
+            },
+            {
+              "cer": 0.12205614693067122,
+              "chars": 18131,
+              "edits": 2213,
+              "missed_numbers": 65,
+              "reader": "heocr-40k",
+              "ref_numbers": 326,
+              "wer": 0.19821826280623608,
+              "word_edits": 623,
+              "words": 3143
+            },
+            {
+              "cer": 0.13623076498814185,
+              "chars": 18131,
+              "edits": 2470,
+              "missed_numbers": 54,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 326,
+              "wer": 0.2593063951638562,
+              "word_edits": 815,
+              "words": 3143
+            },
+            {
+              "cer": 0.1339142904417848,
+              "chars": 18131,
+              "edits": 2428,
+              "missed_numbers": 110,
+              "reader": "tessdata-best",
+              "ref_numbers": 326,
+              "wer": 0.2634425707922367,
+              "word_edits": 828,
+              "words": 3143
+            },
+            {
+              "cer": 0.12641332524405713,
+              "chars": 18131,
+              "edits": 2292,
+              "missed_numbers": 92,
+              "reader": "tessdata-fast",
+              "ref_numbers": 326,
+              "wer": 0.24912503977091952,
+              "word_edits": 783,
+              "words": 3143
+            },
+            {
+              "cer": 0.12371077160664055,
+              "chars": 18131,
+              "edits": 2243,
+              "missed_numbers": 55,
+              "reader": "rivok-full",
+              "ref_numbers": 326,
+              "wer": 0.18230989500477252,
+              "word_edits": 573,
+              "words": 3143
+            },
+            {
+              "cer": 0.1303292703105179,
+              "chars": 18131,
+              "edits": 2363,
+              "missed_numbers": 70,
+              "reader": "rivok-lite",
+              "ref_numbers": 326,
+              "wer": 0.20617244670696785,
+              "word_edits": 648,
+              "words": 3143
+            },
+            {
+              "cer": 0.1453312007059732,
+              "chars": 18131,
+              "edits": 2635,
+              "missed_numbers": 54,
+              "reader": "paddle",
+              "ref_numbers": 326,
+              "wer": 0.39739102768055995,
+              "word_edits": 1249,
+              "words": 3143
+            }
+          ]
+        },
+        "phone-b": {
+          "carriers": 17,
+          "readers": [
+            {
+              "cer": 0.14511058408251062,
+              "chars": 18131,
+              "edits": 2631,
+              "missed_numbers": 96,
+              "reader": "heocr-stock",
+              "ref_numbers": 326,
+              "wer": 0.26598790964047087,
+              "word_edits": 836,
+              "words": 3143
+            },
+            {
+              "cer": 0.13485191109150074,
+              "chars": 18131,
+              "edits": 2445,
+              "missed_numbers": 55,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 326,
+              "wer": 0.22271714922049,
+              "word_edits": 700,
+              "words": 3143
+            },
+            {
+              "cer": 0.138381777066902,
+              "chars": 18131,
+              "edits": 2509,
+              "missed_numbers": 61,
+              "reader": "heocr-120k",
+              "ref_numbers": 326,
+              "wer": 0.2392618517340121,
+              "word_edits": 752,
+              "words": 3143
+            },
+            {
+              "cer": 0.13805085213170812,
+              "chars": 18131,
+              "edits": 2503,
+              "missed_numbers": 60,
+              "reader": "heocr-40k",
+              "ref_numbers": 326,
+              "wer": 0.23385300668151449,
+              "word_edits": 735,
+              "words": 3143
+            },
+            {
+              "cer": 0.15729965252881806,
+              "chars": 18131,
+              "edits": 2852,
+              "missed_numbers": 64,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 326,
+              "wer": 0.3191218580973592,
+              "word_edits": 1003,
+              "words": 3143
+            },
+            {
+              "cer": 0.15702388174948984,
+              "chars": 18131,
+              "edits": 2847,
+              "missed_numbers": 109,
+              "reader": "tessdata-best",
+              "ref_numbers": 326,
+              "wer": 0.279032771237671,
+              "word_edits": 877,
+              "words": 3143
+            },
+            {
+              "cer": 0.1564723401908334,
+              "chars": 18131,
+              "edits": 2837,
+              "missed_numbers": 78,
+              "reader": "tessdata-fast",
+              "ref_numbers": 326,
+              "wer": 0.2704422526248807,
+              "word_edits": 850,
+              "words": 3143
+            },
+            {
+              "cer": 0.15233577850091004,
+              "chars": 18131,
+              "edits": 2762,
+              "missed_numbers": 73,
+              "reader": "rivok-full",
+              "ref_numbers": 326,
+              "wer": 0.23098950047725103,
+              "word_edits": 726,
+              "words": 3143
+            },
+            {
+              "cer": 0.15509348629419226,
+              "chars": 18131,
+              "edits": 2812,
+              "missed_numbers": 88,
+              "reader": "rivok-lite",
+              "ref_numbers": 326,
+              "wer": 0.25039770919503657,
+              "word_edits": 787,
+              "words": 3143
+            },
+            {
+              "cer": 0.1402570183663339,
+              "chars": 18131,
+              "edits": 2543,
+              "missed_numbers": 64,
+              "reader": "paddle",
+              "ref_numbers": 326,
+              "wer": 0.40757238307349664,
+              "word_edits": 1281,
+              "words": 3143
+            }
+          ]
+        },
+        "pooled": {
+          "carriers": 65,
+          "readers": [
+            {
+              "cer": 0.16629101991636544,
+              "chars": 70545,
+              "edits": 11731,
+              "missed_numbers": 390,
+              "reader": "heocr-stock",
+              "ref_numbers": 1229,
+              "wer": 0.30900974025974026,
+              "word_edits": 3807,
+              "words": 12320
+            },
+            {
+              "cer": 0.14967751080870367,
+              "chars": 70545,
+              "edits": 10559,
+              "missed_numbers": 229,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 1229,
+              "wer": 0.24650974025974026,
+              "word_edits": 3037,
+              "words": 12320
+            },
+            {
+              "cer": 0.157771635126515,
+              "chars": 70545,
+              "edits": 11130,
+              "missed_numbers": 233,
+              "reader": "heocr-120k",
+              "ref_numbers": 1229,
+              "wer": 0.26469155844155845,
+              "word_edits": 3261,
+              "words": 12320
+            },
+            {
+              "cer": 0.15449712949181374,
+              "chars": 70545,
+              "edits": 10899,
+              "missed_numbers": 224,
+              "reader": "heocr-40k",
+              "ref_numbers": 1229,
+              "wer": 0.25625,
+              "word_edits": 3157,
+              "words": 12320
+            },
+            {
+              "cer": 0.17472535261180808,
+              "chars": 70545,
+              "edits": 12326,
+              "missed_numbers": 231,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 1229,
+              "wer": 0.3248376623376623,
+              "word_edits": 4002,
+              "words": 12320
+            },
+            {
+              "cer": 0.15950102771280744,
+              "chars": 70545,
+              "edits": 11252,
+              "missed_numbers": 437,
+              "reader": "tessdata-best",
+              "ref_numbers": 1229,
+              "wer": 0.30625,
+              "word_edits": 3773,
+              "words": 12320
+            },
+            {
+              "cer": 0.15738890070167977,
+              "chars": 70545,
+              "edits": 11103,
+              "missed_numbers": 352,
+              "reader": "tessdata-fast",
+              "ref_numbers": 1229,
+              "wer": 0.2976461038961039,
+              "word_edits": 3667,
+              "words": 12320
+            },
+            {
+              "cer": 0.1479622935714792,
+              "chars": 70545,
+              "edits": 10438,
+              "missed_numbers": 251,
+              "reader": "rivok-full",
+              "ref_numbers": 1229,
+              "wer": 0.23400974025974025,
+              "word_edits": 2883,
+              "words": 12320
+            },
+            {
+              "cer": 0.15442625274647387,
+              "chars": 70545,
+              "edits": 10894,
+              "missed_numbers": 334,
+              "reader": "rivok-lite",
+              "ref_numbers": 1229,
+              "wer": 0.257224025974026,
+              "word_edits": 3169,
+              "words": 12320
+            },
+            {
+              "cer": 0.17845346941668438,
+              "chars": 70545,
+              "edits": 12589,
+              "missed_numbers": 215,
+              "reader": "paddle",
+              "ref_numbers": 1229,
+              "wer": 0.4381493506493506,
+              "word_edits": 5398,
+              "words": 12320
+            }
+          ]
+        },
+        "scanner": {
+          "carriers": 17,
+          "readers": [
+            {
+              "cer": 0.16590370084385858,
+              "chars": 18131,
+              "edits": 3008,
+              "missed_numbers": 131,
+              "reader": "heocr-stock",
+              "ref_numbers": 326,
+              "wer": 0.308304167992364,
+              "word_edits": 969,
+              "words": 3143
+            },
+            {
+              "cer": 0.14450388836798853,
+              "chars": 18131,
+              "edits": 2620,
+              "missed_numbers": 63,
+              "reader": "heocr-modern-1",
+              "ref_numbers": 326,
+              "wer": 0.2313076678332803,
+              "word_edits": 727,
+              "words": 3143
+            },
+            {
+              "cer": 0.1562517235673708,
+              "chars": 18131,
+              "edits": 2833,
+              "missed_numbers": 72,
+              "reader": "heocr-120k",
+              "ref_numbers": 326,
+              "wer": 0.2618517340120904,
+              "word_edits": 823,
+              "words": 3143
+            },
+            {
+              "cer": 0.148309525122718,
+              "chars": 18131,
+              "edits": 2689,
+              "missed_numbers": 68,
+              "reader": "heocr-40k",
+              "ref_numbers": 326,
+              "wer": 0.24657970092268533,
+              "word_edits": 775,
+              "words": 3143
+            },
+            {
+              "cer": 0.17053664993657272,
+              "chars": 18131,
+              "edits": 3092,
+              "missed_numbers": 71,
+              "reader": "heocr-crnn-640k",
+              "ref_numbers": 326,
+              "wer": 0.3315303849825008,
+              "word_edits": 1042,
+              "words": 3143
+            },
+            {
+              "cer": 0.13854723953449893,
+              "chars": 18131,
+              "edits": 2512,
+              "missed_numbers": 137,
+              "reader": "tessdata-best",
+              "ref_numbers": 326,
+              "wer": 0.28985046134266623,
+              "word_edits": 911,
+              "words": 3143
+            },
+            {
+              "cer": 0.13623076498814185,
+              "chars": 18131,
+              "edits": 2470,
+              "missed_numbers": 117,
+              "reader": "tessdata-fast",
+              "ref_numbers": 326,
+              "wer": 0.28348711422208084,
+              "word_edits": 891,
+              "words": 3143
+            },
+            {
+              "cer": 0.1227731509569246,
+              "chars": 18131,
+              "edits": 2226,
+              "missed_numbers": 89,
+              "reader": "rivok-full",
+              "ref_numbers": 326,
+              "wer": 0.20394527521476297,
+              "word_edits": 641,
+              "words": 3143
+            },
+            {
+              "cer": 0.13601014836467928,
+              "chars": 18131,
+              "edits": 2466,
+              "missed_numbers": 131,
+              "reader": "rivok-lite",
+              "ref_numbers": 326,
+              "wer": 0.2459433662106268,
+              "word_edits": 773,
+              "words": 3143
+            },
+            {
+              "cer": 0.1287297997904142,
+              "chars": 18131,
+              "edits": 2334,
+              "missed_numbers": 56,
+              "reader": "paddle",
+              "ref_numbers": 326,
+              "wer": 0.3795736557429208,
+              "word_edits": 1193,
+              "words": 3143
+            }
+          ]
+        }
+      }
+    }
+  },
+  "readers": [
+    {
+      "id": "heocr-stock",
+      "label": "HeOCR with stock Hebrew"
+    },
+    {
+      "id": "heocr-modern-1",
+      "label": "HeOCR Modern (first model)"
+    },
+    {
+      "id": "heocr-120k",
+      "label": "HeOCR Modern (120k)"
+    },
+    {
+      "id": "heocr-40k",
+      "label": "HeOCR Modern (40k)"
+    },
+    {
+      "id": "heocr-crnn-640k",
+      "label": "HeOCR CRNN (640k)"
+    },
+    {
+      "id": "tessdata-best",
+      "label": "Tessdata Best Hebrew"
+    },
+    {
+      "id": "tessdata-fast",
+      "label": "Tessdata Fast Hebrew"
+    },
+    {
+      "id": "rivok-full",
+      "label": "Rivok Full"
+    },
+    {
+      "id": "rivok-lite",
+      "label": "Rivok Lite"
+    },
+    {
+      "id": "paddle",
+      "label": "PaddleOCR (CUDA)"
+    },
+    {
+      "id": "heocr-scanner-router",
+      "label": "HeOCR scanner router (Rivok Full)"
+    }
+  ],
+  "schema": "heocr.benchmark.scores.v1",
+  "welfare_reports": {
+    "benchmark": "Welfare inspection reports",
+    "field_value_occurrences": 15078,
+    "metric": "field_recall_pct",
+    "paddle_status": "pending in this receipt",
+    "page_cer": null,
+    "pages": 335,
+    "readers": [
+      {
+        "ci95": [
+          69.51892744479495,
+          76.21951219512195
+        ],
+        "delta_vs_rivok_full_pp": 1.0744130521289295,
+        "field_recall_pct": 72.86112216474334,
+        "hits": 10986,
+        "paired_ci95_vs_rivok_full": [
+          0.5822613405551794,
+          1.557241834378093
+        ],
+        "reader": "heocr-scanner-router"
+      },
+      {
+        "ci95": [
+          68.16304782203277,
+          75.38757122035246
+        ],
+        "field_recall_pct": 71.7867091126144,
+        "hits": 10824,
+        "reader": "rivok-full"
+      },
+      {
+        "ci95": [
+          68.07965299684543,
+          75.16813925886852
+        ],
+        "delta_vs_rivok_full_pp": -0.10611486934606712,
+        "field_recall_pct": 71.68059424326833,
+        "hits": 10808,
+        "paired_ci95_vs_rivok_full": [
+          -0.542189088444595,
+          0.3270809692276884
+        ],
+        "reader": "rivok-lite"
+      },
+      {
+        "ci95": [
+          67.56343828882689,
+          75.320970042796
+        ],
+        "delta_vs_rivok_full_pp": -0.3581376840429765,
+        "field_recall_pct": 71.42857142857143,
+        "hits": 10770,
+        "paired_ci95_vs_rivok_full": [
+          -1.308014076090565,
+          0.5579990809426902
+        ],
+        "reader": "heocr-40k"
+      },
+      {
+        "ci95": [
+          67.43627385559856,
+          72.19567237488384
+        ],
+        "delta_vs_rivok_full_pp": -1.8437458548879162,
+        "field_recall_pct": 69.94296325772649,
+        "hits": 10546,
+        "paired_ci95_vs_rivok_full": [
+          -4.031491787701914,
+          -0.13151837969356217
+        ],
+        "reader": "heocr-stock"
+      },
+      {
+        "ci95": [
+          65.54876043927139,
+          72.35506059613495
+        ],
+        "delta_vs_rivok_full_pp": -2.7656187823318743,
+        "field_recall_pct": 69.02109033028253,
+        "hits": 10407,
+        "paired_ci95_vs_rivok_full": [
+          -3.6178861788617884,
+          -1.835761416345463
+        ],
+        "reader": "tessdata-best"
+      },
+      {
+        "ci95": [
+          64.88482976294407,
+          71.43235196824347
+        ],
+        "delta_vs_rivok_full_pp": -3.4487332537471813,
+        "field_recall_pct": 68.33797585886722,
+        "hits": 10304,
+        "paired_ci95_vs_rivok_full": [
+          -4.951838285171618,
+          -1.9929501084598698
+        ],
+        "reader": "tessdata-fast"
+      },
+      {
+        "ci95": [
+          63.53565194037868,
+          70.81632653061224
+        ],
+        "delta_vs_rivok_full_pp": -4.44356015386656,
+        "field_recall_pct": 67.34314895874785,
+        "hits": 10154,
+        "paired_ci95_vs_rivok_full": [
+          -5.527262850546615,
+          -3.4110252717035485
+        ],
+        "reader": "heocr-modern-1"
+      },
+      {
+        "ci95": [
+          42.11840950516438,
+          51.43901324805847
+        ],
+        "delta_vs_rivok_full_pp": -24.810982888977318,
+        "field_recall_pct": 46.97572622363709,
+        "hits": 7083,
+        "paired_ci95_vs_rivok_full": [
+          -28.049443086117904,
+          -21.4932729452511
+        ],
+        "reader": "heocr-crnn-640k"
+      }
+    ],
+    "reports": 10,
+    "score_scope": "Closed held-out use case, all values"
+  }
+}

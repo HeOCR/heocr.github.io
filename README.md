@@ -25,19 +25,18 @@ The home page's introduction and model release status are maintained by `scripts
 
 ## Benchmarks page
 
-`benchmarks.html` and `en/benchmarks.html` are generated from one file, `benchmarks/results.json`. Do not edit the
-two pages by hand. To update them, replace `results.json` with the file HeOCR's evaluation owner exports after a scored
-run, then rebuild:
+The P-mod-open v0 benchmark and methodology pages are generated in Hebrew and English
+from the pinned [published scores](benchmarks/pmod-open-v0-scores.json). Regenerate the
+four checked-in pages with the standard builder.
 
 ```
-python3 scripts/build_benchmarks.py           # writes both pages (standard library only)
-python3 scripts/build_benchmarks.py --check   # fails if a committed page does not match results.json
+python3 scripts/build_benchmarks.py
+python3 scripts/build_benchmarks.py --check
 ```
 
-The benchmark pages report measurements from registered held-out sets of real documents and photographs.
-Generated or newly typeset documents are development inputs and do not appear in the public results file.
-When a document family has no eligible result, it is marked as not measured. The release note records when
-HeOCR will publish a model or pipeline version.
+The pages use registered held-out measurements on real documents and photographs.
+The v0 dataset, redistribution scope, and exact score definitions are documented
+in [the published benchmark dataset](https://huggingface.co/datasets/HeOCR/p-mod-open-v0).
 
 The maintainer approved the four new Hebrew release-status strings on 2026-11-20: “All strings approved”.
 
@@ -59,3 +58,22 @@ python3 scripts/build_htext.py --import-card pby path/to/htext/data/pby/v1/corpu
 python3 scripts/build_htext.py           # writes both pages (standard library only)
 python3 scripts/build_htext.py --check   # fails if a committed page does not match corpora.json
 ```
+
+### Benchmark release staging
+
+Build the bilingual release pages outside the checkout. Without results, this renders the layout preview.
+
+```bash
+python3 scripts/build_release_benchmark.py --out-dir ../preview
+python3 scripts/build_release_benchmark.py --out-dir ../preview --check
+```
+
+For a release preview, add `--release-data /path/to/approved-aggregates.json --sha256 <digest>` to both commands.
+The builder accepts eval's `heocr.benchmark.scores.v1` export, containing page CER and WER for ten
+readers in both registered views, per carrier and pooled. It renders the registered P-mod-open v0 figures. The closed table reserves space for future published results.
+It validates the reader and carrier panels, denominator arithmetic, and byte identity before rendering.
+The public tables distinguish the two phone streams with the aliases Phone A and Phone B.
+
+Once the redistribution scope is approved, add `--public-pages <count>` to render the dataset link and
+disclose any exclusions from the public copy. Scores always use the registered measurement scope.
+Review the exact staged pages and Hugging Face artifact together before publishing.
