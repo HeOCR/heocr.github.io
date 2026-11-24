@@ -32,6 +32,12 @@ VIEWS = {
 }
 READER_TYPES = {"open weights": "משקולות פתוחות", "API": "API", "commercial API": "API מסחרי"}
 BIAS_NOTICE = "same model family took part in building v0 references (biased comparator)"
+ARTWORK_MASK_NOTICE = '56 carriers match the original scored pixels. Nine artwork-masked carriers are a separate diagnostic.'
+DIAGNOSTIC_NOTICES = {
+    "google-vision-document-text-v0": ARTWORK_MASK_NOTICE,
+    "google-document-ai-ocr-v21-v0": ARTWORK_MASK_NOTICE,
+    "claude-haiku-5-5-v0": ARTWORK_MASK_NOTICE,
+}
 SHA = re.compile(r"[a-f0-9]{64}")
 ROW_ID = re.compile(r"[a-z0-9-]{1,64}")
 BASELINES = {"rivok-full", "rivok-lite", "tessdata-best", "tessdata-fast", "paddle"}
@@ -96,7 +102,7 @@ def validate(data):
             diagnostic = row["diagnostic"]
             if (not isinstance(diagnostic, dict)
                     or diagnostic.keys() != {"notice", "paired_carriers", "masked_carriers", "masked_views"}
-                    or diagnostic["notice"] != BIAS_NOTICE
+                    or diagnostic["notice"] != DIAGNOSTIC_NOTICES.get(row["id"], BIAS_NOTICE)
                     or (diagnostic["paired_carriers"], diagnostic["masked_carriers"]) != (56, 9)
                     or not valid_views(diagnostic["masked_views"])
                     or row["type"] != "commercial API" or not row["verified"] or key is not None):

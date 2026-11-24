@@ -516,6 +516,429 @@
           }
         }
       }
+    },
+    {
+      "category": "C1",
+      "date": "2026-11-24",
+      "diagnostic": {
+        "masked_carriers": 9,
+        "masked_views": {
+          "all": {
+            "archive": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-render": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-scan": {
+              "chars": 0,
+              "edits": 0
+            },
+            "phone-a": {
+              "chars": 4189,
+              "edits": 969
+            },
+            "phone-b": {
+              "chars": 4189,
+              "edits": 788
+            },
+            "pooled": {
+              "chars": 12567,
+              "edits": 2596
+            },
+            "scanner": {
+              "chars": 4189,
+              "edits": 839
+            }
+          },
+          "filtered": {
+            "archive": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-render": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-scan": {
+              "chars": 0,
+              "edits": 0
+            },
+            "phone-a": {
+              "chars": 3111,
+              "edits": 471
+            },
+            "phone-b": {
+              "chars": 3111,
+              "edits": 395
+            },
+            "pooled": {
+              "chars": 9333,
+              "edits": 1268
+            },
+            "scanner": {
+              "chars": 3111,
+              "edits": 402
+            }
+          }
+        },
+        "notice": "56 carriers match the original scored pixels. Nine artwork-masked carriers are a separate diagnostic.",
+        "paired_carriers": 56
+      },
+      "id": "google-vision-document-text-v0",
+      "licence": "Proprietary (Google Cloud service terms)",
+      "reader": "Google Cloud Vision",
+      "scorer_version": "heocr-bench 0.1.0",
+      "submission_sha256": null,
+      "type": "commercial API",
+      "verified": true,
+      "version": "Vision v1 DOCUMENT_TEXT_DETECTION builtin/stable",
+      "views": {
+        "all": {
+          "archive": {
+            "chars": 5352,
+            "edits": 2041
+          },
+          "issuer-render": {
+            "chars": 13964,
+            "edits": 4230
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 20615,
+            "edits": 3767
+          },
+          "phone-b": {
+            "chars": 20615,
+            "edits": 3407
+          },
+          "pooled": {
+            "chars": 81161,
+            "edits": 16930
+          },
+          "scanner": {
+            "chars": 20615,
+            "edits": 3485
+          }
+        },
+        "filtered": {
+          "archive": {
+            "chars": 4697,
+            "edits": 1689
+          },
+          "issuer-render": {
+            "chars": 11455,
+            "edits": 3399
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 15020,
+            "edits": 1891
+          },
+          "phone-b": {
+            "chars": 15020,
+            "edits": 1537
+          },
+          "pooled": {
+            "chars": 61212,
+            "edits": 10007
+          },
+          "scanner": {
+            "chars": 15020,
+            "edits": 1491
+          }
+        }
+      }
+    },
+    {
+      "category": "C1",
+      "date": "2026-11-24",
+      "diagnostic": {
+        "masked_carriers": 9,
+        "masked_views": {
+          "all": {
+            "archive": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-render": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-scan": {
+              "chars": 0,
+              "edits": 0
+            },
+            "phone-a": {
+              "chars": 4189,
+              "edits": 925
+            },
+            "phone-b": {
+              "chars": 4189,
+              "edits": 1031
+            },
+            "pooled": {
+              "chars": 12567,
+              "edits": 2889
+            },
+            "scanner": {
+              "chars": 4189,
+              "edits": 933
+            }
+          },
+          "filtered": {
+            "archive": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-render": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-scan": {
+              "chars": 0,
+              "edits": 0
+            },
+            "phone-a": {
+              "chars": 3111,
+              "edits": 457
+            },
+            "phone-b": {
+              "chars": 3111,
+              "edits": 460
+            },
+            "pooled": {
+              "chars": 9333,
+              "edits": 1364
+            },
+            "scanner": {
+              "chars": 3111,
+              "edits": 447
+            }
+          }
+        },
+        "notice": "56 carriers match the original scored pixels. Nine artwork-masked carriers are a separate diagnostic.",
+        "paired_carriers": 56
+      },
+      "id": "google-document-ai-ocr-v21-v0",
+      "licence": "Proprietary (Google Cloud service terms)",
+      "reader": "Google Document AI Enterprise OCR",
+      "scorer_version": "heocr-bench 0.1.0",
+      "submission_sha256": null,
+      "type": "commercial API",
+      "verified": true,
+      "version": "pretrained-ocr-v2.1-2024-08-07",
+      "views": {
+        "all": {
+          "archive": {
+            "chars": 5352,
+            "edits": 2019
+          },
+          "issuer-render": {
+            "chars": 13964,
+            "edits": 4255
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 20615,
+            "edits": 3891
+          },
+          "phone-b": {
+            "chars": 20615,
+            "edits": 3731
+          },
+          "pooled": {
+            "chars": 81161,
+            "edits": 17722
+          },
+          "scanner": {
+            "chars": 20615,
+            "edits": 3826
+          }
+        },
+        "filtered": {
+          "archive": {
+            "chars": 4697,
+            "edits": 1703
+          },
+          "issuer-render": {
+            "chars": 11455,
+            "edits": 3282
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 15020,
+            "edits": 2148
+          },
+          "phone-b": {
+            "chars": 15020,
+            "edits": 2091
+          },
+          "pooled": {
+            "chars": 61212,
+            "edits": 11297
+          },
+          "scanner": {
+            "chars": 15020,
+            "edits": 2073
+          }
+        }
+      }
+    },
+    {
+      "category": "C1",
+      "date": "2026-11-24",
+      "diagnostic": {
+        "masked_carriers": 9,
+        "masked_views": {
+          "all": {
+            "archive": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-render": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-scan": {
+              "chars": 0,
+              "edits": 0
+            },
+            "phone-a": {
+              "chars": 4189,
+              "edits": 469
+            },
+            "phone-b": {
+              "chars": 4189,
+              "edits": 338
+            },
+            "pooled": {
+              "chars": 12567,
+              "edits": 1229
+            },
+            "scanner": {
+              "chars": 4189,
+              "edits": 422
+            }
+          },
+          "filtered": {
+            "archive": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-render": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-scan": {
+              "chars": 0,
+              "edits": 0
+            },
+            "phone-a": {
+              "chars": 3111,
+              "edits": 143
+            },
+            "phone-b": {
+              "chars": 3111,
+              "edits": 116
+            },
+            "pooled": {
+              "chars": 9333,
+              "edits": 429
+            },
+            "scanner": {
+              "chars": 3111,
+              "edits": 170
+            }
+          }
+        },
+        "notice": "56 carriers match the original scored pixels. Nine artwork-masked carriers are a separate diagnostic.",
+        "paired_carriers": 56
+      },
+      "id": "claude-haiku-5-5-v0",
+      "licence": "Proprietary (Anthropic commercial terms)",
+      "reader": "Claude Haiku 5.5",
+      "scorer_version": "heocr-bench 0.1.0",
+      "submission_sha256": null,
+      "type": "commercial API",
+      "verified": true,
+      "version": "claude-haiku-5-5",
+      "views": {
+        "all": {
+          "archive": {
+            "chars": 5352,
+            "edits": 1022
+          },
+          "issuer-render": {
+            "chars": 13964,
+            "edits": 2615
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 20615,
+            "edits": 2839
+          },
+          "phone-b": {
+            "chars": 20615,
+            "edits": 1652
+          },
+          "pooled": {
+            "chars": 81161,
+            "edits": 11268
+          },
+          "scanner": {
+            "chars": 20615,
+            "edits": 3140
+          }
+        },
+        "filtered": {
+          "archive": {
+            "chars": 4697,
+            "edits": 853
+          },
+          "issuer-render": {
+            "chars": 11455,
+            "edits": 1732
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 15020,
+            "edits": 1007
+          },
+          "phone-b": {
+            "chars": 15020,
+            "edits": 472
+          },
+          "pooled": {
+            "chars": 61212,
+            "edits": 5107
+          },
+          "scanner": {
+            "chars": 15020,
+            "edits": 1043
+          }
+        }
+      }
     }
   ],
   "schema": "heocr.leaderboard.results.v1"
