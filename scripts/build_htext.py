@@ -264,7 +264,7 @@ def page(lang: str, R: dict) -> str:
           f'<li>{t["c_in"]}: {e(release["name"])} (<a href="{e(licence["url"])}">{e(licence["name"])}</a>)</li>\n'
           f'<li>{t["c_source"]}: <a href="{e(c["source"]["url"])}">{e(c["source"]["name"][lang])}</a> ({e(c["source_licence"][lang])})</li>\n'
           f'<li>{t["c_release"]}: <a href="{e(c["release"]["url"])}">{e(c["release"]["tag"])}</a>, {e(c["release"]["date"])}</li>\n'
-          f'<li>{t["c_card"]}: <a href="{e(c["card_url"])}">CORPUS_CARD.md</a></li>\n'
+          f'<li>{t["c_card"]}: <a href="{e(c["card_url"])}">{e(c["card_url"].rsplit("/", 1)[-1])}</a></li>\n'
           + "".join(f'<li>{t["c_prev"]}: '
                     + (f'{e(p["tag"])}, {e(t["c_withdrawn"].format(d=p["withdrawn"]))}' if p.get("withdrawn") else f'<a href="{e(p["url"])}">{e(p["tag"])}</a>')
                     + (f' (<a href="{e(p["known_issues_url"])}">{t["c_issues"]}</a>)' if p.get("known_issues_url") else "")

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21",
+  "updated": "2026-11-25",
   "repository": "https://github.com/HeOCR/htext",
   "corpora": [
     {
@@ -395,6 +395,141 @@
         "concept_doi": "10.5281/zenodo.24415186"
       },
       "privacy_lines_dropped": 848303
+    },
+    {
+      "id": "wikisource-v2",
+      "version": "v2",
+      "unit": "pages",
+      "name": {
+        "en": "Hebrew Wikisource B v2",
+        "he": "ויקיטקסט העברית B v2"
+      },
+      "source": {
+        "name": {
+          "en": "Hebrew Wikisource",
+          "he": "ויקיטקסט העברית"
+        },
+        "url": "https://he.wikisource.org"
+      },
+      "description": {
+        "en": "12,953 unpointed training lines from 39 pinned revisions of Orchot Tzadikim, Sefer HaYirah and Tomer Devorah. This increment adds to v1. Print collation is pending.",
+        "he": "12,953 שורות אימון ללא ניקוד מתוך 39 גרסאות מקובעות של אורחות צדיקים, ספר היראה ותומר דבורה. המאגר מוסיף ל־v1. השוואה למהדורות הדפוס עדיין ממתינה."
+      },
+      "rights_basis": {
+        "en": "CC BY-SA 4.0 with attribution by source revision in the NOTICE and rights index.",
+        "he": "רישיון CC BY-SA 4.0 עם ייחוס לכל גרסת מקור בקובץ NOTICE ובאינדקס הזכויות."
+      },
+      "source_licence": {
+        "en": "CC BY-SA 4.0",
+        "he": "CC BY-SA 4.0"
+      },
+      "credit": {
+        "text": {
+          "en": "Hebrew Wikisource contributors (B v2)",
+          "he": "תורמי ויקיטקסט העברית (B v2)"
+        },
+        "url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2/NOTICE.md"
+      },
+      "htext_release": "by-sa",
+      "files": [
+        {
+          "name": "wikisource_plain_v2.txt",
+          "subset": "plain",
+          "lines": 12953,
+          "bytes": 602896,
+          "sha256": "dc0ef72c17ced163f3a64553dc43b00c18ee9df18b72c2cdeb6aa1a12bdb12e7",
+          "pages": 39
+        },
+        {
+          "name": "wikisource_niqqud_v2.txt",
+          "subset": "niqqud",
+          "lines": 0,
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "pages": 0
+        }
+      ],
+      "release": {
+        "tag": "wikisource-v2",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/tree/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2",
+        "date": "2026-11-25"
+      },
+      "hf": {
+        "repo": "HeOCR/htext-wikisource",
+        "revision": "efcf3e55bedd7a17e6eef7db02afd4c5f6447144"
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24516892",
+        "concept_doi": "10.5281/zenodo.24516891"
+      },
+      "card_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2/CORPUS_CARD.md",
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2/SHA256SUMS"
+    },
+    {
+      "id": "sefaria-v1",
+      "version": "v1",
+      "name": {
+        "en": "Sefaria historical texts v1",
+        "he": "טקסטים היסטוריים מספריא v1"
+      },
+      "source": {
+        "name": {
+          "en": "Sefaria",
+          "he": "ספריא"
+        },
+        "url": "https://www.sefaria.org"
+      },
+      "description": {
+        "en": "6,340 unpointed lines and one pointed line from 47 chapters of two historical Hebrew editions.",
+        "he": "6,340 שורות ללא ניקוד ושורה מנוקדת אחת מתוך 47 פרקים בשתי מהדורות עבריות היסטוריות."
+      },
+      "rights_basis": {
+        "en": "Sefaria labels two exact editions Public Domain: Avot DeRabbi Natan, Schechter Recension A (Vienna, 1887), and Sefer Yetzirah (Warsaw, 1884).",
+        "he": "ספריא מסמנת שתי מהדורות מדויקות כנחלת הכלל: אבות דרבי נתן, מהדורת שכטר, נוסח א (וינה, 1887), וספר יצירה (ורשה, 1884)."
+      },
+      "source_licence": {
+        "en": "Public Domain",
+        "he": "נחלת הכלל"
+      },
+      "credit": {
+        "text": {
+          "en": "Sefaria, exact historical Hebrew editions",
+          "he": "ספריא, מהדורות עבריות היסטוריות"
+        },
+        "url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/source_editions.json"
+      },
+      "htext_release": "cc0",
+      "files": [
+        {
+          "name": "plain.txt",
+          "subset": "plain",
+          "lines": 6340,
+          "bytes": 291705,
+          "sha256": "a39ccb9e6363d79baf059fa7851f4732ed36b674415d68b45c9fa7fa4f2275c6"
+        },
+        {
+          "name": "niqqud.txt",
+          "subset": "niqqud",
+          "lines": 1,
+          "bytes": 24,
+          "sha256": "da52f415ee46c6653fce2c2ee95d96cb44e0fa1aaf2572289358d2a2cb74b89f"
+        }
+      ],
+      "release": {
+        "tag": "sefaria-v1",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/tree/2572e399c910cbfe6410830cc93360b192c14728",
+        "date": "2026-11-25"
+      },
+      "hf": {
+        "repo": "HeOCR/htext-sefaria",
+        "revision": "2572e399c910cbfe6410830cc93360b192c14728"
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24516961",
+        "concept_doi": "10.5281/zenodo.24516960"
+      },
+      "card_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/README.md",
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/SHA256SUMS"
     }
   ],
   "planned": [],
