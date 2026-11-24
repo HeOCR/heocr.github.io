@@ -52,6 +52,102 @@ ROW_ID = re.compile(r"[a-z0-9-]{1,64}")
 BASELINES = {"rivok-full", "rivok-lite", "tessdata-best", "tessdata-fast", "paddle"}
 
 
+DOCUMENT_TYPES = {
+    "all": ("All document types", "כל סוגי המסמכים"),
+    "gazette": ("Gazette / legal notice", "רשומות / הודעות משפטיות"),
+    "forms": ("Forms", "טפסים"),
+    "tables": ("Tables", "טבלאות"),
+    "prose": ("Prose", "טקסט רציף"),
+    "contents": ("Contents / index", "תוכן עניינים / מפתח"),
+}
+TYPE_CAPTURES = {
+    "all": ("All captures", "כל הלכידות"),
+    **{key: label for key, label in STRATA.items() if key != "pooled"},
+    "phone": ("Phones combined", "כל הטלפונים"),
+}
+TYPE_SCOPES = {
+    "matched": (56, "Pixel-matched carriers", "לכידות תואמות פיקסלים"),
+    "original": (65, "All original carriers", "כל הלכידות המקוריות"),
+    "masked": (9, "Artwork-masked diagnostic", "בדיקת משנה עם מיסוך איורים"),
+}
+
+
+def validate_document_types(panel, rows):
+    fields = {"schema", "manifest_sha256", "public_revision", "taxonomy_sha256",
+              "scope_carriers", "type_pages", "readers"}
+    if (not isinstance(panel, dict) or panel.keys() != fields
+            or panel["schema"] != "heocr.leaderboard.c1-document-types.v1"
+            or panel["manifest_sha256"] != MANIFEST
+            or not isinstance(panel["public_revision"], str)
+            or not re.fullmatch(r"[a-f0-9]{40}", panel["public_revision"])
+            or not isinstance(panel["taxonomy_sha256"], str) or not SHA.fullmatch(panel["taxonomy_sha256"])
+            or panel["scope_carriers"] != {key: item[0] for key, item in TYPE_SCOPES.items()}
+            or not isinstance(panel["type_pages"], dict) or panel["type_pages"].keys() != DOCUMENT_TYPES.keys()
+            or not isinstance(panel["readers"], list) or not panel["readers"]):
+        raise ValueError("Invalid document type scope")
+    pages = panel["type_pages"]
+    if (any(type(n) is not int or n < 0 for n in pages.values()) or pages["all"] != 31
+            or pages["gazette"] > 31 or sum(pages[k] for k in ("forms", "tables", "prose", "contents")) != 31):
+        raise ValueError("Invalid document type page counts")
+    canonical = {row["id"]: row for row in rows}
+    seen, denominators = set(), {}
+    for reader in panel["readers"]:
+        if (not isinstance(reader, dict) or reader.keys() not in (
+                {"id", "reader", "authority", "scopes"},
+                {"id", "reader", "authority", "scopes", "reference_builder"})
+                or not isinstance(reader["id"], str) or not ROW_ID.fullmatch(reader["id"])
+                or reader["id"] in seen or not text(reader["reader"], 80)
+                or re.match(r"^heocr\b", reader["reader"], re.IGNORECASE)
+                or reader["authority"] != "saved-registered-output"
+                or reader.get("reference_builder", False) != (reader["id"] == "gemini-vertex-v0")):
+            raise ValueError("Invalid document type reader")
+        seen.add(reader["id"])
+        source = canonical.get(reader["id"])
+        if source and source["reader"] != reader["reader"]:
+            raise ValueError("Document type reader name mismatch")
+        scopes = reader["scopes"]
+        if not isinstance(scopes, dict) or scopes.keys() not in ({"matched", "original"}, {"matched", "masked"}):
+            raise ValueError("Invalid document type reader coverage")
+        for scope, views in scopes.items():
+            if not isinstance(views, dict) or views.keys() != VIEWS.keys():
+                raise ValueError("Invalid document type score view")
+            for view, types in views.items():
+                if not isinstance(types, dict) or not types.keys() <= DOCUMENT_TYPES.keys() or "all" not in types:
+                    raise ValueError("Invalid document type group")
+                capture_set = {"archive", "issuer-render", "issuer-scan", "scanner", "phone-a", "phone-b"}
+                for typ, captures in types.items():
+                    if (not isinstance(captures, dict) or not captures.keys() <= TYPE_CAPTURES.keys()
+                            or "all" not in captures):
+                        raise ValueError("Invalid document type capture group")
+                    for cap, metric in captures.items():
+                        if (not isinstance(metric, dict) or metric.keys() != {"carriers", "chars", "edits"}
+                                or any(type(v) is not int or v < 0 for v in metric.values())
+                                or metric["carriers"] == 0 or metric["chars"] == 0):
+                            raise ValueError("Invalid document type metric")
+                        key = scope, view, typ, cap
+                        denominator = metric["carriers"], metric["chars"]
+                        if denominators.setdefault(key, denominator) != denominator:
+                            raise ValueError("Document type denominators differ across readers")
+                    for field in ("carriers", "chars", "edits"):
+                        if captures["all"][field] != sum(captures.get(k, {}).get(field, 0) for k in capture_set):
+                            raise ValueError("Document type captures do not sum to total")
+                        if captures.get("phone", {}).get(field, 0) != sum(
+                                captures.get(k, {}).get(field, 0) for k in ("phone-a", "phone-b")):
+                            raise ValueError("Phone captures do not sum to total")
+                overall = types["all"]["all"]
+                if overall["carriers"] != TYPE_SCOPES[scope][0]:
+                    raise ValueError("Unexpected document type denominator")
+                for field in ("carriers", "chars", "edits"):
+                    if overall[field] != sum(
+                            types.get(k, {}).get("all", {}).get(field, 0)
+                            for k in ("forms", "tables", "prose", "contents")):
+                        raise ValueError("Document layouts do not sum to total")
+                if source and (scope == "original" or "diagnostic" in source):
+                    expected = source["diagnostic"]["masked_views"] if scope == "masked" else source["views"]
+                    if any(overall[k] != expected[view]["pooled"][k] for k in ("chars", "edits")):
+                        raise ValueError("Document type total differs from published CER")
+
+
 EFFICIENCY_PLATFORMS = {
     "m4-cpu": ("Apple M4 CPU", "מעבד Apple M4"),
     "github-ubuntu-cpu": ("GitHub Ubuntu CPU", "מעבד GitHub Ubuntu"),
@@ -123,7 +219,7 @@ def valid_views(views):
 
 def validate(data):
     fields = {"schema", "benchmark", "rows"}
-    if (not isinstance(data, dict) or data.keys() not in (fields, fields | {"efficiency"})
+    if (not isinstance(data, dict) or not fields <= data.keys() <= fields | {"efficiency", "document_types"}
             or data["schema"] != SCHEMA):
         raise ValueError("Invalid leaderboard schema")
     if data["benchmark"] != {"dataset": DATASET, "manifest_sha256": MANIFEST, "pages": 31, "carriers": 65}:
@@ -167,6 +263,8 @@ def validate(data):
         raise ValueError("Required external baselines are missing")
     if "efficiency" in data:
         validate_efficiency(data["efficiency"], ids)
+    if "document_types" in data:
+        validate_document_types(data["document_types"], data["rows"])
     return data
 
 

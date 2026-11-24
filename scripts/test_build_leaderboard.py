@@ -35,6 +35,21 @@ class LeaderboardTest(unittest.TestCase):
             other = "../leaderboard.html" if lang == "en" else "en/leaderboard.html"
             self.assertIn(f'href="{other}"', page)
 
+    def test_document_type_view_preserves_matched_and_masked_cohorts(self):
+        from leaderboard_results import read_results
+
+        data = read_results(builder.SITE / "leaderboard/results.json")
+        for lang in ("he", "en"):
+            panel = builder.document_types(data, lang)
+            self.assertIn('id="type-matched-filtered-forms"', panel)
+            self.assertIn('id="type-masked-filtered-forms"', panel)
+            self.assertIn("<bdi>17.37% · 8</bdi>", panel)
+            self.assertIn("<bdi>4.60% · 9</bdi>", panel)
+        reader = next(x for x in data["document_types"]["readers"] if x["id"] == "claude-haiku-5-5-v0")
+        reader["scopes"]["matched"]["filtered"]["forms"]["phone"]["carriers"] += 1
+        with self.assertRaisesRegex(ValueError, "do not sum|denominators differ"):
+            validate(data)
+
     def test_vertex_scopes_remain_outside_ranking(self):
         import leaderboard_results as results
 
