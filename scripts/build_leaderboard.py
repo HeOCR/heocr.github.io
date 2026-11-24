@@ -57,6 +57,35 @@ def table(data, view, lang):
     )
 
 
+def diagnostics(data, lang):
+    labels = ("Matched originals", "Artwork-masked carriers", "Scope", "Carriers", "Filtered page CER", "All page CER")
+    if lang == "he":
+        labels = ("תואמים למקור", "נשאים עם מסכת סמל", "קבוצה", "נשאים", "שגיאת תווים מסוננת", "שגיאת תווים מלאה")
+    sections = []
+    for row in data["rows"]:
+        if "diagnostic" not in row:
+            continue
+        details = row["diagnostic"]
+        title = f'{row["reader"]} · {row["version"]} · {row["type"]}'
+        parts = [
+            f'<section class="method"><h3><bdi>{e(title)}</bdi></h3>',
+            f'<p class="note" lang="en" dir="ltr"><strong>{e(details["notice"])}</strong></p>',
+            '<div class="tablewrap"><table><thead><tr>',
+            *(f'<th scope="col">{e(label)}</th>' for label in labels[2:]),
+            '</tr></thead><tbody>',
+        ]
+        for label, count, views in (
+            (labels[0], details["paired_carriers"], row["views"]),
+            (labels[1], details["masked_carriers"], details["masked_views"]),
+        ):
+            parts.append(f'<tr><th scope="row">{e(label)}</th><td>{count}</td>'
+                         f'<td>{percentage(views["filtered"]["pooled"])}</td>'
+                         f'<td>{percentage(views["all"]["pooled"])}</td></tr>')
+        parts.append('</tbody></table></div></section>')
+        sections.append("".join(parts))
+    return "".join(sections)
+
+
 def page(lang, data):
     t = COPY[lang]
     index = int(lang == "he")
@@ -82,7 +111,9 @@ def page(lang, data):
         table(data, "filtered", lang),
         f'<details class="method"><summary>{e(VIEWS["all"][index])}</summary>',
         table(data, "all", lang),
-        "</details></section>",
+        "</details>",
+        diagnostics(data, lang),
+        "</section>",
         pending,
         "</main>",
         shell.footer([f"<p>{links}</p>"]),

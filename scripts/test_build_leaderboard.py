@@ -34,6 +34,25 @@ class LeaderboardTest(unittest.TestCase):
             other = "../leaderboard.html" if lang == "en" else "en/leaderboard.html"
             self.assertIn(f'href="{other}"', page)
 
+    def test_vertex_scopes_remain_outside_ranking(self):
+        import leaderboard_results as results
+
+        data = results.read_results(builder.SITE / "leaderboard/results.json")
+        row = next(row for row in data["rows"] if row["id"] == "gemini-vertex-v0")
+        self.assertEqual(row["type"], "commercial API")
+        self.assertEqual(row["views"]["filtered"]["pooled"], {"edits": 7921, "chars": 61212})
+        self.assertEqual(row["views"]["all"]["pooled"], {"edits": 14378, "chars": 81161})
+        self.assertEqual(row["diagnostic"]["masked_views"]["filtered"]["pooled"], {"edits": 2072, "chars": 9333})
+        self.assertEqual(row["diagnostic"]["masked_views"]["all"]["pooled"], {"edits": 3238, "chars": 12567})
+        self.assertNotIn(row, results.ranked(data, "filtered"))
+        for lang in ("en", "he"):
+            page = builder.page(lang, data)
+            self.assertIn(results.BIAS_NOTICE, page)
+            self.assertIn("<td>56</td>", page)
+            self.assertIn("<td>9</td>", page)
+            self.assertIn("12.94%", page)
+            self.assertIn("22.20%", page)
+
     def test_missing_baseline_cannot_render(self):
         data = fixture()
         data["rows"].pop()
