@@ -45,7 +45,7 @@
 <div class="band gridband"><div class="wrap page-head">
 <h1><span class="bb" data-tag="h1 · 0.99">htext</span></h1>
 <p class="lede">Openly licensed Hebrew text for training HeOCR's recognizers, cut into lines, plain and with niqqud: public-domain text first, and attribution and share-alike text in their own releases. Every work or document carries its own rights record: its status in Israel and in the US, its licence and its credit line. htext is published as three releases, one per licence, so you can pick the terms you need; the core release is CC0 and can be used without conditions.</p>
-<p class="note">Updated 2026-11-21. Figures come from each corpus card and are rebuilt from <a href="../htext/corpora.json">corpora.json</a>.</p>
+<p class="note">Updated 2026-11-25. Figures come from each corpus card and are rebuilt from <a href="../htext/corpora.json">corpora.json</a>.</p>
 </div></div>
 <nav class="wrap" aria-label="On this page"><div class="toc"><a href="#what">What htext is</a><a href="#releases">Releases</a><a href="#corpora">Corpora</a><a href="#rights">Rights</a><a href="#use">Download and use</a><a href="#credit">Credit</a><a href="#licence">Licence</a></div></nav>
 <main id="main" class="wrap doc ht">
@@ -53,7 +53,7 @@
 <h2>What htext is</h2>
 <p>htext collects Hebrew text whose rights are clear enough to publish openly, and turns it into training lines for <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, HeOCR's synthetic page generator. The generator renders each line onto synthetic pages, so the recognizers learn real Hebrew vocabulary, spelling and punctuation, not only made-up text.</p>
 <p>Each source has its own builder, its own corpus and its own card. A build reads a pinned copy of the source, computes rights per entry, cleans and cuts the text, and checks that no line overlaps HeOCR's evaluation text. Only the files a card lists are published.</p>
-<div class="stats"><div class="stat"><b>45,281,942</b><span>lines</span></div><div class="stat"><b><span dir="ltr">2,167.1 MB</span></b><span>of text</span></div><div class="stat"><b>5</b><span>corpora</span></div></div>
+<div class="stats"><div class="stat"><b>45,301,236</b><span>lines</span></div><div class="stat"><b><span dir="ltr">2,168.0 MB</span></b><span>of text</span></div><div class="stat"><b>7</b><span>corpora</span></div></div>
 </section>
 <section id="releases">
 <h2>Releases</h2>
@@ -176,6 +176,38 @@
 <li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24415187"><span dir="ltr">10.5281/zenodo.24415187</span></a> (all versions: <a href="https://doi.org/10.5281/zenodo.24415186"><span dir="ltr">10.5281/zenodo.24415186</span></a>)</li>
 <li>The private-name filter removed 848,303 lines before publication.</li>
 </ul>
+<h3 id="wikisource-v2">Hebrew Wikisource B v2</h3>
+<span class="status">wikisource-v2</span><span class="status">htext-by-sa</span>
+<p>12,953 unpointed training lines from 39 pinned revisions of Orchot Tzadikim, Sefer HaYirah and Tomer Devorah. This increment adds to v1. Print collation is pending.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Subset</th><th>Lines</th><th>Articles</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>wikisource_plain_v2.txt</code></td><td>plain</td><td class="num">12,953</td><td class="num">39</td><td class="num"><span dir="ltr">0.6 MB</span></td></tr>
+<tr><td><code>wikisource_niqqud_v2.txt</code></td><td>niqqud</td><td class="num">0</td><td class="num">0</td><td class="num"><span dir="ltr">0.0 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>Release: htext-by-sa (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>)</li>
+<li>Source: <a href="https://he.wikisource.org">Hebrew Wikisource</a> (CC BY-SA 4.0)</li>
+<li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/tree/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2">wikisource-v2</a>, 2026-11-25</li>
+<li>Corpus card: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2/CORPUS_CARD.md">CORPUS_CARD.md</a></li>
+<li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24516892"><span dir="ltr">10.5281/zenodo.24516892</span></a> (all versions: <a href="https://doi.org/10.5281/zenodo.24516891"><span dir="ltr">10.5281/zenodo.24516891</span></a>)</li>
+</ul>
+<h3 id="sefaria-v1">Sefaria historical texts v1</h3>
+<span class="status">sefaria-v1</span><span class="status">htext-cc0</span>
+<p>6,340 unpointed lines and one pointed line from 47 chapters of two historical Hebrew editions.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Subset</th><th>Lines</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>plain.txt</code></td><td>plain</td><td class="num">6,340</td><td class="num"><span dir="ltr">0.3 MB</span></td></tr>
+<tr><td><code>niqqud.txt</code></td><td>niqqud</td><td class="num">1</td><td class="num"><span dir="ltr">0.0 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>Release: htext-cc0 (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>)</li>
+<li>Source: <a href="https://www.sefaria.org">Sefaria</a> (Public Domain)</li>
+<li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/tree/2572e399c910cbfe6410830cc93360b192c14728">sefaria-v1</a>, 2026-11-25</li>
+<li>Corpus card: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/README.md">README.md</a></li>
+<li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24516961"><span dir="ltr">10.5281/zenodo.24516961</span></a> (all versions: <a href="https://doi.org/10.5281/zenodo.24516960"><span dir="ltr">10.5281/zenodo.24516960</span></a>)</li>
+</ul>
 </section>
 <section id="rights">
 <h2>Rights</h2>
@@ -188,6 +220,8 @@
 <li><b>Westminster Leningrad Codex, via the Open Scriptures Hebrew Bible</b>: The Leningrad Codex is about a thousand years old, and the WLC text is in the public domain (&quot;The text of the WLC remains in the Public Domain&quot;, OSHB). Public domain in Israel and in the US. Only the words are used; OSHB&#x27;s CC BY lemma and morphology layers are not. The edition is WLC, not UXLC.</li>
 <li><b>Hebrew Wikisource</b>: Distributed under CC BY-SA 4.0. See the NOTICE and rights index for attribution by revision.</li>
 <li><b>The Knesset of Israel</b>: Official texts under section 6 of the Israeli Copyright Act. US status was not assessed.</li>
+<li><b>Hebrew Wikisource</b>: CC BY-SA 4.0 with attribution by source revision in the NOTICE and rights index.</li>
+<li><b>Sefaria</b>: Sefaria labels two exact editions Public Domain: Avot DeRabbi Natan, Schechter Recension A (Vienna, 1887), and Sefer Yetzirah (Warsaw, 1884).</li>
 </ul>
 </section>
 <section id="use">
@@ -209,6 +243,8 @@ grep -E &#x27;_v2\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
 <p class="credit">Credit: <a href="https://github.com/openscriptures/morphhb">Westminster Leningrad Codex (public domain), via the Open Scriptures Hebrew Bible</a></p>
 <p class="credit">Credit: <a href="https://github.com/HeOCR/htext/blob/main/data/wikisource/v1/NOTICE.md">Hebrew Wikisource contributors</a></p>
 <p class="credit">Credit: <a href="https://main.knesset.gov.il">The Knesset of Israel (Knesset database, plenary records, Divrei ha-Knesset)</a></p>
+<p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2/NOTICE.md">Hebrew Wikisource contributors (B v2)</a></p>
+<p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/source_editions.json">Sefaria, exact historical Hebrew editions</a></p>
 </section>
 <section id="licence">
 <h2>Licence</h2>
