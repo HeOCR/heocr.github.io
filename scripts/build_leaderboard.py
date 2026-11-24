@@ -20,8 +20,15 @@ COPY = {
         "intro": "שיעור שגיאות תווים בעמוד במבחן הדפוס העברי שנרשם מראש. שיעור נמוך יותר עדיף.",
         "notice": "טקסטי הייחוס של גרסה v0 פורסמו עם מערך המבחן. אימון עליהם עלול לשפר את התוצאות המדווחות. בעתיד מתוכנן סט מבחן סמוי בגרסה v1.",
         "results": "נתוני התוצאות", "dataset": "מערך המבחן", "submit": "הגשת תוצאות דרך GitHub", "space": "טבלת דירוג ב־Hugging Face",
-        "coming": "בקרוב", "view": "תצוגת ציונים", "verified": "כן", "unverified": "לא",
-        "columns": ("מנוע זיהוי", "גרסה", "סוג", "רישיון"), "trailing": ("תאריך", "גרסת המעריך", "אומת"),
+        "coming": "בקרוב", "view": "תצוגת ציונים", "verified": "אומת", "unverified": "הוגש עצמאית, טרם אומת",
+        "columns": ("מנוע זיהוי", "גרסה", "סוג", "רישיון"), "trailing": ("תאריך", "גרסת המעריך", "מצב אימות"),
+        "how": "איך מגישים תוצאות?",
+        "steps": (
+            'הריצו את מנוע הזיהוי על <bdi>P-mod-open v0</bdi> והכינו קובץ <bdi>ZIP</bdi> בפורמט <bdi>heocr-bench</bdi>.',
+            'פתחו בקשת מיזוג ב־<bdi>GitHub</bdi> עם קובץ התחזיות וקובץ <bdi>JSON</bdi> ובו שם המנוע, גרסה, רישיון, משקולות פתוחות או סגורות, קישור ציבורי וסכום הביקורת של הקובץ.',
+            'בדקו את תגובת הניקוד ובקשו בדיקה. אפשר להגיש פעם אחת לכל צמד של מנוע וגרסה. לאחר המיזוג, התוצאה תסומן ״הוגש עצמאית, טרם אומת״ עד להרצה חוזרת של <bdi>HeOCR</bdi>.',
+        ),
+        "instructions": "הוראות הגשה ודוגמה",
         "scope": "{pages} עמודים · {carriers} גרסאות מקור",
     },
     "en": {
@@ -29,8 +36,15 @@ COPY = {
         "intro": "Page character error rate on the registered Hebrew print benchmark. Lower is better.",
         "notice": "P-mod-open v0 has public reference texts, so training on them can inflate scores. A hidden v1 split is planned.",
         "results": "Results data", "dataset": "Benchmark dataset", "submit": "Submit via GitHub", "space": "Leaderboard on Hugging Face",
-        "coming": "Coming", "view": "Score view", "verified": "Yes", "unverified": "No",
-        "columns": ("Reader", "Version", "Type", "Licence"), "trailing": ("Date", "Scorer version", "Verified"),
+        "coming": "Coming", "view": "Score view", "verified": "Verified", "unverified": "Self-submitted, unverified",
+        "columns": ("Reader", "Version", "Type", "Licence"), "trailing": ("Date", "Scorer version", "Status"),
+        "how": "How to submit",
+        "steps": (
+            'Run your reader on P-mod-open v0 and package the predictions in a <bdi>heocr-bench</bdi> ZIP.',
+            'Open a GitHub pull request with the ZIP and a JSON receipt listing the reader, version, licence, open or closed weights, a public link and the ZIP checksum.',
+            'Read the score comment and request review. One entry per reader and version is accepted. After the lead merges it, the row is self-submitted, unverified until HeOCR reruns it.',
+        ),
+        "instructions": "Submission instructions and example",
         "scope": "{pages} pages · {carriers} carriers",
     },
 }
@@ -91,7 +105,7 @@ def page(lang, data):
     index = int(lang == "he")
     scope = e(t["scope"].format(**data["benchmark"]))
     links = " · ".join(f'<a href="{url}">{e(t[key])}</a>' for key, url in (
-        ("dataset", HF_DATASET), ("results", HF_RESULTS), ("space", SPACE), ("submit", SUBMIT),
+        ("dataset", HF_DATASET), ("results", HF_RESULTS), ("space", SPACE), ("submit", "#how-to-submit"),
     ))
     intro = f'<p class="lede">{e(t["intro"])}</p><p>{links}</p><p class="note">{e(t["notice"])}</p>'
     categories = [(key, f"<bdi>{key}</bdi> · {e(label[index])}", e(t["coming"]) if key != "C1" else None)
@@ -101,6 +115,11 @@ def page(lang, data):
         f'<section class="wrap domain" id="{key}"><h2>{title}</h2><p>{status}</p></section>'
         for key, title, status in categories[1:]
     )
+    submission = "".join((
+        f'<section class="wrap domain" id="how-to-submit"><h2>{e(t["how"])}</h2><ol>',
+        *(f'<li>{step}</li>' for step in t["steps"]),
+        f'</ol><p><a href="{SUBMIT}">{e(t["instructions"])}</a></p></section>',
+    ))
     return "".join((
         shell.head(lang, e(t["title"]), e(t["intro"]), "leaderboard"),
         shell.header(lang, "leaderboard"),
@@ -115,6 +134,7 @@ def page(lang, data):
         diagnostics(data, lang),
         "</section>",
         pending,
+        submission,
         "</main>",
         shell.footer([f"<p>{links}</p>"]),
         shell.tail(lang),
