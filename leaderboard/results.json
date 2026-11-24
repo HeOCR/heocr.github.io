@@ -1,0 +1,381 @@
+{
+  "benchmark": {
+    "carriers": 65,
+    "dataset": "HeOCR/p-mod-open-v0",
+    "manifest_sha256": "f173417a49f960f8bdd2bf9950a9e676d2070aeb6d6a6a3b0066887af6a11190",
+    "pages": 31
+  },
+  "rows": [
+    {
+      "category": "C1",
+      "date": "2026-11-23",
+      "id": "tessdata-best",
+      "licence": "Apache-2.0",
+      "reader": "Tessdata Best Hebrew",
+      "scorer_version": "page-cer-v1@sha256:f93f21c06752317a7fcb0ab5a0a70c90bc488cc4167f7b3089f680fd5fe54907",
+      "submission_sha256": null,
+      "type": "open weights",
+      "verified": true,
+      "version": "Tesseract 5.5.3 · tessdata_best dbaa827a",
+      "views": {
+        "all": {
+          "archive": {
+            "chars": 5352,
+            "edits": 2431
+          },
+          "issuer-render": {
+            "chars": 13964,
+            "edits": 2163
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 24804,
+            "edits": 5049
+          },
+          "phone-b": {
+            "chars": 24804,
+            "edits": 5336
+          },
+          "pooled": {
+            "chars": 93728,
+            "edits": 19834
+          },
+          "scanner": {
+            "chars": 24804,
+            "edits": 4855
+          }
+        },
+        "filtered": {
+          "archive": {
+            "chars": 4697,
+            "edits": 1967
+          },
+          "issuer-render": {
+            "chars": 11455,
+            "edits": 1498
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 18131,
+            "edits": 2428
+          },
+          "phone-b": {
+            "chars": 18131,
+            "edits": 2847
+          },
+          "pooled": {
+            "chars": 70545,
+            "edits": 11252
+          },
+          "scanner": {
+            "chars": 18131,
+            "edits": 2512
+          }
+        }
+      }
+    },
+    {
+      "category": "C1",
+      "date": "2026-11-23",
+      "id": "tessdata-fast",
+      "licence": "Apache-2.0",
+      "reader": "Tessdata Fast Hebrew",
+      "scorer_version": "page-cer-v1@sha256:f93f21c06752317a7fcb0ab5a0a70c90bc488cc4167f7b3089f680fd5fe54907",
+      "submission_sha256": null,
+      "type": "open weights",
+      "verified": true,
+      "version": "Tesseract 5.5.3 · tessdata_fast 11f9e43a",
+      "views": {
+        "all": {
+          "archive": {
+            "chars": 5352,
+            "edits": 2473
+          },
+          "issuer-render": {
+            "chars": 13964,
+            "edits": 2113
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 24804,
+            "edits": 4867
+          },
+          "phone-b": {
+            "chars": 24804,
+            "edits": 5316
+          },
+          "pooled": {
+            "chars": 93728,
+            "edits": 19571
+          },
+          "scanner": {
+            "chars": 24804,
+            "edits": 4802
+          }
+        },
+        "filtered": {
+          "archive": {
+            "chars": 4697,
+            "edits": 2049
+          },
+          "issuer-render": {
+            "chars": 11455,
+            "edits": 1455
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 18131,
+            "edits": 2292
+          },
+          "phone-b": {
+            "chars": 18131,
+            "edits": 2837
+          },
+          "pooled": {
+            "chars": 70545,
+            "edits": 11103
+          },
+          "scanner": {
+            "chars": 18131,
+            "edits": 2470
+          }
+        }
+      }
+    },
+    {
+      "category": "C1",
+      "date": "2026-11-23",
+      "id": "rivok-full",
+      "licence": "Apache-2.0",
+      "reader": "Rivok Full",
+      "scorer_version": "page-cer-v1@sha256:f93f21c06752317a7fcb0ab5a0a70c90bc488cc4167f7b3089f680fd5fe54907",
+      "submission_sha256": null,
+      "type": "open weights",
+      "verified": true,
+      "version": "Tesseract 5.5.3 · Rivok full 09ef1830",
+      "views": {
+        "all": {
+          "archive": {
+            "chars": 5352,
+            "edits": 2265
+          },
+          "issuer-render": {
+            "chars": 13964,
+            "edits": 1865
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 24804,
+            "edits": 4660
+          },
+          "phone-b": {
+            "chars": 24804,
+            "edits": 5241
+          },
+          "pooled": {
+            "chars": 93728,
+            "edits": 18470
+          },
+          "scanner": {
+            "chars": 24804,
+            "edits": 4439
+          }
+        },
+        "filtered": {
+          "archive": {
+            "chars": 4697,
+            "edits": 1847
+          },
+          "issuer-render": {
+            "chars": 11455,
+            "edits": 1360
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 18131,
+            "edits": 2243
+          },
+          "phone-b": {
+            "chars": 18131,
+            "edits": 2762
+          },
+          "pooled": {
+            "chars": 70545,
+            "edits": 10438
+          },
+          "scanner": {
+            "chars": 18131,
+            "edits": 2226
+          }
+        }
+      }
+    },
+    {
+      "category": "C1",
+      "date": "2026-11-23",
+      "id": "rivok-lite",
+      "licence": "Apache-2.0",
+      "reader": "Rivok Lite",
+      "scorer_version": "page-cer-v1@sha256:f93f21c06752317a7fcb0ab5a0a70c90bc488cc4167f7b3089f680fd5fe54907",
+      "submission_sha256": null,
+      "type": "open weights",
+      "verified": true,
+      "version": "Tesseract 5.5.3 · Rivok lite 59da073a",
+      "views": {
+        "all": {
+          "archive": {
+            "chars": 5352,
+            "edits": 2255
+          },
+          "issuer-render": {
+            "chars": 13964,
+            "edits": 1958
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 24804,
+            "edits": 4833
+          },
+          "phone-b": {
+            "chars": 24804,
+            "edits": 5303
+          },
+          "pooled": {
+            "chars": 93728,
+            "edits": 19092
+          },
+          "scanner": {
+            "chars": 24804,
+            "edits": 4743
+          }
+        },
+        "filtered": {
+          "archive": {
+            "chars": 4697,
+            "edits": 1848
+          },
+          "issuer-render": {
+            "chars": 11455,
+            "edits": 1405
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 18131,
+            "edits": 2363
+          },
+          "phone-b": {
+            "chars": 18131,
+            "edits": 2812
+          },
+          "pooled": {
+            "chars": 70545,
+            "edits": 10894
+          },
+          "scanner": {
+            "chars": 18131,
+            "edits": 2466
+          }
+        }
+      }
+    },
+    {
+      "category": "C1",
+      "date": "2026-11-23",
+      "id": "paddle",
+      "licence": "Apache-2.0 as declared for selected assets",
+      "reader": "PaddleOCR (CUDA)",
+      "scorer_version": "page-cer-v1@sha256:f93f21c06752317a7fcb0ab5a0a70c90bc488cc4167f7b3089f680fd5fe54907",
+      "submission_sha256": null,
+      "type": "open weights",
+      "verified": true,
+      "version": "flagship c6bfad5d · CUDA · wrapper 3baae91a",
+      "views": {
+        "all": {
+          "archive": {
+            "chars": 5352,
+            "edits": 2291
+          },
+          "issuer-render": {
+            "chars": 13964,
+            "edits": 4014
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 24804,
+            "edits": 4486
+          },
+          "phone-b": {
+            "chars": 24804,
+            "edits": 4456
+          },
+          "pooled": {
+            "chars": 93728,
+            "edits": 19560
+          },
+          "scanner": {
+            "chars": 24804,
+            "edits": 4313
+          }
+        },
+        "filtered": {
+          "archive": {
+            "chars": 4697,
+            "edits": 1859
+          },
+          "issuer-render": {
+            "chars": 11455,
+            "edits": 3218
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 18131,
+            "edits": 2635
+          },
+          "phone-b": {
+            "chars": 18131,
+            "edits": 2543
+          },
+          "pooled": {
+            "chars": 70545,
+            "edits": 12589
+          },
+          "scanner": {
+            "chars": 18131,
+            "edits": 2334
+          }
+        }
+      }
+    }
+  ],
+  "schema": "heocr.leaderboard.results.v1"
+}

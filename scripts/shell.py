@@ -30,7 +30,7 @@ PAGES = {
     "download": "download.html",
     "privacy": "privacy.html",  # linked from the Download page, not in the header
 }
-LINKED_PAGES = PAGES | {"methodology": "methodology.html"}
+LINKED_PAGES = PAGES | {"methodology": "methodology.html", "leaderboard": "leaderboard.html"}
 LANG_DIR = {"he": "", "en": "en/"}  # Hebrew is the default language: the root
 LANGS = ("he", "en")
 
