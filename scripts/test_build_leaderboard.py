@@ -74,6 +74,20 @@ class LeaderboardTest(unittest.TestCase):
                     self.assertIn(f"<td>9</td><td>{masked}</td>", diagnostic)
                     self.assertNotIn(reader, ranked_table)
 
+    def test_haiku45_discloses_the_output_cap_in_both_languages(self):
+        from leaderboard_results import read_results
+
+        data = read_results(builder.SITE / "leaderboard/results.json")
+        for lang in ("en", "he"):
+            with self.subTest(lang=lang):
+                page = builder.page(lang, data)
+                diagnostic = page.split("<h3><bdi>Claude Haiku 4.5 ·", 1)[1].split("</section>", 1)[0]
+                self.assertIn("commercial API", diagnostic)
+                self.assertIn("Haiku 4.5 hit the output cap on 11 carriers.", diagnostic)
+                self.assertIn("<td>56</td><td>98.94%</td>", diagnostic)
+                self.assertIn("<td>9</td><td>159.20%</td>", diagnostic)
+                self.assertNotIn("Claude Haiku 4.5", builder.table(data, "filtered", lang))
+
     def test_missing_baseline_cannot_render(self):
         data = fixture()
         data["rows"].pop()
