@@ -2,6 +2,7 @@
 
 from datetime import date
 import json
+from math import isfinite
 import re
 from pathlib import Path
 
@@ -51,6 +52,51 @@ ROW_ID = re.compile(r"[a-z0-9-]{1,64}")
 BASELINES = {"rivok-full", "rivok-lite", "tessdata-best", "tessdata-fast", "paddle"}
 
 
+EFFICIENCY_PLATFORMS = {
+    "m4-cpu": ("Apple M4 CPU", "מעבד Apple M4"),
+    "github-ubuntu-cpu": ("GitHub Ubuntu CPU", "מעבד GitHub Ubuntu"),
+}
+EFFICIENCY_EXECUTIONS = {
+    "native-tesseract": ("measured", "Native Tesseract · measured", "נמדד · Tesseract מקומי"),
+    "onnx-cpu": ("measured-cpu-variant", "ONNX CPU · measured variant", "נמדד · גרסת ONNX למעבד"),
+    "vertex-global-https": ("list-price-only", "Vertex global · list prices only", "Vertex גלובלי · מחירי מחירון בלבד"),
+}
+MEASUREMENTS = (
+    "pages", "repetitions", "pages_per_minute", "peak_rss_mib",
+    "marginal_usd_per_1000", "runner_hours_per_1000", "runner_usd_per_1000",
+)
+TOKEN_RATES = ("api_input_usd_per_million", "api_output_usd_per_million")
+
+
+def validate_efficiency(table, reader_ids):
+    if (not isinstance(table, dict) or table.keys() != {"source_commit", "source_sha256", "rows"}
+            or not isinstance(table["source_commit"], str) or not re.fullmatch(r"[a-f0-9]{40}", table["source_commit"])
+            or not isinstance(table["source_sha256"], str) or not SHA.fullmatch(table["source_sha256"])
+            or not isinstance(table["rows"], list)):
+        raise ValueError("Invalid efficiency source")
+    pairs = set()
+    fields = {"reader_id", "platform", "execution", "status", *MEASUREMENTS, *TOKEN_RATES}
+    for row in table["rows"]:
+        if not isinstance(row, dict) or row.keys() != fields:
+            raise ValueError("Invalid efficiency row fields")
+        key = row["reader_id"], row["platform"]
+        execution = EFFICIENCY_EXECUTIONS.get(row["execution"])
+        if (key[0] not in reader_ids or key[1] not in EFFICIENCY_PLATFORMS
+                or key in pairs or execution is None or row["status"] != execution[0]):
+            raise ValueError("Invalid or repeated efficiency join")
+        pairs.add(key)
+        if any(v is not None and (type(v) not in (float, int) or not isfinite(v) or v < 0)
+               for v in (row[name] for name in (*MEASUREMENTS, *TOKEN_RATES))):
+            raise ValueError("Invalid efficiency value")
+        if row["status"] == "list-price-only":
+            if any(row[name] is not None for name in MEASUREMENTS) or any(row[name] is None for name in TOKEN_RATES):
+                raise ValueError("A list-price-only row cannot contain measurements")
+        elif (any(type(row[name]) is not int or row[name] < 1 for name in ("pages", "repetitions"))
+              or any(row[name] is None for name in MEASUREMENTS[:-1])
+              or any(row[name] is not None for name in TOKEN_RATES)):
+            raise ValueError("Incomplete local efficiency measurements")
+
+
 def text(value, length):
     return isinstance(value, str) and 0 < len(value) <= length and value == value.strip() and value.isprintable()
 
@@ -76,7 +122,9 @@ def valid_views(views):
 
 
 def validate(data):
-    if not isinstance(data, dict) or data.keys() != {"schema", "benchmark", "rows"} or data["schema"] != SCHEMA:
+    fields = {"schema", "benchmark", "rows"}
+    if (not isinstance(data, dict) or data.keys() not in (fields, fields | {"efficiency"})
+            or data["schema"] != SCHEMA):
         raise ValueError("Invalid leaderboard schema")
     if data["benchmark"] != {"dataset": DATASET, "manifest_sha256": MANIFEST, "pages": 31, "carriers": 65}:
         raise ValueError("Invalid benchmark scope")
@@ -117,6 +165,8 @@ def validate(data):
                 raise ValueError("Invalid diagnostic breakdown")
     if not BASELINES <= {row["id"] for row in data["rows"] if row["verified"] and row["submission_sha256"] is None}:
         raise ValueError("Required external baselines are missing")
+    if "efficiency" in data:
+        validate_efficiency(data["efficiency"], ids)
     return data
 
 
