@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 import shell
+from benchmark_release_data import PMOD_OPEN_V0_DOI_URL
 from leaderboard_results import (
     CATEGORIES, DATASET, EFFICIENCY_EXECUTIONS, EFFICIENCY_PLATFORMS,
     READER_TYPES, RESULTS_REPO, STRATA, VIEWS, percentage, ranked, validate,
@@ -22,7 +23,7 @@ COPY = {
         "title": "טבלת דירוג לזיהוי טקסט בעברית",
         "intro": "שיעור שגיאות תווים בעמוד במבחן הדפוס העברי שנרשם מראש. שיעור נמוך יותר עדיף.",
         "notice": "טקסטי הייחוס של גרסה v0 פורסמו עם מערך המבחן. אימון עליהם עלול לשפר את התוצאות המדווחות. בעתיד מתוכנן סט מבחן סמוי בגרסה v1.",
-        "results": "נתוני התוצאות", "dataset": "מערך המבחן", "submit": "הגשת תוצאות דרך GitHub", "space": "טבלת דירוג ב־Hugging Face",
+        "results": "נתוני התוצאות", "dataset": "מערך המבחן", "doi": "ציטוט מערך הנתונים (Zenodo DOI)", "submit": "הגשת תוצאות דרך GitHub", "space": "טבלת דירוג ב־Hugging Face",
         "coming": "בקרוב", "view": "תצוגת ציונים", "verified": "אומת", "unverified": "הוגש עצמאית, טרם אומת",
         "columns": ("מנוע זיהוי", "גרסה", "סוג", "רישיון"), "trailing": ("תאריך", "גרסת המעריך", "מצב אימות"),
         "how": "איך מגישים תוצאות?",
@@ -38,7 +39,7 @@ COPY = {
         "title": "Hebrew OCR leaderboard",
         "intro": "Page character error rate on the registered Hebrew print benchmark. Lower is better.",
         "notice": "P-mod-open v0 has public reference texts, so training on them can inflate scores. A hidden v1 split is planned.",
-        "results": "Results data", "dataset": "Benchmark dataset", "submit": "Submit via GitHub", "space": "Leaderboard on Hugging Face",
+        "results": "Results data", "dataset": "Benchmark dataset", "doi": "Cite the dataset (Zenodo DOI)", "submit": "Submit via GitHub", "space": "Leaderboard on Hugging Face",
         "coming": "Coming", "view": "Score view", "verified": "Verified", "unverified": "Self-submitted, unverified",
         "columns": ("Reader", "Version", "Type", "Licence"), "trailing": ("Date", "Scorer version", "Status"),
         "how": "How to submit",
@@ -167,7 +168,7 @@ def page(lang, data):
     index = int(lang == "he")
     scope = e(t["scope"].format(**data["benchmark"]))
     links = " · ".join(f'<a href="{url}">{e(t[key])}</a>' for key, url in (
-        ("dataset", HF_DATASET), ("results", HF_RESULTS), ("space", SPACE), ("submit", "#how-to-submit"),
+        ("dataset", HF_DATASET), ("doi", PMOD_OPEN_V0_DOI_URL), ("results", HF_RESULTS), ("space", SPACE), ("submit", "#how-to-submit"),
     ))
     if data.get("efficiency"):
         links += f' · <a href="#efficiency">{e(EFFICIENCY_COPY[lang]["title"])}</a>'

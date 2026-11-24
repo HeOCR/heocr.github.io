@@ -9,6 +9,7 @@ from decimal import Decimal
 from pathlib import Path
 
 SCHEMA = "heocr.benchmark.scores.v1"
+PMOD_OPEN_V0_DOI_URL = "https://doi.org/10.5281/zenodo.24505278"
 VIEW_IDS = ("all", "filtered")
 CARRIER_IDS = ("pooled", "archive", "phone-a", "issuer-render", "issuer-scan", "phone-b", "scanner")
 PRIVATE_CARRIER_IDS = {"phone-a": "iphone", "phone-b": "pixel"}
