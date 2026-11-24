@@ -29,6 +29,8 @@ class LeaderboardTest(unittest.TestCase):
             self.assertIn("&lt;Fixture tessdata-fast&gt;", page)
             self.assertNotIn("<Fixture", page)
             self.assertIn('id="C6"', page)
+            self.assertIn(f'href="{builder.SUBMIT}"', page)
+            self.assertIn(f'href="{builder.SPACE}"', page)
             other = "../leaderboard.html" if lang == "en" else "en/leaderboard.html"
             self.assertIn(f'href="{other}"', page)
 

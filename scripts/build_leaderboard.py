@@ -11,14 +11,15 @@ from leaderboard_results import CATEGORIES, DATASET, READER_TYPES, RESULTS_REPO,
 
 SITE = Path(__file__).resolve().parents[1]
 SPACE = "https://huggingface.co/spaces/HeOCR/hebrew-ocr-leaderboard"
+SUBMIT = "https://github.com/HeOCR/hebrew-ocr-leaderboard/blob/main/SUBMITTING.md"
 HF_DATASET = f"https://huggingface.co/datasets/{DATASET}"
 HF_RESULTS = f"https://huggingface.co/datasets/{RESULTS_REPO}"
 COPY = {
     "he": {
         "title": "טבלת דירוג לזיהוי טקסט בעברית",
         "intro": "שיעור שגיאות תווים בעמוד במבחן הדפוס העברי שנרשם מראש. שיעור נמוך יותר עדיף.",
-        "notice": "טקסטי הייחוס של גרסה v0 ציבוריים. אימון עליהם עלול לשפר את התוצאות המדווחות. בעתיד מתוכנן סט מבחן סמוי בגרסה v1.",
-        "results": "נתוני התוצאות", "dataset": "מערך המבחן", "submit": "הגשת תוצאות זיהוי",
+        "notice": "טקסטי הייחוס של גרסה v0 יתפרסמו עם מערך המבחן. אימון עליהם עלול לשפר את התוצאות המדווחות. בעתיד מתוכנן סט מבחן סמוי בגרסה v1.",
+        "results": "נתוני התוצאות", "dataset": "מערך המבחן", "submit": "הגשת תוצאות דרך GitHub", "space": "טבלת דירוג ב־Hugging Face",
         "coming": "בקרוב", "view": "תצוגת ציונים", "verified": "כן", "unverified": "לא",
         "columns": ("מנוע זיהוי", "גרסה", "סוג", "רישיון"), "trailing": ("תאריך", "גרסת המעריך", "אומת"),
         "scope": "{pages} עמודים · {carriers} גרסאות מקור",
@@ -26,8 +27,8 @@ COPY = {
     "en": {
         "title": "Hebrew OCR leaderboard",
         "intro": "Page character error rate on the registered Hebrew print benchmark. Lower is better.",
-        "notice": "P-mod-open v0 uses public reference texts, so training on them can inflate scores. A hidden v1 split is planned.",
-        "results": "Results data", "dataset": "Benchmark dataset", "submit": "Submit predictions",
+        "notice": "P-mod-open v0 publishes its reference texts with the benchmark, so training on them can inflate scores. A hidden v1 split is planned.",
+        "results": "Results data", "dataset": "Benchmark dataset", "submit": "Submit via GitHub", "space": "Leaderboard on Hugging Face",
         "coming": "Coming", "view": "Score view", "verified": "Yes", "unverified": "No",
         "columns": ("Reader", "Version", "Type", "Licence"), "trailing": ("Date", "Scorer version", "Verified"),
         "scope": "{pages} pages · {carriers} carriers",
@@ -61,7 +62,7 @@ def page(lang, data):
     index = int(lang == "he")
     scope = e(t["scope"].format(**data["benchmark"]))
     links = " · ".join(f'<a href="{url}">{e(t[key])}</a>' for key, url in (
-        ("dataset", HF_DATASET), ("results", HF_RESULTS), ("submit", SPACE),
+        ("dataset", HF_DATASET), ("results", HF_RESULTS), ("space", SPACE), ("submit", SUBMIT),
     ))
     intro = f'<p class="lede">{e(t["intro"])}</p><p>{links}</p><p class="note">{e(t["notice"])}</p>'
     categories = [(key, f"<bdi>{key}</bdi> · {e(label[index])}", e(t["coming"]) if key != "C1" else None)
