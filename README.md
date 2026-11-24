@@ -77,3 +77,16 @@ The public tables distinguish the two phone streams with the aliases Phone A and
 Once the redistribution scope is approved, add `--public-pages <count>` to render the dataset link and
 disclose any exclusions from the public copy. Scores always use the registered measurement scope.
 Review the exact staged pages and Hugging Face artifact together before publishing.
+
+## Build the leaderboard
+
+The bilingual leaderboard uses the external reader aggregates in
+`leaderboard/results.json`. To regenerate and check both HTML files:
+
+```sh
+python3 scripts/build_leaderboard.py
+python3 scripts/build_leaderboard.py --check
+```
+
+The site, Hugging Face Space, and results dataset share the same results
+snapshot. Future snapshots are proposed through the submission repository.
