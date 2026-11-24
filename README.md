@@ -25,19 +25,18 @@ The home page's introduction and model release status are maintained by `scripts
 
 ## Benchmarks page
 
-`benchmarks.html` and `en/benchmarks.html` are generated from one file, `benchmarks/results.json`. Do not edit the
-two pages by hand. To update them, replace `results.json` with the file HeOCR's evaluation owner exports after a scored
-run, then rebuild:
+The P-mod-open v0 benchmark and methodology pages are generated in Hebrew and English
+from the pinned [published scores](benchmarks/pmod-open-v0-scores.json). Regenerate the
+four checked-in pages with the standard builder.
 
 ```
-python3 scripts/build_benchmarks.py           # writes both pages (standard library only)
-python3 scripts/build_benchmarks.py --check   # fails if a committed page does not match results.json
+python3 scripts/build_benchmarks.py
+python3 scripts/build_benchmarks.py --check
 ```
 
-The benchmark pages report measurements from registered held-out sets of real documents and photographs.
-Generated or newly typeset documents are development inputs and do not appear in the public results file.
-When a document family has no eligible result, it is marked as not measured. The release note records when
-HeOCR will publish a model or pipeline version.
+The pages use registered held-out measurements on real documents and photographs.
+The v0 dataset, redistribution scope, and exact score definitions are documented
+in [the published benchmark dataset](https://huggingface.co/datasets/HeOCR/p-mod-open-v0).
 
 The maintainer approved the four new Hebrew release-status strings on 2026-11-20: “All strings approved”.
 

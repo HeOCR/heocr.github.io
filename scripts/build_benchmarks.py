@@ -8,10 +8,14 @@ import json
 import sys
 from pathlib import Path
 
+import benchmark_release_data
+import build_release_benchmark
 import shell
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "benchmarks" / "results.json"
+PUBLISHED_V0 = ROOT / "benchmarks" / "pmod-open-v0-scores.json"
+PUBLISHED_V0_SHA256 = "18a35d121e41bda303e75c1db14b61f8b1c6cc0b1cc2035088b05a9c89072e26"
 
 T = {
     "en": {
@@ -236,6 +240,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
+    if PUBLISHED_V0.is_file():
+        data = benchmark_release_data.load(PUBLISHED_V0, PUBLISHED_V0_SHA256)
+        stale = build_release_benchmark.write_pages(ROOT, data, public_pages=31, check=a.check)
+        if stale:
+            ap.error("Out of date: " + ", ".join(stale) + ". Run python3 scripts/build_benchmarks.py.")
+        return
     R = json.loads(RESULTS.read_text(encoding="utf-8"))
     stale = []
     for lang, path in (("he", ROOT / "benchmarks.html"), ("en", ROOT / "en" / "benchmarks.html")):

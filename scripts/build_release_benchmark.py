@@ -159,6 +159,21 @@ def page(lang, data, public_pages=None):
     ])
 
 
+def write_pages(output_dir, data, public_pages, *, check):
+    stale = []
+    for lang in shell.LANGS:
+        for key, output in (("bench", page(lang, data, public_pages)), ("methodology", build_methodology.page(lang))):
+            relative = shell.site_path(lang, key)
+            path = output_dir / relative
+            if check:
+                if not path.is_file() or path.read_text(encoding="utf-8") != output:
+                    stale.append(relative)
+            else:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(output, encoding="utf-8")
+    return stale
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out-dir", type=Path, required=True)
@@ -180,17 +195,7 @@ def main():
         parser.error(str(exc))
     if args.public_pages is not None and not 1 <= args.public_pages <= data["open"]["pages"]:
         parser.error("--public-pages exceeds the registered page scope or is zero")
-    stale = []
-    for lang in shell.LANGS:
-        for key, output in (("bench", page(lang, data, args.public_pages)), ("methodology", build_methodology.page(lang))):
-            relative = shell.site_path(lang, key)
-            path = output_dir / relative
-            if args.check:
-                if not path.is_file() or path.read_text(encoding="utf-8") != output:
-                    stale.append(relative)
-            else:
-                path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text(output, encoding="utf-8")
+    stale = write_pages(output_dir, data, args.public_pages, check=args.check)
     if stale:
         print("out of date: " + ", ".join(stale), file=sys.stderr)
         sys.exit(1)
