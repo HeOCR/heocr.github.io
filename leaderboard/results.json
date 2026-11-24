@@ -375,6 +375,147 @@
           }
         }
       }
+    },
+    {
+      "category": "C1",
+      "date": "2026-11-24",
+      "diagnostic": {
+        "masked_carriers": 9,
+        "masked_views": {
+          "all": {
+            "archive": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-render": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-scan": {
+              "chars": 0,
+              "edits": 0
+            },
+            "phone-a": {
+              "chars": 4189,
+              "edits": 1189
+            },
+            "phone-b": {
+              "chars": 4189,
+              "edits": 1088
+            },
+            "pooled": {
+              "chars": 12567,
+              "edits": 3238
+            },
+            "scanner": {
+              "chars": 4189,
+              "edits": 961
+            }
+          },
+          "filtered": {
+            "archive": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-render": {
+              "chars": 0,
+              "edits": 0
+            },
+            "issuer-scan": {
+              "chars": 0,
+              "edits": 0
+            },
+            "phone-a": {
+              "chars": 3111,
+              "edits": 752
+            },
+            "phone-b": {
+              "chars": 3111,
+              "edits": 724
+            },
+            "pooled": {
+              "chars": 9333,
+              "edits": 2072
+            },
+            "scanner": {
+              "chars": 3111,
+              "edits": 596
+            }
+          }
+        },
+        "notice": "same model family took part in building v0 references (biased comparator)",
+        "paired_carriers": 56
+      },
+      "id": "gemini-vertex-v0",
+      "licence": "Proprietary (Google Cloud service terms)",
+      "reader": "Gemini (Vertex)",
+      "scorer_version": "heocr-bench 0.1.0",
+      "submission_sha256": null,
+      "type": "commercial API",
+      "verified": true,
+      "version": "Gemini 3.8 Flash",
+      "views": {
+        "all": {
+          "archive": {
+            "chars": 5352,
+            "edits": 2196
+          },
+          "issuer-render": {
+            "chars": 13964,
+            "edits": 4062
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 20615,
+            "edits": 2531
+          },
+          "phone-b": {
+            "chars": 20615,
+            "edits": 2880
+          },
+          "pooled": {
+            "chars": 81161,
+            "edits": 14378
+          },
+          "scanner": {
+            "chars": 20615,
+            "edits": 2709
+          }
+        },
+        "filtered": {
+          "archive": {
+            "chars": 4697,
+            "edits": 1734
+          },
+          "issuer-render": {
+            "chars": 11455,
+            "edits": 3087
+          },
+          "issuer-scan": {
+            "chars": 0,
+            "edits": 0
+          },
+          "phone-a": {
+            "chars": 15020,
+            "edits": 939
+          },
+          "phone-b": {
+            "chars": 15020,
+            "edits": 1165
+          },
+          "pooled": {
+            "chars": 61212,
+            "edits": 7921
+          },
+          "scanner": {
+            "chars": 15020,
+            "edits": 996
+          }
+        }
+      }
     }
   ],
   "schema": "heocr.leaderboard.results.v1"

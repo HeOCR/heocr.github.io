@@ -30,7 +30,8 @@ VIEWS = {
     "filtered": ("Common filtered positions", "מיקומים משותפים לאחר סינון"),
     "all": ("All reference positions", "כל המיקומים בטקסט הייחוס"),
 }
-READER_TYPES = {"open weights": "משקולות פתוחות", "API": "API"}
+READER_TYPES = {"open weights": "משקולות פתוחות", "API": "API", "commercial API": "API מסחרי"}
+BIAS_NOTICE = "same model family took part in building v0 references (biased comparator)"
 SHA = re.compile(r"[a-f0-9]{64}")
 ROW_ID = re.compile(r"[a-z0-9-]{1,64}")
 BASELINES = {"rivok-full", "rivok-lite", "tessdata-best", "tessdata-fast", "paddle"}
@@ -54,6 +55,12 @@ def valid_metrics(groups):
     )
 
 
+def valid_views(views):
+    return isinstance(views, dict) and views.keys() == VIEWS.keys() and all(
+        valid_metrics(groups) for groups in views.values()
+    )
+
+
 def validate(data):
     if not isinstance(data, dict) or data.keys() != {"schema", "benchmark", "rows"} or data["schema"] != SCHEMA:
         raise ValueError("Invalid leaderboard schema")
@@ -65,7 +72,7 @@ def validate(data):
     for row in data["rows"]:
         fields = {"id", "category", "reader", "version", "type", "licence", "date", "scorer_version",
                   "verified", "submission_sha256", "views"}
-        if not isinstance(row, dict) or row.keys() != fields:
+        if not isinstance(row, dict) or row.keys() not in (fields, fields | {"diagnostic"}):
             raise ValueError("Invalid row fields")
         if not isinstance(row["id"], str) or not ROW_ID.fullmatch(row["id"]) or row["id"] in ids:
             raise ValueError("Invalid or repeated reader row")
@@ -83,9 +90,17 @@ def validate(data):
             raise ValueError("Invalid submission pin")
         if key is None and not row["verified"]:
             raise ValueError("Unverified rows require a submission pin")
-        views = row["views"]
-        if not isinstance(views, dict) or views.keys() != VIEWS.keys() or not all(valid_metrics(group) for group in views.values()):
+        if not valid_views(row["views"]):
             raise ValueError("Invalid score breakdown")
+        if "diagnostic" in row:
+            diagnostic = row["diagnostic"]
+            if (not isinstance(diagnostic, dict)
+                    or diagnostic.keys() != {"notice", "paired_carriers", "masked_carriers", "masked_views"}
+                    or diagnostic["notice"] != BIAS_NOTICE
+                    or (diagnostic["paired_carriers"], diagnostic["masked_carriers"]) != (56, 9)
+                    or not valid_views(diagnostic["masked_views"])
+                    or row["type"] != "commercial API" or not row["verified"] or key is not None):
+                raise ValueError("Invalid diagnostic breakdown")
     if not BASELINES <= {row["id"] for row in data["rows"] if row["verified"] and row["submission_sha256"] is None}:
         raise ValueError("Required external baselines are missing")
     return data
@@ -105,4 +120,4 @@ def percentage(metric):
 
 
 def ranked(data, view):
-    return sorted(data["rows"], key=lambda row: (cer(row["views"][view]["pooled"]), row["reader"].casefold(), row["id"]))
+    return sorted((row for row in data["rows"] if "diagnostic" not in row), key=lambda row: (cer(row["views"][view]["pooled"]), row["reader"].casefold(), row["id"]))
