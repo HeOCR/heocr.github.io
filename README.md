@@ -70,15 +70,10 @@ python3 scripts/build_release_benchmark.py --out-dir ../preview --check
 ```
 
 For a release preview, add `--release-data /path/to/approved-aggregates.json --sha256 <digest>` to both commands.
-The schema `heocr.benchmark-release-aggregates.v1` contains:
+The builder accepts eval's `heocr.benchmark.scores.v1` export, containing page CER and WER for ten
+readers in both registered views, per carrier and pooled, plus the closed field-recall aggregates.
+It validates the reader and carrier panels, denominator arithmetic, and byte identity before rendering.
 
-- `p_mod_open`: `public_pages`, `carriers` (carrier IDs mapped to `he` and `en` labels), and exactly two ordered `views`.
-  Each view has a bilingual `name` and `results` keyed by all registered carrier IDs. Each carrier has the same
-  panel of ten readers.
-- `uc_w`: the page count as `pages` and the approved aggregate `results`.
-- Each result row has `reader` (the approved display name) and `metrics` (`cer` and optional `wer`).
-  Each metric has `percent`, `ci95`, and `denominator`. Use JSON numbers on the percentage scale,
-  with `null` for unavailable values. Reader and carrier order follow the input.
-
-Use only eval's reviewed aggregate export. The builder validates shape, completeness and byte identity.
-Review the staged pages and exact HF artifact together before copying release outputs to the site or publishing the dataset.
+Once the redistribution scope is approved, add `--public-pages <count>` to render the dataset link and
+disclose any exclusions from the public copy. Scores always use the registered measurement scope.
+Review the exact staged pages and Hugging Face artifact together before publishing.

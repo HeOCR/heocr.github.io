@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import html
 import sys
+from decimal import Decimal
 from pathlib import Path
 
 import benchmark_release_data
@@ -32,10 +33,16 @@ T = {
         ],
         "method": "Read the benchmark methodology", "preview": "Layout preview. Release figures are pending.",
         "open_result": "P-mod-open v0 results", "closed_result": "UC-W aggregates", "dataset": "Download the benchmark dataset",
-        "pages": "{pages} registered pages", "published": "The public dataset includes {public} of the {registered} scored pages. The figures use the registered scope.",
-        "closed_pages": "{pages} pages. Aggregate results only.",
+        "pages": "{pages} registered pages · {carriers} scored carriers",
+        "scope_pending": "The public dataset scope is pending source-rights review. The figures use the registered scope.",
+        "carrier_count": "{carriers} carriers", "published": "The public dataset includes {public} of the {registered} scored pages. The figures use the registered scope.",
+        "closed_pages": "{pages} pages in {reports} reports · {fields} reference field values",
+        "recall": "Field recall", "hits": "Values found", "delta": "Change vs. Rivok full (percentage points)",
+        "numbers": "Numbers missed", "higher": "Higher field recall is better.",
+        "views": {"all": "All reference positions", "filtered": "Common independently verified positions without known project training overlap"},
+        "carriers": {"pooled": "All carriers", "archive": "Archive", "iphone": "iPhone", "issuer-render": "Issuer render", "issuer-scan": "Issuer scan", "pixel": "Pixel", "scanner": "Scanner"},
         "reader": "Reader", "cer": "Character error rate", "wer": "Word error rate", "interval": "95% confidence interval",
-        "lower": "Lower error rates are better. The tables show 95% confidence intervals where available.",
+        "lower": "Lower error rates are better.",
     },
     "he": {
         "title": "מדדי ביצועים של HeOCR", "lede": "מבחנים על נתונים אמיתיים שהוחזקו בצד, עם הקבוצות הפתוחות תחילה.",
@@ -55,10 +62,16 @@ T = {
         ],
         "method": "לשיטת בניית המבחנים", "preview": "תצוגה מקדימה של המבנה. נתוני ההערכה יתווספו לקראת הפרסום.",
         "open_result": "תוצאות P-mod-open v0", "closed_result": "תוצאות מצרפיות של UC-W", "dataset": "להורדת מערך המבחן",
-        "pages": "{pages} עמודים רשומים", "published": "מערך הנתונים הציבורי כולל {public} מתוך {registered} העמודים שהוערכו. התוצאות מחושבות לפי הקבוצה הרשומה.",
-        "closed_pages": "{pages} עמודים. מוצגות תוצאות מצרפיות בלבד.",
+        "pages": "{pages} עמודים רשומים · {carriers} גרסאות מקור שנבדקו",
+        "scope_pending": "היקף מערך הנתונים הציבורי ייקבע לאחר בדיקת זכויות המקור. התוצאות מחושבות לפי הקבוצה הרשומה.",
+        "carrier_count": "{carriers} גרסאות מקור", "published": "מערך הנתונים הציבורי כולל {public} מתוך {registered} העמודים שהוערכו. התוצאות מחושבות לפי הקבוצה הרשומה.",
+        "closed_pages": "{pages} עמודים ב־{reports} דוחות · {fields} ערכי ייחוס בשדות",
+        "recall": "שיעור זיהוי ערכי שדות", "hits": "ערכים שזוהו", "delta": "הפרש לעומת Rivok המלא (נקודות אחוז)",
+        "numbers": "מספרים שלא זוהו", "higher": "שיעור זיהוי גבוה יותר עדיף.",
+        "views": {"all": "כל המיקומים בטקסט הייחוס", "filtered": "מיקומים משותפים שאומתו באופן עצמאי וללא חפיפה ידועה לאימון הפרויקט"},
+        "carriers": {"pooled": "כל גרסאות המקור", "archive": "ארכיון", "iphone": "iPhone", "issuer-render": "תצוגה ממוחשבת של הגוף המפרסם", "issuer-scan": "סריקה של הגוף המפרסם", "pixel": "Pixel", "scanner": "סורק"},
         "reader": "מנוע זיהוי", "cer": "שיעור שגיאות תווים", "wer": "שיעור שגיאות מילים", "interval": "רווח סמך של 95%",
-        "lower": "שיעור שגיאות נמוך יותר עדיף. רווחי סמך של 95% מוצגים כשיש כאלה.",
+        "lower": "שיעור שגיאות נמוך יותר עדיף.",
     },
 }
 
@@ -75,32 +88,28 @@ def category_table(t, scored_link="", preview=False):
     )
 
 
-def metric_cell(t, metric):
-    if metric is None or metric["percent"] is None:
-        return '<td class="num">—</td>'
-    value = f'<bdi dir="ltr">{metric["percent"]}%</bdi>'
-    interval = ""
-    if metric["ci95"] is not None:
-        lo, hi = metric["ci95"]
-        interval = f'<span class="ci" title="{e(t["interval"])}"><bdi dir="ltr">{lo}–{hi}%</bdi></span>'
-    denominator = ""
-    if metric["denominator"] is not None:
-        denominator = f'<span class="tag-n block"><bdi dir="ltr">n = {metric["denominator"]:,}</bdi></span>'
-    return f'<td class="num"><span class="v">{value}</span>{interval}{denominator}</td>'
+def numbers(value):
+    return f'<bdi dir="ltr">{value}</bdi>'
 
 
-def result_table(t, caption, results, heading_level):
-    metrics = [m for m in ("cer", "wer") if any(m in row["metrics"] for row in results)]
-    columns = "".join(f'<th scope="col">{e(t[m])}</th>' for m in metrics)
-    rows = []
-    for row in results:
-        cells = "".join(metric_cell(t, row["metrics"].get(m)) for m in metrics)
-        rows.append(f'<tr><th scope="row"><bdi>{e(row["reader"])}</bdi></th>{cells}</tr>')
+def metric_cell(t, value, *, suffix="%", interval=None, detail=""):
+    score = numbers(f"{value:.2f}{suffix}")
+    ci = ""
+    if interval is not None:
+        lo, hi = interval
+        ci = f'<span class="ci stack" title="{e(t["interval"])}">{numbers(f"{lo:.2f}–{hi:.2f}{suffix}")}</span>'
+    note = f'<span class="tag-n block">{numbers(detail)}</span>' if detail else ""
+    return f'<td class="num"><span class="v">{score}</span>{ci}{note}</td>'
+
+
+def result_table(t, heading_id, caption, level, columns, rows):
+    headers = "".join(f'<th scope="col">{e(t[column])}</th>' for column in columns)
+    body = "".join(f'<tr><th scope="row"><bdi>{e(reader)}</bdi></th>{cells}</tr>' for reader, cells in rows)
     return (
-        f'<h{heading_level} id="{caption[0]}">{e(caption[1])}</h{heading_level}>'
-        f'<div class="tablewrap narrow" role="region" tabindex="0" aria-labelledby="{caption[0]}">'
-        f'<table><thead><tr><th scope="col">{e(t["reader"])}</th>{columns}</tr></thead>'
-        f'<tbody>{"".join(rows)}</tbody></table></div>\n'
+        f'<h{level} id="{heading_id}">{e(caption)}</h{level}>'
+        f'<div class="tablewrap narrow" role="region" tabindex="0" aria-labelledby="{heading_id}">'
+        f'<table><thead><tr><th scope="col">{e(t["reader"])}</th>{headers}</tr></thead>'
+        f'<tbody>{body}</tbody></table></div>\n'
     )
 
 
@@ -108,38 +117,63 @@ def link(target, label):
     return f'<a href="{target}">{e(label)}</a>'
 
 
-def open_results(lang, data):
-    t = T[lang]
-    out = [
-        f'<h3 id="p-mod-open">{e(t["open_result"])}</h3>',
-        f'<p>{e(t["pages"].format(pages=31))} · {link(DATASET, t["dataset"])}</p>',
-    ]
-    if data["public_pages"] != 31:
-        out.append(f'<p class="note">{e(t["published"].format(public=data["public_pages"], registered=31))}</p>')
+def open_rows(t, rows):
+    for row in rows:
+        cer = metric_cell(t, Decimal(row["cer"]) * 100, detail=f'{row["edits"]:,} / {row["chars"]:,}')
+        wer = metric_cell(t, Decimal(row["wer"]) * 100, detail=f'{row["word_edits"]:,} / {row["words"]:,}')
+        numeric = numbers(f'{row["missed_numbers"]:,} / {row["ref_numbers"]:,}')
+        yield row["reader"], f'{cer}{wer}<td class="num">{numeric}</td>'
+
+
+def open_results(t, data, public_pages):
+    scope = e(t["pages"].format(pages=data["pages"], carriers=data["carriers"]))
+    out = [f'<h3 id="p-mod-open">{e(t["open_result"])}</h3>']
+    if public_pages is None:
+        out.extend([f'<p>{scope}</p>', f'<p class="note">{e(t["scope_pending"])}</p>'])
+    else:
+        out.append(f'<p>{scope} · {link(DATASET, t["dataset"])}</p>')
+        if public_pages != data["pages"]:
+            note = t["published"].format(public=public_pages, registered=data["pages"])
+            out.append(f'<p class="note">{e(note)}</p>')
     out.append(f'<p class="note">{e(t["lower"])}</p>')
-    for i, view in enumerate(data["views"], start=1):
-        heading = f"p-mod-open-view-{i}"
-        out.append(f'<section aria-labelledby="{heading}"><h4 id="{heading}">{e(view["name"][lang])}</h4>')
-        for carrier_id, names in data["carriers"].items():
-            out.append(result_table(t, (f"{heading}-{carrier_id}", names[lang]), view["results"][carrier_id], 5))
+    for view_id, groups in data["views"].items():
+        heading = f"p-mod-open-{view_id}"
+        out.append(f'<section aria-labelledby="{heading}"><h4 id="{heading}">{e(t["views"][view_id])}</h4>')
+        for carrier, group in groups.items():
+            title = f'{t["carriers"][carrier]} · {t["carrier_count"].format(carriers=group["carriers"])}'
+            if group["readers"]:
+                out.append(result_table(t, f"{heading}-{carrier}", title, 5, ("cer", "wer", "numbers"), open_rows(t, group["readers"])))
+            else:
+                out.append(f'<p class="note">{e(title)}</p>')
         out.append("</section>")
     return "".join(out)
 
 
+def closed_rows(t, rows):
+    for row in rows:
+        hits = numbers(f'{row["hits"]:,}')
+        recall = metric_cell(t, row["field_recall_pct"], interval=row["ci95"])
+        delta = '<td class="num">—</td>'
+        if "delta_vs_rivok_full_pp" in row:
+            delta = metric_cell(t, row["delta_vs_rivok_full_pp"], suffix="", interval=row["paired_ci95_vs_rivok_full"])
+        yield row["reader"], f'<td class="num">{hits}</td>{recall}{delta}'
+
+
 def closed_results(t, data):
+    scope = e(t["closed_pages"].format(pages=data["pages"], reports=data["reports"], fields=f'{data["field_value_occurrences"]:,}'))
     return (
-        f'<section id="uc-w"><p>{e(t["closed_pages"].format(pages=data["pages"]))}</p>'
-        + result_table(t, ("uc-w-results", t["closed_result"]), data["results"], 3)
+        f'<section id="uc-w"><p>{scope}. {e(t["higher"])}</p>'
+        + result_table(t, "uc-w-results", t["closed_result"], 3, ("hits", "recall", "delta"), closed_rows(t, data["results"]))
         + "</section>"
     )
 
 
-def page(lang, data):
+def page(lang, data, public_pages=None):
     t = T[lang]
     open_link = link("#p-mod-open", t["open_result"]) if data is not None else ""
     closed_link = link("#uc-w", t["closed_result"]) if data is not None else ""
-    open_panel = open_results(lang, data["p_mod_open"]) if data is not None else ""
-    closed_panel = closed_results(t, data["uc_w"]) if data is not None else ""
+    open_panel = open_results(t, data["open"], public_pages) if data is not None else ""
+    closed_panel = closed_results(t, data["closed"]) if data is not None else ""
     preview_note = f'<p class="note">{e(t["preview"])}</p>' if data is None else ""
     return "".join([
         shell.head(lang, e(t["title"]), e(t["lede"]), "bench"), shell.header(lang, "bench"),
@@ -159,10 +193,13 @@ def main():
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--release-data", type=Path)
     parser.add_argument("--sha256")
+    parser.add_argument("--public-pages", type=int)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     if (args.release_data is None) != (args.sha256 is None):
         parser.error("--release-data and --sha256 must be provided together")
+    if args.public_pages is not None and args.release_data is None:
+        parser.error("--public-pages requires --release-data")
     output_dir = args.out_dir.resolve()
     if output_dir.is_relative_to(ROOT):
         parser.error("--out-dir must be outside this site checkout")
@@ -170,9 +207,11 @@ def main():
         data = benchmark_release_data.load(args.release_data, args.sha256) if args.release_data else None
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
+    if args.public_pages is not None and not 1 <= args.public_pages <= data["open"]["pages"]:
+        parser.error("--public-pages exceeds the registered page scope or is zero")
     stale = []
     for lang in shell.LANGS:
-        for key, output in (("bench", page(lang, data)), ("methodology", build_methodology.page(lang))):
+        for key, output in (("bench", page(lang, data, args.public_pages)), ("methodology", build_methodology.page(lang))):
             relative = shell.site_path(lang, key)
             path = output_dir / relative
             if args.check:
