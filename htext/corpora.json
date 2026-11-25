@@ -530,6 +530,274 @@
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/README.md",
       "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/SHA256SUMS"
+    },
+    {
+      "id": "wikisource-v3",
+      "version": "v3",
+      "name": {
+        "en": "Hebrew Wikisource B v3",
+        "he": "ויקיטקסט העברית B v3"
+      },
+      "source": {
+        "name": {
+          "en": "Hebrew Wikisource",
+          "he": "ויקיטקסט העברית"
+        },
+        "url": "https://he.wikisource.org"
+      },
+      "description": {
+        "en": "79,429 Hebrew training lines from four historical works and 137 pinned Wikisource revisions. Print collation is pending.",
+        "he": "79,429 שורות אימון בעברית מארבע יצירות היסטוריות ומ־137 גרסאות קבועות בוויקיטקסט. השוואה למהדורות דפוס טרם בוצעה."
+      },
+      "rights_basis": {
+        "en": "CC BY-SA 4.0. Cite the Hebrew Wikisource contributors by source revision as listed in the rights index and NOTICE.",
+        "he": "רישיון CC BY-SA 4.0. יש לייחס לתורמי ויקיטקסט העברית לפי גרסת המקור באינדקס הזכויות ובקובץ NOTICE."
+      },
+      "source_licence": {
+        "en": "CC BY-SA 4.0",
+        "he": "CC BY-SA 4.0"
+      },
+      "credit": {
+        "text": {
+          "en": "Hebrew Wikisource contributors by revision",
+          "he": "תורמי ויקיטקסט העברית לפי גרסה"
+        },
+        "url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3/NOTICE.md"
+      },
+      "htext_release": "by-sa",
+      "files": [
+        {
+          "name": "wikisource_niqqud_v3.txt",
+          "subset": "niqqud",
+          "bytes": 3378747,
+          "lines": 42944,
+          "sha256": "5d9ca2c472c355ac94b71118250a17baa04b2e20904287f50b579ab6358493ca"
+        },
+        {
+          "name": "wikisource_plain_v3.txt",
+          "subset": "plain",
+          "bytes": 1695911,
+          "lines": 36485,
+          "sha256": "32de6167757afd0b1744abefa83d04412f055ef24cd1dcc3c3abe5041afb7814"
+        }
+      ],
+      "release": {
+        "tag": "wikisource-v3",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/tree/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3",
+        "date": "2026-11-25"
+      },
+      "hf": {
+        "repo": "HeOCR/htext-wikisource",
+        "revision": "b7766502d9d297176925da620b01e357ad0f4ec6",
+        "filtered": false
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24521419",
+        "concept_doi": "10.5281/zenodo.24521418"
+      },
+      "card_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3/README.md",
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3/SHA256SUMS"
+    },
+    {
+      "id": "sefaria-v2-cc0",
+      "version": "v2-cc0",
+      "name": {
+        "en": "Sefaria v2 PD/CC0",
+        "he": "ספריא v2 — נחלת הכלל ו־CC0"
+      },
+      "source": {
+        "name": {
+          "en": "Sefaria",
+          "he": "ספריא"
+        },
+        "url": "https://www.sefaria.org"
+      },
+      "description": {
+        "en": "58,143 Hebrew training lines from historical editions digitized by Sefaria.",
+        "he": "58,143 שורות אימון בעברית ממהדורות היסטוריות שספריא המירה לטקסט דיגיטלי."
+      },
+      "rights_basis": {
+        "en": "Sefaria marks each exact Hebrew version Public Domain or CC0. See the edition record for the basis per version.",
+        "he": "ספריא מסמנת כל גרסה עברית מדויקת כנחלת הכלל או כ־CC0. הבסיס לכל גרסה מפורט ברשומת המהדורות."
+      },
+      "source_licence": {
+        "en": "Public Domain or CC0 per edition",
+        "he": "נחלת הכלל או CC0 לפי מהדורה"
+      },
+      "credit": {
+        "text": {
+          "en": "Sefaria and the credited editions",
+          "he": "ספריא והמהדורות המפורטות ברשומת הייחוס"
+        },
+        "url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/a92766c9fb4955b1f9fcb3766430cd5522af7614/releases/sefaria-v2-cc0/source_editions.json"
+      },
+      "htext_release": "cc0",
+      "files": [
+        {
+          "name": "niqqud.txt",
+          "subset": "niqqud",
+          "bytes": 3553783,
+          "lines": 43067,
+          "sha256": "9f3b868948f97224ec3a291bc60b563285ac46c9c93a0082947ac3d4dd44fa4b"
+        },
+        {
+          "name": "plain.txt",
+          "subset": "plain",
+          "bytes": 688336,
+          "lines": 15076,
+          "sha256": "c5ab6dfa9a2bcb127b6efb1b5ef56f7b2daff1c036afd773765037212b97d610"
+        }
+      ],
+      "release": {
+        "tag": "sefaria-v2-cc0",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/tree/a92766c9fb4955b1f9fcb3766430cd5522af7614/releases/sefaria-v2-cc0",
+        "date": "2026-11-25"
+      },
+      "hf": {
+        "repo": "HeOCR/htext-sefaria",
+        "revision": "a92766c9fb4955b1f9fcb3766430cd5522af7614",
+        "filtered": false
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24521423",
+        "concept_doi": "10.5281/zenodo.24521422"
+      },
+      "card_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/a92766c9fb4955b1f9fcb3766430cd5522af7614/releases/sefaria-v2-cc0/README.md",
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/a92766c9fb4955b1f9fcb3766430cd5522af7614/releases/sefaria-v2-cc0/SHA256SUMS"
+    },
+    {
+      "id": "sefaria-v2-by",
+      "version": "v2-by",
+      "name": {
+        "en": "Sefaria v2 CC BY",
+        "he": "ספריא v2 — CC BY"
+      },
+      "source": {
+        "name": {
+          "en": "Sefaria",
+          "he": "ספריא"
+        },
+        "url": "https://www.sefaria.org"
+      },
+      "description": {
+        "en": "32,296 unpointed training lines from the Sefaria Hebrew edition of Sefer HaIkkarim.",
+        "he": "32,296 שורות אימון ללא ניקוד מן המהדורה העברית של ספר העיקרים בספריא."
+      },
+      "rights_basis": {
+        "en": "CC BY 4.0. Credit Joseph Albo, editor Isaac Husik, the Jewish Publication Society of America and Hebrew digitization by Sefaria.",
+        "he": "רישיון CC BY 4.0. יש לייחס ליוסף אלבו, לעורך יצחק הוזיק, לאגודה היהודית להוצאה לאור של אמריקה ולספריא על הדיגיטציה העברית."
+      },
+      "source_licence": {
+        "en": "CC BY 4.0",
+        "he": "CC BY 4.0"
+      },
+      "credit": {
+        "text": {
+          "en": "Joseph Albo, Isaac Husik, JPS and Sefaria",
+          "he": "יוסף אלבו, יצחק הוזיק, האגודה היהודית להוצאה לאור וספריא"
+        },
+        "url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/e28fae17d635f72ad6c9a628734252c1ea219e24/source_editions.json"
+      },
+      "htext_release": "by",
+      "files": [
+        {
+          "name": "niqqud.txt",
+          "subset": "niqqud",
+          "bytes": 0,
+          "lines": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "plain.txt",
+          "subset": "plain",
+          "bytes": 1527679,
+          "lines": 32296,
+          "sha256": "148d2e342b6a276f1e9913ca92cfa4294c464a718762256fbce0ef08aac5bbee"
+        }
+      ],
+      "release": {
+        "tag": "sefaria-v2-by",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by/tree/e28fae17d635f72ad6c9a628734252c1ea219e24",
+        "date": "2026-11-25"
+      },
+      "hf": {
+        "repo": "HeOCR/htext-sefaria-by",
+        "revision": "e28fae17d635f72ad6c9a628734252c1ea219e24",
+        "filtered": false
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24521430",
+        "concept_doi": "10.5281/zenodo.24521429"
+      },
+      "card_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/e28fae17d635f72ad6c9a628734252c1ea219e24/README.md",
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/e28fae17d635f72ad6c9a628734252c1ea219e24/SHA256SUMS"
+    },
+    {
+      "id": "tsel-haolam-v1",
+      "version": "v1",
+      "name": {
+        "en": "Tsel HaOlam v1",
+        "he": "צל העולם v1"
+      },
+      "source": {
+        "name": {
+          "en": "Project Gutenberg",
+          "he": "פרויקט גוטנברג"
+        },
+        "url": "https://www.gutenberg.org/ebooks/61024"
+      },
+      "description": {
+        "en": "2,408 unpointed training lines from the historical Hebrew body of Tsel HaOlam, Amsterdam 1733.",
+        "he": "2,408 שורות אימון ללא ניקוד מגוף הטקסט ההיסטורי של צל העולם, אמסטרדם 1733."
+      },
+      "rights_basis": {
+        "en": "The Amsterdam 1733 historical Hebrew text is in the public domain. See NOTICE for the edition basis and Project Gutenberg transcription credit.",
+        "he": "הטקסט העברי ההיסטורי של מהדורת אמסטרדם 1733 הוא בנחלת הכלל. בסיס הזכויות וייחוס התעתיק לפרויקט גוטנברג מופיעים בקובץ NOTICE."
+      },
+      "source_licence": {
+        "en": "Public Domain",
+        "he": "נחלת הכלל"
+      },
+      "credit": {
+        "text": {
+          "en": "Project Gutenberg transcription team",
+          "he": "צוות התעתיק של פרויקט גוטנברג"
+        },
+        "url": "https://huggingface.co/datasets/HeOCR/htext-tsel-haolam/blob/c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb/NOTICE.md"
+      },
+      "htext_release": "cc0",
+      "files": [
+        {
+          "name": "niqqud.txt",
+          "subset": "niqqud",
+          "bytes": 0,
+          "lines": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "plain.txt",
+          "subset": "plain",
+          "bytes": 114908,
+          "lines": 2408,
+          "sha256": "2466941c5be91ec12813726f678daf0fe5eaf2a3378fdd6ea40405741f8fbdb6"
+        }
+      ],
+      "release": {
+        "tag": "tsel-haolam-v1",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-tsel-haolam/tree/c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb",
+        "date": "2026-11-25"
+      },
+      "hf": {
+        "repo": "HeOCR/htext-tsel-haolam",
+        "revision": "c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb",
+        "filtered": false
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24521432",
+        "concept_doi": "10.5281/zenodo.24521431"
+      },
+      "card_url": "https://huggingface.co/datasets/HeOCR/htext-tsel-haolam/blob/c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb/README.md",
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-tsel-haolam/blob/c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb/SHA256SUMS"
     }
   ],
   "planned": [],
@@ -554,7 +822,7 @@
     {
       "id": "by",
       "name": "htext-by",
-      "status": "planned",
+      "status": "published",
       "licence": {
         "name": "CC BY 4.0 (per source)",
         "url": "https://creativecommons.org/licenses/by/4.0/"
