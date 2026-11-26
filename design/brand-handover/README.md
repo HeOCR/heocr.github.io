@@ -55,3 +55,5 @@ The "Bounding Box" brand for HeOCR and the redesigned site (home, Benchmarks, ht
 ## Fonts
 
 JetBrains Mono (headings, labels, figures) and Noto Sans Hebrew (body text and all Hebrew), both from Google Fonts under the SIL Open Font License. The link tag is in `site/MARKUP.md`.
+
+The old home, benchmark and corpus examples now forward to their maintained public pages. Use the live pages for the current release status and registered results.

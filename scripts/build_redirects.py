@@ -1,4 +1,4 @@
-"""Build the redirect pages at the old Hebrew URLs (he/*.html), which moved to the site root.
+"""Build redirects for old Hebrew URLs and superseded public design snapshots.
 
     python3 scripts/build_redirects.py           # write the pages
     python3 scripts/build_redirects.py --check   # fails if a committed page differs
@@ -18,17 +18,19 @@ import shell  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 OLD_DIR = "he"
-TEXT = "העמוד עבר. אם לא עברתם אוטומטית, "
-LINK = "הקישור לעמוד החדש"
+DESIGN_DIR = Path("design/brand-handover/site")
+DESIGN_PAGES = ("home", "bench", "htext")
+TEXT = {"he": "העמוד עבר. אם לא עברתם אוטומטית, ", "en": "This page moved. If you are not redirected, "}
+LINK = {"he": "הקישור לעמוד החדש", "en": "open the updated page"}
 
 
-def page(key: str) -> str:
-    target = shell.page_url("he", key)
-    rel = "../" + ("" if shell.PAGES[key] == "index.html" else shell.PAGES[key])
-    return (f'<!doctype html>\n<html lang="he" dir="rtl">\n<head>\n<meta charset="utf-8">\n'
+def page(key: str, lang: str, rel: str) -> str:
+    target = shell.page_url(lang, key)
+    direction = "rtl" if lang == "he" else "ltr"
+    return (f'<!doctype html>\n<html lang="{lang}" dir="{direction}">\n<head>\n<meta charset="utf-8">\n'
             f'<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>HeOCR</title>\n'
             f'<meta http-equiv="refresh" content="0; url={rel}">\n<link rel="canonical" href="{target}">\n'
-            f'</head>\n<body>\n<p>{TEXT}<a href="{rel}">{LINK}</a>.</p>\n</body>\n</html>\n')
+            f'</head>\n<body>\n<p>{TEXT[lang]}<a href="{rel}">{LINK[lang]}</a>.</p>\n</body>\n</html>\n')
 
 
 def main() -> None:
@@ -36,15 +38,23 @@ def main() -> None:
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
     stale = []
-    for key, name in shell.PAGES.items():
-        path = ROOT / OLD_DIR / name
-        s = page(key)
+    redirects = {
+        Path(OLD_DIR) / name: (key, "he", "../" + ("" if key == "home" else name))
+        for key, name in shell.PAGES.items()
+    }
+    for key in DESIGN_PAGES:
+        name = shell.PAGES[key]
+        redirects[DESIGN_DIR / name] = (key, "en", "../../../en/" + name)
+        redirects[DESIGN_DIR / "he" / name] = (key, "he", "../../../../" + name)
+    for path, (key, lang, rel) in redirects.items():
+        expected = page(key, lang, rel)
+        target = ROOT / path
         if a.check:
-            if not path.exists() or path.read_text(encoding="utf-8") != s:
-                stale.append(f"{OLD_DIR}/{name}")
+            if not target.exists() or target.read_text(encoding="utf-8") != expected:
+                stale.append(str(path))
         else:
-            path.parent.mkdir(exist_ok=True)
-            path.write_text(s, encoding="utf-8")
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(expected, encoding="utf-8")
     if stale:
         print("out of date:", ", ".join(stale), "— run python3 scripts/build_redirects.py", file=sys.stderr)
         sys.exit(1)
