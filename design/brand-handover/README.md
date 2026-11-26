@@ -11,15 +11,15 @@ The "Bounding Box" brand for HeOCR and the redesigned site (home, Benchmarks, ht
 | `README.md` | This file. |
 | `BRAND.md` | The brand guide: concept, logo rules, colour tokens, type, the box, components, accessibility. |
 | `PROMPT.md` | A short prompt to hand to the developer or coding agent who takes this in. |
-| `site/` | Drop-in reference build: `site.css`, `theme.js`, `hero_chart.py`, `favicon.svg`, and every page as static HTML (`index`, `benchmarks`, `htext`, `rights`, plus `he/` versions). |
+| `site/` | Reference CSS, theme, markup notes and rights pages. The legacy home, benchmark and corpus URLs forward to their maintained bilingual pages. |
 | `site/MARKUP.md` | How to wire a page, and every markup pattern that changed from the current site. Read this before touching the generator scripts. |
 | `logo/svg/` | Mark and lockup as SVG: colour, night, mono black, mono white. The lockup wordmark is outlined, so it needs no font. |
 | `logo/png/` | Mark at 16 to 512 px, lockup at 1x, 2x and 4x, `apple-touch-icon.png`, a maskable icon, and `og-image-1200x630.png` for link previews. |
 | `logo/favicon.svg`, `logo/favicon.ico` | Favicons (the `.ico` holds 16, 32 and 48 px). |
 | `tokens/tokens.css` | The colour, type and shape custom properties on their own. |
 | `tokens/tokens.json` | The same tokens as data, for light and night. |
-| `reference/pages/` | Full-page screenshots of every page: desktop (1280 px) and phone (375 px), light and night, English and Hebrew. Use them to compare against your build. The phone Benchmarks page comes as two images, top and bottom. |
-| `reference/brand/` | The brand boards: logo options, palette and type, design language, hero chart specification. |
+| `reference/pages/` | Rights-page screenshots for desktop and phone. Use the maintained site for current home, benchmark and corpus examples. |
+| `reference/brand/` | Logo options, palette and type. |
 | `reference-generator/` | The scripts that produced `site/`. Reference only, not production code; see the note inside. |
 
 ## How to adopt it
@@ -27,10 +27,10 @@ The "Bounding Box" brand for HeOCR and the redesigned site (home, Benchmarks, ht
 1. **Back it up.** Copy this folder into the site repository (for example `design/brand-handover/`), commit and push.
 2. **Read** `BRAND.md` and `site/MARKUP.md`.
 3. **Stylesheet and script.** Use `site/site.css` and `site/theme.js` as they are. Remove the per-page inline `<style>` blocks and the old theme script.
-4. **Generators.** Change the Python page generators to emit the markup in `site/*.html`. The page wording does not change; only the shell and a few patterns do (header, footer, page head, page index, grouped tables, badges).
+4. **Generators.** Use `site/MARKUP.md` for the documented markup patterns and the root `scripts/` for the maintained pages.
 5. **Hero chart.** Call `hero_chart.py` from the Benchmarks generator. It reads `results.json` and returns the inline SVG.
 6. **Logo and icons.** Copy `logo/favicon.svg`, `logo/favicon.ico` and `logo/png/apple-touch-icon.png` to the site root, and add `og-image-1200x630.png` as the `og:image` if you want link previews.
-7. **Compare** each generated page with `reference/pages/`.
+7. **Compare** the generated pages with the maintained site. Use `reference/pages/` for the rights-page screenshots.
 
 ## Checks before it ships
 
@@ -55,3 +55,5 @@ The "Bounding Box" brand for HeOCR and the redesigned site (home, Benchmarks, ht
 ## Fonts
 
 JetBrains Mono (headings, labels, figures) and Noto Sans Hebrew (body text and all Hebrew), both from Google Fonts under the SIL Open Font License. The link tag is in `site/MARKUP.md`.
+
+The old home, benchmark and corpus examples now forward to their maintained public pages. Use the live pages for the current release status and registered results.
