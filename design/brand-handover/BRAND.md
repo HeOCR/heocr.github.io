@@ -21,7 +21,7 @@ Rules:
 
 - Keep clear space around the logo of at least a quarter of the mark's width.
 - Smallest sizes: 16 px for the mark, 20 px high for the lockup.
-- On the site the logo is inline SVG, so it follows the theme; see the header in any file under `site/`.
+- On the site the logo is inline SVG, so it follows the theme; see the header in either rights reference page under `site/`.
 - Keep the wordmark left-to-right on Hebrew pages. The mark sits on the start side: left in English, right in Hebrew.
 - Do not recolour it outside the supplied versions, round its corners, add a shadow, or set the wordmark in another typeface.
 - The lowercase `heocr` is the package name, written in code style. It is not a second logo.
@@ -86,9 +86,9 @@ What gets a box: the logo, the page title, the hero figure, and the "ours" rows 
 
 ## Components
 
-All of these are in `site/site.css`, shown on `reference/brand/design-language.png`, and documented in `site/MARKUP.md`: header with language switch and theme toggle, footer, page head, page index, grouped table with the "ours" row, value with its 95% interval, direction labels, status chips, no-data card, verdict badge, release-gate summary, method disclosure, cards and buttons.
+All of these are in `site/site.css`, and documented in `site/MARKUP.md`: header with language switch and theme toggle, footer, page head, page index, grouped table with the "ours" row, value with its 95% interval, direction labels, status chips, no-data card, verdict badge, release-gate summary, method disclosure, cards and buttons.
 
-The hero chart has its own specification on `reference/brand/hero-chart-spec.png`, and its generator is `site/hero_chart.py`.
+The chart generator is `site/hero_chart.py`. For current benchmark examples, use the maintained [benchmark page](https://heocr.org/en/benchmarks.html).
 
 ## Hebrew and right-to-left
 
