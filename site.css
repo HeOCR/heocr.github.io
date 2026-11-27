@@ -282,6 +282,7 @@ main.home h2 { margin: 0 0 8px; }
 .catalog-licence { color: var(--muted); font-size: var(--fs-small); margin: 0 0 8px; }
 .catalog-card .row { justify-content: flex-start; }
 [dir="rtl"] .catalog-card .row { justify-content: flex-end; }
+.catalog-pending { color: var(--muted); margin: 12px 0 0; }
 
 /* ---------- 10. Footer ---------- */
 .site-footer { margin-top: 56px; padding-block: 30px 44px; border-top: 1px solid var(--line-strong); background: var(--surface); color: var(--muted); font-size: var(--fs-small); }

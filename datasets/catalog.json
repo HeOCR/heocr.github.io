@@ -154,29 +154,6 @@
       "partial_pages": null
     },
     {
-      "id": "HeOCR/nonlegislative-diversity-v4",
-      "revision": "c811badecf5c84b966b7b0ced37dd9f1140a187a",
-      "group": "synthetic",
-      "title": "Non-legislative diversity v4",
-      "description": {
-        "en": "Generated OCR lines from non-legislative layouts with simulated scan, photocopy and phone views.",
-        "he": "שורות סינתטיות לזיהוי תווים ממסמכים שאינם חקיקה, עם הדמיית סריקה, צילום מסמכים ותצלומי טלפון."
-      },
-      "license": "cc0-1.0",
-      "access": "manual",
-      "dois": [],
-      "counts": {
-        "documents": null,
-        "pages": null,
-        "images": 29687,
-        "lines": 29687,
-        "words": null,
-        "characters": null,
-        "bytes": 543332458
-      },
-      "partial_pages": null
-    },
-    {
       "id": "HeOCR/nonlegislative-diversity-v4-revised",
       "revision": "07aa54914a5926d183f5f72ee99ac3b118bf8413",
       "group": "synthetic",
@@ -197,34 +174,36 @@
         "characters": null,
         "bytes": 543690956
       },
-      "partial_pages": null
+      "partial_pages": null,
+      "status": "current"
     },
     {
-      "id": "HeOCR/remote-smoke",
-      "revision": "9b8b54147b69df35260b33f261b6761d13058ce1",
-      "group": "metadata",
-      "title": "Remote runner smoke fixture",
+      "id": "HeOCR/nonlegislative-diversity-v4",
+      "revision": "c811badecf5c84b966b7b0ced37dd9f1140a187a",
+      "group": "synthetic",
+      "title": "Non-legislative diversity v4",
       "description": {
-        "en": "A shell fixture for checking the remote training runner.",
-        "he": "סקריפט לבדיקת תקינות של תשתית האימון מרחוק."
+        "en": "Generated OCR lines from non-legislative layouts with simulated scan, photocopy and phone views.",
+        "he": "שורות סינתטיות לזיהוי תווים ממסמכים שאינם חקיקה, עם הדמיית סריקה, צילום מסמכים ותצלומי טלפון."
       },
       "license": "cc0-1.0",
-      "access": "public",
+      "access": "manual",
       "dois": [],
       "counts": {
         "documents": null,
         "pages": null,
-        "images": null,
-        "lines": null,
+        "images": 29687,
+        "lines": 29687,
         "words": null,
         "characters": null,
-        "bytes": 3238
+        "bytes": 543332458
       },
-      "partial_pages": null
+      "partial_pages": null,
+      "status": "superseded"
     },
     {
       "id": "HeOCR/nonlegislative-phone-heavy-v1",
-      "revision": "f842844a329eadb5fc6c653688aa5dc340145458",
+      "revision": "c5185ca95f7a79eb21c00ec4bde7325557f86903",
       "group": "synthetic",
       "title": "Non-legislative phone-heavy v1",
       "description": {
@@ -241,13 +220,13 @@
         "lines": 9880,
         "words": null,
         "characters": null,
-        "bytes": 310686124
+        "bytes": 310686101
       },
       "partial_pages": null
     },
     {
       "id": "HeOCR/oldprint-pairs-train",
-      "revision": "ee952fd51353c7cd4ab4d4c45d9d326a12377420",
+      "revision": "60e1456f89fc10d75b30ab3d098fe2cec22f2fe9",
       "group": "real",
       "title": "Ahad Ha’am historical line pairs",
       "description": {
@@ -264,13 +243,13 @@
         "lines": 49,
         "words": null,
         "characters": null,
-        "bytes": 14889530
+        "bytes": 14889645
       },
       "partial_pages": null
     },
     {
       "id": "HeOCR/gazette-train",
-      "revision": "e20db41de567f4b59a31cc8470e15335ff782035",
+      "revision": "26ed588ad1a898bfd28445572b1c37454eac41ef",
       "group": "real",
       "title": "Gazette training lines",
       "description": {
@@ -287,13 +266,13 @@
         "lines": 69,
         "words": null,
         "characters": null,
-        "bytes": 295285
+        "bytes": 295256
       },
       "partial_pages": null
     },
     {
       "id": "HeOCR/dolitzky-1911-pairs-train",
-      "revision": "c06b8e7735430aa7160a5254224cc54b63c55e73",
+      "revision": "2254e2d6071d90e5e95d97ad3a57e2104e13b76b",
       "group": "real",
       "title": "Dolitzky 1911 line pairs",
       "description": {
@@ -310,14 +289,14 @@
         "lines": 16,
         "words": null,
         "characters": null,
-        "bytes": 220143
+        "bytes": 220258
       },
       "partial_pages": null
     },
     {
       "id": "HeOCR/p-mod-open-v0",
-      "revision": "02855b2e4ed5ae05fdee509e0e26a643ec921f47",
-      "group": "real",
+      "revision": "c8f136b9a20349d72e7639c253d0a74295ca4658",
+      "group": "benchmarks",
       "title": "P-mod-open v0",
       "description": {
         "en": "Held-out benchmark for modern unpointed Hebrew with archive images, issuer renders, office scans and phone captures.",
@@ -338,14 +317,14 @@
         "lines": 1863,
         "words": null,
         "characters": null,
-        "bytes": 37421582
+        "bytes": 37421739
       },
       "partial_pages": null
     },
     {
       "id": "HeOCR/hebrew-ocr-leaderboard-results",
       "revision": "d798f5a3be4e8731751d591010210324aeb3f65c",
-      "group": "metadata",
+      "group": "benchmarks",
       "title": "Hebrew OCR leaderboard results",
       "description": {
         "en": "Machine-readable result records for the registered Hebrew OCR leaderboard.",
@@ -391,7 +370,7 @@
     {
       "id": "HeOCR/hebrew-ocr-vlm-train-v1",
       "revision": "6062adaba2e3f9ba3e01b527301f7b533bf11368",
-      "group": "mixed",
+      "group": "synthetic",
       "title": "Hebrew OCR VLM TRAIN",
       "description": {
         "en": "Real and synthetic line pairs for VLM fine-tuning, with Parquet and chat-format exports.",
@@ -436,7 +415,7 @@
     },
     {
       "id": "HeOCR/htext-sefaria",
-      "revision": "a92766c9fb4955b1f9fcb3766430cd5522af7614",
+      "revision": "12410f5d77bd08fd8379bc9aff04ca294f8b0c29",
       "group": "text",
       "title": "htext · Sefaria",
       "description": {
@@ -462,7 +441,7 @@
         "lines": 64484,
         "words": null,
         "characters": null,
-        "bytes": 30798910
+        "bytes": 30799118
       },
       "partial_pages": null
     },
@@ -524,7 +503,7 @@
     },
     {
       "id": "HeOCR/trn-phpack1-phone-captures",
-      "revision": "98572bca621d27f8d48b8aea50d5269fd73204ee",
+      "revision": "593f8e7e96f2be0fb687276db51e716ff5d4fdd3",
       "group": "real",
       "title": "TRN-PHPACK1",
       "description": {
@@ -546,13 +525,13 @@
         "lines": 7633,
         "words": null,
         "characters": null,
-        "bytes": 2805933873
+        "bytes": 2805934079
       },
       "partial_pages": null
     },
     {
       "id": "HeOCR/hebrew-print-line-pairs",
-      "revision": "481edf6e9b0d82897ec28b4b25d8fcea2efccce7",
+      "revision": "bc40816f67f3d3bffaa259ce8471c07017acbdd1",
       "group": "real",
       "title": "Hebrew print line pairs",
       "description": {
@@ -590,7 +569,7 @@
         "lines": 77768,
         "words": null,
         "characters": null,
-        "bytes": 1923460321
+        "bytes": 1923460584
       },
       "partial_pages": {
         "count": 352,
@@ -608,5 +587,9 @@
         "label": "MEASURED"
       }
     ]
+  },
+  "pending_text_release": {
+    "en": "htext · Sefaria v3",
+    "he": "htext · ספריא v3"
   }
 }
