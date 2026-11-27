@@ -1,4 +1,4 @@
-"""Generate the English and Hebrew download status pages."""
+"""Generate the English and Hebrew model downloads and app status pages."""
 
 from __future__ import annotations
 
@@ -10,24 +10,49 @@ from pathlib import Path
 import shell
 
 ROOT = Path(__file__).resolve().parents[1]
+MODEL_RELEASES = (
+    ("MEASURED", "measured", "https://huggingface.co/HeOCR/heocr-p-hist-measured",
+     "https://doi.org/10.5281/zenodo.24578440"),
+)
 T = {
-    "en": {"title": "Download HeOCR", "coming": "Coming soon"},
-    "he": {"title": "הורדת HeOCR", "coming": "בקרוב"},
+    "en": {
+        "title": "Download HeOCR",
+        "models": "OCR models",
+        "about": "Tesseract weights for historical, unpointed Hebrew print. Apache 2.0.",
+        "measured": "Evaluated on the C2 held-out set. See the model card for results.",
+        "apps": "Apps",
+        "coming": "Coming soon",
+    },
+    "he": {
+        "title": "הורדת HeOCR",
+        "models": "מודלים לזיהוי תווים",
+        "about": "משקלי Tesseract לדפוס עברי היסטורי לא מנוקד, ברישיון Apache 2.0.",
+        "measured": "נבדק על מערך המבחן C2. התוצאות מופיעות בכרטיס המודל.",
+        "apps": "יישומים",
+        "coming": "בקרוב",
+    },
 }
 
 
 def page(lang: str) -> str:
-    title, coming = (escape(T[lang][key]) for key in ("title", "coming"))
+    text = {key: escape(value) for key, value in T[lang].items()}
+    model_cards = "".join(
+        f'<div class="card"><h3><bdi dir="ltr">HeOCR P-hist {variant}</bdi></h3>'
+        f'<p>{text[description]}</p>'
+        f'<p><a href="{escape(hf)}">Hugging Face</a> · <a href="{escape(doi)}">Zenodo</a></p></div>\n'
+        for variant, description, hf, doi in MODEL_RELEASES
+    )
     cards = "".join(
-        f'<div class="card"><h3>{platform}</h3><p>{coming}</p></div>\n'
+        f'<div class="card"><h3>{platform}</h3><p>{text["coming"]}</p></div>\n'
         for platform in ("macOS", "Windows", "Android")
     )
     return (
-        shell.head(lang, title, coming, "download")
+        shell.head(lang, text["title"], text["about"], "download")
         + shell.header(lang, "download")
         + '<main id="main" class="wrap doc">\n'
-        + shell.page_head(title, f'<p class="lede">{coming}</p>')
-        + f'<div class="grid">\n{cards}</div>\n'
+        + shell.page_head(text["title"], f'<p class="lede">{text["about"]}</p>')
+        + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{model_cards}</div>\n</section>\n'
+        + f'<section>\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n</section>\n'
         + "</main>\n"
         + shell.footer([])
         + shell.tail(lang)
