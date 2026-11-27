@@ -1,0 +1,1461 @@
+{
+ "modern_print_hosted": {
+  "carriers": 56,
+  "dataset": "P-mod-open v0, hosted-reader scope",
+  "issue_clusters": 14,
+  "metric": "page_cer",
+  "notes": {
+   "claude-haiku-4-5": "CER reflects output failures"
+  },
+  "profile": "line_fold_v1",
+  "readers": [
+   {
+    "id": "claude-haiku-5-5",
+    "label": "Claude Haiku 5.5 (claude-haiku-5-5)"
+   },
+   {
+    "id": "gemini-3-8-flash",
+    "label": "Gemini 3.8 Flash (Vertex)"
+   },
+   {
+    "id": "rivok-full",
+    "label": "Rivok Tesseract Full"
+   },
+   {
+    "id": "rivok-lite",
+    "label": "Rivok Tesseract Lite"
+   },
+   {
+    "id": "tessdata-fast",
+    "label": "Tesseract heb fast"
+   },
+   {
+    "id": "tessdata-best",
+    "label": "Tesseract heb best"
+   },
+   {
+    "id": "google-vision",
+    "label": "Google Cloud Vision (DOCUMENT_TEXT_DETECTION)"
+   },
+   {
+    "id": "paddle",
+    "label": "Rivok PaddleOCR"
+   },
+   {
+    "id": "google-docai",
+    "label": "Google Document AI OCR (pretrained-ocr-v2.1-2024-08-07)"
+   },
+   {
+    "id": "claude-haiku-4-5",
+    "label": "Claude Haiku 4.5 (claude-haiku-4-5-20251001)"
+   }
+  ],
+  "score_scope": "56 of the 65 registered inputs: the original-equivalent rasters. The other 9 inputs (issuer renders) were sent to hosted readers only as masked derivatives, so they are diagnostic and excluded here. Tesseract and Rivok lanes are re-pooled on the same 56 inputs. The HeOCR candidate was not scored on this scope; compare it only in the 65-input table.",
+  "sources": {
+   "docai": "0f0d72381758df844755d2602b37ac07a8f93a4b565e2fcd50a0646ab8bc91b3",
+   "haiku45": "6f3da2140bab365c421d51315ae05a6b4848eb753bb4db6d7fe0cf4f07c47077",
+   "haiku55": "8d675e296a56b7039d2a1e26e37d1b62b58a1770d9727ccdf031756eb5d5d8db",
+   "vertex_and_lanes": "ef76ee94994d3be640333d920a5a685a746099ac9a52ea0e21d89a5ce1521db2",
+   "vision": "ea658035676e62b3a8617ebba73bceff425a2cc58da4b69e63d00920ff5418b1"
+  },
+  "view_labels": {
+   "all": "All reference positions",
+   "filtered": "Common independently verified positions without known project training overlap"
+  },
+  "views": {
+   "all": {
+    "archive": {
+     "carriers": 5,
+     "readers": [
+      {
+       "cer": 0.19095665171898354,
+       "chars": 5352,
+       "edits": 1022,
+       "missed_numbers": 5,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 50,
+       "wer": 0.2869238005644403,
+       "word_edits": 305,
+       "words": 1063
+      },
+      {
+       "cer": 0.3772421524663677,
+       "chars": 5352,
+       "edits": 2019,
+       "missed_numbers": 6,
+       "reader": "google-docai",
+       "ref_numbers": 50,
+       "wer": 0.5305738476011289,
+       "word_edits": 564,
+       "words": 1063
+      },
+      {
+       "cer": 0.3813527653213752,
+       "chars": 5352,
+       "edits": 2041,
+       "missed_numbers": 4,
+       "reader": "google-vision",
+       "ref_numbers": 50,
+       "wer": 0.5465663217309501,
+       "word_edits": 581,
+       "words": 1063
+      },
+      {
+       "cer": 0.4103139013452915,
+       "chars": 5352,
+       "edits": 2196,
+       "missed_numbers": 0,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 50,
+       "wer": 0.7074317968015051,
+       "word_edits": 752,
+       "words": 1063
+      },
+      {
+       "cer": 0.42133781763826605,
+       "chars": 5352,
+       "edits": 2255,
+       "missed_numbers": 12,
+       "reader": "rivok-lite",
+       "ref_numbers": 50,
+       "wer": 0.6481655691439323,
+       "word_edits": 689,
+       "words": 1063
+      },
+      {
+       "cer": 0.4232062780269058,
+       "chars": 5352,
+       "edits": 2265,
+       "missed_numbers": 11,
+       "reader": "rivok-full",
+       "ref_numbers": 50,
+       "wer": 0.6415804327375353,
+       "word_edits": 682,
+       "words": 1063
+      },
+      {
+       "cer": 0.4280642750373692,
+       "chars": 5352,
+       "edits": 2291,
+       "missed_numbers": 7,
+       "reader": "paddle",
+       "ref_numbers": 50,
+       "wer": 0.6904985888993415,
+       "word_edits": 734,
+       "words": 1063
+      },
+      {
+       "cer": 0.45422272047832585,
+       "chars": 5352,
+       "edits": 2431,
+       "missed_numbers": 26,
+       "reader": "tessdata-best",
+       "ref_numbers": 50,
+       "wer": 0.7826904985888994,
+       "word_edits": 832,
+       "words": 1063
+      },
+      {
+       "cer": 0.46207025411061287,
+       "chars": 5352,
+       "edits": 2473,
+       "missed_numbers": 23,
+       "reader": "tessdata-fast",
+       "ref_numbers": 50,
+       "wer": 0.7714016933207902,
+       "word_edits": 820,
+       "words": 1063
+      },
+      {
+       "cer": 1.9258221225710015,
+       "chars": 5352,
+       "edits": 10307,
+       "missed_numbers": 35,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 50,
+       "wer": 4.287864534336783,
+       "word_edits": 4558,
+       "words": 1063
+      }
+     ]
+    },
+    "issuer-render": {
+     "carriers": 9,
+     "readers": [
+      {
+       "cer": 0.13355771985104556,
+       "chars": 13964,
+       "edits": 1865,
+       "missed_numbers": 43,
+       "reader": "rivok-full",
+       "ref_numbers": 355,
+       "wer": 0.1958182549256132,
+       "word_edits": 487,
+       "words": 2487
+      },
+      {
+       "cer": 0.14021770266399314,
+       "chars": 13964,
+       "edits": 1958,
+       "missed_numbers": 63,
+       "reader": "rivok-lite",
+       "ref_numbers": 355,
+       "wer": 0.20506634499396864,
+       "word_edits": 510,
+       "words": 2487
+      },
+      {
+       "cer": 0.15131767401890575,
+       "chars": 13964,
+       "edits": 2113,
+       "missed_numbers": 114,
+       "reader": "tessdata-fast",
+       "ref_numbers": 355,
+       "wer": 0.25371934057096907,
+       "word_edits": 631,
+       "words": 2487
+      },
+      {
+       "cer": 0.15489830993984532,
+       "chars": 13964,
+       "edits": 2163,
+       "missed_numbers": 130,
+       "reader": "tessdata-best",
+       "ref_numbers": 355,
+       "wer": 0.26457579412947324,
+       "word_edits": 658,
+       "words": 2487
+      },
+      {
+       "cer": 0.18726725866513894,
+       "chars": 13964,
+       "edits": 2615,
+       "missed_numbers": 50,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 355,
+       "wer": 0.19662243667068757,
+       "word_edits": 489,
+       "words": 2487
+      },
+      {
+       "cer": 0.2874534517330278,
+       "chars": 13964,
+       "edits": 4014,
+       "missed_numbers": 53,
+       "reader": "paddle",
+       "ref_numbers": 355,
+       "wer": 0.5207076799356655,
+       "word_edits": 1295,
+       "words": 2487
+      },
+      {
+       "cer": 0.2908908622171298,
+       "chars": 13964,
+       "edits": 4062,
+       "missed_numbers": 2,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 355,
+       "wer": 0.3088057901085645,
+       "word_edits": 768,
+       "words": 2487
+      },
+      {
+       "cer": 0.3029217989114867,
+       "chars": 13964,
+       "edits": 4230,
+       "missed_numbers": 14,
+       "reader": "google-vision",
+       "ref_numbers": 355,
+       "wer": 0.3892239646160032,
+       "word_edits": 968,
+       "words": 2487
+      },
+      {
+       "cer": 0.3047121168719565,
+       "chars": 13964,
+       "edits": 4255,
+       "missed_numbers": 11,
+       "reader": "google-docai",
+       "ref_numbers": 355,
+       "wer": 0.4028950542822678,
+       "word_edits": 1002,
+       "words": 2487
+      },
+      {
+       "cer": 0.4684187911773131,
+       "chars": 13964,
+       "edits": 6541,
+       "missed_numbers": 98,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 355,
+       "wer": 0.6924004825090471,
+       "word_edits": 1722,
+       "words": 2487
+      }
+     ]
+    },
+    "issuer-scan": {
+     "carriers": 0,
+     "readers": []
+    },
+    "phone-a": {
+     "carriers": 14,
+     "readers": [
+      {
+       "cer": 0.12277467863206402,
+       "chars": 20615,
+       "edits": 2531,
+       "missed_numbers": 7,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 482,
+       "wer": 0.22643097643097643,
+       "word_edits": 807,
+       "words": 3564
+      },
+      {
+       "cer": 0.13771525588163958,
+       "chars": 20615,
+       "edits": 2839,
+       "missed_numbers": 13,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 482,
+       "wer": 0.1978114478114478,
+       "word_edits": 705,
+       "words": 3564
+      },
+      {
+       "cer": 0.17652195003638127,
+       "chars": 20615,
+       "edits": 3639,
+       "missed_numbers": 51,
+       "reader": "paddle",
+       "ref_numbers": 482,
+       "wer": 0.4175084175084175,
+       "word_edits": 1488,
+       "words": 3564
+      },
+      {
+       "cer": 0.18273102110113995,
+       "chars": 20615,
+       "edits": 3767,
+       "missed_numbers": 16,
+       "reader": "google-vision",
+       "ref_numbers": 482,
+       "wer": 0.2362514029180696,
+       "word_edits": 842,
+       "words": 3564
+      },
+      {
+       "cer": 0.1887460586951249,
+       "chars": 20615,
+       "edits": 3891,
+       "missed_numbers": 16,
+       "reader": "google-docai",
+       "ref_numbers": 482,
+       "wer": 0.2516835016835017,
+       "word_edits": 897,
+       "words": 3564
+      },
+      {
+       "cer": 0.19316032015522677,
+       "chars": 20615,
+       "edits": 3982,
+       "missed_numbers": 64,
+       "reader": "rivok-full",
+       "ref_numbers": 482,
+       "wer": 0.25252525252525254,
+       "word_edits": 900,
+       "words": 3564
+      },
+      {
+       "cer": 0.19699248120300752,
+       "chars": 20615,
+       "edits": 4061,
+       "missed_numbers": 85,
+       "reader": "rivok-lite",
+       "ref_numbers": 482,
+       "wer": 0.2727272727272727,
+       "word_edits": 972,
+       "words": 3564
+      },
+      {
+       "cer": 0.20014552510308029,
+       "chars": 20615,
+       "edits": 4126,
+       "missed_numbers": 212,
+       "reader": "tessdata-fast",
+       "ref_numbers": 482,
+       "wer": 0.34231200897867564,
+       "word_edits": 1220,
+       "words": 3564
+      },
+      {
+       "cer": 0.2087800145525103,
+       "chars": 20615,
+       "edits": 4304,
+       "missed_numbers": 239,
+       "reader": "tessdata-best",
+       "ref_numbers": 482,
+       "wer": 0.3493265993265993,
+       "word_edits": 1245,
+       "words": 3564
+      },
+      {
+       "cer": 0.4947853504729566,
+       "chars": 20615,
+       "edits": 10200,
+       "missed_numbers": 103,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 482,
+       "wer": 0.7789001122334456,
+       "word_edits": 2776,
+       "words": 3564
+      }
+     ]
+    },
+    "phone-b": {
+     "carriers": 14,
+     "readers": [
+      {
+       "cer": 0.08013582342954159,
+       "chars": 20615,
+       "edits": 1652,
+       "missed_numbers": 21,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 482,
+       "wer": 0.1251402918069585,
+       "word_edits": 446,
+       "words": 3564
+      },
+      {
+       "cer": 0.1397040989570701,
+       "chars": 20615,
+       "edits": 2880,
+       "missed_numbers": 10,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 482,
+       "wer": 0.2356902356902357,
+       "word_edits": 840,
+       "words": 3564
+      },
+      {
+       "cer": 0.16342469075915594,
+       "chars": 20615,
+       "edits": 3369,
+       "missed_numbers": 68,
+       "reader": "paddle",
+       "ref_numbers": 482,
+       "wer": 0.414983164983165,
+       "word_edits": 1479,
+       "words": 3564
+      },
+      {
+       "cer": 0.16526800873150618,
+       "chars": 20615,
+       "edits": 3407,
+       "missed_numbers": 15,
+       "reader": "google-vision",
+       "ref_numbers": 482,
+       "wer": 0.23148148148148148,
+       "word_edits": 825,
+       "words": 3564
+      },
+      {
+       "cer": 0.17652195003638127,
+       "chars": 20615,
+       "edits": 3639,
+       "missed_numbers": 69,
+       "reader": "rivok-full",
+       "ref_numbers": 482,
+       "wer": 0.24270482603815938,
+       "word_edits": 865,
+       "words": 3564
+      },
+      {
+       "cer": 0.1776376424933301,
+       "chars": 20615,
+       "edits": 3662,
+       "missed_numbers": 72,
+       "reader": "rivok-lite",
+       "ref_numbers": 482,
+       "wer": 0.25336700336700335,
+       "word_edits": 903,
+       "words": 3564
+      },
+      {
+       "cer": 0.17914140189182634,
+       "chars": 20615,
+       "edits": 3693,
+       "missed_numbers": 192,
+       "reader": "tessdata-fast",
+       "ref_numbers": 482,
+       "wer": 0.30443322109988774,
+       "word_edits": 1085,
+       "words": 3564
+      },
+      {
+       "cer": 0.18098471986417658,
+       "chars": 20615,
+       "edits": 3731,
+       "missed_numbers": 16,
+       "reader": "google-docai",
+       "ref_numbers": 482,
+       "wer": 0.24859708193041527,
+       "word_edits": 886,
+       "words": 3564
+      },
+      {
+       "cer": 0.1812272617026437,
+       "chars": 20615,
+       "edits": 3736,
+       "missed_numbers": 225,
+       "reader": "tessdata-best",
+       "ref_numbers": 482,
+       "wer": 0.3100448933782267,
+       "word_edits": 1105,
+       "words": 3564
+      },
+      {
+       "cer": 1.1915595440213438,
+       "chars": 20615,
+       "edits": 24564,
+       "missed_numbers": 235,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 482,
+       "wer": 1.4778338945005611,
+       "word_edits": 5267,
+       "words": 3564
+      }
+     ]
+    },
+    "pooled": {
+     "carriers": 56,
+     "readers": [
+      {
+       "cer": 0.13883515481573663,
+       "chars": 81161,
+       "edits": 11268,
+       "missed_numbers": 104,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 1851,
+       "wer": 0.19442494031737115,
+       "word_edits": 2769,
+       "words": 14242
+      },
+      {
+       "cer": 0.17715405182291988,
+       "chars": 81161,
+       "edits": 14378,
+       "missed_numbers": 27,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 1851,
+       "wer": 0.27720825726723775,
+       "word_edits": 3948,
+       "words": 14242
+      },
+      {
+       "cer": 0.18798437673266716,
+       "chars": 81161,
+       "edits": 15257,
+       "missed_numbers": 293,
+       "reader": "rivok-full",
+       "ref_numbers": 1851,
+       "wer": 0.26702710293498105,
+       "word_edits": 3803,
+       "words": 14242
+      },
+      {
+       "cer": 0.19209965377459617,
+       "chars": 81161,
+       "edits": 15591,
+       "missed_numbers": 389,
+       "reader": "rivok-lite",
+       "ref_numbers": 1851,
+       "wer": 0.2839488835837663,
+       "word_edits": 4044,
+       "words": 14242
+      },
+      {
+       "cer": 0.19898719828489053,
+       "chars": 81161,
+       "edits": 16150,
+       "missed_numbers": 776,
+       "reader": "tessdata-fast",
+       "ref_numbers": 1851,
+       "wer": 0.34770397416093246,
+       "word_edits": 4952,
+       "words": 14242
+      },
+      {
+       "cer": 0.20244945232316014,
+       "chars": 81161,
+       "edits": 16431,
+       "missed_numbers": 876,
+       "reader": "tessdata-best",
+       "ref_numbers": 1851,
+       "wer": 0.35542760848195476,
+       "word_edits": 5062,
+       "words": 14242
+      },
+      {
+       "cer": 0.20646615985510283,
+       "chars": 81161,
+       "edits": 16757,
+       "missed_numbers": 246,
+       "reader": "paddle",
+       "ref_numbers": 1851,
+       "wer": 0.4518326077798062,
+       "word_edits": 6435,
+       "words": 14242
+      },
+      {
+       "cer": 0.20859772550855707,
+       "chars": 81161,
+       "edits": 16930,
+       "missed_numbers": 66,
+       "reader": "google-vision",
+       "ref_numbers": 1851,
+       "wer": 0.28563404016289845,
+       "word_edits": 4068,
+       "words": 14242
+      },
+      {
+       "cer": 0.2183561069972031,
+       "chars": 81161,
+       "edits": 17722,
+       "missed_numbers": 61,
+       "reader": "google-docai",
+       "ref_numbers": 1851,
+       "wer": 0.2977812105041427,
+       "word_edits": 4241,
+       "words": 14242
+      },
+      {
+       "cer": 0.9222286566207908,
+       "chars": 81161,
+       "edits": 74849,
+       "missed_numbers": 641,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 1851,
+       "wer": 1.3852689229040864,
+       "word_edits": 19729,
+       "words": 14242
+      }
+     ]
+    },
+    "scanner": {
+     "carriers": 14,
+     "readers": [
+      {
+       "cer": 0.13140916808149405,
+       "chars": 20615,
+       "edits": 2709,
+       "missed_numbers": 8,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 482,
+       "wer": 0.2191358024691358,
+       "word_edits": 781,
+       "words": 3564
+      },
+      {
+       "cer": 0.15231627455736113,
+       "chars": 20615,
+       "edits": 3140,
+       "missed_numbers": 15,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 482,
+       "wer": 0.23120089786756454,
+       "word_edits": 824,
+       "words": 3564
+      },
+      {
+       "cer": 0.167062818336163,
+       "chars": 20615,
+       "edits": 3444,
+       "missed_numbers": 67,
+       "reader": "paddle",
+       "ref_numbers": 482,
+       "wer": 0.4037598204264871,
+       "word_edits": 1439,
+       "words": 3564
+      },
+      {
+       "cer": 0.1690516614115935,
+       "chars": 20615,
+       "edits": 3485,
+       "missed_numbers": 17,
+       "reader": "google-vision",
+       "ref_numbers": 482,
+       "wer": 0.23905723905723905,
+       "word_edits": 852,
+       "words": 3564
+      },
+      {
+       "cer": 0.17007033713315547,
+       "chars": 20615,
+       "edits": 3506,
+       "missed_numbers": 106,
+       "reader": "rivok-full",
+       "ref_numbers": 482,
+       "wer": 0.24382716049382716,
+       "word_edits": 869,
+       "words": 3564
+      },
+      {
+       "cer": 0.1772980839194761,
+       "chars": 20615,
+       "edits": 3655,
+       "missed_numbers": 157,
+       "reader": "rivok-lite",
+       "ref_numbers": 482,
+       "wer": 0.2721661054994388,
+       "word_edits": 970,
+       "words": 3564
+      },
+      {
+       "cer": 0.18166383701188454,
+       "chars": 20615,
+       "edits": 3745,
+       "missed_numbers": 235,
+       "reader": "tessdata-fast",
+       "ref_numbers": 482,
+       "wer": 0.33557800224466894,
+       "word_edits": 1196,
+       "words": 3564
+      },
+      {
+       "cer": 0.18418627213194275,
+       "chars": 20615,
+       "edits": 3797,
+       "missed_numbers": 256,
+       "reader": "tessdata-best",
+       "ref_numbers": 482,
+       "wer": 0.34287317620650953,
+       "word_edits": 1222,
+       "words": 3564
+      },
+      {
+       "cer": 0.18559301479505214,
+       "chars": 20615,
+       "edits": 3826,
+       "missed_numbers": 12,
+       "reader": "google-docai",
+       "ref_numbers": 482,
+       "wer": 0.250280583613917,
+       "word_edits": 892,
+       "words": 3564
+      },
+      {
+       "cer": 1.127188940092166,
+       "chars": 20615,
+       "edits": 23237,
+       "missed_numbers": 170,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 482,
+       "wer": 1.5168350168350169,
+       "word_edits": 5406,
+       "words": 3564
+      }
+     ]
+    }
+   },
+   "filtered": {
+    "archive": {
+     "carriers": 5,
+     "readers": [
+      {
+       "cer": 0.1816052799659357,
+       "chars": 4697,
+       "edits": 853,
+       "missed_numbers": 5,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 45,
+       "wer": 0.2698072805139186,
+       "word_edits": 252,
+       "words": 934
+      },
+      {
+       "cer": 0.35959122844368746,
+       "chars": 4697,
+       "edits": 1689,
+       "missed_numbers": 5,
+       "reader": "google-vision",
+       "ref_numbers": 45,
+       "wer": 0.5374732334047109,
+       "word_edits": 502,
+       "words": 934
+      },
+      {
+       "cer": 0.36257185437513306,
+       "chars": 4697,
+       "edits": 1703,
+       "missed_numbers": 5,
+       "reader": "google-docai",
+       "ref_numbers": 45,
+       "wer": 0.525695931477516,
+       "word_edits": 491,
+       "words": 934
+      },
+      {
+       "cer": 0.3691718117947626,
+       "chars": 4697,
+       "edits": 1734,
+       "missed_numbers": 0,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 45,
+       "wer": 0.6563169164882227,
+       "word_edits": 613,
+       "words": 934
+      },
+      {
+       "cer": 0.39322972109857357,
+       "chars": 4697,
+       "edits": 1847,
+       "missed_numbers": 10,
+       "reader": "rivok-full",
+       "ref_numbers": 45,
+       "wer": 0.6306209850107066,
+       "word_edits": 589,
+       "words": 934
+      },
+      {
+       "cer": 0.39344262295081966,
+       "chars": 4697,
+       "edits": 1848,
+       "missed_numbers": 11,
+       "reader": "rivok-lite",
+       "ref_numbers": 45,
+       "wer": 0.6381156316916489,
+       "word_edits": 596,
+       "words": 934
+      },
+      {
+       "cer": 0.3957845433255269,
+       "chars": 4697,
+       "edits": 1859,
+       "missed_numbers": 5,
+       "reader": "paddle",
+       "ref_numbers": 45,
+       "wer": 0.683083511777302,
+       "word_edits": 638,
+       "words": 934
+      },
+      {
+       "cer": 0.4187779433681073,
+       "chars": 4697,
+       "edits": 1967,
+       "missed_numbers": 22,
+       "reader": "tessdata-best",
+       "ref_numbers": 45,
+       "wer": 0.7665952890792291,
+       "word_edits": 716,
+       "words": 934
+      },
+      {
+       "cer": 0.4362358952522887,
+       "chars": 4697,
+       "edits": 2049,
+       "missed_numbers": 20,
+       "reader": "tessdata-fast",
+       "ref_numbers": 45,
+       "wer": 0.7708779443254818,
+       "word_edits": 720,
+       "words": 934
+      },
+      {
+       "cer": 2.076218863104109,
+       "chars": 4697,
+       "edits": 9752,
+       "missed_numbers": 32,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 45,
+       "wer": 4.729122055674519,
+       "word_edits": 4417,
+       "words": 934
+      }
+     ]
+    },
+    "issuer-render": {
+     "carriers": 9,
+     "readers": [
+      {
+       "cer": 0.11872544740288084,
+       "chars": 11455,
+       "edits": 1360,
+       "missed_numbers": 24,
+       "reader": "rivok-full",
+       "ref_numbers": 206,
+       "wer": 0.18088911599386817,
+       "word_edits": 354,
+       "words": 1957
+      },
+      {
+       "cer": 0.12265386294194675,
+       "chars": 11455,
+       "edits": 1405,
+       "missed_numbers": 34,
+       "reader": "rivok-lite",
+       "ref_numbers": 206,
+       "wer": 0.18650996423096577,
+       "word_edits": 365,
+       "words": 1957
+      },
+      {
+       "cer": 0.12701876909646442,
+       "chars": 11455,
+       "edits": 1455,
+       "missed_numbers": 45,
+       "reader": "tessdata-fast",
+       "ref_numbers": 206,
+       "wer": 0.21614716402657128,
+       "word_edits": 423,
+       "words": 1957
+      },
+      {
+       "cer": 0.13077258838934963,
+       "chars": 11455,
+       "edits": 1498,
+       "missed_numbers": 59,
+       "reader": "tessdata-best",
+       "ref_numbers": 206,
+       "wer": 0.22534491568727644,
+       "word_edits": 441,
+       "words": 1957
+      },
+      {
+       "cer": 0.15120034919249237,
+       "chars": 11455,
+       "edits": 1732,
+       "missed_numbers": 24,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 206,
+       "wer": 0.1481859989780276,
+       "word_edits": 290,
+       "words": 1957
+      },
+      {
+       "cer": 0.26948930597992143,
+       "chars": 11455,
+       "edits": 3087,
+       "missed_numbers": 7,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 206,
+       "wer": 0.2738886050076648,
+       "word_edits": 536,
+       "words": 1957
+      },
+      {
+       "cer": 0.28092536010475777,
+       "chars": 11455,
+       "edits": 3218,
+       "missed_numbers": 36,
+       "reader": "paddle",
+       "ref_numbers": 206,
+       "wer": 0.5298926928972918,
+       "word_edits": 1037,
+       "words": 1957
+      },
+      {
+       "cer": 0.2865124399825404,
+       "chars": 11455,
+       "edits": 3282,
+       "missed_numbers": 24,
+       "reader": "google-docai",
+       "ref_numbers": 206,
+       "wer": 0.38528359734287176,
+       "word_edits": 754,
+       "words": 1957
+      },
+      {
+       "cer": 0.29672632038411173,
+       "chars": 11455,
+       "edits": 3399,
+       "missed_numbers": 7,
+       "reader": "google-vision",
+       "ref_numbers": 206,
+       "wer": 0.39192641798671435,
+       "word_edits": 767,
+       "words": 1957
+      },
+      {
+       "cer": 0.45307725883893496,
+       "chars": 11455,
+       "edits": 5190,
+       "missed_numbers": 76,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 206,
+       "wer": 0.7026060296371998,
+       "word_edits": 1375,
+       "words": 1957
+      }
+     ]
+    },
+    "issuer-scan": {
+     "carriers": 0,
+     "readers": []
+    },
+    "phone-a": {
+     "carriers": 14,
+     "readers": [
+      {
+       "cer": 0.06251664447403463,
+       "chars": 15020,
+       "edits": 939,
+       "missed_numbers": 16,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 294,
+       "wer": 0.12863231305695466,
+       "word_edits": 332,
+       "words": 2581
+      },
+      {
+       "cer": 0.0670439414114514,
+       "chars": 15020,
+       "edits": 1007,
+       "missed_numbers": 20,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 294,
+       "wer": 0.10693529639674544,
+       "word_edits": 276,
+       "words": 2581
+      },
+      {
+       "cer": 0.1258988015978695,
+       "chars": 15020,
+       "edits": 1891,
+       "missed_numbers": 41,
+       "reader": "google-vision",
+       "ref_numbers": 294,
+       "wer": 0.17745060054242542,
+       "word_edits": 458,
+       "words": 2581
+      },
+      {
+       "cer": 0.1280958721704394,
+       "chars": 15020,
+       "edits": 1924,
+       "missed_numbers": 53,
+       "reader": "rivok-full",
+       "ref_numbers": 294,
+       "wer": 0.19139868268113133,
+       "word_edits": 494,
+       "words": 2581
+      },
+      {
+       "cer": 0.12902796271637818,
+       "chars": 15020,
+       "edits": 1938,
+       "missed_numbers": 89,
+       "reader": "tessdata-fast",
+       "ref_numbers": 294,
+       "wer": 0.2580395195660597,
+       "word_edits": 666,
+       "words": 2581
+      },
+      {
+       "cer": 0.13395472703062583,
+       "chars": 15020,
+       "edits": 2012,
+       "missed_numbers": 67,
+       "reader": "rivok-lite",
+       "ref_numbers": 294,
+       "wer": 0.21387059279349088,
+       "word_edits": 552,
+       "words": 2581
+      },
+      {
+       "cer": 0.13801597869507323,
+       "chars": 15020,
+       "edits": 2073,
+       "missed_numbers": 106,
+       "reader": "tessdata-best",
+       "ref_numbers": 294,
+       "wer": 0.2754746222394421,
+       "word_edits": 711,
+       "words": 2581
+      },
+      {
+       "cer": 0.14294274300932092,
+       "chars": 15020,
+       "edits": 2147,
+       "missed_numbers": 47,
+       "reader": "paddle",
+       "ref_numbers": 294,
+       "wer": 0.4103060829135994,
+       "word_edits": 1059,
+       "words": 2581
+      },
+      {
+       "cer": 0.1430093209054594,
+       "chars": 15020,
+       "edits": 2148,
+       "missed_numbers": 49,
+       "reader": "google-docai",
+       "ref_numbers": 294,
+       "wer": 0.2103835722588144,
+       "word_edits": 543,
+       "words": 2581
+      },
+      {
+       "cer": 0.4830892143808256,
+       "chars": 15020,
+       "edits": 7256,
+       "missed_numbers": 92,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 294,
+       "wer": 0.7733436652460287,
+       "word_edits": 1996,
+       "words": 2581
+      }
+     ]
+    },
+    "phone-b": {
+     "carriers": 14,
+     "readers": [
+      {
+       "cer": 0.031424766977363516,
+       "chars": 15020,
+       "edits": 472,
+       "missed_numbers": 20,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 294,
+       "wer": 0.06044168926772569,
+       "word_edits": 156,
+       "words": 2581
+      },
+      {
+       "cer": 0.07756324900133156,
+       "chars": 15020,
+       "edits": 1165,
+       "missed_numbers": 18,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 294,
+       "wer": 0.13095699341340566,
+       "word_edits": 338,
+       "words": 2581
+      },
+      {
+       "cer": 0.10233022636484687,
+       "chars": 15020,
+       "edits": 1537,
+       "missed_numbers": 38,
+       "reader": "google-vision",
+       "ref_numbers": 294,
+       "wer": 0.1635025184037195,
+       "word_edits": 422,
+       "words": 2581
+      },
+      {
+       "cer": 0.1163115845539281,
+       "chars": 15020,
+       "edits": 1747,
+       "missed_numbers": 64,
+       "reader": "rivok-full",
+       "ref_numbers": 294,
+       "wer": 0.18519953506392872,
+       "word_edits": 478,
+       "words": 2581
+      },
+      {
+       "cer": 0.11804260985352863,
+       "chars": 15020,
+       "edits": 1773,
+       "missed_numbers": 76,
+       "reader": "rivok-lite",
+       "ref_numbers": 294,
+       "wer": 0.1972103835722588,
+       "word_edits": 509,
+       "words": 2581
+      },
+      {
+       "cer": 0.1214380825565912,
+       "chars": 15020,
+       "edits": 1824,
+       "missed_numbers": 69,
+       "reader": "tessdata-fast",
+       "ref_numbers": 294,
+       "wer": 0.22665633475397132,
+       "word_edits": 585,
+       "words": 2581
+      },
+      {
+       "cer": 0.12250332889480692,
+       "chars": 15020,
+       "edits": 1840,
+       "missed_numbers": 55,
+       "reader": "paddle",
+       "ref_numbers": 294,
+       "wer": 0.4013948082138706,
+       "word_edits": 1036,
+       "words": 2581
+      },
+      {
+       "cer": 0.12303595206391478,
+       "chars": 15020,
+       "edits": 1848,
+       "missed_numbers": 98,
+       "reader": "tessdata-best",
+       "ref_numbers": 294,
+       "wer": 0.23982952344052694,
+       "word_edits": 619,
+       "words": 2581
+      },
+      {
+       "cer": 0.13921438082556592,
+       "chars": 15020,
+       "edits": 2091,
+       "missed_numbers": 43,
+       "reader": "google-docai",
+       "ref_numbers": 294,
+       "wer": 0.21309569934134057,
+       "word_edits": 550,
+       "words": 2581
+      },
+      {
+       "cer": 1.2654460719041278,
+       "chars": 15020,
+       "edits": 19007,
+       "missed_numbers": 167,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 294,
+       "wer": 1.5943432777993025,
+       "word_edits": 4115,
+       "words": 2581
+      }
+     ]
+    },
+    "pooled": {
+     "carriers": 56,
+     "readers": [
+      {
+       "cer": 0.08343135332941254,
+       "chars": 61212,
+       "edits": 5107,
+       "missed_numbers": 92,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 1133,
+       "wer": 0.12008651495204062,
+       "word_edits": 1277,
+       "words": 10634
+      },
+      {
+       "cer": 0.1294027314905574,
+       "chars": 61212,
+       "edits": 7921,
+       "missed_numbers": 57,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 1133,
+       "wer": 0.20077111152905774,
+       "word_edits": 2135,
+       "words": 10634
+      },
+      {
+       "cer": 0.14039730771744102,
+       "chars": 61212,
+       "edits": 8594,
+       "missed_numbers": 236,
+       "reader": "rivok-full",
+       "ref_numbers": 1133,
+       "wer": 0.22776001504607862,
+       "word_edits": 2422,
+       "words": 10634
+      },
+      {
+       "cer": 0.14490622753708424,
+       "chars": 61212,
+       "edits": 8870,
+       "missed_numbers": 309,
+       "reader": "rivok-lite",
+       "ref_numbers": 1133,
+       "wer": 0.244780891480158,
+       "word_edits": 2603,
+       "words": 10634
+      },
+      {
+       "cer": 0.14926811736260864,
+       "chars": 61212,
+       "edits": 9137,
+       "missed_numbers": 335,
+       "reader": "tessdata-fast",
+       "ref_numbers": 1133,
+       "wer": 0.2902012413014858,
+       "word_edits": 3086,
+       "words": 10634
+      },
+      {
+       "cer": 0.15170228059857543,
+       "chars": 61212,
+       "edits": 9286,
+       "missed_numbers": 415,
+       "reader": "tessdata-best",
+       "ref_numbers": 1133,
+       "wer": 0.3017679142373519,
+       "word_edits": 3209,
+       "words": 10634
+      },
+      {
+       "cer": 0.16348101679409266,
+       "chars": 61212,
+       "edits": 10007,
+       "missed_numbers": 130,
+       "reader": "google-vision",
+       "ref_numbers": 1133,
+       "wer": 0.2433703216099304,
+       "word_edits": 2588,
+       "words": 10634
+      },
+      {
+       "cer": 0.17929490949487029,
+       "chars": 61212,
+       "edits": 10975,
+       "missed_numbers": 192,
+       "reader": "paddle",
+       "ref_numbers": 1133,
+       "wer": 0.4495956366372014,
+       "word_edits": 4781,
+       "words": 10634
+      },
+      {
+       "cer": 0.1845553159511207,
+       "chars": 61212,
+       "edits": 11297,
+       "missed_numbers": 155,
+       "reader": "google-docai",
+       "ref_numbers": 1133,
+       "wer": 0.2706413391009968,
+       "word_edits": 2878,
+       "words": 10634
+      },
+      {
+       "cer": 0.9894301770894596,
+       "chars": 61212,
+       "edits": 60565,
+       "missed_numbers": 511,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 1133,
+       "wer": 1.5397780703404176,
+       "word_edits": 16374,
+       "words": 10634
+      }
+     ]
+    },
+    "scanner": {
+     "carriers": 14,
+     "readers": [
+      {
+       "cer": 0.06631158455392809,
+       "chars": 15020,
+       "edits": 996,
+       "missed_numbers": 16,
+       "reader": "gemini-3-8-flash",
+       "ref_numbers": 294,
+       "wer": 0.12243316543975204,
+       "word_edits": 316,
+       "words": 2581
+      },
+      {
+       "cer": 0.06944074567243676,
+       "chars": 15020,
+       "edits": 1043,
+       "missed_numbers": 23,
+       "reader": "claude-haiku-5-5",
+       "ref_numbers": 294,
+       "wer": 0.1173963580007749,
+       "word_edits": 303,
+       "words": 2581
+      },
+      {
+       "cer": 0.0992676431424767,
+       "chars": 15020,
+       "edits": 1491,
+       "missed_numbers": 39,
+       "reader": "google-vision",
+       "ref_numbers": 294,
+       "wer": 0.17008911274699728,
+       "word_edits": 439,
+       "words": 2581
+      },
+      {
+       "cer": 0.11424766977363515,
+       "chars": 15020,
+       "edits": 1716,
+       "missed_numbers": 85,
+       "reader": "rivok-full",
+       "ref_numbers": 294,
+       "wer": 0.1964354901201085,
+       "word_edits": 507,
+       "words": 2581
+      },
+      {
+       "cer": 0.12197070572569907,
+       "chars": 15020,
+       "edits": 1832,
+       "missed_numbers": 121,
+       "reader": "rivok-lite",
+       "ref_numbers": 294,
+       "wer": 0.22510654784967066,
+       "word_edits": 581,
+       "words": 2581
+      },
+      {
+       "cer": 0.12456724367509987,
+       "chars": 15020,
+       "edits": 1871,
+       "missed_numbers": 112,
+       "reader": "tessdata-fast",
+       "ref_numbers": 294,
+       "wer": 0.26811313444401397,
+       "word_edits": 692,
+       "words": 2581
+      },
+      {
+       "cer": 0.12649800266311584,
+       "chars": 15020,
+       "edits": 1900,
+       "missed_numbers": 130,
+       "reader": "tessdata-best",
+       "ref_numbers": 294,
+       "wer": 0.2797365362262689,
+       "word_edits": 722,
+       "words": 2581
+      },
+      {
+       "cer": 0.12723035952063916,
+       "chars": 15020,
+       "edits": 1911,
+       "missed_numbers": 49,
+       "reader": "paddle",
+       "ref_numbers": 294,
+       "wer": 0.39170864006199146,
+       "word_edits": 1011,
+       "words": 2581
+      },
+      {
+       "cer": 0.13801597869507323,
+       "chars": 15020,
+       "edits": 2073,
+       "missed_numbers": 34,
+       "reader": "google-docai",
+       "ref_numbers": 294,
+       "wer": 0.20922123208058893,
+       "word_edits": 540,
+       "words": 2581
+      },
+      {
+       "cer": 1.288948069241012,
+       "chars": 15020,
+       "edits": 19360,
+       "missed_numbers": 144,
+       "reader": "claude-haiku-4-5",
+       "ref_numbers": 294,
+       "wer": 1.7322743122820612,
+       "word_edits": 4471,
+       "words": 2581
+      }
+     ]
+    }
+   }
+  }
+ },
+ "schema": "heocr.benchmark.scores.v1"
+}
