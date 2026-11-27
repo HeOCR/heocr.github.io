@@ -53,7 +53,7 @@
 <h2>What htext is</h2>
 <p>htext collects Hebrew text whose rights are clear enough to publish openly, and turns it into training lines for <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, HeOCR's synthetic page generator. The generator renders each line onto synthetic pages, so the recognizers learn real Hebrew vocabulary, spelling and punctuation, not only made-up text.</p>
 <p>Each source has its own builder, its own corpus and its own card. A build reads a pinned copy of the source, computes rights per entry, cleans and cuts the text, and checks that no line overlaps HeOCR's evaluation text. Only the files a card lists are published.</p>
-<div class="stats"><div class="stat"><b>45,477,600</b><span>lines</span></div><div class="stat"><b><span dir="ltr">2,179.1 MB</span></b><span>of text</span></div><div class="stat"><b>12</b><span>corpora</span></div></div>
+<div class="stats"><div class="stat"><b>76,589,382</b><span>lines</span></div><div class="stat"><b><span dir="ltr">3,690.2 MB</span></b><span>of text</span></div><div class="stat"><b>16</b><span>corpora</span></div></div>
 </section>
 <section id="releases">
 <h2>Releases</h2>
@@ -75,7 +75,7 @@
 <h3>htext-by-sa</h3>
 <span class="status">published</span><span class="status">CC BY-SA 4.0</span>
 <ul class="facts">
-<li>Contains: Historical transcriptions from Hebrew Wikisource.</li>
+<li>Contains: Hebrew Wikisource transcriptions and Sefaria editions released under CC BY-SA.</li>
 <li>You may: Any use, with credit, and anything you share that adapts the text must be under CC BY-SA too.</li>
 <li>Licence: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></li>
 </ul>
@@ -276,6 +276,76 @@
 <li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24521430"><span dir="ltr">10.5281/zenodo.24521430</span></a> (all versions: <a href="https://doi.org/10.5281/zenodo.24521429"><span dir="ltr">10.5281/zenodo.24521429</span></a>)</li>
 <li>Hugging Face: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria-by/tree/e28fae17d635f72ad6c9a628734252c1ea219e24">HeOCR/htext-sefaria-by</a> (the same files as the GitHub release)</li>
 </ul>
+<h3 id="sefaria-v3-cc0">htext · Sefaria v3 (public domain and CC0)</h3>
+<span class="status">sefaria-v3-cc0</span><span class="status">htext-cc0</span>
+<p>Hebrew and Aramaic training text from Sefaria under public-domain or CC0 source terms.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Subset</th><th>Lines</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>sefaria_cc0_lines_plain_he_v3.txt</code></td><td>plain</td><td class="num">28,147,135</td><td class="num"><span dir="ltr">1,334.8 MB</span></td></tr>
+<tr><td><code>sefaria_cc0_lines_plain_arc_v3.txt</code></td><td>plain</td><td class="num">27,131</td><td class="num"><span dir="ltr">1.3 MB</span></td></tr>
+<tr><td><code>sefaria_cc0_lines_niqqud_he_v3.txt</code></td><td>niqqud</td><td class="num">922,973</td><td class="num"><span dir="ltr">73.0 MB</span></td></tr>
+<tr><td><code>sefaria_cc0_lines_niqqud_arc_v3.txt</code></td><td>niqqud</td><td class="num">41,223</td><td class="num"><span dir="ltr">3.2 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>Release: htext-cc0 (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>)</li>
+<li>Source: <a href="https://www.sefaria.org">Sefaria</a> (Public domain or CC0 per edition)</li>
+<li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/tree/8da7fb539e9ac8fc40c4f6e4f7073cb9a575bb38/releases/sefaria-v3-cc0">sefaria-v3-cc0</a>, 2026-11-27</li>
+<li>Corpus card: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/8da7fb539e9ac8fc40c4f6e4f7073cb9a575bb38/releases/sefaria-v3-cc0/README.md">README.md</a></li>
+<li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24581317"><span dir="ltr">10.5281/zenodo.24581317</span></a> (all versions: <a href="https://doi.org/10.5281/zenodo.24521422"><span dir="ltr">10.5281/zenodo.24521422</span></a>)</li>
+</ul>
+<h3 id="sefaria-v3-by">htext · Sefaria v3 (CC BY)</h3>
+<span class="status">sefaria-v3-by</span><span class="status">htext-by</span>
+<p>Hebrew and Aramaic training text from Sefaria with attribution.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Subset</th><th>Lines</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>sefaria_by_lines_plain_he_v3.txt</code></td><td>plain</td><td class="num">1,170,055</td><td class="num"><span dir="ltr">53.9 MB</span></td></tr>
+<tr><td><code>sefaria_by_lines_plain_arc_v3.txt</code></td><td>plain</td><td class="num">3,316</td><td class="num"><span dir="ltr">0.1 MB</span></td></tr>
+<tr><td><code>sefaria_by_lines_niqqud_he_v3.txt</code></td><td>niqqud</td><td class="num">52,344</td><td class="num"><span dir="ltr">3.8 MB</span></td></tr>
+<tr><td><code>sefaria_by_lines_niqqud_arc_v3.txt</code></td><td>niqqud</td><td class="num">151,202</td><td class="num"><span dir="ltr">11.8 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>Release: htext-by (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 (per source)</a>)</li>
+<li>Source: <a href="https://www.sefaria.org">Sefaria</a> (CC BY 4.0)</li>
+<li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria-by/tree/c55b5dcbc79b360b87031a1fa7aca029b62d25f0/releases/sefaria-v3-by">sefaria-v3-by</a>, 2026-11-27</li>
+<li>Corpus card: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/c55b5dcbc79b360b87031a1fa7aca029b62d25f0/releases/sefaria-v3-by/README.md">README.md</a></li>
+<li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24581347"><span dir="ltr">10.5281/zenodo.24581347</span></a> (all versions: <a href="https://doi.org/10.5281/zenodo.24521429"><span dir="ltr">10.5281/zenodo.24521429</span></a>)</li>
+</ul>
+<h3 id="sefaria-v3-by-sa">htext · Sefaria v3 (CC BY-SA)</h3>
+<span class="status">sefaria-v3-by-sa</span><span class="status">htext-by-sa</span>
+<p>Hebrew and Aramaic training text from Sefaria with attribution and share-alike terms.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Subset</th><th>Lines</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>sefaria_by-sa_lines_plain_he_v3.txt</code></td><td>plain</td><td class="num">210,770</td><td class="num"><span dir="ltr">9.9 MB</span></td></tr>
+<tr><td><code>sefaria_by-sa_lines_plain_arc_v3.txt</code></td><td>plain</td><td class="num">343,511</td><td class="num"><span dir="ltr">16.0 MB</span></td></tr>
+<tr><td><code>sefaria_by-sa_lines_niqqud_he_v3.txt</code></td><td>niqqud</td><td class="num">36,804</td><td class="num"><span dir="ltr">2.9 MB</span></td></tr>
+<tr><td><code>sefaria_by-sa_lines_niqqud_arc_v3.txt</code></td><td>niqqud</td><td class="num">2</td><td class="num"><span dir="ltr">0.0 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>Release: htext-by-sa (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>)</li>
+<li>Source: <a href="https://www.sefaria.org">Sefaria</a> (CC BY-SA 4.0)</li>
+<li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria-by-sa/tree/1d24204f8bd53d3abc214619a2b73cd731552b5e">sefaria-v3-by-sa</a>, 2026-11-27</li>
+<li>Corpus card: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria-by-sa/blob/1d24204f8bd53d3abc214619a2b73cd731552b5e/README.md">README.md</a></li>
+<li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24581351"><span dir="ltr">10.5281/zenodo.24581351</span></a> (all versions: <a href="https://doi.org/10.5281/zenodo.24581350"><span dir="ltr">10.5281/zenodo.24581350</span></a>)</li>
+</ul>
+<h3 id="gutenberg-v1">htext · Project Gutenberg</h3>
+<span class="status">gutenberg-v1</span><span class="status">htext-cc0</span>
+<p>Hebrew OCR training lines from two public-domain Project Gutenberg ebooks.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>Subset</th><th>Lines</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><code>gutenberg_lines_plain_v1.txt</code></td><td>plain</td><td class="num">5,315</td><td class="num"><span dir="ltr">0.3 MB</span></td></tr>
+<tr><td><code>gutenberg_lines_niqqud_v1.txt</code></td><td>niqqud</td><td class="num">1</td><td class="num"><span dir="ltr">0.0 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>Release: htext-cc0 (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>)</li>
+<li>Source: <a href="https://www.gutenberg.org">Project Gutenberg</a> (Public domain)</li>
+<li>Release: <a href="https://huggingface.co/datasets/HeOCR/htext-gutenberg/tree/1f7432ee0240c0a23b44347cb1612c454fe78eed">gutenberg-v1</a>, 2026-11-27</li>
+<li>Corpus card: <a href="https://huggingface.co/datasets/HeOCR/htext-gutenberg/blob/1f7432ee0240c0a23b44347cb1612c454fe78eed/README.md">README.md</a></li>
+<li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24581353"><span dir="ltr">10.5281/zenodo.24581353</span></a> (all versions: <a href="https://doi.org/10.5281/zenodo.24581352"><span dir="ltr">10.5281/zenodo.24581352</span></a>)</li>
+</ul>
 <h3 id="tsel-haolam-v1">Tsel HaOlam v1</h3>
 <span class="status">tsel-haolam-v1</span><span class="status">htext-cc0</span>
 <p>2,408 unpointed training lines from the historical Hebrew body of Tsel HaOlam, Amsterdam 1733.</p>
@@ -311,6 +381,10 @@
 <li><b>Hebrew Wikisource</b>: CC BY-SA 4.0. Cite the Hebrew Wikisource contributors by source revision as listed in the rights index and NOTICE.</li>
 <li><b>Sefaria</b>: Sefaria marks each exact Hebrew version Public Domain or CC0. See the edition record for the basis per version.</li>
 <li><b>Sefaria</b>: CC BY 4.0. Credit Joseph Albo, editor Isaac Husik, the Jewish Publication Society of America and Hebrew digitization by Sefaria.</li>
+<li><b>Sefaria</b>: Public domain or CC0 per edition</li>
+<li><b>Sefaria</b>: CC BY 4.0</li>
+<li><b>Sefaria</b>: CC BY-SA 4.0</li>
+<li><b>Project Gutenberg</b>: Public domain</li>
 <li><b>Project Gutenberg</b>: The Amsterdam 1733 historical Hebrew text is in the public domain. See NOTICE for the edition basis and Project Gutenberg transcription credit.</li>
 </ul>
 </section>
@@ -339,6 +413,10 @@ grep -E &#x27;_v2\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
 <p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4/NOTICE.md">Hebrew Wikisource contributors by revision</a></p>
 <p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/a92766c9fb4955b1f9fcb3766430cd5522af7614/releases/sefaria-v2-cc0/source_editions.json">Sefaria and the credited editions</a></p>
 <p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/e28fae17d635f72ad6c9a628734252c1ea219e24/source_editions.json">Joseph Albo, Isaac Husik, JPS and Sefaria</a></p>
+<p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/8da7fb539e9ac8fc40c4f6e4f7073cb9a575bb38/releases/sefaria-v3-cc0/NOTICE.md">Sefaria</a></p>
+<p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/c55b5dcbc79b360b87031a1fa7aca029b62d25f0/releases/sefaria-v3-by/NOTICE.md">Sefaria</a></p>
+<p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria-by-sa/blob/1d24204f8bd53d3abc214619a2b73cd731552b5e/NOTICE.md">Sefaria</a></p>
+<p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-gutenberg/blob/1f7432ee0240c0a23b44347cb1612c454fe78eed/NOTICE.md">Project Gutenberg</a></p>
 <p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-tsel-haolam/blob/c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb/NOTICE.md">Project Gutenberg transcription team</a></p>
 </section>
 <section id="licence">

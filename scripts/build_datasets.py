@@ -70,9 +70,13 @@ LICENSES = {
 def load_catalog() -> dict:
     data = json.loads(CATALOG.read_text(encoding="utf-8"))
     entries = data["datasets"]
+    model = data["model"]
+    versions = [model, {**model, **model["previous"]}]
     if len({row["id"] for row in entries}) != len(entries):
         raise ValueError("Dataset ids must be unique")
-    for row in [*entries, data["model"]]:
+    if any(not re.fullmatch(r"v[0-9]+\.[0-9]+", row["version"]) for row in versions):
+        raise ValueError("Expected exact public model version tags")
+    for row in [*entries, *versions]:
         if not re.fullmatch(r"HeOCR/[a-z0-9-]+", row["id"]) or not re.fullmatch(r"[0-9a-f]{40}", row["revision"]):
             raise ValueError("Expected exact public Hub pins")
         if any(not re.fullmatch(r"10\.5281/zenodo\.[0-9]+", d["id"]) for d in row["dois"]):
@@ -113,7 +117,8 @@ def sum_reported(entries: list[dict], key: str) -> int | None:
 def release_links(row: dict, *, model: bool = False) -> str:
     kind = "" if model else "datasets/"
     root = f"https://huggingface.co/{kind}{escape(row['id'], quote=True)}"
-    url = root if row.get("access") == "manual" else f"{root}/tree/{row['revision']}"
+    revision = row["version"] if model else row["revision"]
+    url = root if row.get("access") == "manual" else f"{root}/tree/{revision}"
     links = [f'<a href="{url}">Hugging Face</a>']
     for ref in row["dois"]:
         label = "Zenodo" if len(row["dois"]) == 1 else f"Zenodo {ref['label']}"
