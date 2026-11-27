@@ -84,6 +84,7 @@ T = {
         "historical_filtered": "Filtered",
         "historical_caveat": "HeOCR P-hist v1.1 is a fine-tune of Rivok Full. The v0.1 references came from two independent AI transcriptions and adjudication. A re-score with human-proofread references is coming.",
         "descriptive": "Descriptive",
+        "historical_numbers_note": "C2 contains only 8 numbers; number recall is not compared on this set.",
         "cloud_note": "Google’s descriptive scores use the same eligible and filtered lines. The registered result was decided before these comparisons.",
         "primary": "Primary",
         "best": "Lowest error",
@@ -156,6 +157,7 @@ T = {
         "historical_filtered": "לאחר סינון",
         "historical_caveat": "HeOCR P-hist v1.1 מבוסס על כוונון נוסף של Rivok Full. טקסטי הייחוס של v0.1 הוכנו בשני תעתוקים עצמאיים באמצעות בינה מלאכותית ובהכרעה ביניהם. בהמשך נחשב את הציונים שוב לפי טקסטי ייחוס שעברו הגהה אנושית.",
         "descriptive": "תיאורי",
+        "historical_numbers_note": "ב־C2 יש רק 8 מספרים. במבחן הזה אין השוואה של זיהוי מספרים.",
         "cloud_note": "הציונים התיאוריים של Google חושבו על אותן שורות כשירות ומסוננות. התוצאה הרשומה נקבעה לפני ההשוואות האלה.",
         "primary": "ראשי",
         "best": "שיעור השגיאות הנמוך ביותר",
@@ -300,11 +302,10 @@ def score_panel(t, panel_id, views, captures, tables, *, view_label, alternative
     ])
 
 
-def score_cells(row):
+def text_score_cells(row):
     return [
         error_rate(row["edits"], row["chars"]),
         error_rate(row["word_edits"], row["words"]),
-        error_rate(row["missed_numbers"], row["ref_numbers"]),
     ]
 
 
@@ -324,7 +325,8 @@ def modern_rows(t, group, winner):
         reader = row["reader_id"]
         if reader.startswith("heocr-") and reader != winner:
             continue
-        result = {"name": row["reader"], "cells": score_cells(row)}
+        cells = [*text_score_cells(row), error_rate(row["missed_numbers"], row["ref_numbers"])]
+        result = {"name": row["reader"], "cells": cells}
         if reader == winner:
             if reader == "heocr-modern-1":
                 result["name"] = "HeOCR Modern v1"
@@ -413,7 +415,7 @@ def historical_results(t, data):
         for view, label, note in t["historical_views"]
     ]
     panel_id = "p-hist-open-scores"
-    columns = ("cer", "wer", "numbers")
+    columns = ("cer", "wer")
     tables = {}
     for view, label, _ in views:
         rows = []
@@ -422,7 +424,7 @@ def historical_results(t, data):
             note = t["historical_model_note"] if ours else t["descriptive"] if row["descriptive"] else None
             model_url = HISTORICAL_MODEL if row["id"] == "heocr-p-hist-v1-1" else None
             rows.append({"name": row["name"], "ours": ours, "model_url": model_url,
-                         "note": note, "cells": score_cells(row[view])})
+                         "note": note, "cells": text_score_cells(row[view])})
         tables[view, "pooled"] = result_table(t, f"{panel_id}-{view}-pooled", label, columns, rows)
 
     model = next(row for row in data["readers"] if row["id"].startswith("heocr-"))
@@ -441,7 +443,8 @@ def historical_results(t, data):
         f'<p class="benchmark-finding">{finding}</p>',
         score_panel(t, panel_id, views, (("pooled", "", ""),), tables, view_label=t["evaluation_view"],
                     alternatives=views[1][1]),
-        f'<p class="note benchmark-footnote">{e(t["cloud_note"])}</p>',
+        f'<p class="note benchmark-footnote">{e(t["historical_numbers_note"])}</p>',
+        f'<p class="note">{e(t["cloud_note"])}</p>',
         f'<p class="note">{e(t["historical_caveat"])}</p>',
         "</article>\n",
     ])

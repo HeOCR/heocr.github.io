@@ -120,7 +120,7 @@ class ReleaseBuilderTest(unittest.TestCase):
 
     def test_historical_has_two_scope_choices_and_labels_api_lanes(self):
         score = {"edits": 2, "chars": 100, "word_edits": 1, "words": 10,
-                 "missed_numbers": 0, "ref_numbers": 1}
+                 "missed_numbers": 1, "ref_numbers": 8}
         filtered = {**score, "edits": 1, "chars": 80, "word_edits": 2, "words": 8}
         historical = {
             "dataset": "Fixture historical", "leaves": 2, "regions": 3, "reference_lines": 30,
@@ -145,6 +145,10 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertIn('<bdi dir="ltr">2 / 8</bdi>', default)
             self.assertIn('<bdi dir="ltr">1 / 10</bdi>', fallback)
             self.assertIn(f'<bdi>Example historical API</bdi><small class="benchmark-reader-note">{t["descriptive"]}</small>', panel)
+            self.assertNotIn(t["metric_help"]["numbers"], panel)
+            self.assertNotIn('<bdi dir="ltr">1 / 8</bdi>', panel)
+            self.assertIn(t["historical_numbers_note"], panel)
+            self.assertIn(t["metric_help"]["numbers"], output.split('id="p-hist-open"', 1)[0])
             self.assertIn(t["historical_caveat"], panel)
             self.assertIn('href="methodology.html"', output)
             self.assertIn(t["region_count"].format(count=3), panel)
