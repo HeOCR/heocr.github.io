@@ -3,6 +3,7 @@
 import copy
 import hashlib
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -51,13 +52,80 @@ class ReleaseBuilderTest(unittest.TestCase):
                 self.assertEqual(indices, sorted(indices))
             self.assertEqual(opened.count("Example Reader 10"), 12)
             self.assertEqual(opened.count('role="region"'), 12)
-            self.assertIn(t["carrier_count"].format(carriers=0), opened)
+            self.assertNotIn('id="p-mod-open-all-issuer-scan"', opened)
+            self.assertIn('<details class="method benchmark-details" id="p-mod-open-captures">', opened)
+            self.assertIn(t["phone_note"], opened)
             self.assertNotIn("Example Reader ", closed)
             self.assertNotIn("90.00%", output)
             self.assertIn(t["closed_missing"], closed)
             self.assertIn(t["published"].format(public=16, registered=17), opened)
             self.assertNotIn("launch conditions", output.lower())
             self.assertIn(builder.DATASET, opened)
+
+    def test_one_model_selected_by_pooled_cer_for_every_view(self):
+        raw = example()
+        names = raw["readers"]
+        for index, (key, label) in enumerate((
+            ("heocr-slower", "Example slower model"),
+            ("heocr-winner", "Example best model"),
+            ("heocr-stock", "Example stock pipeline"),
+        )):
+            old_id = names[index]["id"]
+            names[index].update(id=key, label=label)
+            for view, groups in raw["modern_print"]["views"].items():
+                for carrier, group in groups.items():
+                    for row in group["readers"]:
+                        if row["reader"] == old_id:
+                            edits = (40, 20, 10)[index] if (view, carrier) == ("all", "pooled") else (10, 20, 5)[index]
+                            row.update(reader=key, edits=edits, cer=release.Decimal(edits) / 100)
+        raw["welfare_reports"]["readers"][0]["reader"] = names[0]["id"]
+        for lang in builder.T:
+            output = builder.page(lang, release.validate(raw))
+            self.assertEqual(output.count('<tr class="ours">'), 12)
+            self.assertEqual(output.count("Example best model"), 12)
+            self.assertNotIn("Example stock pipeline", output)
+            self.assertNotIn("Example slower model", output)
+            self.assertEqual(output.count("Example Reader 4"), 12)
+
+    def test_primary_order_and_independent_minima(self):
+        rows = [
+            {"name": "Slower", "cells": [builder.error_rate(4, 100), builder.error_rate(1, 10)]},
+            {"name": "Faster", "ours": True,
+             "cells": [builder.error_rate(3, 100), builder.error_rate(2, 10)]},
+            {"name": "Tied", "cells": [builder.error_rate(3, 100), builder.error_rate(0, 0)]},
+        ]
+        t = builder.T["en"]
+        table = builder.result_table(t, "fixture", "Fixture", ("CER", "WER"), rows)
+        body = re.findall(r'<tr(?: class="ours")?><th scope="row">.*?</tr>', table)
+        self.assertEqual([row.partition("<bdi>")[2].partition("</bdi>")[0] for row in body],
+                         ["Faster", "Tied", "Slower"])
+        self.assertRegex(body[0], 'class="benchmark-best"><bdi dir="ltr">3.00%')
+        self.assertRegex(body[1], 'class="benchmark-best"><bdi dir="ltr">3.00%')
+        self.assertRegex(body[2], 'class="benchmark-best"><bdi dir="ltr">10.00%')
+        self.assertEqual(table.count('class="benchmark-best"'), 3)
+
+    def test_historical_result_links_from_category_and_labels_api_lanes(self):
+        score = {"edits": 2, "chars": 100, "word_edits": 1, "words": 10,
+                 "missed_numbers": 0, "ref_numbers": 1}
+        historical = {
+            "dataset": "Fixture historical", "leaves": 2, "regions": 3, "reference_lines": 30,
+            "eligible_lines": 28, "filtered_lines": 25,
+            "readers": [
+                {"id": "heocr-example", "name": "Example historical model", "descriptive": False,
+                 "all": score, "filtered": score},
+                {"id": "example-api", "name": "Example historical API", "descriptive": True,
+                 "all": score, "filtered": score},
+            ],
+        }
+        for lang, t in builder.T.items():
+            output = builder.page(lang, release.validate(example()), historical=historical)
+            self.assertIn(f'<th scope="row">{t["categories"][3]}</th>'
+                          '<td><a href="#p-hist-open">Fixture historical</a></td>', output)
+            panel = output.split('id="p-hist-open"', 1)[1].split("</article>", 1)[0]
+            self.assertEqual(panel.count('<tr class="ours">'), 1)
+            self.assertIn(f'<bdi>Example historical API</bdi><small class="benchmark-reader-note">{t["descriptive"]}</small>', panel)
+            self.assertIn(t["historical_caveat"], panel)
+            self.assertIn('href="methodology.html"', output)
 
     def test_public_phone_aliases_preserve_the_legacy_aggregate_rows(self):
         sample = example()
