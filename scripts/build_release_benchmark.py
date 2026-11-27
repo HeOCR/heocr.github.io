@@ -44,13 +44,14 @@ T = {
         "historical_model_note": "Historical unpointed print",
         "api_capture": "Images scored",
         "api_alternatives": "Results for artwork-masked images",
-        "carriers": {"scanner": "Scanner", "phone-a": "Phone A", "phone-b": "Phone B", "issuer-render": "Digital render", "archive": "Archive", "issuer-scan": "Publisher scan"},
+        "carriers": {"scanner": "Scanner", "phone": "Phone", "issuer-render": "Digital render", "archive": "Archive", "issuer-scan": "Publisher scan"},
         "method": "Read the benchmark methodology", "preview": "Layout preview. Release figures are pending.",
         "open_result": "P-mod-open v0 results", "dataset": "Download the benchmark dataset", "doi": "Cite the dataset (Zenodo DOI)", "closed_missing": "No figure published here",
         "scope_pending": "The public dataset scope is pending source-rights review. The figures use the registered scope.",
         "published": "The public dataset includes {public} of the {registered} scored pages. The figures use the registered scope.",
         "numbers": "Numbers missed",
         "modern_intro": "Official gazettes, legal notices and other public documents in modern unpointed Hebrew.",
+        "phone_matched_note": "Two different phones photographed the same {pages} pages; results are pooled.",
         "modern_capture_design": "A scanner and two phones captured the same {matched} printed pages, scored against the same text for each page. Other images come from archives or publishers’ PDFs.",
         "reading": "All measures are error rates. Lower is better.",
         "primary_cer": "The primary metric is page character error rate (CER).",
@@ -59,8 +60,7 @@ T = {
         "capture_notes": {
             "pooled": "Combines the images from all capture types.",
             "scanner": "Office scans of the printed pages also photographed by both phones.",
-            "phone-a": "Photos from the first phone, covering the same pages as the scanner and Phone B.",
-            "phone-b": "Photos from the second phone, covering the same pages as the scanner and Phone A.",
+            "phone": "Results are pooled across the phones.",
             "issuer-render": "Page images rendered directly from the publishers’ PDFs.",
             "archive": "Page images obtained from archives.",
             "issuer-scan": "Scanned images supplied by the publishers.",
@@ -117,13 +117,14 @@ T = {
         "historical_model_note": "לדפוס היסטורי ללא ניקוד",
         "api_capture": "תמונות שנבדקו",
         "api_alternatives": "תוצאות לתמונות שבהן הוסתרו סמלים",
-        "carriers": {"scanner": "סורק", "phone-a": "טלפון א׳", "phone-b": "טלפון ב׳", "issuer-render": "תמונה דיגיטלית", "archive": "ארכיון", "issuer-scan": "סריקה של הגוף המפרסם"},
+        "carriers": {"scanner": "סורק", "phone": "טלפון", "issuer-render": "תמונה דיגיטלית", "archive": "ארכיון", "issuer-scan": "סריקה של הגוף המפרסם"},
         "method": "לשיטת בניית המבחנים", "preview": "תצוגה מקדימה של המבנה. נתוני ההערכה יתווספו לקראת הפרסום.",
         "open_result": "תוצאות P-mod-open v0", "dataset": "להורדת מערך המבחן", "doi": "ציטוט מערך הנתונים (Zenodo DOI)", "closed_missing": "אין כאן תוצאה שפורסמה",
         "scope_pending": "היקף מערך הנתונים הציבורי ייקבע לאחר בדיקת זכויות המקור. התוצאות מחושבות לפי הקבוצה הרשומה.",
         "published": "מערך הנתונים הציבורי כולל {public} מתוך {registered} העמודים שהוערכו. התוצאות מחושבות לפי הקבוצה הרשומה.",
         "numbers": "מספרים שלא זוהו",
         "modern_intro": "רשומות, הודעות משפטיות ומסמכים ציבוריים נוספים בדפוס עברי מודרני ללא ניקוד.",
+        "phone_matched_note": "שני טלפונים שונים צילמו את אותם {pages} עמודים. התוצאות מחושבות יחד.",
         "modern_capture_design": "אותם {matched} עמודים נסרקו וצולמו בשני טלפונים, וכל התמונות של עמוד נבדקות מול אותו טקסט ייחוס. יתר התמונות באו מארכיונים או מקובצי PDF של הגופים המפרסמים.",
         "reading": "כל המדדים מציגים שיעורי שגיאה. ככל שהשיעור נמוך יותר, התוצאה טובה יותר.",
         "primary_cer": "המדד הראשי הוא שיעור שגיאות התווים בעמוד (CER).",
@@ -132,8 +133,7 @@ T = {
         "capture_notes": {
             "pooled": "כל התמונות, מכל סוגי המקורות.",
             "scanner": "סריקות של אותם עמודים מודפסים שצולמו גם בשני הטלפונים.",
-            "phone-a": "תמונות מהטלפון הראשון, של אותם עמודים שנקלטו בסורק ובטלפון ב׳.",
-            "phone-b": "תמונות מהטלפון השני, של אותם עמודים שנקלטו בסורק ובטלפון א׳.",
+            "phone": "התוצאות מחושבות יחד לכל התמונות מהטלפונים.",
             "issuer-render": "תמונות שהופקו ישירות מקובצי PDF של הגופים המפרסמים.",
             "archive": "תמונות עמודים שמקורן בארכיונים.",
             "issuer-scan": "סריקות שסיפקו הגופים המפרסמים.",
@@ -362,6 +362,20 @@ def benchmark_metadata(t, counts, links=()):
     return f'<p class="benchmark-meta">{" · ".join([*metadata, *links])}</p>'
 
 
+def pool_phone_captures(groups):
+    streams = (groups["phone-a"], groups["phone-b"])
+    fields = ("edits", "chars", "word_edits", "words", "missed_numbers", "ref_numbers")
+    readers = {}
+    for stream in streams:
+        for row in stream["readers"]:
+            total = readers.setdefault(row["reader_id"], {
+                "reader_id": row["reader_id"], "reader": row["reader"], **dict.fromkeys(fields, 0),
+            })
+            for field in fields:
+                total[field] += row[field]
+    return {"carriers": sum(stream["carriers"] for stream in streams), "readers": list(readers.values())}
+
+
 def open_results(t, data, public_pages, api_rows):
     counts = [("page_count", data["pages"]), ("capture_count", data["carriers"])]
     if "reference_lines" in data:
@@ -384,8 +398,11 @@ def open_results(t, data, public_pages, api_rows):
         note = t["published"].format(public=public_pages, registered=data["pages"])
         out.append(f'<p class="note">{e(note)}</p>')
 
-    views = data["views"]
-    capture_notes = t["capture_notes"]
+    views = {view: {**groups, "phone": pool_phone_captures(groups)}
+             for view, groups in data["views"].items()}
+    capture_notes = t["capture_notes"].copy()
+    if "matched_pages" in data:
+        capture_notes["phone"] = t["phone_matched_note"].format(pages=data["matched_pages"])
     captures = [("pooled", t["all_images"].format(count=data["carriers"]), capture_notes["pooled"])]
     for key, label in t["carriers"].items():
         count = views["all"][key]["carriers"]
