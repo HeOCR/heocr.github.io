@@ -30,6 +30,7 @@ COPY = {
         "approval": "Access requires approval",
         "current": "Current release",
         "superseded": "Superseded (kept for reproducibility)",
+        "withdrawn": "Withdrawn",
         "pending": "Publication pending",
         "versions": "Versions",
         "by_source": {"real": "Real image datasets by source", "text": "Text corpora by source"},
@@ -47,6 +48,7 @@ COPY = {
         "approval": "הגישה דורשת אישור",
         "current": "הגרסה העדכנית",
         "superseded": "גרסה שהוחלפה (נשמרת לצורך שחזור)",
+        "withdrawn": "הוסרה",
         "pending": "טרם פורסם",
         "versions": "גרסאות",
         "by_source": {"real": "מאגרי תמונות לפי מקור", "text": "מאגרי טקסט לפי מקור"},
@@ -93,7 +95,9 @@ def load_catalog() -> dict:
             raise ValueError(f"Unexpected release status for {row['id']}")
         if type(row.get("duplicates_sources", False)) is not bool:
             raise ValueError(f"Expected a boolean duplicates_sources for {row['id']}")
-        for value in row["counts"].values():
+        if (path := row.get("release_path")) and not re.fullmatch(r"[a-z0-9.-]+(?:/[a-z0-9.-]+)*", path):
+            raise ValueError(f"Invalid release path for {row['id']}")
+        for value in [*row["counts"].values(), *row.get("release_counts", {}).values()]:
             if value is not None and (type(value) is not int or value < 0):
                 raise ValueError(f"Counts must be nonnegative integers for {row['id']}")
         partial = row["partial_pages"]
@@ -152,6 +156,8 @@ def release_links(row: dict, *, model: bool = False, latest_only: bool = False) 
     root = f"https://huggingface.co/{kind}{escape(row['id'], quote=True)}"
     revision = row["version"] if model else row["revision"]
     url = root if row.get("access") == "manual" else f"{root}/tree/{revision}"
+    if row.get("release_path") and row.get("access") != "manual":
+        url += f'/{escape(row["release_path"], quote=True)}'
     links = [f'<a href="{url}">Hugging Face</a>']
     dois = row["dois"][-1:] if latest_only else row["dois"]
     for ref in dois:
@@ -176,9 +182,14 @@ def version_history(row: dict, relatives: list[dict], lang: str) -> str:
         links = release_links(sibling, latest_only=True)
         stats_html = f'<div class="catalog-licence">{stats}</div>' if stats else ""
         entries.append(f'<bdi dir="ltr">{name}</bdi> · {licence}{state}{approval} · {links}{stats_html}')
-    for sibling in relatives:
-        entries.extend(earlier_links(sibling))
-    entries.extend(earlier_links(row))
+    for release in (row, *relatives):
+        for previous in release.get("withdrawn_versions", []):
+            entries.append(
+                f'<bdi dir="ltr">{escape(previous["label"])}</bdi> · {escape(COPY[lang]["withdrawn"])}. '
+                f'{escape(previous["reason"][lang])}'
+            )
+    for release in (*relatives, row):
+        entries.extend(earlier_links(release))
     if not entries:
         return ""
     items = "".join(f'<li>{item}</li>' for item in entries)
@@ -199,7 +210,7 @@ def earlier_links(row: dict) -> list[str]:
 
 def card(row: dict, lang: str, relatives: list[dict] | None = None) -> str:
     stats = []
-    for key, value in row["counts"].items():
+    for key, value in {**row["counts"], **row.get("release_counts", {})}.items():
         if key == "pages" and (partial := row["partial_pages"]):
             subset = f'<bdi dir="ltr">{escape(partial["scope"])}</bdi>'
             stats.append(statistic(key, partial["count"], lang) + f" ({subset})")

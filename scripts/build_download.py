@@ -15,9 +15,9 @@ FULL_MODEL_HUB = "https://huggingface.co/HeOCR/heocr-p-hist-full"
 QUICK_START_VERSION = "v1.1"
 MODEL_RELEASES = (
     ("MEASURED", QUICK_START_VERSION, "phist-v11", "measured_latest", MODEL_HUB, "10.5281/zenodo.24581274",
-     "held-out-evaluation-old-printed-hebrew-unpointed-v11"),
+     "benchmarks.html#p-hist-open-scores-filtered-pooled"),
     ("MEASURED", "v1.0", "phist-v10", "measured_previous", MODEL_HUB, "10.5281/zenodo.24578440",
-     "held-out-evaluation-old-printed-hebrew-unpointed"),
+     f"{MODEL_HUB}/blob/v1.0/README.md#held-out-evaluation-old-printed-hebrew-unpointed"),
     ("FULL", "v1.0-full", "phist-full-v10", "full_v10", FULL_MODEL_HUB, "10.5281/zenodo.24582845", None),
 )
 QUICK_START = (
@@ -66,7 +66,7 @@ def page(lang: str) -> str:
     text = {key: escape(value) for key, value in T[lang].items()}
     model_cards = []
     for variant, version, anchor, description, hub, doi, result in MODEL_RELEASES:
-        benchmark = (f'<a href="{hub}/blob/{version}/README.md#{result}">{text["model_benchmark"]}</a>'
+        benchmark = (f'<a href="{result}">{text["model_benchmark"]}</a>'
                      if result else "")
         model_cards.append(
             f'<div class="card" id="{anchor}"><h3><bdi dir="ltr">HeOCR P-hist {variant} {version}</bdi></h3>'

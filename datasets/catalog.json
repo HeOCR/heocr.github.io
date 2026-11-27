@@ -426,12 +426,12 @@
     },
     {
       "id": "HeOCR/htext-sefaria",
-      "revision": "8da7fb539e9ac8fc40c4f6e4f7073cb9a575bb38",
+      "revision": "afcf93c24cda1ccbc80f3fe8fa49599b0ea5708b",
       "group": "text",
       "title": "htext · Sefaria",
       "description": {
-        "en": "Hebrew and Aramaic training text from Sefaria, including 29,138,462 lines in v3.",
-        "he": "טקסט לאימון בעברית ובארמית מספריא, כולל 29,138,462 שורות בגרסה השלישית."
+        "en": "Hebrew and Aramaic training text from Sefaria.",
+        "he": "טקסט לאימון בעברית ובארמית מספריא."
       },
       "license": "sefaria",
       "access": "public",
@@ -445,20 +445,40 @@
           "label": "v2 CC0"
         },
         {
-          "id": "10.5281/zenodo.24581317",
-          "label": "v3-cc0"
+          "id": "10.5281/zenodo.24583313",
+          "label": "v3.1-cc0"
         }
       ],
       "counts": {
         "documents": null,
         "pages": null,
         "images": null,
-        "lines": 29202946,
+        "lines": 29058826,
         "words": null,
         "characters": null,
-        "bytes": 1464555245
+        "bytes": 1457501116
       },
-      "partial_pages": null
+      "partial_pages": null,
+      "release_path": "releases/sefaria-v3.1-cc0",
+      "status": "current",
+      "release_counts": {
+        "documents": 4695,
+        "pages": null,
+        "images": null,
+        "lines": 28994342,
+        "words": null,
+        "characters": null,
+        "bytes": 1426701616
+      },
+      "withdrawn_versions": [
+        {
+          "label": "v3-cc0",
+          "reason": {
+            "en": "The replacement removes material reserved for evaluation.",
+            "he": "בגרסה המחליפה הוסר חומר ששוריין להערכה."
+          }
+        }
+      ]
     },
     {
       "id": "HeOCR/htext-sefaria-by",
@@ -678,6 +698,93 @@
         "words": null,
         "characters": null,
         "bytes": 42006709
+      },
+      "partial_pages": null,
+      "duplicates_sources": true
+    },
+    {
+      "id": "HeOCR/htext-cc0",
+      "revision": "f74bcfcb2eca39194c3962ec5e82a0c45f11ed69",
+      "group": "text",
+      "title": "htext-cc0",
+      "description": {
+        "en": "Public-domain, CC0 and official Hebrew and Aramaic text for OCR training.",
+        "he": "טקסט בעברית ובארמית לאימון OCR, ממקורות בנחלת הכלל, ברישיון CC0 ומפרסומים רשמיים."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24583809",
+          "label": "v1"
+        }
+      ],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": null,
+        "lines": 74347024,
+        "words": null,
+        "characters": null,
+        "bytes": 1254833169
+      },
+      "partial_pages": null,
+      "duplicates_sources": true
+    },
+    {
+      "id": "HeOCR/htext-by",
+      "revision": "302605896568ab0bb4b1987b50c8fee7c874306d",
+      "group": "text",
+      "title": "htext-by",
+      "description": {
+        "en": "Hebrew and Aramaic OCR training text with attribution, including Sefaria editions.",
+        "he": "טקסט בעברית ובארמית לאימון OCR ברישיון הדורש ייחוס, כולל מהדורות מספריא."
+      },
+      "license": "cc-by-4.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24583224",
+          "label": "v1"
+        }
+      ],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": null,
+        "lines": 1409213,
+        "words": null,
+        "characters": null,
+        "bytes": 24043389
+      },
+      "partial_pages": null,
+      "duplicates_sources": true
+    },
+    {
+      "id": "HeOCR/htext-by-sa",
+      "revision": "169531494d3cc085938a7b58e4ddd5bd76f59769",
+      "group": "text",
+      "title": "htext-by-sa",
+      "description": {
+        "en": "Hebrew and Aramaic OCR training text under share-alike terms, from Wikisource and Sefaria.",
+        "he": "טקסט בעברית ובארמית לאימון OCR מוויקיטקסט ומספריא, ברישיון ייחוס ושיתוף זהה."
+      },
+      "license": "cc-by-sa-4.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24583234",
+          "label": "v1"
+        }
+      ],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": null,
+        "lines": 758879,
+        "words": null,
+        "characters": null,
+        "bytes": 12532764
       },
       "partial_pages": null,
       "duplicates_sources": true

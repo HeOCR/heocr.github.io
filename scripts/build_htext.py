@@ -48,7 +48,7 @@ T = {
         "c_in": "Release",
         "planned_h": "Planned sources",
         "planned_p": "Sources being prepared. Each is published only after its rights are checked entry by entry.",
-        "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_prev": "Earlier version", "c_issues": "known issues", "c_withdrawn": "withdrawn {d}: its files overlapped HeOCR's evaluation text", "c_withdrawn_corpus": "Withdrawn {d}. A corrected check by HeOCR's evaluation found that these files share text with its evaluation sets, so they were taken down from GitHub, Hugging Face and Zenodo. HeOCR keeps a private backup; decontaminated versions will be published as new versions.", "c_status_withdrawn": "withdrawn", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "all versions", "c_hf": "Hugging Face", "c_hf_filtered": "Corrected check: zero shared 6-grams across 16 evaluation pools for these exact text files", "c_hf_same": "the same files as the GitHub release", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
+        "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_prev": "Earlier version", "c_issues": "known issues", "c_withdrawn": "withdrawn {d}: its files overlapped HeOCR's evaluation text", "c_status_withdrawn": "withdrawn", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "all versions", "c_hf": "Hugging Face", "c_hf_filtered": "Corrected check: zero shared 6-grams across 16 evaluation pools for these exact text files", "c_hf_same": "the same files as the GitHub release", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
         "th_file": "File", "th_variant": "Variant", "th_subset": "Subset", "th_lines": "Lines", "th_works": "Works", "th_laws": "Laws", "th_books": "Books", "th_size": "Size",
         "th_pages": "Articles", "th_sittings": "Sittings",
         "c_privacy": "The private-name filter removed {lines} lines before publication.",
@@ -104,7 +104,7 @@ T = {
         "c_in": "גרסת htext",
         "planned_h": "מקורות מתוכננים",
         "planned_p": "מקורות בהכנה. כל אחד מתפרסם רק אחרי שזכויותיו נבדקו פריט אחר פריט.",
-        "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_prev": "גרסה קודמת", "c_issues": "בעיות ידועות", "c_withdrawn": "הוסרה ב־{d}: הקבצים שלה חפפו לטקסט ההערכה של HeOCR", "c_withdrawn_corpus": "הוסר ב־{d}. בדיקה מתוקנת של צוות ההערכה של HeOCR מצאה שהקבצים חולקים טקסט עם מערכי ההערכה, ולכן הם הורדו מ־GitHub, מ־Hugging Face ומ־Zenodo. ל־HeOCR יש גיבוי פרטי; גרסאות מנוקות יפורסמו כגרסאות חדשות.", "c_status_withdrawn": "הוסר", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "כל הגרסאות", "c_hf": "Hugging Face", "c_hf_filtered": "בבדיקה המתוקנת נמצאו אפס רצפים משותפים של שש מילים מול 16 מאגרי הערכה, עבור קובצי הטקסט האלה", "c_hf_same": "אותם קבצים כמו בגרסה ב־GitHub", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
+        "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_prev": "גרסה קודמת", "c_issues": "בעיות ידועות", "c_withdrawn": "הוסרה ב־{d}: הקבצים שלה חפפו לטקסט ההערכה של HeOCR", "c_status_withdrawn": "הוסר", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "כל הגרסאות", "c_hf": "Hugging Face", "c_hf_filtered": "בבדיקה המתוקנת נמצאו אפס רצפים משותפים של שש מילים מול 16 מאגרי הערכה, עבור קובצי הטקסט האלה", "c_hf_same": "אותם קבצים כמו בגרסה ב־GitHub", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
         "th_file": "קובץ", "th_variant": "גרסה", "th_subset": "סוג", "th_lines": "שורות", "th_works": "יצירות", "th_laws": "חוקים", "th_books": "ספרים", "th_size": "גודל",
         "th_pages": "ערכים", "th_sittings": "ישיבות",
         "c_privacy": "מסנן השמות של אנשים פרטיים הסיר {lines} שורות לפני הפרסום.",
@@ -175,12 +175,8 @@ def corpus_version(c: dict, rel: dict, lang: str) -> str:
     w = out.append
     w(f'<h4 id="{e(c["id"])}">{e(c["name"][lang])}</h4>\n')
     if c.get("withdrawn"):
-        w(f'<span class="status">{e(t["c_status_withdrawn"])}</span><span class="status">{e(rel[c["htext_release"]]["name"])}</span>\n')
-        w(f'<p>{e(c["description"][lang])}</p>\n<p class="note">{e(t["c_withdrawn_corpus"].format(d=c["withdrawn"]))}</p>\n')
-        w('<ul class="facts">\n'
-          f'<li>{t["c_source"]}: <a href="{e(c["source"]["url"])}">{e(c["source"]["name"][lang])}</a> ({e(c["source_licence"][lang])})</li>\n'
-          f'<li>{t["c_release"]}: <a href="{e(c["release"]["url"])}">{e(c["release"]["tag"])}</a> ({t["c_issues"]}: <a href="{e(c["card_url"].replace("CORPUS_CARD.md", "KNOWN_ISSUES.md"))}">KNOWN_ISSUES.md</a>)</li>\n'
-          "</ul>\n")
+        w(f'<span class="status">{e(t["c_status_withdrawn"])}</span>\n')
+        w(f'<p class="note">{e(c["withdrawal_reason"][lang])}</p>\n')
         return "".join(out)
     w(f'<span class="status">{e(c["release"]["tag"])}</span><span class="status">{e(rel[c["htext_release"]]["name"])}</span>\n')
     w(f'<p>{e(c["description"][lang])}</p>\n')
@@ -353,7 +349,7 @@ def page(lang: str, R: dict, catalog: dict) -> str:
     for p in t["rights_p"]:
         w(f"<p>{p}</p>\n")
     w('<ul class="facts">\n')
-    for c in C:
+    for c in live:
         w(f'<li><b>{e(c["source"]["name"][lang])}</b>: {e(c["rights_basis"][lang])}</li>\n')
     w("</ul>\n</section>\n")
     # --- 4. Use
@@ -368,7 +364,7 @@ def page(lang: str, R: dict, catalog: dict) -> str:
     w(f'<p>{t["use_build"].format(doc="https://github.com/HeOCR/htext/blob/main/docs/pby_corpus.md")}</p>\n</section>\n')
     # --- 5. Credit
     w(f'<section id="credit">\n<h2>{e(t["credit_h"])}</h2>\n<p>{e(t["credit_p"])}</p>\n')
-    for c in C:
+    for c in live:
         if c.get("credit"):
             w(f'<p class="credit">Credit: <a href="{e(c["credit"]["url"])}">{e(c["credit"]["text"]["en"])}</a>'
               + (f' · קרדיט: <a href="{e(c["credit"]["url"])}">{e(c["credit"]["text"]["he"])}</a>' if lang == "he" else "")
@@ -389,6 +385,8 @@ def import_card(R: dict, cid: str, path: Path) -> None:
     entry = next((c for c in R["corpora"] if c["id"] == cid), None)
     if entry is None:
         sys.exit(f"no corpus '{cid}' in corpora.json: add its entry (names, source, rights, credit, release) first")
+    if entry.get("withdrawn"):
+        sys.exit(f"cannot import files for withdrawn corpus {cid}")
     previous = {f["name"]: f for f in entry["files"]}
     files = []
     for name, info in card["files"].items():
