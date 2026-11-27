@@ -15,35 +15,44 @@ import shell
 ROOT = Path(__file__).resolve().parents[1]
 e = html.escape
 DATASET = "https://huggingface.co/datasets/HeOCR/p-mod-open-v0"
+HISTORICAL_MODEL = "https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.1"
 T = {
     "en": {
         "title": "HeOCR benchmarks", "lede": "Real-world held-out benchmarks, with open sets first.",
         "open": "Open held-out sets", "open_text": "Open sets are designed so others can evaluate their readers independently.",
         "closed": "Closed held-out sets", "closed_text": "Closed sets may include private sources. They will also be reported, but cannot be independently reproduced in full.",
-        "category": "Category", "result": "Held-out result", "missing": "Not measured on a held-out set yet",
-        "categories": [
-            "Modern printed, unpointed",
-            "Modern printed, pointed",
-            "Modern printed (weighted)",
-            "Historical printed, unpointed",
-            "Historical printed, pointed",
-            "Historical printed (weighted)",
-            "Historical handwriting",
-            "Modern handwriting",
-            "Handwriting (weighted)",
-        ],
+        "modern": "Modern unpointed print",
+        "historical": "Historical unpointed print",
+        "more_sets": "More sets in progress",
+        "in_progress": ("Pointed modern print", "Pointed historical print", "Historical handwriting", "Modern handwriting", "Weighted scores"),
+        "evaluation_view": "Evaluation view",
+        "capture": "Capture type",
+        "alternatives": "Other views and captures",
+        "all_images": "All ({count})",
+        "modern_views": (
+            ("filtered", "Verified, no known training overlap (recommended)",
+             "Scores only words and characters with independently checked reference text and no known overlap with project training."),
+            ("all", "All reference text", "Scores every word and character in the benchmark’s reference text."),
+        ),
+        "historical_views": (
+            ("filtered", "No known training-text overlap (recommended)",
+             "Scores {filtered} lines of AI-reviewed reference text after removing known training-text overlap."),
+            ("all", "All reference text", "Scores every eligible line in the reference text ({eligible} of {total} lines)."),
+        ),
+        "historical_result": "{model} led the registered comparators in both views, with {all_cer} CER across all eligible text and {filtered_cer} after filtering.",
+        "modern_model_note": "Modern unpointed print",
+        "historical_model_note": "Historical unpointed print",
+        "api_capture": "Images scored",
+        "api_alternatives": "Results for artwork-masked images",
+        "carriers": {"scanner": "Scanner", "phone-a": "Phone A", "phone-b": "Phone B", "issuer-render": "Digital render", "archive": "Archive", "issuer-scan": "Publisher scan"},
         "method": "Read the benchmark methodology", "preview": "Layout preview. Release figures are pending.",
         "open_result": "P-mod-open v0 results", "dataset": "Download the benchmark dataset", "doi": "Cite the dataset (Zenodo DOI)", "closed_missing": "No figure published here",
         "scope_pending": "The public dataset scope is pending source-rights review. The figures use the registered scope.",
-        "carrier_count": "{carriers} images", "published": "The public dataset includes {public} of the {registered} scored pages. The figures use the registered scope.",
+        "published": "The public dataset includes {public} of the {registered} scored pages. The figures use the registered scope.",
         "numbers": "Numbers missed",
-        "views": {"all": "All captures", "filtered": "Filtered view"},
-        "filtered_note": "Includes positions verified independently with no known overlap with project training.",
-        "by_capture": "By capture type",
         "phone_note": "Phone A and Phone B are two phones that photographed the same pages.",
         "modern_intro": "{pages} pages of modern unpointed Hebrew, mostly legal notices and gazettes, across {carriers} images from archives, publishers, a scanner, and two phones.",
         "primary_cer": "The primary metric is page character error rate (CER). Lower is better.",
-        "category_index": "Browse all categories",
         "closed_nav": "Closed sets",
         "commercial": "Additional API comparisons",
         "commercial_note": "The APIs were measured separately on 56 images with the original scored pixels and nine with artwork masked for public release.",
@@ -52,50 +61,51 @@ T = {
         "gemini_note": "Gemini’s model family helped build the v0 references and may have an advantage.",
         "haiku_note": "Haiku 4.5 hit its output limit on 11 images.",
         "historical_intro": "Public-domain scans of historical unpointed Hebrew print. The set contains {leaves} leaves, {regions} image regions, and {lines} reference lines.",
-        "historical_scope": "The deciding views use {eligible} eligible lines and {filtered} lines after excluding known training-text overlap.",
-        "historical_all": "All eligible",
         "all_positions": "All positions",
         "historical_filtered": "Filtered",
-        "historical_pooled": "Pooled results",
-        "historical_result": "{model} had the lowest CER among the registered comparators in both deciding views.",
         "historical_caveat": "HeOCR P-hist v1.1 is a fine-tune of Rivok Full. The v0.1 references came from two independent AI transcriptions and adjudication. A re-score with human-proofread references is coming.",
         "descriptive": "Descriptive",
         "cloud_note": "Google’s descriptive scores use the same eligible and filtered lines. The registered result was decided before these comparisons.",
-        "wer_all": "Word error (all)",
         "primary": "Primary",
         "best": "Lowest error",
-        "ours": "HeOCR model",
-        "carriers": {"archive": "Archive", "issuer-render": "Publisher PDF render", "issuer-scan": "Publisher scan", "scanner": "Scanner", "phone-a": "Phone A", "phone-b": "Phone B"},
-        "reader": "Reader", "cer": "CER", "wer": "Word error rate",
+        "reader": "Reader", "cer": "CER", "wer": "Word error",
     },
     "he": {
         "title": "מדדי ביצועים של HeOCR", "lede": "מבחנים על נתונים אמיתיים שהוחזקו בצד, עם הקבוצות הפתוחות תחילה.",
         "open": "קבוצות פתוחות שהוחזקו בצד", "open_text": "קבוצות פתוחות נועדו לאפשר הערכה עצמאית של מנועי זיהוי.",
         "closed": "קבוצות סגורות שהוחזקו בצד", "closed_text": "קבוצות סגורות עשויות לכלול מקורות פרטיים. גם תוצאותיהן ידווחו, אך לא ניתן לשחזר אותן במלואן באופן עצמאי.",
-        "category": "קטגוריה", "result": "תוצאה על קבוצה מוחזקת בצד", "missing": "עוד לא נמדד על קבוצה מוחזקת בצד",
-        "categories": [
-            "דפוס מודרני ללא ניקוד",
-            "דפוס מודרני מנוקד",
-            "דפוס מודרני (משוקלל)",
-            "דפוס היסטורי ללא ניקוד",
-            "דפוס היסטורי מנוקד",
-            "דפוס היסטורי (משוקלל)",
-            "כתב יד היסטורי",
-            "כתב יד מודרני",
-            "כתב יד (משוקלל)",
-        ],
+        "modern": "דפוס מודרני ללא ניקוד",
+        "historical": "דפוס היסטורי ללא ניקוד",
+        "more_sets": "מערכי מבחן נוספים בהכנה",
+        "in_progress": ("דפוס מודרני מנוקד", "דפוס היסטורי מנוקד", "כתב יד היסטורי", "כתב יד מודרני", "ציונים משוקללים"),
+        "evaluation_view": "איזה טקסט נבדק",
+        "capture": "סוג תמונה",
+        "alternatives": "תוצאות לפי טקסט או סוג תמונה",
+        "all_images": "הכול ({count})",
+        "modern_views": (
+            ("filtered", "טקסט מאומת ללא חפיפה ידועה לאימון (מומלץ)",
+             "בודקים רק מילים ותווים שטקסט הייחוס שלהם אומת באופן עצמאי ושאין להם חפיפה ידועה עם נתוני האימון של הפרויקט."),
+            ("all", "כל טקסט הייחוס", "בודקים את כל המילים והתווים בטקסט הייחוס של המבחן."),
+        ),
+        "historical_views": (
+            ("filtered", "ללא חפיפה ידועה לטקסט האימון (מומלץ)",
+             "בודקים {filtered} שורות מטקסט הייחוס שהוכן באמצעות בינה מלאכותית, לאחר הסרת חפיפה ידועה עם טקסט האימון."),
+            ("all", "כל טקסט הייחוס", "בודקים את כל השורות הכשירות בטקסט הייחוס ({eligible} מתוך {total})."),
+        ),
+        "historical_result": "{model} הוביל בשתי ההשוואות שנרשמו מראש עם {all_cer} שגיאות תווים בכל הטקסט הכשיר ו־{filtered_cer} לאחר סינון.",
+        "modern_model_note": "לדפוס מודרני ללא ניקוד",
+        "historical_model_note": "לדפוס היסטורי ללא ניקוד",
+        "api_capture": "תמונות שנבדקו",
+        "api_alternatives": "תוצאות לתמונות שבהן הוסתרו סמלים",
+        "carriers": {"scanner": "סורק", "phone-a": "טלפון א׳", "phone-b": "טלפון ב׳", "issuer-render": "תמונה דיגיטלית", "archive": "ארכיון", "issuer-scan": "סריקה של הגוף המפרסם"},
         "method": "לשיטת בניית המבחנים", "preview": "תצוגה מקדימה של המבנה. נתוני ההערכה יתווספו לקראת הפרסום.",
         "open_result": "תוצאות P-mod-open v0", "dataset": "להורדת מערך המבחן", "doi": "ציטוט מערך הנתונים (Zenodo DOI)", "closed_missing": "אין כאן תוצאה שפורסמה",
         "scope_pending": "היקף מערך הנתונים הציבורי ייקבע לאחר בדיקת זכויות המקור. התוצאות מחושבות לפי הקבוצה הרשומה.",
-        "carrier_count": "{carriers} תמונות", "published": "מערך הנתונים הציבורי כולל {public} מתוך {registered} העמודים שהוערכו. התוצאות מחושבות לפי הקבוצה הרשומה.",
+        "published": "מערך הנתונים הציבורי כולל {public} מתוך {registered} העמודים שהוערכו. התוצאות מחושבות לפי הקבוצה הרשומה.",
         "numbers": "מספרים שלא זוהו",
-        "views": {"all": "כל התמונות", "filtered": "תוצאות לאחר סינון"},
-        "filtered_note": "מיקומים שאומתו באופן עצמאי ושאין להם חפיפה ידועה עם נתוני האימון של הפרויקט.",
-        "by_capture": "לפי סוג הלכידה",
         "phone_note": "טלפון א׳ וטלפון ב׳ הם שני מכשירים שונים שצילמו את אותם העמודים.",
         "modern_intro": "{pages} עמודים של דפוס עברי מודרני ללא ניקוד, בעיקר מתוך רשומות והודעות משפטיות, ב־{carriers} תמונות מארכיונים, מגופים מפרסמים, מסורק ומשני טלפונים.",
         "primary_cer": "המדד הראשי הוא שיעור שגיאות התווים בעמוד (CER). ככל שהוא נמוך יותר, התוצאה טובה יותר.",
-        "category_index": "כל הקטגוריות",
         "closed_nav": "קבוצות סגורות",
         "commercial": "השוואות נוספות לשירותי זיהוי",
         "commercial_note": "השירותים נבדקו בנפרד על 56 תמונות שבהן הפיקסלים זהים לאלה שנמדדו במקור, ועל תשע תמונות שבהן הוסתרו סמלים לקראת הפרסום.",
@@ -104,53 +114,34 @@ T = {
         "gemini_note": "מודל מאותה משפחה של Gemini השתתף בהכנת טקסטי הייחוס של v0, ולכן ייתכן שיש לו יתרון.",
         "haiku_note": "Haiku 4.5 הגיע למגבלת אורך התשובה ב־11 תמונות.",
         "historical_intro": "סריקות ברשות הציבור של דפוס עברי היסטורי ללא ניקוד. הקבוצה כוללת {leaves} דפים, {regions} אזורים בתמונות ו־{lines} שורות ייחוס.",
-        "historical_scope": "התוצאה נקבעת לפי שתי קבוצות שורות: {eligible} שורות כשירות ו־{filtered} שורות לאחר הסרת חפיפה ידועה עם טקסטי האימון.",
-        "historical_all": "כולן",
         "all_positions": "כל המיקומים",
         "historical_filtered": "לאחר סינון",
-        "historical_pooled": "תוצאות מצטברות",
-        "historical_result": "ל־{model} היה שיעור שגיאות התווים הנמוך ביותר מבין המנועים שנרשמו מראש, בשתי קבוצות השורות.",
         "historical_caveat": "HeOCR P-hist v1.1 מבוסס על כוונון נוסף של Rivok Full. טקסטי הייחוס של v0.1 הוכנו בשני תעתוקים עצמאיים באמצעות בינה מלאכותית ובהכרעה ביניהם. בהמשך נחשב את הציונים שוב לפי טקסטי ייחוס שעברו הגהה אנושית.",
         "descriptive": "תיאורי",
         "cloud_note": "הציונים התיאוריים של Google חושבו על אותן שורות כשירות ומסוננות. התוצאה הרשומה נקבעה לפני ההשוואות האלה.",
-        "wer_all": "שגיאות מילים (כולן)",
         "primary": "ראשי",
         "best": "שיעור השגיאות הנמוך ביותר",
-        "ours": "מודל HeOCR",
-        "carriers": {"archive": "ארכיון", "issuer-render": "תמונה מתוך PDF של הגוף המפרסם", "issuer-scan": "סריקה של הגוף המפרסם", "scanner": "סורק", "phone-a": "טלפון א׳", "phone-b": "טלפון ב׳"},
         "reader": "מנוע זיהוי", "cer": "CER", "wer": "שגיאות מילים",
     },
 }
-
-
-def category_table(t, scored_links=None, *, missing=None, preview=False):
-    rows = []
-    missing = "—" if preview else e(missing or t["missing"])
-    for index, name in enumerate(t["categories"]):
-        result = (scored_links or {}).get(index, missing)
-        rows.append(f'<tr><th scope="row">{e(name)}</th><td>{result}</td></tr>\n')
-    return (
-        f'<div class="tablewrap"><table><thead><tr><th scope="col">{e(t["category"])}</th>'
-        f'<th scope="col">{e(t["result"])}</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>\n'
-    )
 
 
 def numbers(value):
     return f'<bdi dir="ltr">{value}</bdi>'
 
 
-def error_rate(edits, denominator, *, as_count=False):
+def percentage(value):
+    return numbers(f"{Decimal(value.numerator) * 100 / value.denominator:.2f}%")
+
+
+def error_rate(edits, denominator):
     if denominator == 0:
-        return None, "—"
-    value = Fraction(edits, denominator)
-    if as_count:
-        return value, numbers(f"{edits:,} / {denominator:,}")
-    return value, numbers(f"{Decimal(edits) * 100 / denominator:.2f}%")
+        return None, ""
+    return Fraction(edits, denominator), numbers(f"{edits:,} / {denominator:,}")
 
 
-def result_table(t, heading_id, caption, columns, rows, *, level=4):
-    # A table always uses column zero as the primary metric. Compare the exact
-    # ratios so rounding percentages for display does not change the ranking.
+def result_table(t, table_id, caption, columns, rows):
+    # Use exact ratios so display rounding cannot change the order or winners.
     def order(row):
         value = row["cells"][0][0]
         return value is None, value, row["name"].casefold()
@@ -168,21 +159,29 @@ def result_table(t, heading_id, caption, columns, rows, *, level=4):
     body = []
     for row in sorted(rows, key=order):
         ours = row.get("ours", False)
-        marker = t["ours"] if ours else t["descriptive"] if row.get("descriptive") else None
+        marker = row.get("note")
         label = f'<bdi>{e(row["name"])}</bdi>'
+        if ours:
+            label = f'<a href="{e(row["model_url"])}">{label}</a>'
         if marker:
             label += f'<small class="benchmark-reader-note">{e(marker)}</small>'
         cells = []
-        for (value, formatted), lowest in zip(row["cells"], best, strict=True):
-            if value is not None and value == lowest:
-                formatted = f'<strong class="benchmark-best">{formatted}<span class="benchmark-sr-only"> ({e(t["best"])})</span></strong>'
-            cells.append(f'<td class="num">{formatted}</td>')
+        for (value, fraction), lowest in zip(row["cells"], best, strict=True):
+            if value is None:
+                cells.append('<td class="num">—</td>')
+                continue
+            score = percentage(value)
+            if value == lowest:
+                score = (f'<span class="benchmark-best">{score}'
+                         f'<span class="benchmark-sr-only"> ({e(t["best"])})</span></span>')
+            cells.append(f'<td class="num"><strong class="benchmark-score">{score}</strong>'
+                         f'<small class="benchmark-fraction">{fraction}</small></td>')
         row_class = ' class="ours"' if ours else ""
         body.append(f'<tr{row_class}><th scope="row">{label}</th>{"".join(cells)}</tr>')
     return (
-        f'<h{level} id="{heading_id}">{e(caption)}</h{level}>'
-        f'<div class="tablewrap benchmark-table" role="region" tabindex="0" aria-labelledby="{heading_id}">'
-        f'<table><thead><tr><th scope="col">{e(t["reader"])}</th>{headers}</tr></thead>'
+        f'<div id="{table_id}" class="tablewrap benchmark-table">'
+        f'<table><caption class="benchmark-sr-only">{e(caption)}</caption>'
+        f'<thead><tr><th scope="col">{e(t["reader"])}</th>{headers}</tr></thead>'
         f'<tbody>{"".join(body)}</tbody></table></div>\n'
     )
 
@@ -191,23 +190,76 @@ def link(target, label):
     return f'<a href="{e(target)}">{e(label)}</a>'
 
 
-def disclosure(summary, content, *, identifier=None):
+def disclosure(summary, content, *, identifier=None, group=None):
     attr = f' id="{identifier}"' if identifier else ""
+    if group:
+        attr += f' name="{group}"'
     return (f'<details class="method benchmark-details"{attr}><summary>{e(summary)}</summary>'
             f'<div class="benchmark-details-body">{content}</div></details>\n')
+
+
+def radio_group(panel_id, dimension, legend, options):
+    items = []
+    for i, (key, label, _) in enumerate(options):
+        checked = " checked" if i == 0 else ""
+        items.append(
+            f'<label><input type="radio" name="{panel_id}-{dimension}" '
+            f'data-score-{dimension} value="{key}"{checked}><span>{e(label)}</span></label>'
+        )
+    return (f'<fieldset class="benchmark-options"><legend>{e(legend)}</legend>'
+            f'<div class="benchmark-pills">{"".join(items)}</div></fieldset>')
+
+
+def score_panel(t, panel_id, views, captures, tables, *, view_label, alternatives):
+    """Render the default and native disclosures from the same score tables."""
+    first_view = views[0][0]
+    first_capture = captures[0][0]
+    controls = [radio_group(panel_id, "view", view_label, views)]
+    if len(captures) > 1:
+        controls.append(radio_group(panel_id, "capture", t["capture"], [
+            (key, label, "") for key, label in captures
+        ]))
+    notes = []
+    fallback = []
+    for view, title, note in views:
+        if note:
+            hidden = "" if view == first_view else " hidden"
+            notes.append(f'<p class="note benchmark-view-note" data-score-note="{view}"{hidden}>{e(note)}</p>')
+        options = []
+        for capture, capture_label in captures:
+            if (view, capture) == (first_view, first_capture):
+                continue
+            table = tables[view, capture]
+            if len(captures) > 1:
+                table = disclosure(capture_label, table, group=f"{panel_id}-{view}-captures")
+            options.append(table)
+        if options and len(captures) > 1:
+            explanation = f'<p class="note">{e(note)}</p>'
+            fallback.append(disclosure(title, explanation + "".join(options), identifier=f"{panel_id}-{view}"))
+        elif options:
+            explanation = f'<p class="note">{e(note)}</p>' if note else ""
+            fallback.append(explanation + "".join(options))
+    return "".join([
+        f'<div class="benchmark-selector" data-score-panel="{panel_id}">',
+        f'<div class="benchmark-controls" data-score-controls hidden>{"".join(controls)}</div>',
+        "".join(notes),
+        '<p class="benchmark-sr-only" role="status" data-score-status></p>',
+        f'<div data-score-active>{tables[first_view, first_capture]}</div>',
+        disclosure(alternatives, "".join(fallback), identifier=f"{panel_id}-alternatives"),
+        '</div>\n',
+    ])
 
 
 def score_cells(row):
     return [
         error_rate(row["edits"], row["chars"]),
         error_rate(row["word_edits"], row["words"]),
-        error_rate(row["missed_numbers"], row["ref_numbers"], as_count=True),
+        error_rate(row["missed_numbers"], row["ref_numbers"]),
     ]
 
 
 def best_modern_model(data):
-    # Keep the pooled winner fixed across all views and captures. The stock
-    # pipeline is a baseline, so only choose among trained HeOCR models.
+    # Select once on the pooled primary metric, then keep the model fixed.
     candidates = [
         row for row in data["views"]["all"]["pooled"]["readers"]
         if row["reader_id"].startswith("heocr-") and row["reader_id"] != "heocr-stock"
@@ -216,32 +268,39 @@ def best_modern_model(data):
     return winner["reader_id"] if winner is not None else None
 
 
-def modern_table(t, heading, title, group, winner, *, level=4):
-    rows = [
-        {"name": "HeOCR Modern v1" if row["reader_id"] == "heocr-modern-1" else row["reader"],
-         "ours": row["reader_id"] == winner, "cells": score_cells(row)}
-        for row in group["readers"]
-        if not row["reader_id"].startswith("heocr-") or row["reader_id"] == winner
-    ]
-    return result_table(t, heading, title, (t["cer"], t["wer"], t["numbers"]), rows, level=level)
+def modern_rows(t, group, winner):
+    rows = []
+    for row in group["readers"]:
+        reader = row["reader_id"]
+        if reader.startswith("heocr-") and reader != winner:
+            continue
+        result = {"name": row["reader"], "cells": score_cells(row)}
+        if reader == winner:
+            if reader == "heocr-modern-1":
+                result["name"] = "HeOCR Modern v1"
+            result.update(ours=True, model_url="download.html", note=t["modern_model_note"])
+        rows.append(result)
+    return rows
 
 
 def modern_api_results(t, api_rows):
-    metrics = (f'{t["cer"]} · {t["all_positions"]}', f'{t["cer"]} · {t["historical_filtered"]}')
-
-    def table(masked, heading, title):
+    columns = (f'{t["cer"]} · {t["all_positions"]}', f'{t["cer"]} · {t["historical_filtered"]}')
+    views = (("original", t["api_original"], t["api_original"]),
+             ("masked", t["api_masked"], t["api_masked"]))
+    panel_id = "p-mod-open-api-scores"
+    tables = {}
+    for scope, title, _ in views:
         rows = []
         for row in api_rows:
-            views = row["diagnostic"]["masked_views"] if masked else row["views"]
-            counts = (views[view]["pooled"] for view in ("all", "filtered"))
+            scores = row["diagnostic"]["masked_views"] if scope == "masked" else row["views"]
+            counts = (scores[view]["pooled"] for view in ("all", "filtered"))
             rows.append({"name": row["reader"],
                          "cells": [error_rate(count["edits"], count["chars"]) for count in counts]})
-        return result_table(t, heading, title, metrics, rows)
-
+        tables[scope, "pooled"] = result_table(t, f"{panel_id}-{scope}-pooled", title, columns, rows)
     return disclosure(t["commercial"], "".join([
         f'<p>{e(t["commercial_note"])}</p>',
-        table(False, "p-mod-open-api-original", t["api_original"]),
-        table(True, "p-mod-open-api-masked", t["api_masked"]),
+        score_panel(t, panel_id, views, (("pooled", ""),), tables,
+                    view_label=t["api_capture"], alternatives=t["api_alternatives"]),
         f'<p class="note">{e(t["gemini_note"])} {e(t["haiku_note"])}</p>',
     ]), identifier="p-mod-open-api")
 
@@ -262,20 +321,20 @@ def open_results(t, data, public_pages, api_rows):
             out.append(f'<p class="note">{e(note)}</p>')
 
     views = data["views"]
+    captures = [("pooled", t["all_images"].format(count=data["carriers"]))]
+    captures.extend((key, label) for key, label in t["carriers"].items() if views["all"][key]["carriers"])
     winner = best_modern_model(data)
-    out.append(modern_table(t, "p-mod-open-all-pooled", t["views"]["all"], views["all"]["pooled"], winner))
-    filtered = modern_table(t, "p-mod-open-filtered-pooled", t["views"]["filtered"], views["filtered"]["pooled"], winner)
-    out.append(disclosure(t["views"]["filtered"], f'<p>{e(t["filtered_note"])}</p>{filtered}'))
-
-    captures = [f'<p>{e(t["phone_note"])}</p>']
-    for view, groups in views.items():
-        captures.append(f'<h4>{e(t["views"][view])}</h4>')
-        for carrier in t["carriers"]:
-            group = groups[carrier]
-            if group["readers"]:
-                title = f'{t["carriers"][carrier]} · {t["carrier_count"].format(carriers=group["carriers"])}'
-                captures.append(modern_table(t, f"p-mod-open-{view}-{carrier}", title, group, winner, level=5))
-    out.append(disclosure(t["by_capture"], "".join(captures), identifier="p-mod-open-captures"))
+    columns = (t["cer"], t["wer"], t["numbers"])
+    panel_id = "p-mod-open"
+    tables = {
+        (view, capture): result_table(t, f"{panel_id}-{view}-{capture}", f"{label} · {title}", columns,
+                                      modern_rows(t, views[view][capture], winner))
+        for view, label, _ in t["modern_views"]
+        for capture, title in captures
+    }
+    out.append(score_panel(t, panel_id, t["modern_views"], captures, tables,
+                           view_label=t["evaluation_view"], alternatives=t["alternatives"]))
+    out.append(f'<p class="note benchmark-phone-note">{e(t["phone_note"])}</p>')
     if api_rows:
         out.append(modern_api_results(t, api_rows))
     out.append("</article>\n")
@@ -283,26 +342,38 @@ def open_results(t, data, public_pages, api_rows):
 
 
 def historical_results(t, data):
-    rows = []
-    for row in data["readers"]:
-        all_cer, wer, missed = score_cells(row["all"])
-        filtered_cer = error_rate(row["filtered"]["edits"], row["filtered"]["chars"])
-        rows.append({"name": row["name"], "ours": row["id"].startswith("heocr-"),
-                     "descriptive": row["descriptive"], "cells": [all_cer, filtered_cer, wer, missed]})
-    model = next(row["name"] for row in rows if row["ours"])
-    finding = e(t["historical_result"]).format(model=f"<bdi>{e(model)}</bdi>")
-    columns = (
-        f'{t["cer"]} · {t["historical_all"]}',
-        f'{t["cer"]} · {t["historical_filtered"]}',
-        t["wer_all"], t["numbers"],
-    )
+    views = [
+        (view, label, note.format(eligible=data["eligible_lines"], filtered=data["filtered_lines"],
+                                 total=data["reference_lines"]))
+        for view, label, note in t["historical_views"]
+    ]
+    panel_id = "p-hist-open-scores"
+    columns = (t["cer"], t["wer"], t["numbers"])
+    tables = {}
+    for view, label, _ in views:
+        rows = []
+        for row in data["readers"]:
+            ours = row["id"].startswith("heocr-")
+            note = t["historical_model_note"] if ours else t["descriptive"] if row["descriptive"] else None
+            rows.append({"name": row["name"], "ours": ours, "model_url": HISTORICAL_MODEL,
+                         "note": note, "cells": score_cells(row[view])})
+        tables[view, "pooled"] = result_table(t, f"{panel_id}-{view}-pooled", label, columns, rows)
+
+    model = next(row for row in data["readers"] if row["id"].startswith("heocr-"))
+
+    def model_cer(view):
+        return percentage(Fraction(model[view]["edits"], model[view]["chars"]))
+
+    finding = e(t["historical_result"]).format(model=f'<bdi>{e(model["name"])}</bdi>',
+                                              all_cer=model_cer("all"), filtered_cer=model_cer("filtered"))
     return "".join([
         f'<article class="benchmark-result" id="p-hist-open"><h3><bdi>{e(data["dataset"])}</bdi></h3>',
         f'<p class="benchmark-intro">{e(t["historical_intro"].format(leaves=data["leaves"], regions=data["regions"], lines=data["reference_lines"]))}</p>',
-        f'<p class="note">{e(t["primary_cer"])} {e(t["historical_scope"].format(eligible=data["eligible_lines"], filtered=data["filtered_lines"]))}</p>',
+        f'<p class="note">{e(t["primary_cer"])}</p>',
         f'<p class="benchmark-finding">{finding}</p>',
-        result_table(t, "p-hist-open-pooled", t["historical_pooled"], columns, rows),
-        f'<p class="note">{e(t["cloud_note"])}</p>',
+        score_panel(t, panel_id, views, (("pooled", ""),), tables, view_label=t["evaluation_view"],
+                    alternatives=views[1][1]),
+        f'<p class="note benchmark-footnote">{e(t["cloud_note"])}</p>',
         f'<p class="note">{e(t["historical_caveat"])}</p>',
         "</article>\n",
     ])
@@ -310,35 +381,36 @@ def historical_results(t, data):
 
 def page(lang, data, public_pages=None, *, historical=None, api_rows=()):
     t = T[lang]
-    category_links = {}
     toc = []
     open_panels = []
     if data is not None:
-        category_links[0] = link("#p-mod-open", t["open_result"])
-        toc.append(("p-mod-open", e(t["categories"][0]), None))
+        toc.append(("p-mod-open", e(t["modern"]), None))
         open_panels.append(open_results(t, data["open"], public_pages, api_rows))
     if historical is not None:
-        category_links[3] = link("#p-hist-open", historical["dataset"])
-        toc.append(("p-hist-open", e(t["categories"][3]), None))
+        toc.append(("p-hist-open", e(t["historical"]), None))
         open_panels.append(historical_results(t, historical))
     if not toc:
         toc.append(("open", e(t["open"]), None))
     toc.append(("closed", e(t["closed_nav"]), None))
     preview_note = f'<p class="note">{e(t["preview"])}</p>' if data is None else ""
+    badges = "".join(f"<li>{e(category)}</li>" for category in t["in_progress"])
     return "".join([
         shell.head(lang, e(t["title"]), e(t["lede"]), "bench"), shell.header(lang, "bench"),
         '<main id="main" class="bench benchmark-page">\n',
         shell.page_head(e(t["title"]), f'<p class="lede">{e(t["lede"])}</p><p>{link("methodology.html", t["method"])}</p>{preview_note}'),
         shell.toc(lang, toc),
-        f'<section id="open" class="wrap domain"><h2>{e(t["open"])}</h2><p class="sub">{e(t["open_text"])}</p>',
+        f'<section id="open" class="wrap domain"><h2 class="benchmark-sr-only">{e(t["open"])}</h2>',
         "".join(open_panels),
-        disclosure(t["category_index"], category_table(t, category_links, preview=data is None)),
         "</section>\n",
         '<section id="closed" class="wrap domain">',
-        disclosure(t["closed"], f'<p>{e(t["closed_text"])}</p>'
-                   + category_table(t, missing=t["closed_missing"], preview=data is None)),
+        disclosure(t["closed"], f'<p>{e(t["closed_text"])}</p><p class="note">{e(t["closed_missing"])}</p>'),
         "</section>\n",
-        '</main>\n', shell.footer(['<p><a href="./">HeOCR</a></p>']), shell.tail(lang),
+        '<section class="wrap benchmark-progress" aria-labelledby="benchmark-progress-title">',
+        f'<h2 id="benchmark-progress-title">{e(t["more_sets"])}</h2><ul>{badges}</ul>',
+        '</section>\n</main>\n',
+        shell.footer(['<p><a href="./">HeOCR</a></p>']),
+        f'<script src="{shell.prefix(lang)}benchmark-controls.js" defer></script>',
+        shell.tail(lang),
     ])
 
 

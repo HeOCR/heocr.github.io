@@ -47,14 +47,21 @@ class ReleaseBuilderTest(unittest.TestCase):
         for lang, t in builder.T.items():
             output = builder.page(lang, data, public_pages=16)
             opened, closed = output.split('id="closed"', 1)
-            for part in (opened, closed):
-                indices = [part.index(category) for category in t["categories"]]
-                self.assertEqual(indices, sorted(indices))
             self.assertEqual(opened.count("Example Reader 10"), 12)
-            self.assertEqual(opened.count('role="region"'), 12)
+            self.assertEqual(opened.count("<caption"), 12)
+            self.assertIn('data-score-view value="filtered" checked', opened)
+            self.assertIn('data-score-view value="all"', opened)
+            self.assertIn('data-score-capture value="pooled" checked', opened)
+            self.assertIn(t["all_images"].format(count=22), opened)
+            self.assertNotIn('value="issuer-scan"', opened)
             self.assertNotIn('id="p-mod-open-all-issuer-scan"', opened)
-            self.assertIn('<details class="method benchmark-details" id="p-mod-open-captures">', opened)
+            self.assertIn('<details class="method benchmark-details" id="p-mod-open-alternatives">', opened)
             self.assertIn(t["phone_note"], opened)
+            self.assertNotIn(t["in_progress"][0], opened)
+            self.assertIn(t["in_progress"][0], closed)
+            self.assertIn(t["more_sets"], closed)
+            prefix = "" if lang == "he" else "../"
+            self.assertIn(f'<script src="{prefix}benchmark-controls.js" defer>', output)
             self.assertNotIn("Example Reader ", closed)
             self.assertNotIn("90.00%", output)
             self.assertIn(t["closed_missing"], closed)
@@ -82,7 +89,7 @@ class ReleaseBuilderTest(unittest.TestCase):
         for lang in builder.T:
             output = builder.page(lang, release.validate(raw))
             self.assertEqual(output.count('<tr class="ours">'), 12)
-            self.assertEqual(output.count("Example best model"), 12)
+            self.assertEqual(output.count('<a href="download.html"><bdi>Example best model</bdi></a>'), 12)
             self.assertNotIn("Example stock pipeline", output)
             self.assertNotIn("Example slower model", output)
             self.assertEqual(output.count("Example Reader 4"), 12)
@@ -90,7 +97,7 @@ class ReleaseBuilderTest(unittest.TestCase):
     def test_primary_order_and_independent_minima(self):
         rows = [
             {"name": "Slower", "cells": [builder.error_rate(4, 100), builder.error_rate(1, 10)]},
-            {"name": "Faster", "ours": True,
+            {"name": "Faster", "ours": True, "model_url": "download.html",
              "cells": [builder.error_rate(3, 100), builder.error_rate(2, 10)]},
             {"name": "Tied", "cells": [builder.error_rate(3, 100), builder.error_rate(0, 0)]},
         ]
@@ -103,26 +110,35 @@ class ReleaseBuilderTest(unittest.TestCase):
         self.assertRegex(body[1], 'class="benchmark-best"><bdi dir="ltr">3.00%')
         self.assertRegex(body[2], 'class="benchmark-best"><bdi dir="ltr">10.00%')
         self.assertEqual(table.count('class="benchmark-best"'), 3)
+        self.assertIn('<small class="benchmark-fraction"><bdi dir="ltr">3 / 100</bdi></small>', body[0])
+        self.assertIn('<td class="num">—</td>', body[1])
 
-    def test_historical_result_links_from_category_and_labels_api_lanes(self):
+    def test_historical_has_two_scope_choices_and_labels_api_lanes(self):
         score = {"edits": 2, "chars": 100, "word_edits": 1, "words": 10,
                  "missed_numbers": 0, "ref_numbers": 1}
+        filtered = {**score, "edits": 1, "chars": 80, "word_edits": 2, "words": 8}
         historical = {
             "dataset": "Fixture historical", "leaves": 2, "regions": 3, "reference_lines": 30,
             "eligible_lines": 28, "filtered_lines": 25,
             "readers": [
                 {"id": "heocr-example", "name": "Example historical model", "descriptive": False,
-                 "all": score, "filtered": score},
+                 "all": score, "filtered": filtered},
                 {"id": "example-api", "name": "Example historical API", "descriptive": True,
                  "all": score, "filtered": score},
             ],
         }
         for lang, t in builder.T.items():
             output = builder.page(lang, release.validate(example()), historical=historical)
-            self.assertIn(f'<th scope="row">{t["categories"][3]}</th>'
-                          '<td><a href="#p-hist-open">Fixture historical</a></td>', output)
+            self.assertIn(f'<a href="#p-hist-open">{t["historical"]}</a>', output)
             panel = output.split('id="p-hist-open"', 1)[1].split("</article>", 1)[0]
-            self.assertEqual(panel.count('<tr class="ours">'), 1)
+            default, fallback = panel.split('id="p-hist-open-scores-alternatives"', 1)
+            self.assertEqual(default.count('<tr class="ours">'), 1)
+            self.assertEqual(fallback.count('<tr class="ours">'), 1)
+            self.assertIn('id="p-hist-open-scores-filtered-pooled"', default)
+            self.assertIn('id="p-hist-open-scores-all-pooled"', fallback)
+            self.assertIn(f'<a href="{builder.HISTORICAL_MODEL}"><bdi>Example historical model</bdi></a>', default)
+            self.assertIn('<bdi dir="ltr">2 / 8</bdi>', default)
+            self.assertIn('<bdi dir="ltr">1 / 10</bdi>', fallback)
             self.assertIn(f'<bdi>Example historical API</bdi><small class="benchmark-reader-note">{t["descriptive"]}</small>', panel)
             self.assertIn(t["historical_caveat"], panel)
             self.assertIn('href="methodology.html"', output)
