@@ -11,7 +11,9 @@ import shell
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_RELEASES = (
-    ("MEASURED", "measured", "https://huggingface.co/HeOCR/heocr-p-hist-measured",
+    ("MEASURED v1.1", "measured_latest", "https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.1",
+     "https://doi.org/10.5281/zenodo.24581274"),
+    ("MEASURED v1.0", "measured_previous", "https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.0",
      "https://doi.org/10.5281/zenodo.24578440"),
 )
 T = {
@@ -19,7 +21,8 @@ T = {
         "title": "Download HeOCR",
         "models": "OCR models",
         "about": "Tesseract weights for historical, unpointed Hebrew print. Apache 2.0.",
-        "measured": "Evaluated on the C2 held-out set. See the model card for results.",
+        "measured_latest": "Best / Latest. Evaluated on the C2 held-out set.",
+        "measured_previous": "Previous version. Evaluated on the C2 held-out set.",
         "apps": "Apps",
         "coming": "Coming soon",
     },
@@ -27,7 +30,8 @@ T = {
         "title": "הורדת HeOCR",
         "models": "מודלים לזיהוי תווים",
         "about": "משקלי Tesseract לדפוס עברי היסטורי לא מנוקד, ברישיון Apache 2.0.",
-        "measured": "נבדק על מערך המבחן C2. התוצאות מופיעות בכרטיס המודל.",
+        "measured_latest": "הגרסה הטובה והעדכנית ביותר. נבדקה על מערך המבחן C2.",
+        "measured_previous": "גרסה קודמת. נבדקה על מערך המבחן C2.",
         "apps": "יישומים",
         "coming": "בקרוב",
     },
