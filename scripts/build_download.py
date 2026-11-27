@@ -18,6 +18,7 @@ MODEL_RELEASES = (
      "benchmarks.html#p-hist-open-scores-filtered-pooled"),
     ("MEASURED", "v1.0", "phist-v10", "measured_previous", MODEL_HUB, "10.5281/zenodo.24578440",
      f"{MODEL_HUB}/blob/v1.0/README.md#held-out-evaluation-old-printed-hebrew-unpointed"),
+    ("FULL", "v1.1-full", "phist-full-v11", "full_v11", FULL_MODEL_HUB, "10.5281/zenodo.24586339", None),
     ("FULL", "v1.0-full", "phist-full-v10", "full_v10", FULL_MODEL_HUB, "10.5281/zenodo.24582845", None),
 )
 QUICK_START = (
@@ -41,6 +42,7 @@ T = {
         "measured_previous": "Previous version. Evaluated on the C2 held-out set.",
         "full_v10": "Trained with additional data. This variant is unmeasured.",
         "apps": "Apps",
+        "full_v11": "Trained with additional data. This variant is unmeasured.",
         "coming": "Coming soon",
     },
     "he": {
@@ -57,6 +59,7 @@ T = {
         "measured_previous": "גרסה קודמת. נבדקה על מערך המבחן C2.",
         "full_v10": "אומן עם נתונים נוספים. גרסה זו לא נמדדה.",
         "apps": "יישומים",
+        "full_v11": "אומן עם נתונים נוספים. גרסה זו לא נמדדה.",
         "coming": "בקרוב",
     },
 }
