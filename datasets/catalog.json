@@ -1,0 +1,595 @@
+{
+  "as_of": "2026-11-27",
+  "datasets": [
+    {
+      "id": "HeOCR/htext-knesset-laws",
+      "revision": "a1f89b906577cf1ca9f8ac5762d170013f771c5f",
+      "group": "text",
+      "title": "htext · Knesset laws",
+      "description": {
+        "en": "OCR text from enacted laws of the first eight Knessets.",
+        "he": "טקסט שחולץ בזיהוי תווים מחוקים שנחקקו בשמונה הכנסות הראשונות."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24384730",
+          "label": "knesset-laws-v2"
+        }
+      ],
+      "counts": {
+        "documents": 1972,
+        "pages": null,
+        "images": null,
+        "lines": 223617,
+        "words": null,
+        "characters": null,
+        "bytes": 19645459
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/htext-tanakh",
+      "revision": "082a6bc4640922cce77d640aaa4613b43a76e664",
+      "group": "text",
+      "title": "htext · Tanakh",
+      "description": {
+        "en": "Westminster Leningrad Codex Hebrew text, plain and with niqqud.",
+        "he": "טקסט המקרא מכתב יד לנינגרד בגרסת וסטמינסטר, עם ניקוד ובלעדיו."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24398530",
+          "label": "tanakh-v1.1"
+        }
+      ],
+      "counts": {
+        "documents": 39,
+        "pages": null,
+        "images": null,
+        "lines": 115320,
+        "words": null,
+        "characters": null,
+        "bytes": 12250295
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/htext-pby",
+      "revision": "e9743322cffe783f7bad4e65236256baf111b990",
+      "group": "text",
+      "title": "htext · Project Ben-Yehuda",
+      "description": {
+        "en": "Public-domain Hebrew literature in separate plain and pointed files.",
+        "he": "ספרות עברית בנחלת הכלל, בקבצים נפרדים לטקסט מנוקד ולא מנוקד."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24398596",
+          "label": "pby-v3.1"
+        }
+      ],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": null,
+        "lines": 13610209,
+        "words": null,
+        "characters": null,
+        "bytes": 1210960882
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/htext-wikisource",
+      "revision": "a5ee2ac15051447d571e027c87c9512317cce919",
+      "group": "text",
+      "title": "htext · Hebrew Wikisource",
+      "description": {
+        "en": "Hebrew Wikisource training text across four releases, with attribution by source revision.",
+        "he": "טקסט לאימון מוויקיטקסט העברית בארבע גרסאות, עם ייחוס לכל גרסת מקור."
+      },
+      "license": "cc-by-sa-4.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24415189",
+          "label": "v1"
+        },
+        {
+          "id": "10.5281/zenodo.24516892",
+          "label": "v2"
+        },
+        {
+          "id": "10.5281/zenodo.24521419",
+          "label": "v3"
+        },
+        {
+          "id": "10.5281/zenodo.24580528",
+          "label": "v4"
+        }
+      ],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": null,
+        "lines": 168689,
+        "words": null,
+        "characters": null,
+        "bytes": 16339852
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/htext-knesset-plenary",
+      "revision": "daf44afc2737942acd57f77ea3299a6bc1b5e2e1",
+      "group": "text",
+      "title": "htext · Knesset plenary",
+      "description": {
+        "en": "OCR and transcribed lines from published plenary proceedings.",
+        "he": "שורות מזיהוי תווים ומתעתיקים של פרוטוקולים שפורסמו מדיוני המליאה."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24415187",
+          "label": "knesset-plenary-v1"
+        }
+      ],
+      "counts": {
+        "documents": 6844,
+        "pages": null,
+        "images": null,
+        "lines": 31318214,
+        "words": null,
+        "characters": null,
+        "bytes": 2827044181
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/nonlegislative-diversity-v4-revised",
+      "revision": "07aa54914a5926d183f5f72ee99ac3b118bf8413",
+      "group": "synthetic",
+      "title": "Non-legislative diversity v4 revised",
+      "description": {
+        "en": "Revised OCR lines with contextual numeric labels in table cells.",
+        "he": "גרסה מתוקנת של שורות לזיהוי תווים, עם תוויות מספריות בהקשר של תאי טבלה."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": 29687,
+        "lines": 29687,
+        "words": null,
+        "characters": null,
+        "bytes": 543690956
+      },
+      "partial_pages": null,
+      "status": "current"
+    },
+    {
+      "id": "HeOCR/nonlegislative-diversity-v4",
+      "revision": "c811badecf5c84b966b7b0ced37dd9f1140a187a",
+      "group": "synthetic",
+      "title": "Non-legislative diversity v4",
+      "description": {
+        "en": "Generated OCR lines from non-legislative layouts with simulated scan, photocopy and phone views.",
+        "he": "שורות סינתטיות לזיהוי תווים ממסמכים שאינם חקיקה, עם הדמיית סריקה, צילום מסמכים ותצלומי טלפון."
+      },
+      "license": "cc0-1.0",
+      "access": "manual",
+      "dois": [],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": 29687,
+        "lines": 29687,
+        "words": null,
+        "characters": null,
+        "bytes": 543332458
+      },
+      "partial_pages": null,
+      "status": "superseded"
+    },
+    {
+      "id": "HeOCR/nonlegislative-phone-heavy-v1",
+      "revision": "c5185ca95f7a79eb21c00ec4bde7325557f86903",
+      "group": "synthetic",
+      "title": "Non-legislative phone-heavy v1",
+      "description": {
+        "en": "Generated OCR lines weighted toward simulated near and oblique phone views.",
+        "he": "שורות סינתטיות לזיהוי תווים, בעיקר בהדמיית תצלומי טלפון מזווית ישרה ואלכסונית."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": 9880,
+        "lines": 9880,
+        "words": null,
+        "characters": null,
+        "bytes": 310686101
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/oldprint-pairs-train",
+      "revision": "60e1456f89fc10d75b30ab3d098fe2cec22f2fe9",
+      "group": "real",
+      "title": "Ahad Ha’am historical line pairs",
+      "description": {
+        "en": "Scanned lines from Ahad Ha’am’s 1903 edition with matching Project Ben-Yehuda transcriptions.",
+        "he": "שורות סרוקות ממהדורת אחד העם משנת 1903, לצד תעתיקים תואמים מפרויקט בן־יהודה."
+      },
+      "license": "pd-cc0",
+      "access": "public",
+      "dois": [],
+      "counts": {
+        "documents": 1,
+        "pages": 18,
+        "images": 49,
+        "lines": 49,
+        "words": null,
+        "characters": null,
+        "bytes": 14889645
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/gazette-train",
+      "revision": "26ed588ad1a898bfd28445572b1c37454eac41ef",
+      "group": "real",
+      "title": "Gazette training lines",
+      "description": {
+        "en": "Original line crops of statutes from Israel’s official gazette, aligned to the issuer text.",
+        "he": "חיתוכי שורות מקוריים של חוקים מספר החוקים, מותאמים לטקסט הרשמי."
+      },
+      "license": "gazette",
+      "access": "public",
+      "dois": [],
+      "counts": {
+        "documents": 5,
+        "pages": 23,
+        "images": 69,
+        "lines": 69,
+        "words": null,
+        "characters": null,
+        "bytes": 295256
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/dolitzky-1911-pairs-train",
+      "revision": "2254e2d6071d90e5e95d97ad3a57e2104e13b76b",
+      "group": "real",
+      "title": "Dolitzky 1911 line pairs",
+      "description": {
+        "en": "Scan crops from the 1911 edition of Milhemet ha-tehiyah with exact transcriptions.",
+        "he": "חיתוכי שורות סרוקות ממהדורת 1911 של מלחמת התחייה, לצד תעתיקים מדויקים."
+      },
+      "license": "pd-cc0",
+      "access": "public",
+      "dois": [],
+      "counts": {
+        "documents": 1,
+        "pages": 9,
+        "images": 16,
+        "lines": 16,
+        "words": null,
+        "characters": null,
+        "bytes": 220258
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/p-mod-open-v0",
+      "revision": "c8f136b9a20349d72e7639c253d0a74295ca4658",
+      "group": "benchmarks",
+      "title": "P-mod-open v0",
+      "description": {
+        "en": "Held-out benchmark for modern unpointed Hebrew with archive images, issuer renders, office scans and phone captures.",
+        "he": "מבחן הערכה לדפוס עברי מודרני לא מנוקד, עם תמונות מארכיונים, עיבודי מסמכים רשמיים, סריקות ותצלומי טלפון."
+      },
+      "license": "mixed-benchmark",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24505278",
+          "label": "v0"
+        }
+      ],
+      "counts": {
+        "documents": null,
+        "pages": 31,
+        "images": 65,
+        "lines": 1863,
+        "words": null,
+        "characters": null,
+        "bytes": 37421739
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/hebrew-ocr-leaderboard-results",
+      "revision": "d798f5a3be4e8731751d591010210324aeb3f65c",
+      "group": "benchmarks",
+      "title": "Hebrew OCR leaderboard results",
+      "description": {
+        "en": "Machine-readable result records for the registered Hebrew OCR leaderboard.",
+        "he": "רשומות תוצאות קריאות למכונה מלוח ההשוואה של מערכות זיהוי תווים בעברית."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": null,
+        "lines": null,
+        "words": null,
+        "characters": null,
+        "bytes": 137799
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/c1-synthetic-train-v1",
+      "revision": "0fb40628068aa45c186822af4b3538c9320be50b",
+      "group": "synthetic",
+      "title": "C1 synthetic TRAIN",
+      "description": {
+        "en": "Generated Hebrew line crops from letters, prose, reports, forms and tables.",
+        "he": "חיתוכי שורות סינתטיים בעברית ממכתבים, פרוזה, דוחות, טפסים וטבלאות."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": 15600,
+        "lines": 15600,
+        "words": null,
+        "characters": null,
+        "bytes": 359391835
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/hebrew-ocr-vlm-train-v1",
+      "revision": "6062adaba2e3f9ba3e01b527301f7b533bf11368",
+      "group": "synthetic",
+      "title": "Hebrew OCR VLM TRAIN",
+      "description": {
+        "en": "Real and synthetic line pairs for VLM fine-tuning, with Parquet and chat-format exports.",
+        "he": "זוגות של תמונות שורה ותעתיקים, אמיתיים וסינתטיים, לאימון מודלים רב־אופניים. זמין ב־Parquet ובפורמט צ׳אט."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": 10152,
+        "lines": 10152,
+        "words": null,
+        "characters": null,
+        "bytes": 345527810
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/c2-old-print-synthetic-train-v1",
+      "revision": "2e2740cf5cb2b8a555ae12c252eebbc85b96f59a",
+      "group": "synthetic",
+      "title": "C2 old-print synthetic TRAIN",
+      "description": {
+        "en": "Historical-style line crops composed from public-domain glyphs with simulated scanner capture.",
+        "he": "חיתוכי שורות בסגנון דפוס היסטורי, מאותיות בנחלת הכלל ועם הדמיית סריקה."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": 5000,
+        "lines": 5000,
+        "words": null,
+        "characters": null,
+        "bytes": 143222976
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/htext-sefaria",
+      "revision": "12410f5d77bd08fd8379bc9aff04ca294f8b0c29",
+      "group": "text",
+      "title": "htext · Sefaria",
+      "description": {
+        "en": "Historical Sefaria texts under public-domain or CC0 source terms, across v1 and v2.",
+        "he": "טקסטים היסטוריים מספריא בנחלת הכלל או בתנאי CC0, בגרסאות v1 ו־v2."
+      },
+      "license": "sefaria",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24516961",
+          "label": "v1"
+        },
+        {
+          "id": "10.5281/zenodo.24521423",
+          "label": "v2 CC0"
+        }
+      ],
+      "counts": {
+        "documents": 6,
+        "pages": null,
+        "images": null,
+        "lines": 64484,
+        "words": null,
+        "characters": null,
+        "bytes": 30799118
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/htext-sefaria-by",
+      "revision": "e28fae17d635f72ad6c9a628734252c1ea219e24",
+      "group": "text",
+      "title": "htext · Sefaria (CC BY)",
+      "description": {
+        "en": "Attributed Hebrew training text from Sefer Ha-Ikkarim.",
+        "he": "טקסט עברי לאימון מספר העיקרים, עם ייחוס למקור."
+      },
+      "license": "cc-by-4.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24521430",
+          "label": "v2 CC BY"
+        }
+      ],
+      "counts": {
+        "documents": 1,
+        "pages": null,
+        "images": null,
+        "lines": 32296,
+        "words": null,
+        "characters": null,
+        "bytes": 14791538
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/htext-tsel-haolam",
+      "revision": "c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb",
+      "group": "text",
+      "title": "htext · Tsel HaOlam",
+      "description": {
+        "en": "Hebrew training lines from the 1733 Amsterdam edition of Tsel HaOlam.",
+        "he": "שורות עברית לאימון מתוך מהדורת אמסטרדם משנת 1733 של צל העולם."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24521432",
+          "label": "v1"
+        }
+      ],
+      "counts": {
+        "documents": 1,
+        "pages": null,
+        "images": null,
+        "lines": 2408,
+        "words": null,
+        "characters": null,
+        "bytes": 1016368
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/trn-phpack1-phone-captures",
+      "revision": "593f8e7e96f2be0fb687276db51e716ff5d4fdd3",
+      "group": "real",
+      "title": "TRN-PHPACK1",
+      "description": {
+        "en": "Training crops and page views from two phones photographing the same Hebrew print pack.",
+        "he": "תצלומי עמודים וחיתוכי שורות לאימון, משני טלפונים שצילמו את אותה ערכת דפים מודפסת בעברית."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24572310",
+          "label": "A+B"
+        }
+      ],
+      "counts": {
+        "documents": null,
+        "pages": 60,
+        "images": 7911,
+        "lines": 7633,
+        "words": null,
+        "characters": null,
+        "bytes": 2805934079
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/hebrew-print-line-pairs",
+      "revision": "bc40816f67f3d3bffaa259ce8471c07017acbdd1",
+      "group": "real",
+      "title": "Hebrew print line pairs",
+      "description": {
+        "en": "Scanned Hebrew print with aligned transcriptions from books, Vilna Talmud regions and historical periodicals.",
+        "he": "שורות מדפוס עברי סרוק לצד תעתיקים תואמים, מספרים, מתלמוד וילנה ומכתבי עת היסטוריים."
+      },
+      "license": "cc-by-sa-4.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24571580",
+          "label": "v1"
+        },
+        {
+          "id": "10.5281/zenodo.24572438",
+          "label": "v1.1"
+        },
+        {
+          "id": "10.5281/zenodo.24574729",
+          "label": "v2-p1"
+        },
+        {
+          "id": "10.5281/zenodo.24575597",
+          "label": "v2-p2"
+        },
+        {
+          "id": "10.5281/zenodo.24580468",
+          "label": "v2-p3"
+        }
+      ],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": 77768,
+        "lines": 77768,
+        "words": null,
+        "characters": null,
+        "bytes": 1923460584
+      },
+      "partial_pages": {
+        "count": 352,
+        "scope": "v2-p3"
+      }
+    }
+  ],
+  "model": {
+    "id": "HeOCR/heocr-p-hist-measured",
+    "revision": "57487fe4c5832c01c58394eb7342b038c1d8c58d",
+    "license": "apache-2.0",
+    "dois": [
+      {
+        "id": "10.5281/zenodo.24578440",
+        "label": "MEASURED"
+      }
+    ]
+  },
+  "pending_text_release": {
+    "en": "htext · Sefaria v3",
+    "he": "htext · ספריא v3"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25",
+  "updated": "2026-11-27",
   "repository": "https://github.com/HeOCR/htext",
   "corpora": [
     {
@@ -597,6 +597,73 @@
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3/README.md",
       "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3/SHA256SUMS"
+    },
+    {
+      "id": "wikisource-v4",
+      "version": "v4",
+      "name": {
+        "en": "Hebrew Wikisource B v4",
+        "he": "ויקיטקסט העברית B v4"
+      },
+      "source": {
+        "name": {
+          "en": "Hebrew Wikisource",
+          "he": "ויקיטקסט העברית"
+        },
+        "url": "https://he.wikisource.org"
+      },
+      "description": {
+        "en": "4,088 Hebrew training lines from five Wikisource works, with source revision attribution.",
+        "he": "4,088 שורות אימון בעברית מחמש יצירות בוויקיטקסט, עם ייחוס לגרסאות המקור."
+      },
+      "rights_basis": {
+        "en": "CC BY-SA 4.0. Cite the Hebrew Wikisource contributors by source revision as listed in the rights index and NOTICE.",
+        "he": "רישיון CC BY-SA 4.0. יש לייחס לתורמי ויקיטקסט העברית לפי גרסת המקור באינדקס הזכויות ובקובץ NOTICE."
+      },
+      "source_licence": {
+        "en": "CC BY-SA 4.0",
+        "he": "CC BY-SA 4.0"
+      },
+      "credit": {
+        "text": {
+          "en": "Hebrew Wikisource contributors by revision",
+          "he": "תורמי ויקיטקסט העברית לפי גרסה"
+        },
+        "url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4/NOTICE.md"
+      },
+      "htext_release": "by-sa",
+      "files": [
+        {
+          "name": "wikisource_plain_v4.txt",
+          "subset": "plain",
+          "bytes": 192684,
+          "lines": 4088,
+          "sha256": "e9c377c973ce4843b2b952378c9ef74f791f1dc52c13546f18d2d69b2d85529f"
+        },
+        {
+          "name": "wikisource_niqqud_v4.txt",
+          "subset": "niqqud",
+          "bytes": 0,
+          "lines": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "release": {
+        "tag": "wikisource-v4",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/tree/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4",
+        "date": "2026-11-27"
+      },
+      "hf": {
+        "repo": "HeOCR/htext-wikisource",
+        "revision": "a5ee2ac15051447d571e027c87c9512317cce919",
+        "filtered": false
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24580528",
+        "concept_doi": "10.5281/zenodo.24521418"
+      },
+      "card_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4/README.md",
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4/SHA256SUMS"
     },
     {
       "id": "sefaria-v2-cc0",

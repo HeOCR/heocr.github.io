@@ -73,38 +73,184 @@
     <h2>מודלים וצינור העיבוד</h2>
     <p class="sub">משקלי HeOCR P-hist לזיהוי דפוס עברי היסטורי לא מנוקד זמינים להורדה.</p>
     <p><a href="download.html#models">הורדת משקלי המודל</a></p>
+    <div class="meta"><span>Apache-2.0</span> <a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/57487fe4c5832c01c58394eb7342b038c1d8c58d">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24578440">Zenodo</a></div>
   </section>
 
   <section id="datasets">
     <h2>מאגרי נתונים</h2>
-    <p class="sub">כל מאגר בנוי רק מחומר שמותר להפיץ ולהשתמש בו מחדש, גם ללמידת מכונה. הזכויות מתועדות לכל פריט, ולא מניחים אותן לגבי אוסף שלם.</p>
+    <p class="sub">הקטלוג נכון ל־<bdi dir="ltr">2026-11-27</bdi>. זכויות ותנאי שימוש מופיעים ליד כל גרסה.</p>
+    <p class="catalog-totals"><strong><bdi dir="ltr">21</bdi> מאגרים · <bdi dir="ltr">156,197</bdi> תמונות · <bdi dir="ltr">45,692,954</bdi> שורות · <bdi dir="ltr">493</bdi> עמודי מקור</strong></p>
+    <p class="sub">מספר המאגרים כולל גם גרסאות שהוחלפו. סכומי התוכן מחושבים מהגרסאות העדכניות, שעשויות לכלול פריטים חופפים, וכוללים גם עמודי מקור שדווחו לחלק ממאגר. קו מפריד מציין שמספר לא פורסם.</p>
+    <h3>תמונות ממסמכים אמיתיים</h3>
     <div class="grid">
-      <div class="card">
-        <h3><a href="https://github.com/HeOCR/hash">HASH</a></h3>
-        <p>ארכיון עברי של כתב יד סרוק (Hebrew Archive of Scanned Handwriting): מסמכים סרוקים בכתב יד עברי מהמאה ה־18 ואילך, ובהם מכתבים, מחברות, טיוטות וטפסים.</p>
-        <div class="meta"><span>198 סריקות</span><span>48 מקורות</span><span>מטא־דאטה CC0</span></div>
-      </div>
-      <div class="card">
-        <h3><a href="htext.html">htext</a></h3>
-        <p>טקסט עברי בנחלת הכלל לאימון, החל משורות מיצירות <a href="https://benyehuda.org">פרויקט בן־יהודה</a>, עם ניקוד ובלעדיו. כל יצירה מסומנת כנחלת הכלל בישראל, בארה"ב או בשתיהן.</p>
-        <div class="meta"><span>CC0</span><a href="https://github.com/HeOCR/htext">GitHub</a><a href="https://github.com/HeOCR/htext/releases/tag/pby-v1">גרסה pby-v1</a></div>
-      </div>
-      <div class="card">
-        <h3><a href="https://github.com/HeOCR/hletterscript">hletterscript</a></h3>
-        <p>אותיות עבריות בכתב יד, חתוכות וממוינות לפי כותב, מתוך סריקות בנחלת הכלל. משמשות ליצירת כתב יד סינתטי.</p>
-        <div class="meta"><span>מערך התחלתי</span><span>מטא־דאטה CC0</span></div>
-      </div>
-      <div class="card">
-        <h3><a href="https://github.com/HeOCR/heocr-datasets">HeOCR</a> ו־<a href="https://github.com/HeOCR/HeOCRsynth">HeOCRsynth</a></h3>
-        <p>מאגרי ה־OCR/HTR המרכזיים: אחד משלב עמודים אמיתיים וסינתטיים, והשני סינתטי בלבד. hocrgen מייצא את שניהם אחרי שבדיקות השחרור שלו עוברות.</p>
-        <div class="meta"><span>בהכנה</span></div>
-      </div>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">Ahad Ha’am historical line pairs</bdi></h4>
+        <p>שורות סרוקות ממהדורת אחד העם משנת 1903, לצד תעתיקים תואמים מפרויקט בן־יהודה.</p>
+        <div class="catalog-licence">מקורות בנחלת הכלל. האוסף והמטא־דאטה ב־CC0.</div>
+        <div class="meta catalog-counts"><span><bdi dir="ltr">1</bdi> מסמך או יצירה</span><span><bdi dir="ltr">18</bdi> עמודי מקור</span><span><bdi dir="ltr">49</bdi> תמונות</span><span><bdi dir="ltr">49</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">14,889,645</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/oldprint-pairs-train/tree/60e1456f89fc10d75b30ab3d098fe2cec22f2fe9">Hugging Face</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">Gazette training lines</bdi></h4>
+        <p>חיתוכי שורות מקוריים של חוקים מספר החוקים, מותאמים לטקסט הרשמי.</p>
+        <div class="catalog-licence">תיוגים ומטא־דאטה ב־CC0. לטקסטים הרשמיים חלים תנאי המקור.</div>
+        <div class="meta catalog-counts"><span><bdi dir="ltr">5</bdi> מסמכים או יצירות</span><span><bdi dir="ltr">23</bdi> עמודי מקור</span><span><bdi dir="ltr">69</bdi> תמונות</span><span><bdi dir="ltr">69</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">295,256</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/gazette-train/tree/26ed588ad1a898bfd28445572b1c37454eac41ef">Hugging Face</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">Dolitzky 1911 line pairs</bdi></h4>
+        <p>חיתוכי שורות סרוקות ממהדורת 1911 של מלחמת התחייה, לצד תעתיקים מדויקים.</p>
+        <div class="catalog-licence">מקורות בנחלת הכלל. האוסף והמטא־דאטה ב־CC0.</div>
+        <div class="meta catalog-counts"><span><bdi dir="ltr">1</bdi> מסמך או יצירה</span><span><bdi dir="ltr">9</bdi> עמודי מקור</span><span><bdi dir="ltr">16</bdi> תמונות</span><span><bdi dir="ltr">16</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">220,258</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/dolitzky-1911-pairs-train/tree/2254e2d6071d90e5e95d97ad3a57e2104e13b76b">Hugging Face</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">TRN-PHPACK1</bdi></h4>
+        <p>תצלומי עמודים וחיתוכי שורות לאימון, משני טלפונים שצילמו את אותה ערכת דפים מודפסת בעברית.</p>
+        <div class="catalog-licence">CC0 1.0</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span><bdi dir="ltr">60</bdi> עמודי מקור</span><span><bdi dir="ltr">7,911</bdi> תמונות</span><span><bdi dir="ltr">7,633</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">2,805,934,079</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/trn-phpack1-phone-captures/tree/593f8e7e96f2be0fb687276db51e716ff5d4fdd3">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24572310">Zenodo</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">Hebrew print line pairs</bdi></h4>
+        <p>שורות מדפוס עברי סרוק לצד תעתיקים תואמים, מספרים, מתלמוד וילנה ומכתבי עת היסטוריים.</p>
+        <div class="catalog-licence">CC BY-SA 4.0</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span><bdi dir="ltr">352</bdi> עמודי מקור (<bdi dir="ltr">v2-p3</bdi>)</span><span><bdi dir="ltr">77,768</bdi> תמונות</span><span><bdi dir="ltr">77,768</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">1,923,460,584</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/hebrew-print-line-pairs/tree/bc40816f67f3d3bffaa259ce8471c07017acbdd1">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24571580">Zenodo v1</a> <a href="https://doi.org/10.5281/zenodo.24572438">Zenodo v1.1</a> <a href="https://doi.org/10.5281/zenodo.24574729">Zenodo v2-p1</a> <a href="https://doi.org/10.5281/zenodo.24575597">Zenodo v2-p2</a> <a href="https://doi.org/10.5281/zenodo.24580468">Zenodo v2-p3</a></div>
+      </article>
     </div>
+    <h3>מאגרי טקסט</h3>
+    <div class="grid">
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">htext · Knesset laws</bdi></h4>
+        <p>טקסט שחולץ בזיהוי תווים מחוקים שנחקקו בשמונה הכנסות הראשונות.</p>
+        <div class="catalog-licence">CC0 1.0</div>
+        <div class="meta catalog-counts"><span><bdi dir="ltr">1,972</bdi> מסמכים או יצירות</span><span>עמודי מקור —</span><span>תמונות —</span><span><bdi dir="ltr">223,617</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">19,645,459</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/htext-knesset-laws/tree/a1f89b906577cf1ca9f8ac5762d170013f771c5f">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24384730">Zenodo</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">htext · Tanakh</bdi></h4>
+        <p>טקסט המקרא מכתב יד לנינגרד בגרסת וסטמינסטר, עם ניקוד ובלעדיו.</p>
+        <div class="catalog-licence">CC0 1.0</div>
+        <div class="meta catalog-counts"><span><bdi dir="ltr">39</bdi> מסמכים או יצירות</span><span>עמודי מקור —</span><span>תמונות —</span><span><bdi dir="ltr">115,320</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">12,250,295</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/htext-tanakh/tree/082a6bc4640922cce77d640aaa4613b43a76e664">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24398530">Zenodo</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">htext · Project Ben-Yehuda</bdi></h4>
+        <p>ספרות עברית בנחלת הכלל, בקבצים נפרדים לטקסט מנוקד ולא מנוקד.</p>
+        <div class="catalog-licence">CC0 1.0</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span>עמודי מקור —</span><span>תמונות —</span><span><bdi dir="ltr">13,610,209</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">1,210,960,882</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/htext-pby/tree/e9743322cffe783f7bad4e65236256baf111b990">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24398596">Zenodo</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">htext · Hebrew Wikisource</bdi></h4>
+        <p>טקסט לאימון מוויקיטקסט העברית בארבע גרסאות, עם ייחוס לכל גרסת מקור.</p>
+        <div class="catalog-licence">CC BY-SA 4.0</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span>עמודי מקור —</span><span>תמונות —</span><span><bdi dir="ltr">168,689</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">16,339,852</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/tree/a5ee2ac15051447d571e027c87c9512317cce919">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24415189">Zenodo v1</a> <a href="https://doi.org/10.5281/zenodo.24516892">Zenodo v2</a> <a href="https://doi.org/10.5281/zenodo.24521419">Zenodo v3</a> <a href="https://doi.org/10.5281/zenodo.24580528">Zenodo v4</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">htext · Knesset plenary</bdi></h4>
+        <p>שורות מזיהוי תווים ומתעתיקים של פרוטוקולים שפורסמו מדיוני המליאה.</p>
+        <div class="catalog-licence">CC0 1.0</div>
+        <div class="meta catalog-counts"><span><bdi dir="ltr">6,844</bdi> מסמכים או יצירות</span><span>עמודי מקור —</span><span>תמונות —</span><span><bdi dir="ltr">31,318,214</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">2,827,044,181</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/htext-knesset-plenary/tree/daf44afc2737942acd57f77ea3299a6bc1b5e2e1">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24415187">Zenodo</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">htext · Sefaria</bdi></h4>
+        <p>טקסטים היסטוריים מספריא בנחלת הכלל או בתנאי CC0, בגרסאות v1 ו־v2.</p>
+        <div class="catalog-licence">נחלת הכלל או CC0, לפי מהדורה.</div>
+        <div class="meta catalog-counts"><span><bdi dir="ltr">6</bdi> מסמכים או יצירות</span><span>עמודי מקור —</span><span>תמונות —</span><span><bdi dir="ltr">64,484</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">30,799,118</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/tree/12410f5d77bd08fd8379bc9aff04ca294f8b0c29">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24516961">Zenodo v1</a> <a href="https://doi.org/10.5281/zenodo.24521423">Zenodo v2 CC0</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">htext · Sefaria (CC BY)</bdi></h4>
+        <p>טקסט עברי לאימון מספר העיקרים, עם ייחוס למקור.</p>
+        <div class="catalog-licence">CC BY 4.0</div>
+        <div class="meta catalog-counts"><span><bdi dir="ltr">1</bdi> מסמך או יצירה</span><span>עמודי מקור —</span><span>תמונות —</span><span><bdi dir="ltr">32,296</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">14,791,538</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/htext-sefaria-by/tree/e28fae17d635f72ad6c9a628734252c1ea219e24">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24521430">Zenodo</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">htext · Tsel HaOlam</bdi></h4>
+        <p>שורות עברית לאימון מתוך מהדורת אמסטרדם משנת 1733 של צל העולם.</p>
+        <div class="catalog-licence">CC0 1.0</div>
+        <div class="meta catalog-counts"><span><bdi dir="ltr">1</bdi> מסמך או יצירה</span><span>עמודי מקור —</span><span>תמונות —</span><span><bdi dir="ltr">2,408</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">1,016,368</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/htext-tsel-haolam/tree/c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24521432">Zenodo</a></div>
+      </article>
+    </div>
+    <p class="catalog-pending"><strong>htext · ספריא v3</strong> · טרם פורסם</p>
+    <h3>נתוני אימון סינתטיים ומשולבים</h3>
+    <div class="grid">
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">Non-legislative diversity v4 revised</bdi></h4>
+        <p>גרסה מתוקנת של שורות לזיהוי תווים, עם תוויות מספריות בהקשר של תאי טבלה.</p>
+        <div class="catalog-licence">CC0 1.0 · הגרסה העדכנית</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span>עמודי מקור —</span><span><bdi dir="ltr">29,687</bdi> תמונות</span><span><bdi dir="ltr">29,687</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">543,690,956</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/nonlegislative-diversity-v4-revised/tree/07aa54914a5926d183f5f72ee99ac3b118bf8413">Hugging Face</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">Non-legislative diversity v4</bdi></h4>
+        <p>שורות סינתטיות לזיהוי תווים ממסמכים שאינם חקיקה, עם הדמיית סריקה, צילום מסמכים ותצלומי טלפון.</p>
+        <div class="catalog-licence">CC0 1.0 · גרסה שהוחלפה (נשמרת לצורך שחזור) · הגישה דורשת אישור</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span>עמודי מקור —</span><span><bdi dir="ltr">29,687</bdi> תמונות</span><span><bdi dir="ltr">29,687</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">543,332,458</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/nonlegislative-diversity-v4">Hugging Face</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">Non-legislative phone-heavy v1</bdi></h4>
+        <p>שורות סינתטיות לזיהוי תווים, בעיקר בהדמיית תצלומי טלפון מזווית ישרה ואלכסונית.</p>
+        <div class="catalog-licence">CC0 1.0</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span>עמודי מקור —</span><span><bdi dir="ltr">9,880</bdi> תמונות</span><span><bdi dir="ltr">9,880</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">310,686,101</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/nonlegislative-phone-heavy-v1/tree/c5185ca95f7a79eb21c00ec4bde7325557f86903">Hugging Face</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">C1 synthetic TRAIN</bdi></h4>
+        <p>חיתוכי שורות סינתטיים בעברית ממכתבים, פרוזה, דוחות, טפסים וטבלאות.</p>
+        <div class="catalog-licence">CC0 1.0</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span>עמודי מקור —</span><span><bdi dir="ltr">15,600</bdi> תמונות</span><span><bdi dir="ltr">15,600</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">359,391,835</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/c1-synthetic-train-v1/tree/0fb40628068aa45c186822af4b3538c9320be50b">Hugging Face</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">Hebrew OCR VLM TRAIN</bdi></h4>
+        <p>זוגות של תמונות שורה ותעתיקים, אמיתיים וסינתטיים, לאימון מודלים רב־אופניים. זמין ב־Parquet ובפורמט צ׳אט.</p>
+        <div class="catalog-licence">CC0 1.0</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span>עמודי מקור —</span><span><bdi dir="ltr">10,152</bdi> תמונות</span><span><bdi dir="ltr">10,152</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">345,527,810</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/hebrew-ocr-vlm-train-v1/tree/6062adaba2e3f9ba3e01b527301f7b533bf11368">Hugging Face</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">C2 old-print synthetic TRAIN</bdi></h4>
+        <p>חיתוכי שורות בסגנון דפוס היסטורי, מאותיות בנחלת הכלל ועם הדמיית סריקה.</p>
+        <div class="catalog-licence">CC0 1.0</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span>עמודי מקור —</span><span><bdi dir="ltr">5,000</bdi> תמונות</span><span><bdi dir="ltr">5,000</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">143,222,976</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/c2-old-print-synthetic-train-v1/tree/2e2740cf5cb2b8a555ae12c252eebbc85b96f59a">Hugging Face</a></div>
+      </article>
+    </div>
+    <h3>מאגרי הערכה</h3>
+    <div class="grid">
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">P-mod-open v0</bdi></h4>
+        <p>מבחן הערכה לדפוס עברי מודרני לא מנוקד, עם תמונות מארכיונים, עיבודי מסמכים רשמיים, סריקות ותצלומי טלפון.</p>
+        <div class="catalog-licence">תצלומי HeOCR והתיוגים ב־CC0. זכויות המקור משתנות לפי פריט.</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span><bdi dir="ltr">31</bdi> עמודי מקור</span><span><bdi dir="ltr">65</bdi> תמונות</span><span><bdi dir="ltr">1,863</bdi> שורות</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">37,421,739</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/p-mod-open-v0/tree/c8f136b9a20349d72e7639c253d0a74295ca4658">Hugging Face</a> <a href="https://doi.org/10.5281/zenodo.24505278">Zenodo</a></div>
+      </article>
+      <article class="card catalog-card">
+        <h4><bdi dir="ltr">Hebrew OCR leaderboard results</bdi></h4>
+        <p>רשומות תוצאות קריאות למכונה מלוח ההשוואה של מערכות זיהוי תווים בעברית.</p>
+        <div class="catalog-licence">CC0 1.0</div>
+        <div class="meta catalog-counts"><span>מסמכים או יצירות —</span><span>עמודי מקור —</span><span>תמונות —</span><span>שורות —</span><span>מילים —</span><span>תווים —</span><span><bdi dir="ltr">137,799</bdi> בתים</span></div>
+        <div class="row" dir="ltr"><a href="https://huggingface.co/datasets/HeOCR/hebrew-ocr-leaderboard-results/tree/d798f5a3be4e8731751d591010210324aeb3f65c">Hugging Face</a></div>
+      </article>
+    </div>
+    <h3>מאגרים נוספים ב־GitHub</h3>
+    <ul>
+      <li><a href="https://github.com/HeOCR/hash">HASH</a> · ארכיון סריקות של כתבי יד בעברית</li>
+      <li><a href="https://github.com/HeOCR/hletterscript">hletterscript</a> · חיתוכי אותיות עבריות בכתב יד</li>
+    </ul>
   </section>
 
   <section id="sources">
     <h2>מקורות וקרדיט</h2>
-    <p class="sub">אנחנו משתמשים רק ביצירות בנחלת הכלל, וכל פריט שומר את המקור ואת הקרדיט שלו. איך אנחנו בודקים זכויות: <a href="rights.html">זכויות והסרה</a>.</p>
+    <p class="sub">הגרסאות משתמשות במקורות בנחלת הכלל או ברישיון פתוח. כל פריט שומר את המקור ואת הקרדיט שלו. <a href="rights.html">זכויות והסרה</a>.</p>
     <div class="grid">
       <div class="card">
         <h3><a href="https://www.nli.org.il">הספרייה הלאומית</a></h3>
@@ -120,7 +266,7 @@
       </div>
       <div class="card">
         <h3><a href="https://he.wikisource.org">ויקיטקסט העברי</a></h3>
-        <p>תעתיקים מוגהים של עמודים סרוקים. אנחנו משתמשים בהם להערכה בלבד, וכל עמוד נבדק בידי אדם. הטקסט שלהם ברישיון CC BY-SA.</p>
+        <p>טקסט מוויקיטקסט העברית מופיע במאגרי האימון ובזוגות השורות. בכל גרסה יש קישורים למקורות ותיעוד של תנאי CC BY-SA.</p>
       </div>
     </div>
   </section>

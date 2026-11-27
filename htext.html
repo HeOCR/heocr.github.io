@@ -45,7 +45,7 @@
 <div class="band gridband"><div class="wrap page-head">
 <h1><span class="bb" data-tag="h1 · 0.99">htext</span></h1>
 <p class="lede">טקסט עברי ברישיונות פתוחים לאימון מנועי הזיהוי של HeOCR, חתוך לשורות, עם ניקוד ובלעדיו: בראש ובראשונה טקסט בנחלת הכלל, וטקסט בייחוס ובשיתוף זהה בגרסאות נפרדות. לכל יצירה או מסמך יש רישום זכויות משלו: מעמדו בישראל ובארה"ב, הרישיון שלו ושורת הקרדיט שלו. htext מתפרסם בשלוש גרסאות, אחת לכל רישיון, כדי שתוכלו לבחור את התנאים שמתאימים לכם; גרסת הליבה היא CC0 ואפשר להשתמש בה בלי תנאים.</p>
-<p class="note">עודכן ב־2026-11-25. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href="htext/corpora.json">corpora.json</a>.</p>
+<p class="note">עודכן ב־2026-11-27. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href="htext/corpora.json">corpora.json</a>.</p>
 </div></div>
 <nav class="wrap" aria-label="בעמוד זה"><div class="toc"><a href="#what">מה זה htext</a><a href="#releases">גרסאות</a><a href="#corpora">מאגרים</a><a href="#rights">זכויות</a><a href="#use">הורדה ושימוש</a><a href="#credit">קרדיט</a><a href="#licence">רישיון</a></div></nav>
 <main id="main" class="wrap doc ht">
@@ -53,7 +53,7 @@
 <h2>מה זה htext</h2>
 <p>htext אוסף טקסט עברי שזכויותיו ברורות דיין לפרסום פתוח, והופך אותו לשורות אימון עבור <a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a>, מחולל העמודים הסינתטיים של HeOCR. המחולל מצייר כל שורה על עמודים סינתטיים, כך שמנועי הזיהוי לומדים אוצר מילים, כתיב ופיסוק עבריים אמיתיים, ולא רק טקסט מומצא.</p>
 <p>לכל מקור יש בונה משלו, מאגר משלו וכרטיס משלו. בנייה קוראת עותק נעוץ של המקור, מחשבת זכויות לכל פריט, מנקה וחותכת את הטקסט, ובודקת ששום שורה אינה חופפת לטקסט ההערכה של HeOCR. רק הקבצים שהכרטיס מונה מתפרסמים.</p>
-<div class="stats"><div class="stat"><b>45,473,512</b><span>שורות</span></div><div class="stat"><b><span dir="ltr">2,178.9 MB</span></b><span>טקסט</span></div><div class="stat"><b>11</b><span>מאגרים</span></div></div>
+<div class="stats"><div class="stat"><b>45,477,600</b><span>שורות</span></div><div class="stat"><b><span dir="ltr">2,179.1 MB</span></b><span>טקסט</span></div><div class="stat"><b>12</b><span>מאגרים</span></div></div>
 </section>
 <section id="releases">
 <h2>גרסאות</h2>
@@ -225,6 +225,23 @@
 <li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24521419"><span dir="ltr">10.5281/zenodo.24521419</span></a> (כל הגרסאות: <a href="https://doi.org/10.5281/zenodo.24521418"><span dir="ltr">10.5281/zenodo.24521418</span></a>)</li>
 <li>Hugging Face: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/tree/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3">HeOCR/htext-wikisource</a> (אותם קבצים כמו בגרסה ב־GitHub)</li>
 </ul>
+<h3 id="wikisource-v4">ויקיטקסט העברית B v4</h3>
+<span class="status">wikisource-v4</span><span class="status">htext-by-sa</span>
+<p>4,088 שורות אימון בעברית מחמש יצירות בוויקיטקסט, עם ייחוס לגרסאות המקור.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>קובץ</th><th>סוג</th><th>שורות</th><th>גודל</th></tr></thead>
+<tbody>
+<tr><td><code>wikisource_plain_v4.txt</code></td><td>ללא ניקוד</td><td class="num">4,088</td><td class="num"><span dir="ltr">0.2 MB</span></td></tr>
+<tr><td><code>wikisource_niqqud_v4.txt</code></td><td>מנוקד</td><td class="num">0</td><td class="num"><span dir="ltr">0.0 MB</span></td></tr>
+</tbody></table></div>
+<ul class="facts">
+<li>גרסת htext: htext-by-sa (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>)</li>
+<li>מקור: <a href="https://he.wikisource.org">ויקיטקסט העברית</a> (CC BY-SA 4.0)</li>
+<li>גרסה: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/tree/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4">wikisource-v4</a>, 2026-11-27</li>
+<li>כרטיס המאגר: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4/README.md">README.md</a></li>
+<li>Zenodo (DOI): <a href="https://doi.org/10.5281/zenodo.24580528"><span dir="ltr">10.5281/zenodo.24580528</span></a> (כל הגרסאות: <a href="https://doi.org/10.5281/zenodo.24521418"><span dir="ltr">10.5281/zenodo.24521418</span></a>)</li>
+<li>Hugging Face: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/tree/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4">HeOCR/htext-wikisource</a> (אותם קבצים כמו בגרסה ב־GitHub)</li>
+</ul>
 <h3 id="sefaria-v2-cc0">ספריא v2 — נחלת הכלל ו־CC0</h3>
 <span class="status">sefaria-v2-cc0</span><span class="status">htext-cc0</span>
 <p>58,143 שורות אימון בעברית ממהדורות היסטוריות שספריא המירה לטקסט דיגיטלי.</p>
@@ -291,6 +308,7 @@
 <li><b>ויקיטקסט העברית</b>: רישיון CC BY-SA 4.0 עם ייחוס לכל גרסת מקור בקובץ NOTICE ובאינדקס הזכויות.</li>
 <li><b>ספריא</b>: ספריא מסמנת שתי מהדורות מדויקות כנחלת הכלל: אבות דרבי נתן, מהדורת שכטר, נוסח א (וינה, 1887), וספר יצירה (ורשה, 1884).</li>
 <li><b>ויקיטקסט העברית</b>: רישיון CC BY-SA 4.0. יש לייחס לתורמי ויקיטקסט העברית לפי גרסת המקור באינדקס הזכויות ובקובץ NOTICE.</li>
+<li><b>ויקיטקסט העברית</b>: רישיון CC BY-SA 4.0. יש לייחס לתורמי ויקיטקסט העברית לפי גרסת המקור באינדקס הזכויות ובקובץ NOTICE.</li>
 <li><b>ספריא</b>: ספריא מסמנת כל גרסה עברית מדויקת כנחלת הכלל או כ־CC0. הבסיס לכל גרסה מפורט ברשומת המהדורות.</li>
 <li><b>ספריא</b>: רישיון CC BY 4.0. יש לייחס ליוסף אלבו, לעורך יצחק הוזיק, לאגודה היהודית להוצאה לאור של אמריקה ולספריא על הדיגיטציה העברית.</li>
 <li><b>פרויקט גוטנברג</b>: הטקסט העברי ההיסטורי של מהדורת אמסטרדם 1733 הוא בנחלת הכלל. בסיס הזכויות וייחוס התעתיק לפרויקט גוטנברג מופיעים בקובץ NOTICE.</li>
@@ -318,6 +336,7 @@ grep -E &#x27;_v2\.txt$&#x27; SHA256SUMS | sha256sum -c</code></pre>
 <p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2/NOTICE.md">Hebrew Wikisource contributors (B v2)</a> · קרדיט: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2/NOTICE.md">תורמי ויקיטקסט העברית (B v2)</a></p>
 <p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/source_editions.json">Sefaria, exact historical Hebrew editions</a> · קרדיט: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/source_editions.json">ספריא, מהדורות עבריות היסטוריות</a></p>
 <p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3/NOTICE.md">Hebrew Wikisource contributors by revision</a> · קרדיט: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3/NOTICE.md">תורמי ויקיטקסט העברית לפי גרסה</a></p>
+<p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4/NOTICE.md">Hebrew Wikisource contributors by revision</a> · קרדיט: <a href="https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4/NOTICE.md">תורמי ויקיטקסט העברית לפי גרסה</a></p>
 <p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/a92766c9fb4955b1f9fcb3766430cd5522af7614/releases/sefaria-v2-cc0/source_editions.json">Sefaria and the credited editions</a> · קרדיט: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/a92766c9fb4955b1f9fcb3766430cd5522af7614/releases/sefaria-v2-cc0/source_editions.json">ספריא והמהדורות המפורטות ברשומת הייחוס</a></p>
 <p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/e28fae17d635f72ad6c9a628734252c1ea219e24/source_editions.json">Joseph Albo, Isaac Husik, JPS and Sefaria</a> · קרדיט: <a href="https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/e28fae17d635f72ad6c9a628734252c1ea219e24/source_editions.json">יוסף אלבו, יצחק הוזיק, האגודה היהודית להוצאה לאור וספריא</a></p>
 <p class="credit">Credit: <a href="https://huggingface.co/datasets/HeOCR/htext-tsel-haolam/blob/c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb/NOTICE.md">Project Gutenberg transcription team</a> · קרדיט: <a href="https://huggingface.co/datasets/HeOCR/htext-tsel-haolam/blob/c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb/NOTICE.md">צוות התעתיק של פרויקט גוטנברג</a></p>
