@@ -7,3 +7,5 @@ Both versions were served locally and captured in Chromium at the same desktop s
 The modern and historical detail screenshots show the entire benchmark block.
 
 The screenshot branch is review evidence and is independent of the site PR.
+
+The pooled-phone follow-up at `26c974d` is shown in pooled-phone-he.png and pooled-phone-en.png.
