@@ -285,6 +285,16 @@ main.home h2 { margin: 0 0 8px; }
 .catalog-sources { margin-block-start: 12px; }
 .catalog-sources summary { cursor: pointer; font-weight: 600; }
 .catalog-sources[open] summary { margin-block-end: 12px; }
+.versions { margin-block-start: 10px; font-size: var(--fs-small); }
+.versions > summary { cursor: pointer; font-weight: 600; }
+.versions > ul { margin-block: 8px 0; padding-inline-start: 20px; }
+.versions > ul > li + li { margin-block-start: 6px; }
+.source-list { display: grid; gap: 12px; }
+.source-card { min-width: 0; }
+.source-card .source-release { flex: none; margin-block-end: 4px; }
+.source-version { border-block-start: 1px solid var(--line); margin-block-start: 12px; padding-block-start: 12px; }
+.source-version h4 { margin-block-start: 0; }
+.quick-start code { white-space: pre-wrap; overflow-wrap: anywhere; }
 
 /* ---------- 10. Footer ---------- */
 .site-footer { margin-top: 56px; padding-block: 30px 44px; border-top: 1px solid var(--line-strong); background: var(--surface); color: var(--muted); font-size: var(--fs-small); }

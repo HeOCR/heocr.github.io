@@ -10,33 +10,53 @@ from pathlib import Path
 import shell
 
 ROOT = Path(__file__).resolve().parents[1]
+MODEL_HUB = "https://huggingface.co/HeOCR/heocr-p-hist-measured"
+FULL_MODEL_HUB = "https://huggingface.co/HeOCR/heocr-p-hist-full"
+QUICK_START_VERSION = "v1.1"
 MODEL_RELEASES = (
-    ("MEASURED v1.1", "measured_latest", "https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.1",
-     "https://doi.org/10.5281/zenodo.24581274"),
-    ("MEASURED v1.0", "measured_previous", "https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.0",
-     "https://doi.org/10.5281/zenodo.24578440"),
-    ("FULL v1.0-full", "full_v10", "https://huggingface.co/HeOCR/heocr-p-hist-full/tree/v1.0-full",
-     "https://doi.org/10.5281/zenodo.24582845"),
+    ("MEASURED", QUICK_START_VERSION, "phist-v11", "measured_latest", MODEL_HUB, "10.5281/zenodo.24581274",
+     "held-out-evaluation-old-printed-hebrew-unpointed-v11"),
+    ("MEASURED", "v1.0", "phist-v10", "measured_previous", MODEL_HUB, "10.5281/zenodo.24578440",
+     "held-out-evaluation-old-printed-hebrew-unpointed"),
+    ("FULL", "v1.0-full", "phist-full-v10", "full_v10", FULL_MODEL_HUB, "10.5281/zenodo.24582845", None),
+)
+QUICK_START = (
+    "mkdir -p tessdata\n"
+    "curl -fL -o tessdata/phist_v2.traineddata \\\n"
+    f"  {MODEL_HUB}/resolve/{QUICK_START_VERSION}/phist_v2.traineddata\n"
+    "tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3"
 )
 T = {
     "en": {
         "title": "Download HeOCR",
         "models": "OCR models",
-        "about": "Tesseract weights for historical, unpointed Hebrew print. Apache 2.0.",
+        "about": "HeOCR P-hist v1.1 is available now for historical, unpointed Hebrew print. Apache 2.0.",
+        "quick_start": "Quick start",
+        "instructions": "With Tesseract 5 and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.",
+        "experimental": "HeOCR’s modern print and handwriting models are still experimental.",
+        "modern_results": "Modern print benchmark",
+        "benchmarks": "See all benchmarks",
+        "model_benchmark": "C2 held-out result",
         "measured_latest": "Best / Latest. Evaluated on the C2 held-out set.",
         "measured_previous": "Previous version. Evaluated on the C2 held-out set.",
-        "apps": "Apps",
         "full_v10": "Trained with additional data. This variant is unmeasured.",
+        "apps": "Apps",
         "coming": "Coming soon",
     },
     "he": {
         "title": "הורדת HeOCR",
         "models": "מודלים לזיהוי תווים",
-        "about": "משקלי Tesseract לדפוס עברי היסטורי לא מנוקד, ברישיון Apache 2.0.",
+        "about": "HeOCR P-hist v1.1 זמין להורדה לדפוס עברי היסטורי לא מנוקד, ברישיון Apache 2.0.",
+        "quick_start": "התחלה מהירה",
+        "instructions": "התקינו Tesseract 5 ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.",
+        "experimental": "המודלים של HeOCR לדפוס מודרני ולכתב יד עדיין ניסיוניים.",
+        "modern_results": "מדד ההערכה לדפוס מודרני",
+        "benchmarks": "לכל מדדי ההערכה",
+        "model_benchmark": "תוצאות על מערך המבחן C2",
         "measured_latest": "הגרסה הטובה והעדכנית ביותר. נבדקה על מערך המבחן C2.",
         "measured_previous": "גרסה קודמת. נבדקה על מערך המבחן C2.",
-        "apps": "יישומים",
         "full_v10": "אומן עם נתונים נוספים. גרסה זו לא נמדדה.",
+        "apps": "יישומים",
         "coming": "בקרוב",
     },
 }
@@ -44,12 +64,16 @@ T = {
 
 def page(lang: str) -> str:
     text = {key: escape(value) for key, value in T[lang].items()}
-    model_cards = "".join(
-        f'<div class="card"><h3><bdi dir="ltr">HeOCR P-hist {variant}</bdi></h3>'
-        f'<p>{text[description]}</p>'
-        f'<p><a href="{escape(hf)}">Hugging Face</a> · <a href="{escape(doi)}">Zenodo</a></p></div>\n'
-        for variant, description, hf, doi in MODEL_RELEASES
-    )
+    model_cards = []
+    for variant, version, anchor, description, hub, doi, result in MODEL_RELEASES:
+        benchmark = (f'<a href="{hub}/blob/{version}/README.md#{result}">{text["model_benchmark"]}</a>'
+                     if result else "")
+        model_cards.append(
+            f'<div class="card" id="{anchor}"><h3><bdi dir="ltr">HeOCR P-hist {variant} {version}</bdi></h3>'
+            f'<p>{text[description]}</p>'
+            f'<div class="row"><a href="{hub}/tree/{version}">Hugging Face</a>'
+            f'<a href="https://doi.org/{doi}">Zenodo</a>{benchmark}</div></div>\n'
+        )
     cards = "".join(
         f'<div class="card"><h3>{platform}</h3><p>{text["coming"]}</p></div>\n'
         for platform in ("macOS", "Windows", "Android")
@@ -59,7 +83,12 @@ def page(lang: str) -> str:
         + shell.header(lang, "download")
         + '<main id="main" class="wrap doc">\n'
         + shell.page_head(text["title"], f'<p class="lede">{text["about"]}</p>')
-        + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{model_cards}</div>\n</section>\n'
+        + f'<section id="quick-start">\n<h2>{text["quick_start"]}</h2>\n'
+          f'<p>{text["instructions"]}</p>\n'
+          f'<pre class="quick-start"><code>{escape(QUICK_START)}</code></pre>\n</section>\n'
+        + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n</section>\n'
+        + f'<p>{text["experimental"]} <a href="benchmarks.html#p-mod-open">{text["modern_results"]}</a> · '
+          f'<a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
         + f'<section>\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n</section>\n'
         + "</main>\n"
         + shell.footer([])

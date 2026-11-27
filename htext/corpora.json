@@ -176,7 +176,9 @@
       "zenodo": {
         "doi": "10.5281/zenodo.24384730",
         "concept_doi": "10.5281/zenodo.24384729"
-      }
+      },
+      "source_group": "knesset",
+      "series": "knesset-laws"
     },
     {
       "id": "tanakh",
@@ -324,7 +326,8 @@
       "zenodo": {
         "doi": "10.5281/zenodo.24415189",
         "concept_doi": "10.5281/zenodo.24415188"
-      }
+      },
+      "source_group": "wikisource"
     },
     {
       "id": "knesset-plenary",
@@ -394,7 +397,9 @@
         "doi": "10.5281/zenodo.24415187",
         "concept_doi": "10.5281/zenodo.24415186"
       },
-      "privacy_lines_dropped": 848303
+      "privacy_lines_dropped": 848303,
+      "source_group": "knesset",
+      "series": "knesset-plenary"
     },
     {
       "id": "wikisource-v2",
@@ -463,7 +468,8 @@
         "concept_doi": "10.5281/zenodo.24516891"
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2/CORPUS_CARD.md",
-      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2/SHA256SUMS"
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/efcf3e55bedd7a17e6eef7db02afd4c5f6447144/releases/wikisource-v2/SHA256SUMS",
+      "source_group": "wikisource"
     },
     {
       "id": "sefaria-v1",
@@ -529,7 +535,8 @@
         "concept_doi": "10.5281/zenodo.24516960"
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/README.md",
-      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/SHA256SUMS"
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/2572e399c910cbfe6410830cc93360b192c14728/SHA256SUMS",
+      "source_group": "sefaria"
     },
     {
       "id": "wikisource-v3",
@@ -596,7 +603,8 @@
         "concept_doi": "10.5281/zenodo.24521418"
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3/README.md",
-      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3/SHA256SUMS"
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/b7766502d9d297176925da620b01e357ad0f4ec6/releases/wikisource-v3/SHA256SUMS",
+      "source_group": "wikisource"
     },
     {
       "id": "wikisource-v4",
@@ -663,7 +671,8 @@
         "concept_doi": "10.5281/zenodo.24521418"
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4/README.md",
-      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4/SHA256SUMS"
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/a5ee2ac15051447d571e027c87c9512317cce919/releases/wikisource-v4/SHA256SUMS",
+      "source_group": "wikisource"
     },
     {
       "id": "sefaria-v2-cc0",
@@ -730,7 +739,8 @@
         "concept_doi": "10.5281/zenodo.24521422"
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/a92766c9fb4955b1f9fcb3766430cd5522af7614/releases/sefaria-v2-cc0/README.md",
-      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/a92766c9fb4955b1f9fcb3766430cd5522af7614/releases/sefaria-v2-cc0/SHA256SUMS"
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/a92766c9fb4955b1f9fcb3766430cd5522af7614/releases/sefaria-v2-cc0/SHA256SUMS",
+      "source_group": "sefaria"
     },
     {
       "id": "sefaria-v2-by",
@@ -797,7 +807,8 @@
         "concept_doi": "10.5281/zenodo.24521429"
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/e28fae17d635f72ad6c9a628734252c1ea219e24/README.md",
-      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/e28fae17d635f72ad6c9a628734252c1ea219e24/SHA256SUMS"
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/e28fae17d635f72ad6c9a628734252c1ea219e24/SHA256SUMS",
+      "source_group": "sefaria"
     },
     {
       "id": "sefaria-v3-cc0",
@@ -877,7 +888,8 @@
         "concept_doi": "10.5281/zenodo.24521422"
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/8da7fb539e9ac8fc40c4f6e4f7073cb9a575bb38/releases/sefaria-v3-cc0/README.md",
-      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/8da7fb539e9ac8fc40c4f6e4f7073cb9a575bb38/releases/sefaria-v3-cc0/SHA256SUMS"
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria/blob/8da7fb539e9ac8fc40c4f6e4f7073cb9a575bb38/releases/sefaria-v3-cc0/SHA256SUMS",
+      "source_group": "sefaria"
     },
     {
       "id": "sefaria-v3-by",
@@ -957,7 +969,8 @@
         "concept_doi": "10.5281/zenodo.24521429"
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/c55b5dcbc79b360b87031a1fa7aca029b62d25f0/releases/sefaria-v3-by/README.md",
-      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/c55b5dcbc79b360b87031a1fa7aca029b62d25f0/releases/sefaria-v3-by/SHA256SUMS"
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by/blob/c55b5dcbc79b360b87031a1fa7aca029b62d25f0/releases/sefaria-v3-by/SHA256SUMS",
+      "source_group": "sefaria"
     },
     {
       "id": "sefaria-v3-by-sa",
@@ -1037,7 +1050,8 @@
         "concept_doi": "10.5281/zenodo.24581350"
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by-sa/blob/1d24204f8bd53d3abc214619a2b73cd731552b5e/README.md",
-      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by-sa/blob/1d24204f8bd53d3abc214619a2b73cd731552b5e/SHA256SUMS"
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-sefaria-by-sa/blob/1d24204f8bd53d3abc214619a2b73cd731552b5e/SHA256SUMS",
+      "source_group": "sefaria"
     },
     {
       "id": "gutenberg-v1",
@@ -1103,7 +1117,9 @@
         "concept_doi": "10.5281/zenodo.24581352"
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-gutenberg/blob/1f7432ee0240c0a23b44347cb1612c454fe78eed/README.md",
-      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-gutenberg/blob/1f7432ee0240c0a23b44347cb1612c454fe78eed/SHA256SUMS"
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-gutenberg/blob/1f7432ee0240c0a23b44347cb1612c454fe78eed/SHA256SUMS",
+      "source_group": "gutenberg",
+      "series": "gutenberg-v1"
     },
     {
       "id": "tsel-haolam-v1",
@@ -1170,7 +1186,9 @@
         "concept_doi": "10.5281/zenodo.24521431"
       },
       "card_url": "https://huggingface.co/datasets/HeOCR/htext-tsel-haolam/blob/c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb/README.md",
-      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-tsel-haolam/blob/c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb/SHA256SUMS"
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-tsel-haolam/blob/c95c9a349a1f9a9d1972489c1b1d25b23fc24dbb/SHA256SUMS",
+      "source_group": "gutenberg",
+      "series": "tsel-haolam-v1"
     }
   ],
   "planned": [],

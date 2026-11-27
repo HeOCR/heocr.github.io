@@ -157,7 +157,7 @@
       "id": "HeOCR/nonlegislative-diversity-v4-revised",
       "revision": "07aa54914a5926d183f5f72ee99ac3b118bf8413",
       "group": "synthetic",
-      "title": "Non-legislative diversity v4 revised",
+      "title": "Non-legislative diversity",
       "description": {
         "en": "Revised OCR lines with contextual numeric labels in table cells.",
         "he": "גרסה מתוקנת של שורות לזיהוי תווים, עם תוויות מספריות בהקשר של תאי טבלה."
@@ -175,7 +175,8 @@
         "bytes": 543690956
       },
       "partial_pages": null,
-      "status": "current"
+      "status": "current",
+      "version": "v4 revised"
     },
     {
       "id": "HeOCR/nonlegislative-diversity-v4",
@@ -199,13 +200,15 @@
         "bytes": 543332458
       },
       "partial_pages": null,
-      "status": "superseded"
+      "status": "superseded",
+      "version": "v4",
+      "family": "HeOCR/nonlegislative-diversity-v4-revised"
     },
     {
       "id": "HeOCR/nonlegislative-phone-heavy-v1",
       "revision": "c5185ca95f7a79eb21c00ec4bde7325557f86903",
       "group": "synthetic",
-      "title": "Non-legislative phone-heavy v1",
+      "title": "Non-legislative phone-heavy",
       "description": {
         "en": "Generated OCR lines weighted toward simulated near and oblique phone views.",
         "he": "שורות סינתטיות לזיהוי תווים, בעיקר בהדמיית תצלומי טלפון מזווית ישרה ואלכסונית."
@@ -222,7 +225,8 @@
         "characters": null,
         "bytes": 310686101
       },
-      "partial_pages": null
+      "partial_pages": null,
+      "version": "v1"
     },
     {
       "id": "HeOCR/oldprint-pairs-train",
@@ -365,7 +369,14 @@
         "characters": null,
         "bytes": 359391835
       },
-      "partial_pages": null
+      "partial_pages": null,
+      "version": "v1.1",
+      "hub_versions": [
+        {
+          "label": "v1.0",
+          "revision": "368168c8e51b124cceb3da8777bb23c7b969ee80"
+        }
+      ]
     },
     {
       "id": "HeOCR/hebrew-ocr-vlm-train-v1",
@@ -479,7 +490,8 @@
         "characters": null,
         "bytes": 85930670
       },
-      "partial_pages": null
+      "partial_pages": null,
+      "family": "HeOCR/htext-sefaria"
     },
     {
       "id": "HeOCR/htext-tsel-haolam",
@@ -610,7 +622,8 @@
         "characters": null,
         "bytes": 29342856
       },
-      "partial_pages": null
+      "partial_pages": null,
+      "family": "HeOCR/htext-sefaria"
     },
     {
       "id": "HeOCR/htext-gutenberg",
@@ -639,6 +652,35 @@
         "bytes": 488669
       },
       "partial_pages": null
+    },
+    {
+      "id": "HeOCR/hebrew-line-pairs-cc0",
+      "revision": "adb855a0fa3191c86a87c522220d6c7ba0e79995",
+      "group": "real",
+      "title": "Hebrew line pairs · CC0",
+      "description": {
+        "en": "Original Hebrew line crops and literal text from historical books, periodicals and the Israeli Gazette. Source rights accompany each pair.",
+        "he": "חיתוכי שורות מקוריים ותמלול מדויק מספרים ומכתבי עת היסטוריים ומספר החוקים. זכויות המקור מתועדות בכל זוג."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24582387",
+          "label": "v1.0"
+        }
+      ],
+      "counts": {
+        "documents": null,
+        "pages": null,
+        "images": 926,
+        "lines": 926,
+        "words": null,
+        "characters": null,
+        "bytes": 42006709
+      },
+      "partial_pages": null,
+      "duplicates_sources": true
     }
   ],
   "model": {

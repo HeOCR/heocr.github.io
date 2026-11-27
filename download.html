@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>הורדת HeOCR</title>
-<meta name="description" content="משקלי Tesseract לדפוס עברי היסטורי לא מנוקד, ברישיון Apache 2.0.">
+<meta name="description" content="HeOCR P-hist v1.1 זמין להורדה לדפוס עברי היסטורי לא מנוקד, ברישיון Apache 2.0.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HeOCR">
 <meta property="og:title" content="הורדת HeOCR">
-<meta property="og:description" content="משקלי Tesseract לדפוס עברי היסטורי לא מנוקד, ברישיון Apache 2.0.">
+<meta property="og:description" content="HeOCR P-hist v1.1 זמין להורדה לדפוס עברי היסטורי לא מנוקד, ברישיון Apache 2.0.">
 <meta property="og:url" content="https://heocr.org/download.html">
 <meta property="og:image" content="https://heocr.org/og-image-he-1200x630.png">
 <meta property="og:image:width" content="1200">
@@ -45,16 +45,25 @@
 <main id="main" class="wrap doc">
 <div class="band gridband"><div class="wrap page-head">
 <h1><span class="bb" data-tag="h1 · 0.99">הורדת HeOCR</span></h1>
-<p class="lede">משקלי Tesseract לדפוס עברי היסטורי לא מנוקד, ברישיון Apache 2.0.</p>
+<p class="lede">HeOCR P-hist v1.1 זמין להורדה לדפוס עברי היסטורי לא מנוקד, ברישיון Apache 2.0.</p>
 </div></div>
+<section id="quick-start">
+<h2>התחלה מהירה</h2>
+<p>התקינו Tesseract 5 ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.</p>
+<pre class="quick-start"><code>mkdir -p tessdata
+curl -fL -o tessdata/phist_v2.traineddata \
+  https://huggingface.co/HeOCR/heocr-p-hist-measured/resolve/v1.1/phist_v2.traineddata
+tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre>
+</section>
 <section id="models">
 <h2>מודלים לזיהוי תווים</h2>
 <div class="grid">
-<div class="card"><h3><bdi dir="ltr">HeOCR P-hist MEASURED v1.1</bdi></h3><p>הגרסה הטובה והעדכנית ביותר. נבדקה על מערך המבחן C2.</p><p><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.1">Hugging Face</a> · <a href="https://doi.org/10.5281/zenodo.24581274">Zenodo</a></p></div>
-<div class="card"><h3><bdi dir="ltr">HeOCR P-hist MEASURED v1.0</bdi></h3><p>גרסה קודמת. נבדקה על מערך המבחן C2.</p><p><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.0">Hugging Face</a> · <a href="https://doi.org/10.5281/zenodo.24578440">Zenodo</a></p></div>
-<div class="card"><h3><bdi dir="ltr">HeOCR P-hist FULL v1.0-full</bdi></h3><p>אומן עם נתונים נוספים. גרסה זו לא נמדדה.</p><p><a href="https://huggingface.co/HeOCR/heocr-p-hist-full/tree/v1.0-full">Hugging Face</a> · <a href="https://doi.org/10.5281/zenodo.24582845">Zenodo</a></p></div>
+<div class="card" id="phist-v11"><h3><bdi dir="ltr">HeOCR P-hist MEASURED v1.1</bdi></h3><p>הגרסה הטובה והעדכנית ביותר. נבדקה על מערך המבחן C2.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.1">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24581274">Zenodo</a><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/blob/v1.1/README.md#held-out-evaluation-old-printed-hebrew-unpointed-v11">תוצאות על מערך המבחן C2</a></div></div>
+<div class="card" id="phist-v10"><h3><bdi dir="ltr">HeOCR P-hist MEASURED v1.0</bdi></h3><p>גרסה קודמת. נבדקה על מערך המבחן C2.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.0">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24578440">Zenodo</a><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/blob/v1.0/README.md#held-out-evaluation-old-printed-hebrew-unpointed">תוצאות על מערך המבחן C2</a></div></div>
+<div class="card" id="phist-full-v10"><h3><bdi dir="ltr">HeOCR P-hist FULL v1.0-full</bdi></h3><p>אומן עם נתונים נוספים. גרסה זו לא נמדדה.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-full/tree/v1.0-full">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24582845">Zenodo</a></div></div>
 </div>
 </section>
+<p>המודלים של HeOCR לדפוס מודרני ולכתב יד עדיין ניסיוניים. <a href="benchmarks.html#p-mod-open">מדד ההערכה לדפוס מודרני</a> · <a href="benchmarks.html">לכל מדדי ההערכה</a></p>
 <section>
 <h2>יישומים</h2>
 <div class="grid">

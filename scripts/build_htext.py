@@ -16,6 +16,7 @@ import argparse, html, json, re, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from build_datasets import load_catalog, release_links, statistic
 import shell  # noqa: E402  (head, header, footer: one source for every page)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,7 +28,7 @@ T = {
         "desc": "htext: openly licensed Hebrew text for training Hebrew OCR, in three releases (CC0, CC BY, CC BY-SA), with a rights record for every entry.",
         "lede": "Openly licensed Hebrew text for training HeOCR's recognizers, cut into lines, plain and with niqqud: public-domain text first, and attribution and share-alike text in their own releases. Every work or document carries its own rights record: its status in Israel and in the US, its licence and its credit line. htext is published as three releases, one per licence, so you can pick the terms you need; the core release is CC0 and can be used without conditions.",
         "updated": "Updated {d}. Figures come from each corpus card and are rebuilt from <a href=\"{json}\">corpora.json</a>.",
-        "toc": [("what", "What htext is"), ("releases", "Releases"), ("corpora", "Corpora"), ("rights", "Rights"), ("use", "Download and use"),
+        "toc": [("releases", "Releases"), ("what", "What htext is"), ("corpora", "Corpora"), ("rights", "Rights"), ("use", "Download and use"),
                 ("credit", "Credit"), ("licence", "Licence")],
         "what_p": [
             "htext collects Hebrew text whose rights are clear enough to publish openly, and turns it into training lines for "
@@ -39,11 +40,11 @@ T = {
             "Only the files a card lists are published.",
         ],
         "stat_lines": "lines", "stat_works": "works", "stat_works_laws": "works and laws", "stat_works_laws_books": "works, laws and books", "stat_corpora": "corpora", "stat_corpus": "corpus", "stat_bytes": "of text",
-        "corpora_h": "Corpora",
+        "corpora_h": "Text sources",
+        "versions": "Versions",
         "releases_h": "Releases",
-        "releases_p": "htext ships one release per licence. Pick the release whose terms fit your use. Models trained on any of them can still be released under an open licence, with credit in their NOTICE.",
-        "r_contents": "Contains", "r_allows": "You may", "r_licence": "Licence",
-        "r_status": {"published": "published", "planned": "planned"},
+        "releases_p": "Choose a collection by licence. Each source keeps its own release history and rights record.",
+        "tier_pending": "Publication pending",
         "c_in": "Release",
         "planned_h": "Planned sources",
         "planned_p": "Sources being prepared. Each is published only after its rights are checked entry by entry.",
@@ -83,7 +84,7 @@ T = {
         "desc": "htext: טקסט עברי ברישיונות פתוחים לאימון OCR עברי, בשלוש גרסאות (CC0,‏ CC BY,‏ CC BY-SA), עם רישום זכויות לכל פריט.",
         "lede": "טקסט עברי ברישיונות פתוחים לאימון מנועי הזיהוי של HeOCR, חתוך לשורות, עם ניקוד ובלעדיו: בראש ובראשונה טקסט בנחלת הכלל, וטקסט בייחוס ובשיתוף זהה בגרסאות נפרדות. לכל יצירה או מסמך יש רישום זכויות משלו: מעמדו בישראל ובארה\"ב, הרישיון שלו ושורת הקרדיט שלו. htext מתפרסם בשלוש גרסאות, אחת לכל רישיון, כדי שתוכלו לבחור את התנאים שמתאימים לכם; גרסת הליבה היא CC0 ואפשר להשתמש בה בלי תנאים.",
         "updated": "עודכן ב־{d}. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href=\"{json}\">corpora.json</a>.",
-        "toc": [("what", "מה זה htext"), ("releases", "גרסאות"), ("corpora", "מאגרים"), ("rights", "זכויות"), ("use", "הורדה ושימוש"),
+        "toc": [("releases", "גרסאות"), ("what", "מה זה htext"), ("corpora", "מאגרים"), ("rights", "זכויות"), ("use", "הורדה ושימוש"),
                 ("credit", "קרדיט"), ("licence", "רישיון")],
         "what_p": [
             "htext אוסף טקסט עברי שזכויותיו ברורות דיין לפרסום פתוח, והופך אותו לשורות אימון עבור "
@@ -95,11 +96,11 @@ T = {
             "רק הקבצים שהכרטיס מונה מתפרסמים.",
         ],
         "stat_lines": "שורות", "stat_works": "יצירות", "stat_works_laws": "יצירות וחוקים", "stat_works_laws_books": "יצירות, חוקים וספרים", "stat_corpora": "מאגרים", "stat_corpus": "מאגר", "stat_bytes": "טקסט",
-        "corpora_h": "מאגרים",
+        "corpora_h": "מקורות הטקסט",
+        "versions": "גרסאות",
         "releases_h": "גרסאות",
-        "releases_p": "htext מתפרסם בגרסה אחת לכל רישיון. בחרו את הגרסה שתנאיה מתאימים לשימוש שלכם. מודלים שאומנו על כל אחת מהן עדיין יכולים להתפרסם ברישיון פתוח, עם קרדיט בקובץ ה־NOTICE שלהם.",
-        "r_contents": "תוכן", "r_allows": "מותר", "r_licence": "רישיון",
-        "r_status": {"published": "פורסמה", "planned": "מתוכננת"},
+        "releases_p": "בחרו אוסף לפי רישיון. לכל מקור נשמרים היסטוריית הגרסאות ורישום הזכויות שלו.",
+        "tier_pending": "טרם פורסם",
         "c_in": "גרסת htext",
         "planned_h": "מקורות מתוכננים",
         "planned_p": "מקורות בהכנה. כל אחד מתפרסם רק אחרי שזכויותיו נבדקו פריט אחר פריט.",
@@ -168,7 +169,138 @@ def zenodo_item(c: dict, t: dict) -> str:
     return f'<li>{t["c_zenodo"]}: {link}</li>\n'
 
 
-def page(lang: str, R: dict) -> str:
+def corpus_version(c: dict, rel: dict, lang: str) -> str:
+    t = T[lang]
+    out = []
+    w = out.append
+    w(f'<h4 id="{e(c["id"])}">{e(c["name"][lang])}</h4>\n')
+    if c.get("withdrawn"):
+        w(f'<span class="status">{e(t["c_status_withdrawn"])}</span><span class="status">{e(rel[c["htext_release"]]["name"])}</span>\n')
+        w(f'<p>{e(c["description"][lang])}</p>\n<p class="note">{e(t["c_withdrawn_corpus"].format(d=c["withdrawn"]))}</p>\n')
+        w('<ul class="facts">\n'
+          f'<li>{t["c_source"]}: <a href="{e(c["source"]["url"])}">{e(c["source"]["name"][lang])}</a> ({e(c["source_licence"][lang])})</li>\n'
+          f'<li>{t["c_release"]}: <a href="{e(c["release"]["url"])}">{e(c["release"]["tag"])}</a> ({t["c_issues"]}: <a href="{e(c["card_url"].replace("CORPUS_CARD.md", "KNOWN_ISSUES.md"))}">KNOWN_ISSUES.md</a>)</li>\n'
+          "</ul>\n")
+        return "".join(out)
+    w(f'<span class="status">{e(c["release"]["tag"])}</span><span class="status">{e(rel[c["htext_release"]]["name"])}</span>\n')
+    w(f'<p>{e(c["description"][lang])}</p>\n')
+    unit = c.get("unit", "works")
+    count_key = "works" if unit in {"works", "laws", "books"} else unit
+    show_counts = all(count_key in f for f in c["files"])
+    show_variant = any("variant" in f for f in c["files"])
+    headers = [t["th_file"]]
+    if show_variant:
+        headers.append(t["th_variant"])
+    headers.extend([t["th_subset"], t["th_lines"]])
+    if show_counts:
+        headers.append(t[f"th_{unit}"])
+    rows = []
+    for f in c["files"]:
+        row = [(f'<code>{e(f["name"])}</code>', False)]
+        if show_variant:
+            row.append((e(t["variant"].get(f.get("variant"), "—")), False))
+        row.extend([(e(t["subset"][f["subset"]]), False), (n(f["lines"]), True)])
+        if show_counts:
+            row.append((n(f[count_key]), True))
+        rows.append(row + [(mb(lang, f["bytes"]), True)])
+    w(table([*headers, t["th_size"]], rows))
+    if any(f.get("variant") == "il_us" for f in c["files"]):
+        w(f'<p class="note">{t["variants_note"]}</p>\n')
+    q = c.get("text_quality")
+    if q == "ocr_layer":
+        k = c["eye_check"]
+        quality = t["c_quality"][q].format(k=n(k["lines_checked"]), l=n(k["lines_with_error"]), lr=f'{k["lines_with_error"] / k["lines_checked"]:.0%}',
+                                           ww=n(k["words_wrong"]), sw=n(k["sample_words"]), wr=f'{k["words_wrong"] / k["sample_words"]:.1%}')
+    else:
+        quality = t["c_quality"][q] if q else ""
+    count = ""
+    if "works_in_corpus" in c:
+        count = (t[f"c_{unit}"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"])) if unit != "works"
+             else t["c_works"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"]), u=n(c["works_in_il_us"])))
+    release = rel[c["htext_release"]]
+    licence = release["licence"]
+    hf = c.get("hf", {})
+    w('<ul class="facts">\n'
+      f'<li>{t["c_in"]}: {e(release["name"])} (<a href="{e(licence["url"])}">{e(licence["name"])}</a>)</li>\n'
+      f'<li>{t["c_source"]}: <a href="{e(c["source"]["url"])}">{e(c["source"]["name"][lang])}</a> ({e(c["source_licence"][lang])})</li>\n'
+      f'<li>{t["c_release"]}: <a href="{e(c["release"]["url"])}">{e(c["release"]["tag"])}</a>, {e(c["release"]["date"])}</li>\n'
+      f'<li>{t["c_card"]}: <a href="{e(c["card_url"])}">{e(c["card_url"].rsplit("/", 1)[-1])}</a></li>\n'
+      + "".join(f'<li>{t["c_prev"]}: '
+                + (f'{e(p["tag"])}, {e(t["c_withdrawn"].format(d=p["withdrawn"]))}' if p.get("withdrawn") else f'<a href="{e(p["url"])}">{e(p["tag"])}</a>')
+                + (f' (<a href="{e(p["known_issues_url"])}">{t["c_issues"]}</a>)' if p.get("known_issues_url") else "")
+                + "</li>\n" for p in c.get("previous", []))
+      + zenodo_item(c, t)
+      + (f'<li>{t["c_hf"]}: <a href="{e(c["release"]["url"] if hf.get("revision") else "https://huggingface.co/datasets/" + hf["repo"])}">{e(hf["repo"])}</a> '
+         f'({e(t["c_hf_filtered"] if hf["filtered"] else t["c_hf_same"])})</li>\n' if "filtered" in hf else "")
+      + (f'<li>{e(quality)}</li>\n' if quality else '')
+      + (f'<li>{e(count)}</li>\n' if count else '')
+      + (f'<li>{e(t["c_privacy"].format(lines=n(c["privacy_lines_dropped"])))}</li>\n'
+         if "privacy_lines_dropped" in c else '')
+      + "</ul>\n")
+    return "".join(out)
+
+
+def source_card(versions: list[dict], rel: dict, lang: str) -> str:
+    t = T[lang]
+    versions = sorted(
+        versions,
+        key=lambda c: (c["release"]["date"], tuple(map(int, re.findall(r"\d+", c["version"])))),
+        reverse=True,
+    )
+    first = versions[0]
+    title = first["source"]["name"][lang]
+    latest = {}
+    for c in versions:
+        if not c.get("withdrawn"):
+            latest.setdefault((c.get("series"), c["htext_release"]), c)
+
+    versions_label = e(t["versions"])
+    out = [f'<article class="card source-card"><h3>{e(title)}</h3>\n']
+    for c in latest.values():
+        release = c["release"]
+        label = e(rel[c["htext_release"]]["licence"]["name"])
+        lines = sum(f["lines"] for f in full_files([c]))
+        out.append(f'<p class="source-release"><a href="{e(release["url"])}"><bdi dir="ltr">'
+                   f'{e(release["tag"])}</bdi></a> · {label} · <bdi dir="ltr">{n(lines)}</bdi> '
+                   f'{e(t["stat_lines"])}</p>\n')
+    out.append(f'<details class="versions"><summary>{versions_label}</summary>\n')
+    out.extend(f'<div class="source-version">\n{corpus_version(c, rel, lang)}</div>\n'
+               for c in versions)
+    out.append('</details></article>\n')
+    return "".join(out)
+
+
+def full_files(corpora: list[dict]) -> list[dict]:
+    # The IL+US variant and alternate forms repeat text.
+    return [f for c in corpora for f in c["files"]
+            if f.get("variant") != "il_us" and not f.get("same_text_as")]
+
+
+def tier_cards(releases: list[dict], catalog: dict, lang: str) -> str:
+    t = T[lang]
+    by_id = {row["id"]: row for row in catalog["datasets"]}
+    out = [f'<section id="releases">\n<h2>{e(t["releases_h"])}</h2>\n'
+           f'<p>{e(t["releases_p"])}</p>\n<div class="grid">\n']
+    for release in releases:
+        name = release["name"]
+        licence = release["licence"]
+        row = by_id.get(f"HeOCR/{name}")
+        out.append(f'<article class="card catalog-card"><h3><bdi dir="ltr">{e(name)}</bdi></h3>\n'
+                   f'<p>{e(release["contents"][lang])}</p>\n'
+                   f'<div class="catalog-licence"><a href="{e(licence["url"])}">'
+                   f'{e(licence["name"])}</a></div>\n')
+        if row:
+            if row["counts"]["lines"] is not None:
+                out.append(f'<div class="meta"><span>{statistic("lines", row["counts"]["lines"], lang)}</span></div>\n')
+            out.append(f'<div class="row" dir="ltr">{release_links(row, latest_only=True)}</div>\n')
+        else:
+            out.append(f'<div class="catalog-licence">{e(t["tier_pending"])}</div>\n')
+        out.append('</article>\n')
+    out.append('</div>\n</section>\n')
+    return "".join(out)
+
+
+def page(lang: str, R: dict, catalog: dict) -> str:
     t = T[lang]
     pre = shell.prefix(lang)
     json_href = f"{pre}htext/corpora.json"
@@ -182,14 +314,14 @@ def page(lang: str, R: dict) -> str:
                                       f'<p class="note">{t["updated"].format(d=e(R["updated"]), json=json_href)}</p>'))
     w(shell.toc(lang, [(i, e(h), None) for i, h in t["toc"]]))
     w('<main id="main" class="wrap doc ht">\n')
-    # Count full-coverage files once. The IL+US variant and alternate forms repeat text.
-    full_files = [f for c in live for f in c["files"] if f.get("variant") != "il_us" and not f.get("same_text_as")]
-    lines = sum(f["lines"] for f in full_files)
-    bytes_ = sum(f["bytes"] for f in full_files)
+    files = full_files(live)
+    lines = sum(f["lines"] for f in files)
+    bytes_ = sum(f["bytes"] for f in files)
     works = sum(c.get("works_in_corpus", 0) for c in live)
     all_works_known = all("works_in_corpus" in c for c in live)
     units = {c.get("unit", "works") for c in live}
     works_label = t["stat_works_laws_books"] if "books" in units else t["stat_works_laws"] if "laws" in units else t["stat_works"]
+    w(tier_cards(R["releases"], catalog, lang))
     # --- 1. What
     w(f'<section id="what">\n<h2>{e(dict(t["toc"])["what"])}</h2>\n')
     for p in t["what_p"]:
@@ -200,83 +332,16 @@ def page(lang: str, R: dict) -> str:
       + f'<div class="stat"><b>{mb(lang, bytes_)}</b><span>{t["stat_bytes"]}</span></div>'
       f'<div class="stat"><b>{len(live)}</b><span>{t["stat_corpus"] if len(live) == 1 else t["stat_corpora"]}</span></div>'
       "</div>\n</section>\n")
-    # --- 1b. Releases
     rel = {r["id"]: r for r in R["releases"]}
-    w(f'<section id="releases">\n<h2>{e(t["releases_h"])}</h2>\n<p>{e(t["releases_p"])}</p>\n')
-    for r in R["releases"]:
-        w(f'<h3>{e(r["name"])}</h3>\n<span class="status">{e(t["r_status"][r["status"]])}</span>'
-          f'<span class="status">{e(r["licence"]["name"])}</span>\n<ul class="facts">\n'
-          f'<li>{t["r_contents"]}: {e(r["contents"][lang])}</li>\n'
-          f'<li>{t["r_allows"]}: {e(r["allows"][lang])}</li>\n'
-          f'<li>{t["r_licence"]}: <a href="{e(r["licence"]["url"])}">{e(r["licence"]["name"])}</a></li>\n</ul>\n')
-    w("</section>\n")
     # --- 2. Corpora
     w(f'<section id="corpora">\n<h2>{e(t["corpora_h"])}</h2>\n')
+    sources = {}
     for c in C:
-        w(f'<h3 id="{e(c["id"])}">{e(c["name"][lang])}</h3>\n')
-        if c.get("withdrawn"):
-            w(f'<span class="status">{e(t["c_status_withdrawn"])}</span><span class="status">{e(rel[c["htext_release"]]["name"])}</span>\n')
-            w(f'<p>{e(c["description"][lang])}</p>\n<p class="note">{e(t["c_withdrawn_corpus"].format(d=c["withdrawn"]))}</p>\n')
-            w('<ul class="facts">\n'
-              f'<li>{t["c_source"]}: <a href="{e(c["source"]["url"])}">{e(c["source"]["name"][lang])}</a> ({e(c["source_licence"][lang])})</li>\n'
-              f'<li>{t["c_release"]}: <a href="{e(c["release"]["url"])}">{e(c["release"]["tag"])}</a> ({t["c_issues"]}: <a href="{e(c["card_url"].replace("CORPUS_CARD.md", "KNOWN_ISSUES.md"))}">KNOWN_ISSUES.md</a>)</li>\n'
-              "</ul>\n")
-            continue
-        w(f'<span class="status">{e(c["release"]["tag"])}</span><span class="status">{e(rel[c["htext_release"]]["name"])}</span>\n')
-        w(f'<p>{e(c["description"][lang])}</p>\n')
-        unit = c.get("unit", "works")
-        count_key = "works" if unit in {"works", "laws", "books"} else unit
-        show_counts = all(count_key in f for f in c["files"])
-        show_variant = any("variant" in f for f in c["files"])
-        headers = [t["th_file"]]
-        if show_variant:
-            headers.append(t["th_variant"])
-        headers.extend([t["th_subset"], t["th_lines"]])
-        if show_counts:
-            headers.append(t[f"th_{unit}"])
-        rows = []
-        for f in c["files"]:
-            row = [(f'<code>{e(f["name"])}</code>', False)]
-            if show_variant:
-                row.append((e(t["variant"].get(f.get("variant"), "—")), False))
-            row.extend([(e(t["subset"][f["subset"]]), False), (n(f["lines"]), True)])
-            if show_counts:
-                row.append((n(f[count_key]), True))
-            rows.append(row + [(mb(lang, f["bytes"]), True)])
-        w(table([*headers, t["th_size"]], rows))
-        if any(f.get("variant") == "il_us" for f in c["files"]):
-            w(f'<p class="note">{t["variants_note"]}</p>\n')
-        q = c.get("text_quality")
-        if q == "ocr_layer":
-            k = c["eye_check"]
-            quality = t["c_quality"][q].format(k=n(k["lines_checked"]), l=n(k["lines_with_error"]), lr=f'{k["lines_with_error"] / k["lines_checked"]:.0%}',
-                                               ww=n(k["words_wrong"]), sw=n(k["sample_words"]), wr=f'{k["words_wrong"] / k["sample_words"]:.1%}')
-        else:
-            quality = t["c_quality"][q] if q else ""
-        count = ""
-        if "works_in_corpus" in c:
-            count = (t[f"c_{unit}"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"])) if unit != "works"
-                 else t["c_works"].format(w=n(c["works_in_corpus"]), c=n(c["catalogue_works"]), u=n(c["works_in_il_us"])))
-        release = rel[c["htext_release"]]
-        licence = release["licence"]
-        hf = c.get("hf", {})
-        w('<ul class="facts">\n'
-          f'<li>{t["c_in"]}: {e(release["name"])} (<a href="{e(licence["url"])}">{e(licence["name"])}</a>)</li>\n'
-          f'<li>{t["c_source"]}: <a href="{e(c["source"]["url"])}">{e(c["source"]["name"][lang])}</a> ({e(c["source_licence"][lang])})</li>\n'
-          f'<li>{t["c_release"]}: <a href="{e(c["release"]["url"])}">{e(c["release"]["tag"])}</a>, {e(c["release"]["date"])}</li>\n'
-          f'<li>{t["c_card"]}: <a href="{e(c["card_url"])}">{e(c["card_url"].rsplit("/", 1)[-1])}</a></li>\n'
-          + "".join(f'<li>{t["c_prev"]}: '
-                    + (f'{e(p["tag"])}, {e(t["c_withdrawn"].format(d=p["withdrawn"]))}' if p.get("withdrawn") else f'<a href="{e(p["url"])}">{e(p["tag"])}</a>')
-                    + (f' (<a href="{e(p["known_issues_url"])}">{t["c_issues"]}</a>)' if p.get("known_issues_url") else "")
-                    + "</li>\n" for p in c.get("previous", []))
-          + zenodo_item(c, t)
-          + (f'<li>{t["c_hf"]}: <a href="{e(c["release"]["url"] if hf.get("revision") else "https://huggingface.co/datasets/" + hf["repo"])}">{e(hf["repo"])}</a> '
-             f'({e(t["c_hf_filtered"] if hf["filtered"] else t["c_hf_same"])})</li>\n' if "filtered" in hf else "")
-          + (f'<li>{e(quality)}</li>\n' if quality else '')
-          + (f'<li>{e(count)}</li>\n' if count else '')
-          + (f'<li>{e(t["c_privacy"].format(lines=n(c["privacy_lines_dropped"])))}</li>\n'
-             if "privacy_lines_dropped" in c else '')
-          + "</ul>\n")
+        sources.setdefault(c.get("source_group", c["id"]), []).append(c)
+    w('<div class="source-list">\n')
+    for versions in sources.values():
+        w(source_card(versions, rel, lang))
+    w('</div>\n')
     if R.get("planned"):
         w(f'<h3 id="planned">{e(t["planned_h"])}</h3>\n<p>{e(t["planned_p"])}</p>\n<ul class="facts">\n')
         for p in R["planned"]:
@@ -355,8 +420,9 @@ def main():
         import_card(R, a.import_card[0], Path(a.import_card[1]))
         DATA.write_text(json.dumps(R, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     stale = []
+    catalog = load_catalog()
     for lang, path in (("he", ROOT / "htext.html"), ("en", ROOT / "en" / "htext.html")):
-        s = page(lang, R)
+        s = page(lang, R, catalog)
         if a.check:
             if not path.exists() or path.read_text(encoding="utf-8") != s:
                 stale.append(str(path.relative_to(ROOT)))
