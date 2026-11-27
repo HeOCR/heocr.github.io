@@ -1,0 +1,200 @@
+{
+  "dataset": "P-hist-open v0.1",
+  "primary_metric": "page_cer",
+  "leaves": 18,
+  "regions": 30,
+  "reference_lines": 973,
+  "eligible_lines": 875,
+  "filtered_lines": 837,
+  "readers": [
+    {
+      "id": "heocr-p-hist-v1-1",
+      "name": "HeOCR P-hist v1.1",
+      "descriptive": false,
+      "all": {
+        "edits": 6467,
+        "chars": 45131,
+        "word_edits": 2347,
+        "words": 8769,
+        "missed_numbers": 1,
+        "ref_numbers": 8
+      },
+      "filtered": {
+        "edits": 6204,
+        "chars": 44096,
+        "word_edits": 2268,
+        "words": 8570,
+        "missed_numbers": 1,
+        "ref_numbers": 8
+      }
+    },
+    {
+      "id": "rivok-full",
+      "name": "Rivok Full",
+      "descriptive": false,
+      "all": {
+        "edits": 7489,
+        "chars": 45131,
+        "word_edits": 3134,
+        "words": 8769,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      },
+      "filtered": {
+        "edits": 7220,
+        "chars": 44096,
+        "word_edits": 3049,
+        "words": 8570,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      }
+    },
+    {
+      "id": "rivok-lite",
+      "name": "Rivok Lite",
+      "descriptive": false,
+      "all": {
+        "edits": 7861,
+        "chars": 45131,
+        "word_edits": 3318,
+        "words": 8769,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      },
+      "filtered": {
+        "edits": 7588,
+        "chars": 44096,
+        "word_edits": 3226,
+        "words": 8570,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      }
+    },
+    {
+      "id": "tessdata-best",
+      "name": "Tessdata Best Hebrew",
+      "descriptive": false,
+      "all": {
+        "edits": 14902,
+        "chars": 45131,
+        "word_edits": 6651,
+        "words": 8769,
+        "missed_numbers": 1,
+        "ref_numbers": 8
+      },
+      "filtered": {
+        "edits": 14579,
+        "chars": 44096,
+        "word_edits": 6511,
+        "words": 8570,
+        "missed_numbers": 1,
+        "ref_numbers": 8
+      }
+    },
+    {
+      "id": "tessdata-fast",
+      "name": "Tessdata Fast Hebrew",
+      "descriptive": false,
+      "all": {
+        "edits": 16071,
+        "chars": 45131,
+        "word_edits": 6946,
+        "words": 8769,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      },
+      "filtered": {
+        "edits": 15810,
+        "chars": 44096,
+        "word_edits": 6808,
+        "words": 8570,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      }
+    },
+    {
+      "id": "paddle",
+      "name": "Rivok PaddleOCR",
+      "descriptive": false,
+      "all": {
+        "edits": 15866,
+        "chars": 45131,
+        "word_edits": 6869,
+        "words": 8769,
+        "missed_numbers": 1,
+        "ref_numbers": 8
+      },
+      "filtered": {
+        "edits": 15415,
+        "chars": 44096,
+        "word_edits": 6693,
+        "words": 8570,
+        "missed_numbers": 1,
+        "ref_numbers": 8
+      }
+    },
+    {
+      "id": "google-docai-ocr",
+      "name": "Google Document AI",
+      "descriptive": true,
+      "all": {
+        "edits": 12878,
+        "chars": 45131,
+        "word_edits": 5570,
+        "words": 8769,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      },
+      "filtered": {
+        "edits": 12625,
+        "chars": 44096,
+        "word_edits": 5449,
+        "words": 8570,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      }
+    },
+    {
+      "id": "google-vision",
+      "name": "Google Cloud Vision",
+      "descriptive": true,
+      "all": {
+        "edits": 13250,
+        "chars": 45131,
+        "word_edits": 5583,
+        "words": 8769,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      },
+      "filtered": {
+        "edits": 12985,
+        "chars": 44096,
+        "word_edits": 5462,
+        "words": 8570,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      }
+    },
+    {
+      "id": "google-drive-ocr",
+      "name": "Google Drive OCR",
+      "descriptive": true,
+      "all": {
+        "edits": 13750,
+        "chars": 45131,
+        "word_edits": 5612,
+        "words": 8769,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      },
+      "filtered": {
+        "edits": 13472,
+        "chars": 44096,
+        "word_edits": 5488,
+        "words": 8570,
+        "missed_numbers": 0,
+        "ref_numbers": 8
+      }
+    }
+  ]
+}
