@@ -29,13 +29,15 @@ HOME = {
     "en": {
         "intro": "Open data and tools for reading Hebrew documents, both printed and handwritten. Every dataset item has its own rights record.",
         "models": "Models and pipeline",
-        "status": "There are no model or pipeline releases available yet.",
+        "status": "HeOCR P-hist OCR weights are available for historical, unpointed Hebrew print.",
+        "model_link": "Get the OCR weights",
         "download": "Download",
     },
     "he": {
         "intro": "נתונים וכלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו.",
         "models": "מודלים וצינור העיבוד",
-        "status": "עדיין אין גרסאות זמינות של המודלים או של צינור העיבוד.",
+        "status": "משקלי HeOCR P-hist לזיהוי דפוס עברי היסטורי לא מנוקד זמינים להורדה.",
+        "model_link": "הורדת משקלי המודל",
         "download": "הורדה",
     },
 }
@@ -58,6 +60,7 @@ def home_status(lang: str, text: str) -> str:
             '  <section id="models">\n'
             f'    <h2>{html.escape(t["models"])}</h2>\n'
             f'    <p class="sub">{html.escape(t["status"])}</p>\n'
+            f'    <p><a href="download.html#models">{html.escape(t["model_link"])}</a></p>\n'
             '  </section>'
         ),
         text,
