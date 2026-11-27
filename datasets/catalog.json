@@ -415,12 +415,12 @@
     },
     {
       "id": "HeOCR/htext-sefaria",
-      "revision": "12410f5d77bd08fd8379bc9aff04ca294f8b0c29",
+      "revision": "8da7fb539e9ac8fc40c4f6e4f7073cb9a575bb38",
       "group": "text",
       "title": "htext · Sefaria",
       "description": {
-        "en": "Historical Sefaria texts under public-domain or CC0 source terms, across v1 and v2.",
-        "he": "טקסטים היסטוריים מספריא בנחלת הכלל או בתנאי CC0, בגרסאות v1 ו־v2."
+        "en": "Hebrew and Aramaic training text from Sefaria, including 29,138,462 lines in v3.",
+        "he": "טקסט לאימון בעברית ובארמית מספריא, כולל 29,138,462 שורות בגרסה השלישית."
       },
       "license": "sefaria",
       "access": "public",
@@ -432,27 +432,31 @@
         {
           "id": "10.5281/zenodo.24521423",
           "label": "v2 CC0"
+        },
+        {
+          "id": "10.5281/zenodo.24581317",
+          "label": "v3-cc0"
         }
       ],
       "counts": {
-        "documents": 6,
+        "documents": null,
         "pages": null,
         "images": null,
-        "lines": 64484,
+        "lines": 29202946,
         "words": null,
         "characters": null,
-        "bytes": 30799118
+        "bytes": 1464555245
       },
       "partial_pages": null
     },
     {
       "id": "HeOCR/htext-sefaria-by",
-      "revision": "e28fae17d635f72ad6c9a628734252c1ea219e24",
+      "revision": "c55b5dcbc79b360b87031a1fa7aca029b62d25f0",
       "group": "text",
       "title": "htext · Sefaria (CC BY)",
       "description": {
-        "en": "Attributed Hebrew training text from Sefer Ha-Ikkarim.",
-        "he": "טקסט עברי לאימון מספר העיקרים, עם ייחוס למקור."
+        "en": "Hebrew and Aramaic training text from Sefaria, including 1,376,917 lines in v3.",
+        "he": "טקסט לאימון בעברית ובארמית מספריא, כולל 1,376,917 שורות בגרסה השלישית."
       },
       "license": "cc-by-4.0",
       "access": "public",
@@ -460,16 +464,20 @@
         {
           "id": "10.5281/zenodo.24521430",
           "label": "v2 CC BY"
+        },
+        {
+          "id": "10.5281/zenodo.24581347",
+          "label": "v3-by"
         }
       ],
       "counts": {
-        "documents": 1,
+        "documents": null,
         "pages": null,
         "images": null,
-        "lines": 32296,
+        "lines": 1409213,
         "words": null,
         "characters": null,
-        "bytes": 14791538
+        "bytes": 85930670
       },
       "partial_pages": null
     },
@@ -575,21 +583,84 @@
         "count": 352,
         "scope": "v2-p3"
       }
+    },
+    {
+      "id": "HeOCR/htext-sefaria-by-sa",
+      "revision": "1d24204f8bd53d3abc214619a2b73cd731552b5e",
+      "group": "text",
+      "title": "htext · Sefaria v3 (CC BY-SA)",
+      "description": {
+        "en": "Hebrew and Aramaic training text from Sefaria with attribution and share-alike terms.",
+        "he": "טקסט לאימון בעברית ובארמית מספריא, בתנאי ייחוס ושיתוף זהה."
+      },
+      "license": "cc-by-sa-4.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24581351",
+          "label": "v3-by-sa"
+        }
+      ],
+      "counts": {
+        "documents": 84,
+        "pages": null,
+        "images": null,
+        "lines": 591087,
+        "words": null,
+        "characters": null,
+        "bytes": 29342856
+      },
+      "partial_pages": null
+    },
+    {
+      "id": "HeOCR/htext-gutenberg",
+      "revision": "1f7432ee0240c0a23b44347cb1612c454fe78eed",
+      "group": "text",
+      "title": "htext · Project Gutenberg",
+      "description": {
+        "en": "Hebrew OCR training lines from two public-domain Project Gutenberg ebooks.",
+        "he": "שורות עברית לאימון זיהוי תווים משני ספרים דיגיטליים בנחלת הכלל של פרויקט גוטנברג."
+      },
+      "license": "cc0-1.0",
+      "access": "public",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24581353",
+          "label": "gutenberg-v1"
+        }
+      ],
+      "counts": {
+        "documents": 2,
+        "pages": null,
+        "images": null,
+        "lines": 5316,
+        "words": null,
+        "characters": null,
+        "bytes": 488669
+      },
+      "partial_pages": null
     }
   ],
   "model": {
     "id": "HeOCR/heocr-p-hist-measured",
-    "revision": "57487fe4c5832c01c58394eb7342b038c1d8c58d",
+    "revision": "7517212dadc1b677f5c01e499ee40ea1828707b0",
     "license": "apache-2.0",
     "dois": [
       {
-        "id": "10.5281/zenodo.24578440",
-        "label": "MEASURED"
+        "id": "10.5281/zenodo.24581274",
+        "label": "v1.1"
       }
-    ]
-  },
-  "pending_text_release": {
-    "en": "htext · Sefaria v3",
-    "he": "htext · ספריא v3"
+    ],
+    "version": "v1.1",
+    "previous": {
+      "version": "v1.0",
+      "revision": "8775b4e2f765f32e5fd12e83affc95ab02a41312",
+      "dois": [
+        {
+          "id": "10.5281/zenodo.24578440",
+          "label": "v1.0"
+        }
+      ]
+    }
   }
 }

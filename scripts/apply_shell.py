@@ -32,6 +32,8 @@ HOME = {
         "models": "Models and pipeline",
         "status": "HeOCR P-hist OCR weights are available for historical, unpointed Hebrew print.",
         "model_link": "Get the OCR weights",
+        "model_latest": "Best / Latest",
+        "model_previous": "Previous",
         "download": "Download",
         "sources": "The releases use public-domain or openly licensed sources. Each item keeps its source and credit.",
         "wikisource": "Hebrew Wikisource text appears in the training corpora and in line pairs. Releases link to source revisions and record the CC BY-SA terms.",
@@ -41,6 +43,8 @@ HOME = {
         "models": "מודלים וצינור העיבוד",
         "status": "משקלי HeOCR P-hist לזיהוי דפוס עברי היסטורי לא מנוקד זמינים להורדה.",
         "model_link": "הורדת משקלי המודל",
+        "model_latest": "הטובה והעדכנית ביותר",
+        "model_previous": "גרסה קודמת",
         "download": "הורדה",
         "sources": "הגרסאות משתמשות במקורות בנחלת הכלל או ברישיון פתוח. כל פריט שומר את המקור ואת הקרדיט שלו.",
         "wikisource": "טקסט מוויקיטקסט העברית מופיע במאגרי האימון ובזוגות השורות. בכל גרסה יש קישורים למקורות ותיעוד של תנאי CC BY-SA.",
@@ -52,6 +56,15 @@ def home_status(lang: str, text: str) -> str:
     t = HOME[lang]
     model = load_catalog()["model"]
     model_licence = html.escape(LICENSES[model["license"]][lang])
+    releases = (
+        (model, t["model_latest"]),
+        ({**model, **model["previous"]}, t["model_previous"]),
+    )
+    model_links = "".join(
+        f'      <li><bdi dir="ltr">{html.escape(release["version"])}</bdi> '
+        f'{html.escape(label)} · {release_links(release, model=True)}</li>\n'
+        for release, label in releases
+    )
     intro = html.escape(t["intro"])
     text = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{intro}">', text, count=1)
     text = re.sub(r'<p class="lede">.*?</p>', f'<p class="lede">{intro}</p>', text, count=1, flags=re.S)
@@ -68,7 +81,8 @@ def home_status(lang: str, text: str) -> str:
             f'    <h2>{html.escape(t["models"])}</h2>\n'
             f'    <p class="sub">{html.escape(t["status"])}</p>\n'
             f'    <p><a href="download.html#models">{html.escape(t["model_link"])}</a></p>\n'
-            f'    <div class="meta"><span>{model_licence}</span> {release_links(model, model=True)}</div>\n'
+            f'    <div class="meta"><span>{model_licence}</span></div>\n'
+            f'    <ul>\n{model_links}    </ul>\n'
             '  </section>'
         ),
         text,
