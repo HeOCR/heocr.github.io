@@ -47,8 +47,8 @@ class ReleaseBuilderTest(unittest.TestCase):
         for lang, t in builder.T.items():
             output = builder.page(lang, data, public_pages=16)
             opened, closed = output.split('id="closed"', 1)
-            self.assertEqual(opened.count("Example Reader 10"), 12)
-            self.assertEqual(opened.count("<caption"), 12)
+            self.assertEqual(opened.count("Example Reader 10"), 10)
+            self.assertEqual(opened.count("<caption"), 10)
             self.assertIn('data-score-view value="filtered" checked', opened)
             self.assertIn('data-score-view value="all"', opened)
             self.assertIn('data-score-capture value="pooled" checked', opened)
@@ -56,9 +56,11 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertNotIn('value="issuer-scan"', opened)
             self.assertNotIn('id="p-mod-open-all-issuer-scan"', opened)
             self.assertIn('<details class="method benchmark-details" id="p-mod-open-alternatives">', opened)
-            self.assertIn('data-score-capture-note="phone-b" hidden', opened)
-            self.assertIn(t["capture_notes"]["phone-b"], opened)
-            self.assertIn(f'{t["carriers"]["phone-b"]} (8)', opened)
+            self.assertIn('data-score-capture-note="phone" hidden', opened)
+            self.assertIn(t["capture_notes"]["phone"], opened)
+            self.assertIn(f'{t["carriers"]["phone"]} (13)', opened)
+            self.assertNotIn('data-score-capture value="phone-a"', opened)
+            self.assertNotIn('data-score-capture value="phone-b"', opened)
             self.assertIn(t["metric_help"]["cer"], opened)
             self.assertNotIn(t["in_progress"][0], opened)
             self.assertIn(t["in_progress"][0], closed)
@@ -91,13 +93,13 @@ class ReleaseBuilderTest(unittest.TestCase):
         raw["welfare_reports"]["readers"][0]["reader"] = names[0]["id"]
         for lang in builder.T:
             output = builder.page(lang, release.validate(raw))
-            self.assertEqual(output.count('<tr class="ours">'), 12)
+            self.assertEqual(output.count('<tr class="ours">'), 10)
             note = builder.T[lang]["modern_model_note"]
             self.assertEqual(output.count(f'<th scope="row"><bdi>Example best model</bdi>'
-                                          f'<small class="benchmark-reader-note">{note}</small></th>'), 12)
+                                          f'<small class="benchmark-reader-note">{note}</small></th>'), 10)
             self.assertNotIn("Example stock pipeline", output)
             self.assertNotIn("Example slower model", output)
-            self.assertEqual(output.count("Example Reader 4"), 12)
+            self.assertEqual(output.count("Example Reader 4"), 10)
 
     def test_primary_order_and_independent_minima(self):
         rows = [
@@ -164,10 +166,28 @@ class ReleaseBuilderTest(unittest.TestCase):
         self.assertEqual(release.validate(sample), data)
         for lang in builder.T:
             output = builder.page(lang, data)
-            self.assertIn('id="p-mod-open-all-phone-a"', output)
-            self.assertIn('id="p-mod-open-filtered-phone-b"', output)
+            self.assertIn('id="p-mod-open-all-phone"', output)
+            self.assertIn('id="p-mod-open-filtered-phone"', output)
             self.assertNotIn("iphone", output.casefold())
             self.assertNotIn("pixel", output.casefold())
+
+    def test_pools_each_metric_from_counts_by_reader(self):
+        sample = example()
+        groups = sample["modern_print"]["views"]["filtered"]
+        groups["phone-a"]["readers"][0].update(edits=2, cer=release.Decimal("0.02"),
+                                                     word_edits=4, wer=release.Decimal("0.08"),
+                                                     missed_numbers=1)
+        groups["phone-b"]["readers"][0].update(chars=300, edits=27, cer=release.Decimal("0.09"),
+                                                     words=200, word_edits=40, wer=release.Decimal("0.20"),
+                                                     ref_numbers=6, missed_numbers=2)
+        groups["phone-b"]["readers"].reverse()
+        data = release.validate(sample)
+        output = builder.page("en", data)
+        phone = output.split('id="p-mod-open-filtered-phone"', 1)[1].split("</table>", 1)[0]
+        reader = phone.split("Example Reader 1</bdi>", 1)[1].split("</tr>", 1)[0]
+        for score, fraction in (("7.25%", "29 / 400"), ("17.60%", "44 / 250"), ("37.50%", "3 / 8")):
+            self.assertIn(score, reader)
+            self.assertIn(fraction, reader)
 
     def test_layout_preview_and_pending_rights(self):
         data = release.validate(example())

@@ -22,7 +22,8 @@ for (const panel of document.querySelectorAll("[data-score-panel]")) {
   }
 
   function followLink() {
-    const fragment = window.location.hash.slice(1);
+    const fragment = window.location.hash.slice(1)
+      .replace(/^(p-mod-open-(?:all|filtered)-phone)-[ab]$/, "$1");
     const table = tables.get(fragment) || tables.get(`${fragment}-pooled`);
     if (!table) return;
     const suffix = table.id.slice(prefix.length + 1);
