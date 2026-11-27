@@ -22,6 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import shell  # noqa: E402
+from build_datasets import LICENSES, load_catalog, release_links  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 HAND = {"home": "index.html", "rights": "rights.html"}
@@ -32,6 +33,8 @@ HOME = {
         "status": "HeOCR P-hist OCR weights are available for historical, unpointed Hebrew print.",
         "model_link": "Get the OCR weights",
         "download": "Download",
+        "sources": "The releases use public-domain or openly licensed sources. Each item keeps its source and credit.",
+        "wikisource": "Hebrew Wikisource text appears in the training corpora and in line pairs. Releases link to source revisions and record the CC BY-SA terms.",
     },
     "he": {
         "intro": "נתונים וכלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו.",
@@ -39,12 +42,16 @@ HOME = {
         "status": "משקלי HeOCR P-hist לזיהוי דפוס עברי היסטורי לא מנוקד זמינים להורדה.",
         "model_link": "הורדת משקלי המודל",
         "download": "הורדה",
+        "sources": "הגרסאות משתמשות במקורות בנחלת הכלל או ברישיון פתוח. כל פריט שומר את המקור ואת הקרדיט שלו.",
+        "wikisource": "טקסט מוויקיטקסט העברית מופיע במאגרי האימון ובזוגות השורות. בכל גרסה יש קישורים למקורות ותיעוד של תנאי CC BY-SA.",
     },
 }
 
 
 def home_status(lang: str, text: str) -> str:
     t = HOME[lang]
+    model = load_catalog()["model"]
+    model_licence = html.escape(LICENSES[model["license"]][lang])
     intro = html.escape(t["intro"])
     text = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{intro}">', text, count=1)
     text = re.sub(r'<p class="lede">.*?</p>', f'<p class="lede">{intro}</p>', text, count=1, flags=re.S)
@@ -54,18 +61,31 @@ def home_status(lang: str, text: str) -> str:
         text,
         count=1,
     )
-    return re.sub(
+    text = re.sub(
         r'^  <section id="models">.*?^  </section>',
         lambda _: (
             '  <section id="models">\n'
             f'    <h2>{html.escape(t["models"])}</h2>\n'
             f'    <p class="sub">{html.escape(t["status"])}</p>\n'
             f'    <p><a href="download.html#models">{html.escape(t["model_link"])}</a></p>\n'
+            f'    <div class="meta"><span>{model_licence}</span> {release_links(model, model=True)}</div>\n'
             '  </section>'
         ),
         text,
         count=1,
         flags=re.M | re.S,
+    )
+    text = re.sub(
+        r'(<section id="sources">\s*<h2>[^<]+</h2>\s*<p class="sub">).*?( <a href="rights.html">.*?</p>)',
+        lambda m: m[1] + html.escape(t["sources"]) + m[2],
+        text,
+        count=1,
+    )
+    return re.sub(
+        r'(<h3><a href="https://he.wikisource.org">[^<]+</a></h3>\s*<p>).*?(</p>)',
+        lambda m: m[1] + html.escape(t["wikisource"]) + m[2],
+        text,
+        count=1,
     )
 
 

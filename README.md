@@ -23,6 +23,18 @@ python3 scripts/apply_shell.py --check   # fails if a hand-written page's shell 
 
 The home page's introduction and model release status are maintained by `scripts/apply_shell.py`. Run the builder for changes to those sections.
 
+## Dataset catalog
+
+The Hebrew and English homepages use the pinned Hub releases in
+`datasets/catalog.json`. The catalog sums published counts across releases.
+If a count is unavailable, leave it null. Keep partial counts scoped to their
+published component. Verify Zenodo links against the matching release.
+
+```
+python3 scripts/build_datasets.py
+python3 scripts/build_datasets.py --check
+```
+
 ## Benchmarks page
 
 The P-mod-open v0 benchmark and methodology pages are generated in Hebrew and English

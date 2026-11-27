@@ -277,6 +277,11 @@ main.home h2 { margin: 0 0 8px; }
 .meta span { background: var(--tag); padding: 2px 8px; border-radius: var(--radius-sm); color: var(--muted); }
 .meta a { font-weight: 500; }
 .card .row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; font-size: var(--fs-small); font-weight: 500; }
+.catalog-totals { font-size: 1.05rem; margin: 0 0 8px; }
+.catalog-card h4 { font-size: 1.05rem; margin: 0 0 6px; }
+.catalog-licence { color: var(--muted); font-size: var(--fs-small); margin: 0 0 8px; }
+.catalog-card .row { justify-content: flex-start; }
+[dir="rtl"] .catalog-card .row { justify-content: flex-end; }
 
 /* ---------- 10. Footer ---------- */
 .site-footer { margin-top: 56px; padding-block: 30px 44px; border-top: 1px solid var(--line-strong); background: var(--surface); color: var(--muted); font-size: var(--fs-small); }
