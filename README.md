@@ -29,10 +29,14 @@ The Hebrew and English homepages use the pinned Hub releases in
 `datasets/catalog.json`. The catalog sums published counts across releases.
 If a count is unavailable, leave it null. Keep partial counts scoped to their
 published component. Verify Zenodo links against the matching release.
-Use `pending_text_release` for a text release awaiting public pins. Move it
-into the dataset list only once its revision, licence and counts are verified.
-Mark a preserved older release `superseded` to keep its links available and
-exclude its counts from the content totals.
+The `collections` lists set the main cards for real images and text. Other
+datasets in those groups appear under a closed source disclosure. A collection
+slot without a matching dataset row shows publication pending. Add its dataset
+row once its revision, licence and counts are verified. Set
+`duplicates_sources: true` for a collection that repackages counted sources.
+It adds one repository to the dataset count and contributes no additional
+content totals. Mark a preserved older release `superseded` to keep its links
+available and exclude its counts from the content totals.
 
 ```
 python3 scripts/build_datasets.py

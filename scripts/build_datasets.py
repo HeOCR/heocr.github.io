@@ -23,7 +23,7 @@ COPY = {
     "en": {
         "title": "Datasets",
         "source": "Catalog as of {date}. Rights and permitted uses are stated with each release.",
-        "coverage": "The dataset count includes superseded releases. The content totals use current releases, which can overlap. Reported source pages include separately counted subsets. A dash means no count was stated.",
+        "coverage": "The dataset count includes superseded releases and collections. The content totals count current source releases once, with possible overlap between sources. Reported source pages include separately counted subsets. A dash means no count was stated.",
         "stats": {"datasets": "datasets", "documents": "documents or works", "pages": "source pages",
                   "images": "images", "lines": "lines", "words": "words", "characters": "characters", "bytes": "bytes"},
         "one_document": "document or work",
@@ -31,6 +31,7 @@ COPY = {
         "current": "Current release",
         "superseded": "Superseded (kept for reproducibility)",
         "pending": "Publication pending",
+        "by_source": {"real": "Real image datasets by source", "text": "Text corpora by source"},
         "legacy": "Also on GitHub",
         "hash": "Archive of scanned Hebrew handwriting",
         "glyphs": "Cropped Hebrew handwriting glyphs",
@@ -38,7 +39,7 @@ COPY = {
     "he": {
         "title": "מאגרי נתונים",
         "source": "הקטלוג נכון ל־{date}. זכויות ותנאי שימוש מופיעים ליד כל גרסה.",
-        "coverage": "מספר המאגרים כולל גם גרסאות שהוחלפו. סכומי התוכן מחושבים מהגרסאות העדכניות, שעשויות לכלול פריטים חופפים, וכוללים גם עמודי מקור שדווחו לחלק ממאגר. קו מפריד מציין שמספר לא פורסם.",
+        "coverage": "מספר המאגרים כולל גם גרסאות שהוחלפו ואוספים מאוחדים. סכומי התוכן סופרים כל גרסת מקור עדכנית פעם אחת, וייתכן שיש חפיפה בין המקורות. ספירת עמודי המקור כוללת גם נתונים שדווחו רק לחלק ממאגר. קו מפריד מציין שמספר לא פורסם.",
         "stats": {"datasets": "מאגרים", "documents": "מסמכים או יצירות", "pages": "עמודי מקור",
                   "images": "תמונות", "lines": "שורות", "words": "מילים", "characters": "תווים", "bytes": "בתים"},
         "one_document": "מסמך או יצירה",
@@ -46,6 +47,7 @@ COPY = {
         "current": "הגרסה העדכנית",
         "superseded": "גרסה שהוחלפה (נשמרת לצורך שחזור)",
         "pending": "טרם פורסם",
+        "by_source": {"real": "מאגרי תמונות לפי מקור", "text": "מאגרי טקסט לפי מקור"},
         "legacy": "מאגרים נוספים ב־GitHub",
         "hash": "ארכיון סריקות של כתבי יד בעברית",
         "glyphs": "חיתוכי אותיות עבריות בכתב יד",
@@ -65,6 +67,7 @@ LICENSES = {
     "sefaria": {"en": "Public domain or CC0 by edition.",
                 "he": "נחלת הכלל או CC0, לפי מהדורה."},
 }
+HUB_ID = re.compile(r"HeOCR/[a-z0-9-]+")
 
 
 def load_catalog() -> dict:
@@ -77,7 +80,7 @@ def load_catalog() -> dict:
     if any(not re.fullmatch(r"v[0-9]+\.[0-9]+", row["version"]) for row in versions):
         raise ValueError("Expected exact public model version tags")
     for row in [*entries, *versions]:
-        if not re.fullmatch(r"HeOCR/[a-z0-9-]+", row["id"]) or not re.fullmatch(r"[0-9a-f]{40}", row["revision"]):
+        if not HUB_ID.fullmatch(row["id"]) or not re.fullmatch(r"[0-9a-f]{40}", row["revision"]):
             raise ValueError("Expected exact public Hub pins")
         if any(not re.fullmatch(r"10\.5281/zenodo\.[0-9]+", d["id"]) for d in row["dois"]):
             raise ValueError(f"Unexpected DOI for {row['id']}")
@@ -86,12 +89,34 @@ def load_catalog() -> dict:
             raise ValueError(f"Unknown catalog group or licence for {row['id']}")
         if row.get("status") not in (None, "current", "superseded"):
             raise ValueError(f"Unexpected release status for {row['id']}")
+        if type(row.get("duplicates_sources", False)) is not bool:
+            raise ValueError(f"Expected a boolean duplicates_sources for {row['id']}")
         for value in row["counts"].values():
             if value is not None and (type(value) is not int or value < 0):
                 raise ValueError(f"Counts must be nonnegative integers for {row['id']}")
         partial = row["partial_pages"]
         if partial and (row["counts"]["pages"] is not None or type(partial["count"]) is not int or partial["count"] < 0):
             raise ValueError(f"Partial page counts must complement missing full counts for {row['id']}")
+    by_id = {row["id"]: row for row in entries}
+    for group, slots in data["collections"].items():
+        if group not in COPY["en"]["by_source"]:
+            raise ValueError(f"Unknown collection group: {group}")
+        if len({slot["id"] for slot in slots}) != len(slots):
+            raise ValueError(f"Collection slots must be unique for {group}")
+        for slot in slots:
+            if not HUB_ID.fullmatch(slot["id"]) or slot["license"] not in LICENSES:
+                raise ValueError(f"Invalid collection slot: {slot}")
+            row = by_id.get(slot["id"])
+            if row and (row["group"] != group or row["license"] != slot["license"]):
+                raise ValueError(f"Collection slot disagrees with release: {slot['id']}")
+    for group, components in data["source_components"].items():
+        if group not in data["collections"]:
+            raise ValueError(f"Unknown source disclosure: {group}")
+        for component in components:
+            if component["id"] not in by_id or not re.fullmatch(
+                r"[a-z0-9-]+(?:/[a-z0-9-]+)*", component["path"]
+            ):
+                raise ValueError(f"Invalid source component: {component}")
     return data
 
 
@@ -151,10 +176,51 @@ def card(row: dict, lang: str) -> str:
     ])
 
 
+def collection_section(
+    rows: list[dict], slots: list[dict], components: list[tuple[str, str]], label: str, lang: str
+) -> list[str]:
+    by_id = {row["id"]: row for row in rows}
+    lines = ['    <div class="grid">']
+    for slot in slots:
+        if row := by_id.pop(slot["id"], None):
+            lines.append(card(row, lang))
+        else:
+            name = escape(slot["id"].split("/", 1)[1])
+            licence = escape(LICENSES[slot["license"]][lang])
+            lines.extend([
+                '      <article class="card catalog-card">',
+                f'        <h4><bdi dir="ltr">{name}</bdi></h4>',
+                f'        <div class="catalog-licence">{licence}</div>',
+                f'        <p>{escape(COPY[lang]["pending"])}</p>',
+                '      </article>',
+            ])
+    lines.append('    </div>')
+    if by_id or components:
+        lines.extend([
+            '    <details class="catalog-sources">',
+            f'      <summary>{escape(label)}</summary>',
+            '      <div class="grid">',
+            *(card(row, lang) for row in by_id.values()),
+            '      </div>',
+        ])
+        if components:
+            lines.extend([
+                '      <ul>',
+                *(f'        <li><a href="{url}">{escape(title)}</a></li>' for url, title in components),
+                '      </ul>',
+            ])
+        lines.append('    </details>')
+    return lines
+
+
 def render(data: dict, lang: str, text: str) -> str:
     t = COPY[lang]
     entries = data["datasets"]
-    current = [row for row in entries if row.get("status") != "superseded"]
+    by_id = {row["id"]: row for row in entries}
+    current = [
+        row for row in entries
+        if row.get("status") != "superseded" and not row.get("duplicates_sources")
+    ]
     fields = [("datasets", len(entries))] + [
         (name, sum_reported(current, name)) for name in ("images", "lines", "pages")
     ]
@@ -168,11 +234,19 @@ def render(data: dict, lang: str, text: str) -> str:
         f'    <p class="sub">{escape(t["coverage"])}</p>',
     ]
     for key, group in GROUPS.items():
-        lines.extend([f'    <h3>{escape(group[lang])}</h3>', '    <div class="grid">'])
-        lines.extend(card(row, lang) for row in entries if row["group"] == key)
-        lines.append('    </div>')
-        if key == "text" and (pending := data.get("pending_text_release")):
-            lines.append(f'    <p class="catalog-pending"><strong>{escape(pending[lang])}</strong> · {escape(t["pending"])}</p>')
+        lines.append(f'    <h3>{escape(group[lang])}</h3>')
+        rows = [row for row in entries if row["group"] == key]
+        if slots := data["collections"].get(key):
+            components = [
+                (
+                    f"https://huggingface.co/datasets/{part['id']}/tree/{by_id[part['id']]['revision']}/{part['path']}",
+                    part["title"][lang],
+                )
+                for part in data["source_components"].get(key, [])
+            ]
+            lines.extend(collection_section(rows, slots, components, t["by_source"][key], lang))
+        else:
+            lines.extend(['    <div class="grid">', *(card(row, lang) for row in rows), '    </div>'])
     lines.extend([
         f'    <h3>{escape(t["legacy"])}</h3>',
         '    <ul>',

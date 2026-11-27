@@ -662,5 +662,47 @@
         }
       ]
     }
+  },
+  "collections": {
+    "real": [
+      {
+        "id": "HeOCR/hebrew-line-pairs-cc0",
+        "license": "cc0-1.0"
+      },
+      {
+        "id": "HeOCR/hebrew-print-line-pairs",
+        "license": "cc-by-sa-4.0"
+      },
+      {
+        "id": "HeOCR/trn-phpack1-phone-captures",
+        "license": "cc0-1.0"
+      }
+    ],
+    "text": [
+      {
+        "id": "HeOCR/htext-cc0",
+        "license": "cc0-1.0"
+      },
+      {
+        "id": "HeOCR/htext-by",
+        "license": "cc-by-4.0"
+      },
+      {
+        "id": "HeOCR/htext-by-sa",
+        "license": "cc-by-sa-4.0"
+      }
+    ]
+  },
+  "source_components": {
+    "real": [
+      {
+        "id": "HeOCR/hebrew-ocr-vlm-train-v1",
+        "path": "real",
+        "title": {
+          "en": "Real line crops in the VLM training release",
+          "he": "חיתוכי שורות אמיתיות במאגר האימון למודלי ראייה ושפה"
+        }
+      }
+    ]
   }
 }
