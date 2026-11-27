@@ -675,6 +675,73 @@
       "source_group": "wikisource"
     },
     {
+      "id": "wikisource-v5",
+      "version": "v5",
+      "name": {
+        "en": "Hebrew Wikisource B v5",
+        "he": "ויקיטקסט העברית B v5"
+      },
+      "source": {
+        "name": {
+          "en": "Hebrew Wikisource",
+          "he": "ויקיטקסט העברית"
+        },
+        "url": "https://he.wikisource.org"
+      },
+      "description": {
+        "en": "Pointed and unpointed Hebrew training lines from 130 Wikisource works.",
+        "he": "שורות אימון בעברית, עם ניקוד ובלעדיו, מתוך 130 יצירות בוויקיטקסט."
+      },
+      "rights_basis": {
+        "en": "CC BY-SA 4.0. Cite the Hebrew Wikisource contributors by source revision as listed in the rights index and NOTICE.",
+        "he": "רישיון CC BY-SA 4.0. יש לייחס לתורמי ויקיטקסט העברית לפי גרסת המקור באינדקס הזכויות ובקובץ NOTICE."
+      },
+      "source_licence": {
+        "en": "CC BY-SA 4.0",
+        "he": "CC BY-SA 4.0"
+      },
+      "credit": {
+        "text": {
+          "en": "Hebrew Wikisource contributors by revision",
+          "he": "תורמי ויקיטקסט העברית לפי גרסה"
+        },
+        "url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/ea93b039a4d57234466d4c649ff83311069394a4/releases/wikisource-v5/NOTICE.md"
+      },
+      "htext_release": "by-sa",
+      "files": [
+        {
+          "name": "wikisource_plain_v5.txt",
+          "subset": "plain",
+          "bytes": 158365183,
+          "lines": 3292731,
+          "sha256": "b8737862c943c90089610c2a8fb788a4066c6cf6fbd81ff89ee287983efc6040"
+        },
+        {
+          "name": "wikisource_niqqud_v5.txt",
+          "subset": "niqqud",
+          "bytes": 34519394,
+          "lines": 410681,
+          "sha256": "151fd75153fb9d569e618c8adcce8f6a34a950e99fac4798432a77828a606390"
+        }
+      ],
+      "release": {
+        "tag": "wikisource-v5",
+        "url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/tree/ea93b039a4d57234466d4c649ff83311069394a4/releases/wikisource-v5",
+        "date": "2026-11-27"
+      },
+      "hf": {
+        "repo": "HeOCR/htext-wikisource",
+        "revision": "ea93b039a4d57234466d4c649ff83311069394a4"
+      },
+      "zenodo": {
+        "doi": "10.5281/zenodo.24584329",
+        "concept_doi": "10.5281/zenodo.24521418"
+      },
+      "card_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/ea93b039a4d57234466d4c649ff83311069394a4/releases/wikisource-v5/CORPUS_CARD.md",
+      "sha256sums_url": "https://huggingface.co/datasets/HeOCR/htext-wikisource/blob/ea93b039a4d57234466d4c649ff83311069394a4/releases/wikisource-v5/SHA256SUMS",
+      "source_group": "wikisource"
+    },
+    {
       "id": "sefaria-v2-cc0",
       "version": "v2-cc0",
       "name": {

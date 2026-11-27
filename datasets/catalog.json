@@ -87,12 +87,12 @@
     },
     {
       "id": "HeOCR/htext-wikisource",
-      "revision": "a5ee2ac15051447d571e027c87c9512317cce919",
+      "revision": "ea93b039a4d57234466d4c649ff83311069394a4",
       "group": "text",
       "title": "htext · Hebrew Wikisource",
       "description": {
-        "en": "Hebrew Wikisource training text across four releases, with attribution by source revision.",
-        "he": "טקסט לאימון מוויקיטקסט העברית בארבע גרסאות, עם ייחוס לכל גרסת מקור."
+        "en": "Hebrew Wikisource training text with attribution by source revision.",
+        "he": "טקסט לאימון מוויקיטקסט העברית, עם ייחוס לגרסאות המקור."
       },
       "license": "cc-by-sa-4.0",
       "access": "public",
@@ -112,18 +112,32 @@
         {
           "id": "10.5281/zenodo.24580528",
           "label": "v4"
+        },
+        {
+          "id": "10.5281/zenodo.24584329",
+          "label": "v5"
         }
       ],
       "counts": {
         "documents": null,
         "pages": null,
         "images": null,
-        "lines": 168689,
+        "lines": 3872101,
         "words": null,
         "characters": null,
-        "bytes": 16339852
+        "bytes": 359062282
       },
-      "partial_pages": null
+      "partial_pages": null,
+      "release_path": "releases/wikisource-v5",
+      "release_counts": {
+        "documents": 130,
+        "pages": null,
+        "images": null,
+        "lines": 3703412,
+        "words": null,
+        "characters": null,
+        "bytes": 342722263
+      }
     },
     {
       "id": "HeOCR/htext-knesset-plenary",
@@ -762,7 +776,7 @@
     },
     {
       "id": "HeOCR/htext-by-sa",
-      "revision": "169531494d3cc085938a7b58e4ddd5bd76f59769",
+      "revision": "9c80e95dc4c28f3491744bb0213f6a6c16365f5f",
       "group": "text",
       "title": "htext-by-sa",
       "description": {
@@ -775,19 +789,29 @@
         {
           "id": "10.5281/zenodo.24583234",
           "label": "v1"
+        },
+        {
+          "id": "10.5281/zenodo.24584416",
+          "label": "v2"
         }
       ],
       "counts": {
         "documents": null,
         "pages": null,
         "images": null,
-        "lines": 758879,
+        "lines": 4462291,
         "words": null,
         "characters": null,
-        "bytes": 12532764
+        "bytes": 75072862
       },
       "partial_pages": null,
-      "duplicates_sources": true
+      "duplicates_sources": true,
+      "hub_versions": [
+        {
+          "label": "v1",
+          "revision": "169531494d3cc085938a7b58e4ddd5bd76f59769"
+        }
+      ]
     }
   ],
   "model": {

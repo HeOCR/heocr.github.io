@@ -16,7 +16,7 @@ import argparse, html, json, re, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from build_datasets import load_catalog, release_links, statistic
+from build_datasets import load_catalog, release_links, statistic, version_history, version_name
 import shell  # noqa: E402  (head, header, footer: one source for every page)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -281,14 +281,17 @@ def tier_cards(releases: list[dict], catalog: dict, lang: str) -> str:
         name = release["name"]
         licence = release["licence"]
         row = by_id.get(f"HeOCR/{name}")
+        version = version_name(row) if row else ""
+        edition = f' · <bdi dir="ltr">{e(version)}</bdi>' if version else ""
         out.append(f'<article class="card catalog-card"><h3><bdi dir="ltr">{e(name)}</bdi></h3>\n'
                    f'<p>{e(release["contents"][lang])}</p>\n'
                    f'<div class="catalog-licence"><a href="{e(licence["url"])}">'
-                   f'{e(licence["name"])}</a></div>\n')
+                   f'{e(licence["name"])}</a>{edition}</div>\n')
         if row:
             if row["counts"]["lines"] is not None:
                 out.append(f'<div class="meta"><span>{statistic("lines", row["counts"]["lines"], lang)}</span></div>\n')
             out.append(f'<div class="row" dir="ltr">{release_links(row, latest_only=True)}</div>\n')
+            out.append(version_history(row, [], lang))
         else:
             out.append(f'<div class="catalog-licence">{e(t["tier_pending"])}</div>\n')
         out.append('</article>\n')
