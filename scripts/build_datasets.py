@@ -33,6 +33,8 @@ COPY = {
         "withdrawn": "Withdrawn",
         "pending": "Publication pending",
         "versions": "Versions",
+        "experimental": "EXPERIMENTAL",
+        "synthetic_note": "A gain attributable to synthetic data over the best open models on real held-out sets remains unverified. Our strongest results use training mixes that include real line images and their transcriptions.",
         "by_source": {"real": "Real image datasets by source", "text": "Text corpora by source"},
         "legacy": "Also on GitHub",
         "hash": "Archive of scanned Hebrew handwriting",
@@ -51,6 +53,8 @@ COPY = {
         "withdrawn": "הוסרה",
         "pending": "טרם פורסם",
         "versions": "גרסאות",
+        "experimental": "ניסיוני",
+        "synthetic_note": "במבחנים על מסמכים אמיתיים שהופרדו מהאימון, טרם מדדנו שיפור שניתן לייחס לנתונים סינתטיים מעבר לביצועי המודלים הפתוחים המובילים. התוצאות הטובות ביותר שלנו התקבלו באימון שכלל תמונות של שורות אמיתיות ואת התמלול שלהן.",
         "by_source": {"real": "מאגרי תמונות לפי מקור", "text": "מאגרי טקסט לפי מקור"},
         "legacy": "מאגרים נוספים ב־GitHub",
         "hash": "ארכיון סריקות של כתבי יד בעברית",
@@ -309,7 +313,12 @@ def render(data: dict, lang: str, text: str) -> str:
         f'    <p class="sub">{escape(t["coverage"])}</p>',
     ]
     for key, group in GROUPS.items():
-        lines.append(f'    <h3>{escape(group[lang])}</h3>')
+        title = escape(group[lang])
+        if key == "synthetic":
+            lines.append(f'    <h3>{title} <span class="status">{escape(t["experimental"])}</span></h3>')
+            lines.append(f'    <p class="sub">{escape(t["synthetic_note"])}</p>')
+        else:
+            lines.append(f'    <h3>{title}</h3>')
         rows = [row for row in entries if row["group"] == key]
         if slots := data["collections"].get(key):
             components = [
