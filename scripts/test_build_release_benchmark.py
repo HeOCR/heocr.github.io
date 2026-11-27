@@ -56,7 +56,10 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertNotIn('value="issuer-scan"', opened)
             self.assertNotIn('id="p-mod-open-all-issuer-scan"', opened)
             self.assertIn('<details class="method benchmark-details" id="p-mod-open-alternatives">', opened)
-            self.assertIn(t["phone_note"], opened)
+            self.assertIn('data-score-capture-note="phone-b" hidden', opened)
+            self.assertIn(t["capture_notes"]["phone-b"], opened)
+            self.assertIn(f'{t["carriers"]["phone-b"]} (8)', opened)
+            self.assertIn(t["metric_help"]["cer"], opened)
             self.assertNotIn(t["in_progress"][0], opened)
             self.assertIn(t["in_progress"][0], closed)
             self.assertIn(t["more_sets"], closed)
@@ -83,7 +86,7 @@ class ReleaseBuilderTest(unittest.TestCase):
                 for carrier, group in groups.items():
                     for row in group["readers"]:
                         if row["reader"] == old_id:
-                            edits = (40, 20, 10)[index] if (view, carrier) == ("all", "pooled") else (10, 20, 5)[index]
+                            edits = (40, 20, 10)[index] if (view, carrier) == ("filtered", "pooled") else (10, 20, 5)[index]
                             row.update(reader=key, edits=edits, cer=release.Decimal(edits) / 100)
         raw["welfare_reports"]["readers"][0]["reader"] = names[0]["id"]
         for lang in builder.T:
@@ -102,7 +105,7 @@ class ReleaseBuilderTest(unittest.TestCase):
             {"name": "Tied", "cells": [builder.error_rate(3, 100), builder.error_rate(0, 0)]},
         ]
         t = builder.T["en"]
-        table = builder.result_table(t, "fixture", "Fixture", ("CER", "WER"), rows)
+        table = builder.result_table(t, "fixture", "Fixture", ("cer", "wer"), rows)
         body = re.findall(r'<tr(?: class="ours")?><th scope="row">.*?</tr>', table)
         self.assertEqual([row.partition("<bdi>")[2].partition("</bdi>")[0] for row in body],
                          ["Faster", "Tied", "Slower"])
@@ -142,6 +145,9 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertIn(f'<bdi>Example historical API</bdi><small class="benchmark-reader-note">{t["descriptive"]}</small>', panel)
             self.assertIn(t["historical_caveat"], panel)
             self.assertIn('href="methodology.html"', output)
+            self.assertIn(t["region_count"].format(count=3), panel)
+            self.assertIn(t["reference_count"].format(count=30), panel)
+            self.assertIn(t["reading"], output)
 
     def test_public_phone_aliases_preserve_the_legacy_aggregate_rows(self):
         sample = example()

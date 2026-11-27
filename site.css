@@ -450,8 +450,8 @@ pre code { background: none; padding: 0; white-space: pre; }
   font-size: clamp(1.15rem, 1rem + 0.55cqi, 1.5rem);
   margin-block-start: 0;
 }
-.benchmark-intro { max-width: 55ch; }
-.benchmark-links { font-size: var(--fs-small); }
+.benchmark-intro { max-width: 70ch; }
+.benchmark-meta { color: var(--muted); font-size: var(--fs-small); }
 .benchmark-finding {
   background: var(--accent-soft);
   border-inline-start: 3px solid var(--accent);
@@ -461,7 +461,7 @@ pre code { background: none; padding: 0; white-space: pre; }
 }
 .benchmark-details-body { padding: 12px 14px; }
 .benchmark-details-body > :last-child { margin-block-end: 0; }
-.benchmark-footnote, .benchmark-phone-note { margin-block-start: 10px; }
+.benchmark-footnote { margin-block-start: 10px; }
 .benchmark-options { border: 0; margin: 0 0 12px; min-inline-size: 0; padding: 0; }
 .benchmark-options legend {
   padding: 0;
@@ -498,7 +498,7 @@ pre code { background: none; padding: 0; white-space: pre; }
   border-color: var(--accent);
 }
 .benchmark-pills input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
-.benchmark-view-note { margin-block: 6px 10px; max-width: 70ch; }
+.benchmark-view-note, .benchmark-capture-note { margin-block: 4px 8px; max-width: 70ch; }
 .benchmark-progress { margin-block: 20px; }
 .benchmark-progress h2 { font-size: var(--fs-small); }
 .benchmark-progress ul {
@@ -523,6 +523,37 @@ pre code { background: none; padding: 0; white-space: pre; }
   line-height: 1.25;
   letter-spacing: 0;
   text-transform: none;
+}
+.benchmark-table thead { position: relative; }
+.benchmark-metric-help > summary { list-style: none; cursor: help; }
+.benchmark-metric-help > summary::-webkit-details-marker { display: none; }
+.benchmark-help-icon {
+  display: inline-block;
+  margin-inline-start: 3px;
+  padding-inline: 3px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: var(--accent);
+  font-size: 0.62rem;
+}
+.benchmark-metric-help[open] .benchmark-help-icon {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+}
+.benchmark-tooltip {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: 100%;
+  inset-inline-end: 6px;
+  max-inline-size: min(24rem, 96%);
+  padding: 8px 10px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  text-align: start;
+  font: 500 var(--fs-micro)/1.45 var(--font-body);
 }
 .benchmark-table thead th:not(:first-child), .benchmark-table td { text-align: end; }
 .benchmark-table tbody th {

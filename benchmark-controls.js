@@ -4,9 +4,10 @@ for (const panel of document.querySelectorAll("[data-score-panel]")) {
   const prefix = panel.dataset.scorePanel;
   const controls = panel.querySelector("[data-score-controls]");
   const active = panel.querySelector("[data-score-active]");
-  const fallback = panel.querySelector("details");
+  const fallback = panel.querySelector(":scope > details");
   const status = panel.querySelector("[data-score-status]");
   const notes = panel.querySelectorAll("[data-score-note]");
+  const captureNotes = panel.querySelectorAll("[data-score-capture-note]");
   const tables = new Map([...panel.querySelectorAll(".benchmark-table")].map(table => [table.id, table]));
 
   function render() {
@@ -16,6 +17,7 @@ for (const panel of document.querySelectorAll("[data-score-panel]")) {
     if (!table) return;
     if (active.firstElementChild !== table) active.replaceChildren(table);
     for (const note of notes) note.hidden = note.dataset.scoreNote !== view;
+    for (const note of captureNotes) note.hidden = note.dataset.scoreCaptureNote !== capture;
     status.textContent = table.querySelector("caption").textContent;
   }
 
