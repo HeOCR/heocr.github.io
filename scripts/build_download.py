@@ -15,6 +15,8 @@ MODEL_RELEASES = (
      "https://doi.org/10.5281/zenodo.24581274"),
     ("MEASURED v1.0", "measured_previous", "https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.0",
      "https://doi.org/10.5281/zenodo.24578440"),
+    ("FULL v1.0-full", "full_v10", "https://huggingface.co/HeOCR/heocr-p-hist-full/tree/v1.0-full",
+     "https://doi.org/10.5281/zenodo.24582845"),
 )
 T = {
     "en": {
@@ -24,6 +26,7 @@ T = {
         "measured_latest": "Best / Latest. Evaluated on the C2 held-out set.",
         "measured_previous": "Previous version. Evaluated on the C2 held-out set.",
         "apps": "Apps",
+        "full_v10": "Trained with additional data. This variant is unmeasured.",
         "coming": "Coming soon",
     },
     "he": {
@@ -33,6 +36,7 @@ T = {
         "measured_latest": "הגרסה הטובה והעדכנית ביותר. נבדקה על מערך המבחן C2.",
         "measured_previous": "גרסה קודמת. נבדקה על מערך המבחן C2.",
         "apps": "יישומים",
+        "full_v10": "אומן עם נתונים נוספים. גרסה זו לא נמדדה.",
         "coming": "בקרוב",
     },
 }
