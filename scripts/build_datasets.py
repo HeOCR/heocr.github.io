@@ -199,12 +199,18 @@ def version_history(row: dict, relatives: list[dict], lang: str) -> str:
 
 def earlier_links(row: dict) -> list[str]:
     root = f"https://huggingface.co/datasets/{row['id']}/tree"
+    by_version: dict[str, list[str]] = {}
+    for previous in row.get("hub_versions", []):
+        by_version.setdefault(previous["label"], []).append(
+            f'<a href="{root}/{previous["revision"]}">Hugging Face</a>'
+        )
+    for ref in reversed(row["dois"][:-1]):
+        by_version.setdefault(ref["label"], []).append(
+            f'<a href="https://doi.org/{ref["id"]}">Zenodo</a>'
+        )
     return [
-        f'<a href="{root}/{previous["revision"]}"><bdi dir="ltr">{escape(previous["label"])}</bdi> · Hugging Face</a>'
-        for previous in row.get("hub_versions", [])
-    ] + [
-        f'<a href="https://doi.org/{ref["id"]}"><bdi dir="ltr">{escape(ref["label"])}</bdi> · Zenodo</a>'
-        for ref in reversed(row["dois"][:-1])
+        f'<bdi dir="ltr">{escape(label)}</bdi> · {" · ".join(links)}'
+        for label, links in by_version.items()
     ]
 
 
