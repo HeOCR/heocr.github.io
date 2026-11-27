@@ -92,7 +92,9 @@ class ReleaseBuilderTest(unittest.TestCase):
         for lang in builder.T:
             output = builder.page(lang, release.validate(raw))
             self.assertEqual(output.count('<tr class="ours">'), 12)
-            self.assertEqual(output.count('<a href="download.html"><bdi>Example best model</bdi></a>'), 12)
+            note = builder.T[lang]["modern_model_note"]
+            self.assertEqual(output.count(f'<th scope="row"><bdi>Example best model</bdi>'
+                                          f'<small class="benchmark-reader-note">{note}</small></th>'), 12)
             self.assertNotIn("Example stock pipeline", output)
             self.assertNotIn("Example slower model", output)
             self.assertEqual(output.count("Example Reader 4"), 12)
@@ -124,7 +126,7 @@ class ReleaseBuilderTest(unittest.TestCase):
             "dataset": "Fixture historical", "leaves": 2, "regions": 3, "reference_lines": 30,
             "eligible_lines": 28, "filtered_lines": 25,
             "readers": [
-                {"id": "heocr-example", "name": "Example historical model", "descriptive": False,
+                {"id": "heocr-p-hist-v1-1", "name": "Example historical model", "descriptive": False,
                  "all": score, "filtered": filtered},
                 {"id": "example-api", "name": "Example historical API", "descriptive": True,
                  "all": score, "filtered": score},

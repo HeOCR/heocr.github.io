@@ -40,7 +40,7 @@ T = {
             ("all", "All reference text", "Scores every eligible line in the reference text ({eligible} of {total} lines)."),
         ),
         "historical_result": "{model} led the registered comparators in both views, with {all_cer} CER across all eligible text and {filtered_cer} after filtering.",
-        "modern_model_note": "Modern unpointed print",
+        "modern_model_note": "(experimental, not released)",
         "historical_model_note": "Historical unpointed print",
         "api_capture": "Images scored",
         "api_alternatives": "Results for artwork-masked images",
@@ -112,7 +112,7 @@ T = {
             ("all", "כל טקסט הייחוס", "בודקים את כל השורות הכשירות בטקסט הייחוס ({eligible} מתוך {total})."),
         ),
         "historical_result": "{model} הוביל בשתי ההשוואות שנרשמו מראש עם {all_cer} שגיאות תווים בכל הטקסט הכשיר ו־{filtered_cer} לאחר סינון.",
-        "modern_model_note": "לדפוס מודרני ללא ניקוד",
+        "modern_model_note": "(ניסיוני, טרם פורסם)",
         "historical_model_note": "לדפוס היסטורי ללא ניקוד",
         "api_capture": "תמונות שנבדקו",
         "api_alternatives": "תוצאות לתמונות שבהן הוסתרו סמלים",
@@ -208,7 +208,7 @@ def result_table(t, table_id, caption, columns, rows):
         ours = row.get("ours", False)
         marker = row.get("note")
         label = f'<bdi>{e(row["name"])}</bdi>'
-        if ours:
+        if row.get("model_url"):
             label = f'<a href="{e(row["model_url"])}">{label}</a>'
         if marker:
             label += f'<small class="benchmark-reader-note">{e(marker)}</small>'
@@ -328,7 +328,7 @@ def modern_rows(t, group, winner):
         if reader == winner:
             if reader == "heocr-modern-1":
                 result["name"] = "HeOCR Modern v1"
-            result.update(ours=True, model_url="download.html", note=t["modern_model_note"])
+            result.update(ours=True, note=t["modern_model_note"])
         rows.append(result)
     return rows
 
@@ -420,7 +420,8 @@ def historical_results(t, data):
         for row in data["readers"]:
             ours = row["id"].startswith("heocr-")
             note = t["historical_model_note"] if ours else t["descriptive"] if row["descriptive"] else None
-            rows.append({"name": row["name"], "ours": ours, "model_url": HISTORICAL_MODEL,
+            model_url = HISTORICAL_MODEL if row["id"] == "heocr-p-hist-v1-1" else None
+            rows.append({"name": row["name"], "ours": ours, "model_url": model_url,
                          "note": note, "cells": score_cells(row[view])})
         tables[view, "pooled"] = result_table(t, f"{panel_id}-{view}-pooled", label, columns, rows)
 
