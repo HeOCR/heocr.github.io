@@ -70,7 +70,8 @@ def open_row(row, names):
 
 
 def open_panel(value, names):
-    fields(value, "aggregate_sha256 carriers category_order dataset issue_clusters line_cer metric pages score_scope view_labels views", "modern_print")
+    required = set("aggregate_sha256 carriers category_order dataset issue_clusters line_cer metric pages score_scope view_labels views".split())
+    require(isinstance(value, dict) and required <= value.keys() <= required | {"decision", "sources"}, "modern_print")
     require(value["category_order"] == 1 and value["metric"] == "page_cer" and value["line_cer"] is None, "registered metric")
     count(value["pages"], "registered pages", minimum=1)
     count(value["carriers"], "registered carriers", minimum=1)
@@ -89,14 +90,13 @@ def open_panel(value, names):
             fields(group, "carriers readers", "carrier result")
             count(group["carriers"], "carriers")
             rows = group["readers"]
-            expected = 10 if group["carriers"] else 0
-            require(isinstance(rows, list) and len(rows) == expected, "panel size")
+            require(isinstance(rows, list) and (len(rows) >= 2 if group["carriers"] else not rows), "panel size")
             if not rows:
                 views[view_id][group_id] = {"carriers": 0, "readers": []}
                 continue
             rows = [open_row(row, names) for row in rows]
             reader_ids = {row["reader_id"] for row in rows}
-            require(len(reader_ids) == 10 and (panel is None or panel == reader_ids), "open reader panel")
+            require(len(reader_ids) == len(rows) and (panel is None or panel == reader_ids), "open reader panel")
             panel = reader_ids
             views[view_id][group_id] = {"carriers": group["carriers"], "readers": rows}
         actual = sum(groups[key]["carriers"] for key in keys if key != "pooled")
@@ -117,7 +117,8 @@ def closed_panel(value, names):
         paired = {"delta_vs_rivok_full_pp", "paired_ci95_vs_rivok_full"}
         require(isinstance(row, dict) and row.keys() in (required, required | paired), "closed result")
         key = row["reader"]
-        require(isinstance(key, str) and key in names and key not in seen, "closed reader id")
+        # The closed (welfare) panel is not rendered and keeps its v0 reader ids.
+        require(isinstance(key, str) and re.fullmatch(r"[A-Za-z0-9_.-]+", key) and key not in seen, "closed reader id")
         seen.add(key)
         count(row["hits"], "hits")
         number(row["field_recall_pct"], "field recall")
@@ -128,7 +129,7 @@ def closed_panel(value, names):
         if paired <= row.keys():
             number(row["delta_vs_rivok_full_pp"], "paired change", signed=True)
             interval(row["paired_ci95_vs_rivok_full"], "paired interval", signed=True)
-        rows.append({**row, "reader": names[key]})
+        rows.append({**row, "reader": names.get(key, key)})
     return {
         "pages": value["pages"], "reports": value["reports"],
         "field_value_occurrences": value["field_value_occurrences"], "results": rows,
@@ -140,6 +141,61 @@ def validate(data):
     require(data["schema"] == SCHEMA, "schema")
     names = reader_names(data["readers"])
     return {"open": open_panel(data["modern_print"], names), "closed": closed_panel(data["welfare_reports"], names)}
+
+
+def load_hosted(path: Path, sha256: str):
+    """Hosted-reader C1 bundle (eval #1937): same counts per reader, pooled over the 56 original-equivalent inputs."""
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == sha256, "hosted SHA-256")
+    data = json.loads(raw, parse_float=Decimal, parse_constant=reject_constant, object_pairs_hook=unique_keys)
+    require(data.get("schema") == SCHEMA and "modern_print_hosted" in data, "hosted schema")
+    value = data["modern_print_hosted"]
+    names = reader_names(value["readers"])
+    require(not any(key.startswith("heocr") for key in names), "no HeOCR lane on the hosted scope")
+    views = {}
+    for view in VIEW_IDS:
+        rows = [open_row(row, names) for row in value["views"][view]["pooled"]["readers"]]
+        require({row["reader_id"] for row in rows} == names.keys(), "hosted panel")
+        views[view] = rows
+    return {"carriers": value["carriers"], "views": views, "notes": value.get("notes") or {}}
+
+
+PBYH_SCHEMA = "heocr.benchmark.pbyh.v0"
+
+
+def pbyh_reader(row):
+    require(isinstance(row, dict) and row.get("status") in ("scored", "not_run"), "pbyh reader")
+    require(isinstance(row.get("id"), str) and re.fullmatch(r"[A-Za-z0-9_.-]+", row["id"]), "pbyh reader id")
+    require(isinstance(row.get("label"), str) and 0 < len(row["label"]) <= 96, "pbyh reader label")
+    if row["status"] == "not_run":
+        require(isinstance(row.get("reason"), str) and row["reason"], "pbyh not-run reason")
+        return {"id": row["id"], "label": row["label"], "status": "not_run", "reason": row["reason"]}
+    for key in ("chars", "words"):
+        count(row[key], key, minimum=1)
+    for key in ("edits", "word_edits"):
+        count(row[key], key)
+    paired = row.get("paired_vs_heocr")
+    if paired is not None:
+        fields(paired, "delta_pct ub975_pct", "pbyh paired bound")
+        number(paired["delta_pct"], "pbyh paired change", signed=True)
+        number(paired["ub975_pct"], "pbyh paired bound", signed=True)
+    return {key: row[key] for key in ("id", "label", "status", "edits", "chars", "word_edits", "words")} | {
+        "paired": paired}
+
+
+def load_pbyh(path: Path, sha256: str):
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == sha256, "PBY-H SHA-256")
+    data = json.loads(raw, parse_float=Decimal, parse_constant=reject_constant, object_pairs_hook=unique_keys)
+    require(isinstance(data, dict) and data.get("schema") == PBYH_SCHEMA, "PBY-H schema")
+    for key in ("pages", "works", "scored_lines", "masked_lines", "chars"):
+        count(data[key], key, minimum=0)
+    readers = [pbyh_reader(row) for row in data["readers"]]
+    scored = [row for row in readers if row["status"] == "scored"]
+    require(sum(row["id"].startswith("heocr-") for row in scored) == 1, "one HeOCR row")
+    require(all(row["chars"] == data["chars"] for row in scored), "PBY-H shared denominator")
+    return {key: data[key] for key in ("dataset", "stratum", "pages", "works", "scored_lines", "masked_lines",
+                                       "chars")} | {"readers": readers}
 
 
 def unique_keys(pairs):

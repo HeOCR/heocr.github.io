@@ -12,8 +12,16 @@ import build_release_benchmark
 import leaderboard_results
 
 ROOT = Path(__file__).resolve().parents[1]
-PUBLISHED_V0 = ROOT / "benchmarks" / "pmod-open-v0-scores.json"
-PUBLISHED_V0_SHA256 = "18a35d121e41bda303e75c1db14b61f8b1c6cc0b1cc2035088b05a9c89072e26"
+# C1 public rows (eval, restricted-eval #1936/#1937, built by build_public_scores.py 7c54fcf1): the HeOCR lane is the
+# capture-only 1k model (receipt #1916); comparator bytes equal the v0 release; Kraken and Qwen appended.
+PUBLISHED_V0 = ROOT / "benchmarks" / "c1-public-scores.json"
+PUBLISHED_V0_SHA256 = "98e8db900e77ef9bc05edab39c66c1fc04f8dc676cbb36f357d0e7e54164a623"
+# Hosted readers on the 56 original-equivalent C1 inputs (eval #1937, build_hosted_scores.py 05283760); Shay approved.
+HOSTED_56 = ROOT / "benchmarks" / "c1-hosted-56-public-scores.json"
+HOSTED_56_SHA256 = "deb3ef1174df5982ba607e4b53b76a3557a3594acddfdb84b258a5f0797901c2"
+# PBY-H v0 stratum U public rows (eval #1937; score receipt #1895, registration #1880).
+PBYH_V0 = ROOT / "benchmarks" / "pby-h-v0-public-scores.json"
+PBYH_V0_SHA256 = "264d77050f162dd1dcf913494df79a66099658122a446e1180ef9e2a180133c6"
 
 # Counted once per source page from the published manifest at HF revision
 # 54d637d0. Manifest SHA-256 f173417a49f960f8bdd2bf9950a9e676d2070aeb6d6a3b0066887af6a11190.
@@ -40,11 +48,13 @@ def main():
             raise ValueError("Historical aggregate SHA-256 mismatch")
         historical = json.loads(historical_raw)
         leaderboard = leaderboard_results.read_results(LEADERBOARD)
+        pbyh = benchmark_release_data.load_pbyh(PBYH_V0, PBYH_V0_SHA256)
+        hosted = benchmark_release_data.load_hosted(HOSTED_56, HOSTED_56_SHA256)
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
     api_rows = tuple(row for row in leaderboard["rows"] if "diagnostic" in row)
     stale = build_release_benchmark.write_pages(
-        ROOT, data, public_pages=31, check=args.check, historical=historical, api_rows=api_rows,
+        ROOT, data, public_pages=31, check=args.check, historical=historical, api_rows=api_rows, pbyh=pbyh, hosted=hosted,
     )
     if stale:
         parser.error("Out of date: " + ", ".join(stale) + ". Run python3 scripts/build_benchmarks.py.")

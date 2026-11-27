@@ -73,8 +73,8 @@ T = {
             "api_filtered": "Character edits divided by the number of reference characters kept after filtering.",
         },
         "closed_nav": "Closed sets",
-        "commercial": "Additional API comparisons",
-        "commercial_note": "The APIs were measured separately on 56 images with the original scored pixels and nine with artwork masked for public release.",
+        "commercial": "Hosted readers (a different 56-image scope)",
+        "commercial_note": "The hosted readers were measured separately on 56 images with the original scored pixels and nine with artwork masked for public release. Tesseract and Rivok are re-scored on the same 56 images for comparison. HeOCR was not scored on this scope, so compare it only in the table above. General hosted vision-language models lead on these modern documents.",
         "api_original": "56 images with the original scored pixels",
         "api_masked": "9 images with artwork masked",
         "gemini_note": "Gemini’s model family helped build the v0 references and may have an advantage.",
@@ -89,6 +89,19 @@ T = {
         "primary": "Primary",
         "best": "Lowest error",
         "reader": "Reader", "cer": "CER", "wer": "Word error",
+        "pbyh": "Modern unpointed literature",
+        "pbyh_title": "PBY-H v0 results",
+        "pbyh_intro": "Pages from public-domain Hebrew literary works in Project Ben-Yehuda, imaged from scans of the exact printed editions. The text has no vowel marks.",
+        "work_count": "{count:,} works", "scored_lines": "{count:,} scored lines",
+        "pbyh_masked": "{masked:,} lines where the printed edition and the reference text differ are left out for every reader.",
+        "pbyh_finding": "{model} ({cer} CER) is statistically level with Rivok Lite, Google Cloud Vision and Rivok Full, and clearly better than Google Document AI, Tesseract and PaddleOCR.",
+        "pbyh_refs": "The reference is Project Ben-Yehuda’s volunteer-proofread reading text, not a diplomatic transcription.",
+        "pbyh_caveat": "HeOCR old-print v1.1 is a fine-tune of Rivok Full. Other Project Ben-Yehuda text is public and may be in any reader’s training data, ours included. The other readers’ training data is unknown.",
+        "not_run": "Not run",
+        "not_run_reason": "Google Drive’s built-in OCR was not run: its API refused Hebrew as an OCR language.",
+        "pbyh_paired": "Differences are tested with a paired bootstrap by work (12 works).",
+        "modern_notes": "HeOCR’s model is a fine-tune of Rivok Full, so a near-tie with it is expected. A CER above 100% means the reader inserted text that is not on the page. The other readers’ training data is unknown, and these pages may be on the public web.",
+        "modern_finding": "{model} ties Rivok Full on modern printed documents ({ours} vs {rivok} CER in the recommended view). That is not a win under our registered test. It is clearly better than stock Tesseract.",
     },
     "he": {
         "title": "מדדי ביצועים של HeOCR", "lede": "השוואה בין מנועי זיהוי טקסט בעברית על מסמכים אמיתיים שנשמרו לבדיקה.",
@@ -146,8 +159,8 @@ T = {
             "api_filtered": "מספר השינויים בתווים, חלקי מספר התווים בטקסט הייחוס שנותר לאחר סינון.",
         },
         "closed_nav": "קבוצות סגורות",
-        "commercial": "השוואות נוספות לשירותי זיהוי",
-        "commercial_note": "השירותים נבדקו בנפרד על 56 תמונות שבהן הפיקסלים זהים לאלה שנמדדו במקור, ועל תשע תמונות שבהן הוסתרו סמלים לקראת הפרסום.",
+        "commercial": "שירותי זיהוי מקוונים (קבוצה אחרת של 56 תמונות)",
+        "commercial_note": "השירותים המקוונים נבדקו בנפרד על 56 תמונות שבהן הפיקסלים זהים לאלה שנמדדו במקור, ועל תשע תמונות שבהן הוסתרו סמלים לקראת הפרסום. Tesseract ו־Rivok נבדקו שוב על אותן 56 תמונות לצורך השוואה. HeOCR לא נבדק בקבוצה הזו, ולכן יש להשוות אותו רק בטבלה שלמעלה. מודלים כלליים של ראייה ושפה מובילים במסמכים המודרניים האלה.",
         "api_original": "56 תמונות עם הפיקסלים המקוריים",
         "api_masked": "9 תמונות עם סמלים מוסתרים",
         "gemini_note": "מודל מאותה משפחה של Gemini השתתף בהכנת טקסטי הייחוס של v0, ולכן ייתכן שיש לו יתרון.",
@@ -162,6 +175,19 @@ T = {
         "primary": "ראשי",
         "best": "שיעור השגיאות הנמוך ביותר",
         "reader": "מנוע זיהוי", "cer": "CER", "wer": "שגיאות מילים",
+        "pbyh": "ספרות בדפוס מודרני ללא ניקוד",
+        "pbyh_title": "תוצאות PBY-H v0",
+        "pbyh_intro": "עמודים מיצירות ספרות עבריות ברשות הציבור מפרויקט בן־יהודה, מתוך סריקות של המהדורות המודפסות עצמן. הטקסט אינו מנוקד.",
+        "work_count": "{count:,} יצירות", "scored_lines": "{count:,} שורות שנבדקו",
+        "pbyh_masked": "{masked:,} שורות שבהן המהדורה המודפסת וטקסט הייחוס שונים הוצאו מהבדיקה לכל המנועים.",
+        "pbyh_finding": "{model} ({cer} שגיאות תווים) שקול סטטיסטית ל־Rivok Lite, ל־Google Cloud Vision ול־Rivok Full, וטוב בבירור מ־Google Document AI, מ־Tesseract ומ־PaddleOCR.",
+        "pbyh_refs": "טקסט הייחוס הוא טקסט הקריאה של פרויקט בן־יהודה שעבר הגהה בידי מתנדבים, ולא תעתיק דיפלומטי.",
+        "pbyh_caveat": "HeOCR old-print v1.1 מבוסס על כוונון נוסף של Rivok Full. טקסטים אחרים של פרויקט בן־יהודה זמינים לציבור וייתכן שהם בנתוני האימון של כל מנוע, כולל שלנו. נתוני האימון של המנועים האחרים אינם ידועים.",
+        "not_run": "לא נבדק",
+        "not_run_reason": "זיהוי הטקסט המובנה של Google Drive לא נבדק: הממשק שלו דחה עברית כשפת זיהוי.",
+        "pbyh_paired": "ההבדלים נבדקו בשיטת bootstrap מזווגת לפי יצירה (12 יצירות).",
+        "modern_notes": "המודל של HeOCR מבוסס על כוונון נוסף של Rivok Full, ולכן צפוי שהתוצאות יהיו קרובות. שיעור שגיאות תווים מעל 100% פירושו שהמנוע הוסיף טקסט שאינו מופיע בעמוד. נתוני האימון של המנועים האחרים אינם ידועים, וייתכן שהעמודים האלה זמינים ברשת.",
+        "modern_finding": "{model} שקול ל־Rivok Full במסמכים מודפסים מודרניים ({ours} לעומת {rivok} שגיאות תווים בתצוגה המומלצת). לפי המבחן הרשום זה אינו ניצחון. הוא טוב בבירור מ־Tesseract הרגיל.",
     },
 }
 
@@ -335,7 +361,7 @@ def modern_rows(t, group, winner):
     return rows
 
 
-def modern_api_results(t, api_rows):
+def modern_api_results(t, api_rows, hosted=None):
     columns = ("api_all", "api_filtered")
     views = (("original", t["api_original"], t["api_original"]),
              ("masked", t["api_masked"], t["api_masked"]))
@@ -343,11 +369,18 @@ def modern_api_results(t, api_rows):
     tables = {}
     for scope, title, _ in views:
         rows = []
-        for row in api_rows:
-            scores = row["diagnostic"]["masked_views"] if scope == "masked" else row["views"]
-            counts = (scores[view]["pooled"] for view in ("all", "filtered"))
-            rows.append({"name": row["reader"],
-                         "cells": [error_rate(count["edits"], count["chars"]) for count in counts]})
+        if scope == "original" and hosted is not None:
+            by_view = {view: {r["reader_id"]: r for r in hosted["views"][view]} for view in ("all", "filtered")}
+            for reader_id, row in by_view["all"].items():
+                rows.append({"name": row["reader"], "cells": [
+                    error_rate(by_view[view][reader_id]["edits"], by_view[view][reader_id]["chars"])
+                    for view in ("all", "filtered")]})
+        else:
+            for row in api_rows:
+                scores = row["diagnostic"]["masked_views"] if scope == "masked" else row["views"]
+                counts = (scores[view]["pooled"] for view in ("all", "filtered"))
+                rows.append({"name": row["reader"],
+                             "cells": [error_rate(count["edits"], count["chars"]) for count in counts]})
         tables[scope, "pooled"] = result_table(t, f"{panel_id}-{scope}-pooled", title, columns, rows)
     return disclosure(t["commercial"], "".join([
         f'<p>{e(t["commercial_note"])}</p>',
@@ -376,7 +409,7 @@ def pool_phone_captures(groups):
     return {"carriers": sum(stream["carriers"] for stream in streams), "readers": list(readers.values())}
 
 
-def open_results(t, data, public_pages, api_rows):
+def open_results(t, data, public_pages, api_rows, hosted=None):
     counts = [("page_count", data["pages"]), ("capture_count", data["carriers"])]
     if "reference_lines" in data:
         counts.append(("reference_count", data["reference_lines"]))
@@ -409,6 +442,13 @@ def open_results(t, data, public_pages, api_rows):
         if count:
             captures.append((key, f"{label} ({count})", capture_notes[key]))
     winner = best_modern_model(data)
+    pooled = {row["reader_id"]: row for row in views["filtered"]["pooled"]["readers"]}
+    if winner is not None and "rivok-full" in pooled:
+        cer = lambda r: percentage(Fraction(pooled[r]["edits"], pooled[r]["chars"]))  # noqa: E731
+        name = modern_rows(t, views["filtered"]["pooled"], winner)
+        name = next(r["name"] for r in name if r.get("ours"))
+        out.append('<p class="benchmark-finding">' + e(t["modern_finding"]).format(
+            model=f'<bdi>{e(name)}</bdi>', ours=cer(winner), rivok=cer("rivok-full")) + "</p>")
     columns = ("cer", "wer", "numbers")
     panel_id = "p-mod-open"
     tables = {
@@ -419,8 +459,9 @@ def open_results(t, data, public_pages, api_rows):
     }
     out.append(score_panel(t, panel_id, t["modern_views"], captures, tables,
                            view_label=t["evaluation_view"], alternatives=t["alternatives"]))
+    out.append(f'<p class="note">{e(t["modern_notes"])}</p>')
     if api_rows:
-        out.append(modern_api_results(t, api_rows))
+        out.append(modern_api_results(t, api_rows, hosted))
     out.append("</article>\n")
     return "".join(out)
 
@@ -467,16 +508,51 @@ def historical_results(t, data):
     ])
 
 
-def page(lang, data, public_pages=None, *, historical=None, api_rows=()):
+def pbyh_results(t, data):
+    panel_id = "pby-h-open-scores"
+    rows = []
+    for row in data["readers"]:
+        ours = row["id"].startswith("heocr-")
+        if row["status"] == "not_run":
+            rows.append({"name": row["label"], "note": t["not_run"], "cells": [(None, ""), (None, "")]})
+            continue
+        rows.append({"name": row["label"], "ours": ours,
+                     "model_url": HISTORICAL_MODEL if row["id"] == "heocr-p-hist-v1-1" else None,
+                     "cells": text_score_cells(row)})
+    table = result_table(t, f"{panel_id}-pooled", t["pbyh_title"], ("cer", "wer"), rows)
+    model = next(row for row in data["readers"] if row["id"].startswith("heocr-"))
+    finding = e(t["pbyh_finding"]).format(model=f'<bdi>{e(model["label"])}</bdi>',
+                                         cer=percentage(Fraction(model["edits"], model["chars"])))
+    notes = [t["pbyh_masked"].format(masked=data["masked_lines"]), t["pbyh_refs"], t["pbyh_paired"]]
+    if any(row["status"] == "not_run" for row in data["readers"]):
+        notes.append(t["not_run_reason"])
+    notes.append(t["pbyh_caveat"])
+    return "".join([
+        f'<article class="benchmark-result" id="pby-h-open"><h3><bdi>{e(t["pbyh_title"])}</bdi></h3>',
+        benchmark_metadata(t, [("page_count", data["pages"]), ("work_count", data["works"]),
+                               ("scored_lines", data["scored_lines"])]),
+        f'<p class="benchmark-intro">{e(t["pbyh_intro"])}</p>',
+        f'<p class="note">{e(t["primary_cer"])}</p>',
+        f'<p class="benchmark-finding">{finding}</p>',
+        table,
+        "".join(f'<p class="note">{e(note)}</p>' for note in notes),
+        "</article>\n",
+    ])
+
+
+def page(lang, data, public_pages=None, *, historical=None, api_rows=(), pbyh=None, hosted=None):
     t = T[lang]
     toc = []
     open_panels = []
     if data is not None:
         toc.append(("p-mod-open", e(t["modern"]), None))
-        open_panels.append(open_results(t, data["open"], public_pages, api_rows))
+        open_panels.append(open_results(t, data["open"], public_pages, api_rows, hosted))
     if historical is not None:
         toc.append(("p-hist-open", e(t["historical"]), None))
         open_panels.append(historical_results(t, historical))
+    if pbyh is not None:
+        toc.append(("pby-h-open", e(t["pbyh"]), None))
+        open_panels.append(pbyh_results(t, pbyh))
     if not toc:
         toc.append(("open", e(t["open"]), None))
     toc.append(("closed", e(t["closed_nav"]), None))
@@ -502,10 +578,10 @@ def page(lang, data, public_pages=None, *, historical=None, api_rows=()):
     ])
 
 
-def write_pages(output_dir, data, public_pages, *, check, historical=None, api_rows=()):
+def write_pages(output_dir, data, public_pages, *, check, historical=None, api_rows=(), pbyh=None, hosted=None):
     stale = []
     for lang in shell.LANGS:
-        benchmark = page(lang, data, public_pages, historical=historical, api_rows=api_rows)
+        benchmark = page(lang, data, public_pages, historical=historical, api_rows=api_rows, pbyh=pbyh, hosted=hosted)
         for key, output in (("bench", benchmark), ("methodology", build_methodology.page(lang))):
             relative = shell.site_path(lang, key)
             path = output_dir / relative

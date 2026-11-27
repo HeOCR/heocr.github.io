@@ -1,0 +1,138 @@
+{
+ "chars": 53547,
+ "dataset": "PBY-H v0",
+ "interval": "paired relative CER change vs HeOCR v1.1; one-sided 97.5% upper bound; bootstrap by work, 2,000 draws, seed 0",
+ "masked_lines": 147,
+ "pages": 36,
+ "readers": [
+  {
+   "cer": 0.07216090537285003,
+   "chars": 53547,
+   "edits": 3864,
+   "id": "rivok-lite",
+   "label": "Rivok Tesseract Lite",
+   "paired_vs_heocr": {
+    "delta_pct": 1.5786749482401552,
+    "ub975_pct": 11.422787738577211
+   },
+   "status": "scored",
+   "wer": 0.20651842826682912,
+   "word_edits": 2034,
+   "words": 9849
+  },
+  {
+   "cer": 0.07330009150839449,
+   "chars": 53547,
+   "edits": 3925,
+   "id": "heocr-p-hist-v1-1",
+   "label": "HeOCR old-print v1.1",
+   "paired_vs_heocr": null,
+   "status": "scored",
+   "wer": 0.22113920194943648,
+   "word_edits": 2178,
+   "words": 9849
+  },
+  {
+   "cer": 0.07541038713653427,
+   "chars": 53547,
+   "edits": 4038,
+   "id": "google-vision",
+   "label": "Google Cloud Vision",
+   "paired_vs_heocr": {
+    "delta_pct": -2.798415056958903,
+    "ub975_pct": 2.0509193776520496
+   },
+   "status": "scored",
+   "wer": 0.24469489288252613,
+   "word_edits": 2410,
+   "words": 9849
+  },
+  {
+   "cer": 0.07669897473247801,
+   "chars": 53547,
+   "edits": 4107,
+   "id": "rivok-full",
+   "label": "Rivok Tesseract Full",
+   "paired_vs_heocr": {
+    "delta_pct": -4.431458485512552,
+    "ub975_pct": 3.5730541647701397
+   },
+   "status": "scored",
+   "wer": 0.2259112600263986,
+   "word_edits": 2225,
+   "words": 9849
+  },
+  {
+   "cer": 0.0865781463013801,
+   "chars": 53547,
+   "edits": 4636,
+   "id": "google-docai",
+   "label": "Google Document AI OCR",
+   "paired_vs_heocr": {
+    "delta_pct": -15.336496980155312,
+    "ub975_pct": -8.154213578983283
+   },
+   "status": "scored",
+   "wer": 0.2576911361559549,
+   "word_edits": 2538,
+   "words": 9849
+  },
+  {
+   "cer": 0.10566418286738753,
+   "chars": 53547,
+   "edits": 5658,
+   "id": "tessdata-fast",
+   "label": "Tesseract heb fast",
+   "paired_vs_heocr": {
+    "delta_pct": -30.6291975963238,
+    "ub975_pct": -20.47829937998229
+   },
+   "status": "scored",
+   "wer": 0.3205401563610519,
+   "word_edits": 3157,
+   "words": 9849
+  },
+  {
+   "cer": 0.11022092740956543,
+   "chars": 53547,
+   "edits": 5902,
+   "id": "tessdata-best",
+   "label": "Tesseract heb best",
+   "paired_vs_heocr": {
+    "delta_pct": -33.49711962046764,
+    "ub975_pct": -25.913110342176083
+   },
+   "status": "scored",
+   "wer": 0.3226723525230988,
+   "word_edits": 3178,
+   "words": 9849
+  },
+  {
+   "cer": 0.13683306254318636,
+   "chars": 53547,
+   "edits": 7327,
+   "id": "paddle",
+   "label": "Rivok PaddleOCR",
+   "paired_vs_heocr": {
+    "delta_pct": -46.431008598334934,
+    "ub975_pct": -41.909385113268605
+   },
+   "status": "scored",
+   "wer": 0.4360848817138796,
+   "word_edits": 4295,
+   "words": 9849
+  },
+  {
+   "id": "google-drive-ocr",
+   "label": "Google Drive built-in OCR",
+   "reason": "API refused Hebrew (HTTP 400)",
+   "status": "not_run"
+  }
+ ],
+ "receipt": "restricted-eval#1895 records/pby_h_v0_1880_score_2026-11-27/score-receipt.json sha256 c825fd80f3605a340e12b6bd60ad2fd8cb9837ad5f1e607e20b9726f8166a67e",
+ "registration": "restricted-eval#1880 preregistration/pby_h_v0_2026-11-27/REGISTRATION.md sha256 e2f7c9cd6c91b59690bedc29286636680508b194f5c1e099b5dde0ad0817d7ac",
+ "schema": "heocr.benchmark.pbyh.v0",
+ "scored_lines": 1017,
+ "stratum": "U",
+ "works": 12
+}
