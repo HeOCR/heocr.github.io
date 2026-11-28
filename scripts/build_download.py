@@ -45,18 +45,19 @@ T = {
         "models": "OCR models",
         "about": "HeOCR models are available now for modern printed documents (modern v1.0), historical unpointed print (P-hist v1.1), unpointed literary print (literature v1.0) and pointed literary print (pointed v1.0). Apache 2.0.",
         "quick_start": "Quick start",
+        "quick_start_file": "The file for HeOCR P-hist MEASURED v1.1 is named <code>phist_v2.traineddata</code>; the release version is v1.1.",
         "instructions": "With Tesseract 5 and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.",
         "experimental": "HeOCR’s handwriting models are still experimental.",
         "pmod_benchmark": "P-mod-open held-out result",
         "modern": "Modern unpointed printed documents. Evaluated on the P-mod-open v0 held-out set.",
         "benchmarks": "See all benchmarks",
-        "model_benchmark": "C2 held-out result",
+        "model_benchmark": "Held-out result on P-hist-open (C2)",
         "pbyh_benchmark": "PBY-H held-out result",
         "pointed_benchmark": "PBY-H pointed held-out result",
         "literature": "Unpointed literary print. Evaluated on the PBY-H v0 held-out set.",
         "pointed": "Pointed (niqqud) literary print. Evaluated on the PBY-H v0.1 pointed held-out set, where Google’s readers score better.",
-        "measured_latest": "Best / Latest. Evaluated on the C2 held-out set.",
-        "measured_previous": "Previous version. Evaluated on the C2 held-out set.",
+        "measured_latest": "Best / Latest. Evaluated on the P-hist-open held-out set (C2).",
+        "measured_previous": "Previous version. Evaluated on the P-hist-open held-out set (C2).",
         "full_v10": "Trained with additional data. This variant is unmeasured.",
         "apps": "Apps",
         "full_v11": "Trained with additional data. This variant is unmeasured.",
@@ -67,18 +68,19 @@ T = {
         "models": "מודלים לזיהוי תווים",
         "about": "מודלים של HeOCR זמינים להורדה למסמכים מודרניים בדפוס (modern v1.0), לדפוס היסטורי לא מנוקד (P-hist v1.1), לספרות בדפוס לא מנוקד (literature v1.0) ולספרות בדפוס מנוקד (pointed v1.0), ברישיון Apache 2.0.",
         "quick_start": "התחלה מהירה",
+        "quick_start_file": "הקובץ של HeOCR P-hist MEASURED v1.1 נקרא <code>phist_v2.traineddata</code>, וגרסת השחרור היא v1.1.",
         "instructions": "התקינו Tesseract 5 ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.",
         "experimental": "המודלים של HeOCR לכתב יד עדיין ניסיוניים.",
         "pmod_benchmark": "תוצאות על מערך המבחן P-mod-open",
         "modern": "מסמכים מודרניים בדפוס לא מנוקד. נבדק על מערך המבחן P-mod-open v0.",
         "benchmarks": "לכל מדדי ההערכה",
-        "model_benchmark": "תוצאות על מערך המבחן C2",
+        "model_benchmark": "תוצאות על מערך המבחן P-hist-open (C2)",
         "pbyh_benchmark": "תוצאות על מערך המבחן PBY-H",
         "pointed_benchmark": "תוצאות על מערך המבחן המנוקד PBY-H",
         "literature": "ספרות בדפוס לא מנוקד. נבדק על מערך המבחן PBY-H v0.",
         "pointed": "ספרות בדפוס מנוקד. נבדק על מערך המבחן המנוקד PBY-H v0.1, שבו המנועים של Google משיגים תוצאות טובות יותר.",
-        "measured_latest": "הגרסה הטובה והעדכנית ביותר. נבדקה על מערך המבחן C2.",
-        "measured_previous": "גרסה קודמת. נבדקה על מערך המבחן C2.",
+        "measured_latest": "הגרסה הטובה והעדכנית ביותר. נבדקה על מערך המבחן P-hist-open (C2).",
+        "measured_previous": "גרסה קודמת. נבדקה על מערך המבחן P-hist-open (C2).",
         "full_v10": "אומן עם נתונים נוספים. גרסה זו לא נמדדה.",
         "apps": "יישומים",
         "full_v11": "אומן עם נתונים נוספים. גרסה זו לא נמדדה.",
@@ -110,7 +112,8 @@ def page(lang: str) -> str:
         + shell.page_head(text["title"], f'<p class="lede">{text["about"]}</p>')
         + f'<section id="quick-start">\n<h2>{text["quick_start"]}</h2>\n'
           f'<p>{text["instructions"]}</p>\n'
-          f'<pre class="quick-start"><code>{escape(QUICK_START)}</code></pre>\n</section>\n'
+          f'<pre class="quick-start"><code>{escape(QUICK_START)}</code></pre>\n'
+          f'<p class="note">{text["quick_start_file"]}</p>\n</section>\n'
         + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n</section>\n'
         + f'<p>{text["experimental"]} <a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
         + f'<section>\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n</section>\n'

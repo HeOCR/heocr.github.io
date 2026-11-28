@@ -142,8 +142,22 @@ def number(value: int) -> str:
     return f'<bdi dir="ltr">{value:,}</bdi>'
 
 
+def size(value: int, unit_name: str) -> str:
+    """A byte count for people (decimal units, as HF shows them), the exact count in the tooltip
+    (site review 2, FIX-01)."""
+    shown, unit = float(value), "B"
+    for unit in ("B", "kB", "MB", "GB", "TB"):
+        if shown < 1000 or unit == "TB":
+            break
+        shown /= 1000
+    text = f"{value:,} B" if unit == "B" else f"{shown:.2f} {unit}"
+    return f'<bdi dir="ltr" title="{value:,} {unit_name}">{text}</bdi>'
+
+
 def statistic(key: str, value: int, lang: str) -> str:
     t = COPY[lang]
+    if key == "bytes":
+        return size(value, escape(t["stats"]["bytes"]))
     name = escape(t["one_document"] if key == "documents" and value == 1 else t["stats"][key])
     return f"{number(value)} {name}"
 
