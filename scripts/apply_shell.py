@@ -30,6 +30,12 @@ HAND = {"home": "index.html", "rights": "rights.html"}
 HOME = {
     "en": {
         "intro": "HeOCR is an open project for getting Hebrew text out of any document: PDF and Office files, web pages, scans and photos. The code, the models and the data are open, and the tools run on your own computer or phone.",
+        "apps": "Desktop app",
+        "apps_text": "HeOCR for macOS and Windows is in development. To hear when it is out, watch HeOCR/heocr-desktop on GitHub (Watch → Custom → Releases).",
+        "apps_releases": "Releases",
+        "code_signing": "Code signing policy",
+        "privacy": "Privacy policy",
+        "rights_link": "Rights &amp; takedown",
         "models": "Models and pipeline",
         "status": "Four HeOCR OCR models for Tesseract 5, one for each kind of printed document.",
         "model_link": "Get the OCR weights",
@@ -66,6 +72,12 @@ HOME = {
     },
     "he": {
         "intro": "HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים, והכלים רצים על המחשב או הטלפון שלכם.",
+        "apps": "אפליקציה למחשב",
+        "apps_text": "HeOCR ל־macOS ול־Windows נמצאת בפיתוח. כדי לדעת כשתצא, עקבו אחרי HeOCR/heocr-desktop ב־GitHub (Watch ← Custom ← Releases).",
+        "apps_releases": "גרסאות",
+        "code_signing": "מדיניות חתימת קוד",
+        "privacy": "מדיניות פרטיות",
+        "rights_link": "זכויות והסרה",
         "models": "מודלים וצינור העיבוד",
         "status": "ארבעה מודלים של HeOCR לזיהוי תווים עם Tesseract 5, אחד לכל סוג של מסמך מודפס.",
         "model_link": "הורדת משקלי המודל",
@@ -138,6 +150,28 @@ def home_status(lang: str, text: str) -> str:
         lambda m: m[1] + html.escape(t["sources"]) + m[2],
         text,
         count=1,
+    )
+    # The code-signing policy has its own page (site review 2, ARCH-04 / COPY-10); home keeps a short
+    # apps section in its place, and the footer links to the policy.
+    desktop = "https://github.com/HeOCR/heocr-desktop"
+    text = re.sub(
+        r'^  <section id="(?:code-signing|apps)">.*?^  </section>',
+        lambda _: (
+            '  <section id="apps">\n'
+            f'    <h2>{html.escape(t["apps"])}</h2>\n'
+            f'    <p class="sub">{html.escape(t["apps_text"])}</p>\n'
+            f'    <p><a href="{desktop}/releases">{html.escape(t["apps_releases"])}</a> · '
+            f'<a href="code-signing.html">{html.escape(t["code_signing"])}</a> · '
+            f'<a href="privacy.html">{html.escape(t["privacy"])}</a></p>\n'
+            '  </section>'
+        ),
+        text, count=1, flags=re.M | re.S,
+    )
+    text = re.sub(
+        r'<p><a href="rights.html">[^<]*</a>(?: · <a href="code-signing.html">[^<]*</a>)?</p>',
+        lambda _: (f'<p><a href="rights.html">{t["rights_link"]}</a> · '
+                   f'<a href="code-signing.html">{html.escape(t["code_signing"])}</a></p>'),
+        text, count=1,
     )
     return re.sub(
         r'(<h3><a href="https://he.wikisource.org">[^<]+</a></h3>\s*<p>).*?(</p>)',

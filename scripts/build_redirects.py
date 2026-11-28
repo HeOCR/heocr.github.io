@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OLD_DIR = "he"
 DESIGN_DIR = Path("design/brand-handover/site")
 DESIGN_PAGES = ("home", "bench", "htext")
-NEW_PAGES = {"datasets"}  # added after the he/ move: no old URL to redirect
+NEW_PAGES = {"datasets", "code-signing"}  # added after the he/ move: no old URL to redirect
 TEXT = {"he": "העמוד עבר. אם לא עברתם אוטומטית, ", "en": "This page moved. If you are not redirected, "}
 LINK = {"he": "הקישור לעמוד החדש", "en": "open the updated page"}
 

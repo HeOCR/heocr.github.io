@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מדיניות חתימת קוד</title>
+<meta name="description" content="איך נבנית ונחתמת אפליקציית HeOCR למחשב, ל־macOS ול־Windows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script>(function(){try{if(localStorage.getItem("heocr-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}})()</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HeOCR">
+<meta property="og:title" content="מדיניות חתימת קוד">
+<meta property="og:description" content="איך נבנית ונחתמת אפליקציית HeOCR למחשב, ל־macOS ול־Windows.">
+<meta property="og:url" content="https://heocr.org/code-signing.html">
+<meta property="og:image" content="https://heocr.org/og-image-he-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://heocr.org/code-signing.html">
+<link rel="alternate" hreflang="he" href="https://heocr.org/code-signing.html">
+<link rel="alternate" hreflang="en" href="https://heocr.org/en/code-signing.html">
+<link rel="alternate" hreflang="x-default" href="https://heocr.org/code-signing.html">
+</head>
+<body class="site">
+<a class="skip" href="#main">דילוג לתוכן</a>
+<header class="site-header">
+<div class="wrap bar">
+<a class="brand" href="./" aria-label="HeOCR"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="7" width="34" height="34" class="lg-box sw2"></rect><rect x="4" y="4" width="6" height="6" class="lg-h"></rect><rect x="38" y="4" width="6" height="6" class="lg-h"></rect><rect x="4" y="38" width="6" height="6" class="lg-h"></rect><rect x="38" y="38" width="6" height="6" class="lg-h"></rect><path d="M16 18H32V32.5" class="lg-ink sw45"></path><path d="M16 24.5V32.5" class="lg-ink sw45"></path></svg><span dir="ltr">He<b>OCR</b></span></a>
+<nav class="site-nav" aria-label="ניווט באתר"><a href="download.html">הורדה</a><a href="benchmarks.html">מדדי ביצועים</a><a href="datasets.html">מאגרי נתונים</a><a href="htext.html">מאגרי טקסט</a><a href="rights.html">זכויות והסרה</a></nav>
+<div class="tools">
+<div class="lang-toggle" role="group" aria-label="שפה / Language">
+<span aria-current="page" lang="he">עברית</span>
+        <a href="en/code-signing.html" lang="en" hreflang="en">English</a>
+</div>
+<button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><svg class="ico i-moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.6A5.6 5.6 0 0 1 6.4 3 5.6 5.6 0 1 0 13 9.6z"></path></svg><svg class="ico i-sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"></circle><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"></path></svg><span class="label">מצב לילה</span></button>
+</div>
+</div>
+</header>
+<div class="band gridband"><div class="wrap page-head">
+<h1><span class="bb" data-tag="h1 · 0.99">מדיניות חתימת קוד</span></h1>
+<p class="lede">לאפליקציית HeOCR למחשב, ל־macOS ול־Windows, שנמצאת בפיתוח.</p>
+</div></div>
+<main id="main" class="wrap doc">
+<section>
+<h2>מצב</h2>
+<p>האפליקציה עוד לא שוחררה. כדי לדעת כשתשוחרר, עקבו אחרי <a href="https://github.com/HeOCR/heocr-desktop">HeOCR/heocr-desktop</a> ב־GitHub (Watch ← Custom ← Releases), או ראו את <a href="https://github.com/HeOCR/heocr-desktop/releases">עמוד הגרסאות</a>.</p>
+</section>
+<section>
+<h2>מה נחתם</h2>
+<p>נחתמים רק מתקינים שנבנו ב־GitHub Actions מקוד המקור הפומבי, וכל חתימה מאושרת ידנית.</p>
+<p>macOS: חתומה ב־Apple Developer ID ומאושרת (notarized) על ידי Apple.</p>
+<p>Windows: המתקינים עוד לא חתומים. כשתונפק תעודה, העמוד הזה יציין מי חותם ומי מחזיק בתעודה.</p>
+</section>
+<section>
+<h2>תפקידים בצוות</h2>
+<p>כותבי קוד ובודקים: שי פלצ'י אפק (<a href="https://github.com/shaypal5">@shaypal5</a>), עם סוכני קוד מבוססי בינה מלאכותית שעובדים דרך בקשות משיכה שנבדקות. מאשר חתימות: שי פלצ'י אפק.</p>
+</section>
+<section>
+<h2>פרטיות</h2>
+<p>התוכנה לא תעביר מידע למערכות אחרות ברשת, אלא אם המשתמש או מי שמתקין או מפעיל אותה ביקשו זאת במפורש. לאפליקציה אין שום יכולת רשת. ראו גם את <a href="privacy.html">מדיניות הפרטיות</a> ואת <a href="https://github.com/HeOCR/heocr-desktop/blob/main/docs/code-signing-policy.md">מדיניות החתימה המלאה</a>.</p>
+</section>
+</main>
+<footer class="site-footer">
+<div class="wrap foot">
+<div class="foot-brand">He<b>OCR</b></div>
+<div class="foot-text">
+<p><a href="https://github.com/HeOCR/heocr-desktop">HeOCR/heocr-desktop</a> · <a href="./">HeOCR</a></p>
+</div>
+</div>
+</footer>
+<script src="theme.js"></script>
+</body>
+</html>
