@@ -145,6 +145,10 @@ def page(lang: str) -> str:
         + f'<section id="choose">\n<h2>{text["compass"]}</h2>\n<ul class="compass">\n{compass}</ul>\n</section>\n'
         + f'<section id="quick-start">\n<h2>{text["quick_start"]}</h2>\n'
           f'<p>{text["instructions"]}</p>\n'
+          f'<pre class="quick-start"><code>{escape(QUICK_START)}</code></pre>\n'
+          f'<p class="note">{text["quick_start_file"]}</p>\n</section>\n'
+        + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n'
+          f'<h3 id="variants">{text["variants"]}</h3>\n<p>{text["variants_text"]}</p>\n</section>\n'
         + f'<p>{text["experimental"]} <a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
         + f'<section>\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n</section>\n'
         + "</main>\n"

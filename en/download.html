@@ -59,6 +59,26 @@
 <section id="quick-start">
 <h2>Quick start</h2>
 <p>With Tesseract 5 and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.</p>
+<pre class="quick-start"><code>mkdir -p tessdata
+curl -fL -o tessdata/phist_v2.traineddata \
+  https://huggingface.co/HeOCR/heocr-p-hist-measured/resolve/v1.1/phist_v2.traineddata
+tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre>
+<p class="note">The file for HeOCR P-hist MEASURED v1.1 is named phist_v2.traineddata; the release version is v1.1.</p>
+</section>
+<section id="models">
+<h2>OCR models</h2>
+<div class="grid">
+<div class="card" id="modern-v10"><h3><bdi dir="ltr">HeOCR modern MEASURED v1.0</bdi></h3><p>Modern unpointed printed documents. Evaluated on the P-mod-open v0 held-out set.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-modern-measured/tree/v1.0">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24615080">Zenodo</a><a href="benchmarks.html#p-mod-open">P-mod-open held-out result</a></div></div>
+<div class="card" id="literature-v10"><h3><bdi dir="ltr">HeOCR literature MEASURED v1.0</bdi></h3><p>Unpointed literary print. Evaluated on the PBY-H v0 held-out set.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-literature-measured/tree/v1.0">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24620176">Zenodo</a><a href="benchmarks.html#pby-h-open">PBY-H held-out result</a></div></div>
+<div class="card" id="pointed-v10"><h3><bdi dir="ltr">HeOCR pointed MEASURED v1.0</bdi></h3><p>Pointed (niqqud) literary print. Evaluated on the PBY-H v0.1 pointed held-out set, where Google’s readers score better.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-pointed-measured/tree/v1.0">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24620184">Zenodo</a><a href="benchmarks.html#pby-h-pointed">PBY-H pointed held-out result</a></div></div>
+<div class="card" id="phist-v11"><h3><bdi dir="ltr">HeOCR P-hist MEASURED v1.1</bdi></h3><p>Best / Latest. Evaluated on the P-hist-open held-out set (C2).</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.1">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24581274">Zenodo</a><a href="benchmarks.html#p-hist-open-scores-filtered-pooled">Held-out result on P-hist-open (C2)</a></div></div>
+<div class="card" id="phist-v10"><h3><bdi dir="ltr">HeOCR P-hist MEASURED v1.0</bdi></h3><p>Previous version. Evaluated on the P-hist-open held-out set (C2).</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.0">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24578440">Zenodo</a><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/blob/v1.0/README.md#held-out-evaluation-old-printed-hebrew-unpointed">Held-out result on P-hist-open (C2)</a></div></div>
+<div class="card" id="phist-full-v11"><h3><bdi dir="ltr">HeOCR P-hist FULL v1.1-full</bdi></h3><p>Also trained on our public test-set pages, so it has no independent score.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-full/tree/v1.1-full">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24586339">Zenodo</a></div></div>
+<div class="card" id="phist-full-v10"><h3><bdi dir="ltr">HeOCR P-hist FULL v1.0-full</bdi></h3><p>Also trained on our public test-set pages, so it has no independent score.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-full/tree/v1.0-full">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24582845">Zenodo</a></div></div>
+</div>
+<h3 id="variants">MEASURED or FULL?</h3>
+<p>MEASURED is the version our published held-out numbers belong to. FULL was also trained on our public test-set pages, so it has no independent score. It may be slightly stronger on similar material; this is not measured.</p>
+</section>
 <p>HeOCR’s handwriting models are still experimental. <a href="benchmarks.html">See all benchmarks</a></p>
 <section>
 <h2>Apps</h2>
