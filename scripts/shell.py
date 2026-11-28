@@ -50,12 +50,14 @@ STR = {
                 "rights": "Rights &amp; takedown"},
         "nav_aria": "Site", "lang_aria": "Language / שפה", "theme": "Night mode",
         "skip": "Skip to content", "toc_aria": "On this page", "lang_name": "English",
+        "partner": "In partnership with DataHack",
     },
     "he": {
         "nav": {"download": "הורדה", "bench": "מדדי ביצועים", "datasets": "מאגרי נתונים", "htext": "מאגרי טקסט",
                 "rights": "זכויות והסרה"},
         "nav_aria": "ניווט באתר", "lang_aria": "שפה / Language", "theme": "מצב לילה",
         "skip": "דילוג לתוכן", "toc_aria": "בעמוד זה", "lang_name": "עברית",
+        "partner": "בשיתוף עמותת דאטה-האק",
     },
 }
 
@@ -143,10 +145,20 @@ def header(lang: str, page: str) -> str:
             '</div>\n</div>\n</header>\n')
 
 
-def footer(lines: list[str]) -> str:
-    """The footer: the brand, then the page's own lines (each a ready <p>…</p>)."""
+DATAHACK_URL = "https://datahack.org.il"
+
+
+def partner(lang: str) -> str:
+    """The partnership strip, the footer's last line on every page (DataHack logo from assets/)."""
+    return (f'<p class="foot-partner"><span>{STR[lang]["partner"]}</span>'
+            f'<a href="{DATAHACK_URL}"><img src="{prefix(lang)}assets/datahack-logo.svg" alt="DataHack" '
+            'width="20" height="19"></a></p>')
+
+
+def footer(lines: list[str], lang: str) -> str:
+    """The footer: the brand, then the page's own lines (each a ready <p>…</p>), then the partnership strip."""
     return ('<footer class="site-footer">\n<div class="wrap foot">\n<div class="foot-brand">He<b>OCR</b></div>\n'
-            '<div class="foot-text">\n' + "\n".join(lines) + '\n</div>\n</div>\n</footer>\n')
+            '<div class="foot-text">\n' + "\n".join([*lines, partner(lang)]) + '\n</div>\n</div>\n</footer>\n')
 
 
 def tail(lang: str) -> str:
@@ -169,4 +181,4 @@ def toc(lang: str, links: list[tuple[str, str, str | None]]) -> str:
     return f'<nav class="wrap" aria-label="{STR[lang]["toc_aria"]}"><div class="toc">{items}</div></nav>\n'
 
 
-__all__ = ["e", "head", "head_assets", "header", "footer", "tail", "boxed", "page_head", "toc", "prefix", "STR", "PAGES"]
+__all__ = ["e", "head", "head_assets", "header", "footer", "partner", "tail", "boxed", "page_head", "toc", "prefix", "STR", "PAGES"]

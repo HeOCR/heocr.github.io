@@ -41,4 +41,4 @@ def page(lang):
                     shell.page_head(e(t['title']), f'<p class="lede">{e(t["lede"])}</p>'),
                     '<main id="main" class="wrap doc">\n', sections,
                     f'<p><a href="benchmarks.html">{e(t["back"])}</a></p></main>\n',
-                    shell.footer(['<p><a href="./">HeOCR</a></p>']), shell.tail(lang)])
+                    shell.footer(['<p><a href="./">HeOCR</a></p>'], lang), shell.tail(lang)])

@@ -3,10 +3,11 @@
     python3 scripts/apply_shell.py           # rewrite the shell blocks of index.html, rights.html (HE at the root, EN under en/)
     python3 scripts/apply_shell.py --check   # exit 1 if a page's shell differs from shell.py
 
-The hand-written pages carry three marked blocks, which this script owns:
+The hand-written pages carry four marked blocks, which this script owns:
 
     <!-- shell:head -->    … fonts, site.css, theme script, icons, link previews …   <!-- /shell:head -->
     <!-- shell:header -->  … skip link and site header …                              <!-- /shell:header -->
+    <!-- shell:partner -->  … the footer's partnership strip …                       <!-- /shell:partner -->
     <!-- shell:tail -->    … theme.js …                                               <!-- /shell:tail -->
 
 The home pages also take their release status and introduction from this builder.
@@ -284,6 +285,7 @@ def render(page: str, lang: str, text: str) -> str:
     parts = {
         "head": shell.head_assets(lang, title, desc, page),
         "header": shell.header(lang, page),
+        "partner": shell.partner(lang),
         "tail": f'<script src="{shell.prefix(lang)}theme.js"></script>',
     }
     for name, body in parts.items():

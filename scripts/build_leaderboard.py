@@ -312,7 +312,7 @@ def page(lang, data):
         pending,
         submission,
         "</main>",
-        shell.footer([f"<p>{links}</p>"]),
+        shell.footer([f"<p>{links}</p>"], lang),
         shell.tail(lang),
     ))
 

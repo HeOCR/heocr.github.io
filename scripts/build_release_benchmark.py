@@ -787,7 +787,7 @@ def page(lang, data, public_pages=None, *, historical=None, api_rows=(), pbyh=No
         '<section class="wrap benchmark-progress" aria-labelledby="benchmark-progress-title">',
         f'<h2 id="benchmark-progress-title">{e(t["more_sets"])}</h2><ul>{badges}</ul>',
         '</section>\n</main>\n',
-        shell.footer(['<p><a href="./">HeOCR</a></p>']),
+        shell.footer(['<p><a href="./">HeOCR</a></p>'], lang),
         f'<script src="{shell.prefix(lang)}benchmark-controls.js" defer></script>',
         shell.tail(lang),
     ])
