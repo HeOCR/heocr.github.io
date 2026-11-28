@@ -20,6 +20,9 @@ import shell  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "datasets" / "catalog.json"
+# htext's line counts, one rule for both pages (site review 2, FIX-03; htext #87 writes it): for an htext
+# repository listed there, its "lines" replace the catalog's.
+HTEXT_COUNTS = ROOT / "htext" / "line_counts.json"
 HOME = {"he": ROOT / "index.html", "en": ROOT / "en" / "index.html"}
 PAGE = {"he": ROOT / "datasets.html", "en": ROOT / "en" / "datasets.html"}
 SECTION = re.compile(r'^  <section id="datasets"[^>]*>.*?^  </section>', re.M | re.S)
@@ -97,6 +100,12 @@ HUB_ID = re.compile(r"HeOCR/[a-z0-9-]+")
 def load_catalog() -> dict:
     data = json.loads(CATALOG.read_text(encoding="utf-8"))
     entries = data["datasets"]
+    htext = json.loads(HTEXT_COUNTS.read_text(encoding="utf-8"))["repositories"]
+    for row in entries:
+        if row["id"] in htext:
+            row["counts"]["lines"] = htext[row["id"]]["lines"]
+    if missing := set(htext) - {row["id"] for row in entries}:
+        raise ValueError(f"htext line counts for repositories not in the catalog: {sorted(missing)}")
     model = data["model"]
     versions = [model, {**model, **model["previous"]}]
     if len({row["id"] for row in entries}) != len(entries):
