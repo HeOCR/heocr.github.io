@@ -151,8 +151,8 @@ DATAHACK_URL = "https://datahack.org.il"
 def partner(lang: str) -> str:
     """The partnership strip, the footer's last line on every page (DataHack logo from assets/)."""
     return (f'<p class="foot-partner"><span>{STR[lang]["partner"]}</span>'
-            f'<a href="{DATAHACK_URL}"><img src="{prefix(lang)}assets/datahack-logo.svg" alt="DataHack" '
-            'width="20" height="19"></a></p>')
+            f'<a href="{DATAHACK_URL}"><img src="{prefix(lang)}assets/datahack-logo.png" alt="DataHack" '
+            'width="21" height="20"></a></p>')
 
 
 def footer(lines: list[str], lang: str) -> str:

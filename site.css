@@ -684,4 +684,4 @@ pre code { background: none; padding: 0; white-space: pre; }
 /* ---------- Footer partnership strip ---------- */
 .site-footer .foot-partner { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 12px 0 0; font-size: var(--fs-micro); color: var(--muted); }
 .site-footer .foot-partner a { display: inline-flex; }
-.site-footer .foot-partner img { display: block; height: 19px; width: auto; }
+.site-footer .foot-partner img { display: block; height: 20px; width: auto; }
