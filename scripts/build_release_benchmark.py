@@ -59,7 +59,6 @@ T = {
              "Scores {filtered} lines of AI-reviewed reference text after removing known training-text overlap."),
             ("all", "All reference text", "Scores every eligible line in the reference text ({eligible} of {total} lines)."),
         ),
-        "historical_result": "{model} led the registered comparators in both views, with {all_cer} CER across all eligible text and {filtered_cer} after filtering.",
         "modern_model_note": "Modern unpointed print",
         "historical_model_note": "Historical unpointed print",
         "api_capture": "Images scored",
@@ -96,7 +95,7 @@ T = {
         },
         "closed_nav": "Closed sets",
         "commercial": "Hosted readers (a different 56-image scope)",
-        "commercial_note": "The hosted readers were measured separately on 56 images with the original scored pixels and nine with artwork masked for public release. Tesseract and Rivok are re-scored on the same 56 images for comparison. HeOCR was not scored on this scope, so compare it only in the table above. General hosted vision-language models lead on these modern documents.",
+        "commercial_note": "The hosted readers were measured separately on 56 images with the original scored pixels and nine with artwork masked for public release. Tesseract and Rivok are re-scored on the same 56 images for comparison. HeOCR was not scored on this scope, so compare it only in the table above.",
         "api_original": "56 images with the original scored pixels",
         "api_masked": "9 images with artwork masked",
         "gemini_note": "Gemini’s model family helped build the v0 references and may have an advantage.",
@@ -116,14 +115,12 @@ T = {
         "pbyh_intro": "Pages from public-domain Hebrew literary works in Project Ben-Yehuda, imaged from scans of the exact printed editions. The text has no vowel marks.",
         "work_count": "{count:,} works", "scored_lines": "{count:,} scored lines",
         "pbyh_masked": "{masked:,} lines where the printed edition and the reference text differ are left out for every reader.",
-        "pbyh_finding": "{model} ({cer} CER) has the lowest error on this set. It is better than Google Cloud Vision (narrowly), Google Document AI, Tesseract and Rivok PaddleOCR, and statistically level with Rivok Tesseract Lite, Rivok Tesseract Full and our previous model, HeOCR P-hist MEASURED v1.1. This is not a registered state-of-the-art result.",
         "pbyh_refs": "The reference is Project Ben-Yehuda’s volunteer-proofread reading text, not a diplomatic transcription.",
-        "pbyh_caveat": "HeOCR literature MEASURED v1.0 is a fine-tune of Rivok Tesseract Full and is level with it here. It was selected on a separate development set and scored on this set once. Other Project Ben-Yehuda text is public and may be in any reader’s training data, ours included. The other readers’ training data is unknown.",
+        "pbyh_caveat": "HeOCR literature MEASURED v1.0 is a fine-tune of Rivok Tesseract Full. It was selected on a separate development set and scored on this set once. Other Project Ben-Yehuda text is public and may be in any reader’s training data, ours included. The other readers’ training data is unknown.",
         "pointed": "Pointed literature",
         "pointed_title": "PBY-H v0.1 pointed results",
         "pointed_intro": "Pages from public-domain pointed Hebrew works (poetry) in Project Ben-Yehuda, imaged from Internet Archive scans of two printed editions. The reference is Project Ben-Yehuda’s typed text, with the vowel points as typed there.",
         "pointed_primary": "The primary metric is page character error rate (CER) with vowel points kept.",
-        "pointed_finding": "Google leads on this set: Google Document AI ({docai} CER) and Google Cloud Vision ({vision}). {model} ({cer}) is better than our previous model, HeOCR P-hist MEASURED v1.1 ({v11}), and statistically level with Rivok Tesseract Full. Its gain over v1.1 is in the vowel points: on letters alone the two are level. This is not a registered state-of-the-art result.",
         "pointed_editions": "These results come from two printed editions, with 21 of the 24 pages from one (Katzenelson, Warsaw 1910), so they may not carry over to other pointed editions.",
         "pointed_paired": "Differences are tested with a paired bootstrap by work (8 works).",
         "pointed_higher": "Mark recall is the only measure here where higher is better.",
@@ -132,7 +129,7 @@ T = {
         "not_run": "Not run",
         "not_run_reason": "Google Drive’s built-in OCR was not run: its API refused Hebrew as an OCR language.",
         "pbyh_paired": "Differences are tested with a paired bootstrap by work (12 works).",
-        "modern_notes": "HeOCR’s model is a fine-tune of Rivok Full, so a near-tie with it is expected. A CER above 100% means the reader inserted text that is not on the page. The other readers’ training data is unknown, and these pages may be on the public web.",
+        "modern_notes": "HeOCR’s model is a fine-tune of Rivok Full. A CER above 100% means the reader inserted text that is not on the page. The other readers’ training data is unknown, and these pages may be on the public web.",
     },
     "he": {
         "lang": "he",
@@ -157,7 +154,6 @@ T = {
              "בודקים {filtered} שורות מטקסט הייחוס שהוכן באמצעות בינה מלאכותית, לאחר הסרת חפיפה ידועה עם טקסט האימון."),
             ("all", "כל טקסט הייחוס", "בודקים את כל השורות הכשירות בטקסט הייחוס ({eligible} מתוך {total})."),
         ),
-        "historical_result": "{model} הוביל בשתי ההשוואות שנרשמו מראש עם {all_cer} שגיאות תווים בכל הטקסט הכשיר ו־{filtered_cer} לאחר סינון.",
         "modern_model_note": "לדפוס מודרני ללא ניקוד",
         "historical_model_note": "לדפוס היסטורי ללא ניקוד",
         "api_capture": "תמונות שנבדקו",
@@ -194,7 +190,7 @@ T = {
         },
         "closed_nav": "קבוצות סגורות",
         "commercial": "שירותי זיהוי מקוונים (קבוצה אחרת של 56 תמונות)",
-        "commercial_note": "השירותים המקוונים נבדקו בנפרד על 56 תמונות שבהן הפיקסלים זהים לאלה שנמדדו במקור, ועל תשע תמונות שבהן הוסתרו סמלים לקראת הפרסום. Tesseract ו־Rivok נבדקו שוב על אותן 56 תמונות לצורך השוואה. HeOCR לא נבדק בקבוצה הזו, ולכן יש להשוות אותו רק בטבלה שלמעלה. מודלים כלליים של ראייה ושפה מובילים במסמכים המודרניים האלה.",
+        "commercial_note": "השירותים המקוונים נבדקו בנפרד על 56 תמונות שבהן הפיקסלים זהים לאלה שנמדדו במקור, ועל תשע תמונות שבהן הוסתרו סמלים לקראת הפרסום. Tesseract ו־Rivok נבדקו שוב על אותן 56 תמונות לצורך השוואה. HeOCR לא נבדק בקבוצה הזו, ולכן יש להשוות אותו רק בטבלה שלמעלה.",
         "api_original": "56 תמונות עם הפיקסלים המקוריים",
         "api_masked": "9 תמונות עם סמלים מוסתרים",
         "gemini_note": "מודל מאותה משפחה של Gemini השתתף בהכנת טקסטי הייחוס של v0, ולכן ייתכן שיש לו יתרון.",
@@ -214,14 +210,12 @@ T = {
         "pbyh_intro": "עמודים מיצירות ספרות עבריות ברשות הציבור מפרויקט בן־יהודה, מתוך סריקות של המהדורות המודפסות עצמן. הטקסט אינו מנוקד.",
         "work_count": "{count:,} יצירות", "scored_lines": "{count:,} שורות שנבדקו",
         "pbyh_masked": "{masked:,} שורות שבהן המהדורה המודפסת וטקסט הייחוס שונים הוצאו מהבדיקה לכל המנועים.",
-        "pbyh_finding": "ל־{model} ({cer} שגיאות תווים) שיעור השגיאות הנמוך ביותר במערך הזה. הוא טוב מ־Google Cloud Vision (בהפרש קטן), מ־Google Document AI, מ־Tesseract ומ־Rivok PaddleOCR, ושקול סטטיסטית ל־Rivok Tesseract Lite, ל־Rivok Tesseract Full ולמודל הקודם שלנו, HeOCR P-hist MEASURED v1.1. זו אינה תוצאה רשומה של ביצועי שיא.",
         "pbyh_refs": "טקסט הייחוס הוא טקסט הקריאה של פרויקט בן־יהודה שעבר הגהה בידי מתנדבים, ולא תעתיק דיפלומטי.",
-        "pbyh_caveat": "HeOCR literature MEASURED v1.0 מבוסס על כוונון נוסף של Rivok Tesseract Full, ושקול לו כאן. המודל נבחר על מערך פיתוח נפרד ונבדק על מערך זה פעם אחת. טקסטים אחרים של פרויקט בן־יהודה זמינים לציבור וייתכן שהם בנתוני האימון של כל מנוע, כולל שלנו. נתוני האימון של המנועים האחרים אינם ידועים.",
+        "pbyh_caveat": "HeOCR literature MEASURED v1.0 מבוסס על כוונון נוסף של Rivok Tesseract Full. המודל נבחר על מערך פיתוח נפרד ונבדק על מערך זה פעם אחת. טקסטים אחרים של פרויקט בן־יהודה זמינים לציבור וייתכן שהם בנתוני האימון של כל מנוע, כולל שלנו. נתוני האימון של המנועים האחרים אינם ידועים.",
         "pointed": "ספרות בדפוס מנוקד",
         "pointed_title": "תוצאות PBY-H v0.1 מנוקד",
         "pointed_intro": "עמודים מיצירות עבריות מנוקדות (שירה) ברשות הציבור מפרויקט בן־יהודה, מתוך סריקות של שתי מהדורות מודפסות ב־Internet Archive. טקסט הייחוס הוא הטקסט המוקלד של פרויקט בן־יהודה, עם הניקוד כפי שהוקלד שם.",
         "pointed_primary": "המדד הראשי הוא שיעור שגיאות התווים בעמוד (CER) כולל ניקוד.",
-        "pointed_finding": "Google מובילה במערך הזה: Google Document AI ({docai} שגיאות תווים) ו־Google Cloud Vision ({vision}). {model} ({cer}) טוב מהמודל הקודם שלנו, HeOCR P-hist MEASURED v1.1 ({v11}), ושקול סטטיסטית ל־Rivok Tesseract Full. השיפור לעומת v1.1 הוא בניקוד: באותיות בלבד השניים שקולים. זו אינה תוצאה רשומה של ביצועי שיא.",
         "pointed_editions": "התוצאות מבוססות על שתי מהדורות מודפסות, ו־21 מתוך 24 העמודים מאחת מהן (כצנלסון, ורשה 1910), ולכן ייתכן שאינן מייצגות מהדורות מנוקדות אחרות.",
         "pointed_paired": "ההבדלים נבדקו בשיטת bootstrap מזווגת לפי יצירה (8 יצירות).",
         "pointed_higher": "זיהוי סימני הניקוד הוא המדד היחיד כאן שבו ערך גבוה יותר טוב יותר.",
@@ -230,7 +224,7 @@ T = {
         "not_run": "לא נבדק",
         "not_run_reason": "זיהוי הטקסט המובנה של Google Drive לא נבדק: הממשק שלו דחה עברית כשפת זיהוי.",
         "pbyh_paired": "ההבדלים נבדקו בשיטת bootstrap מזווגת לפי יצירה (12 יצירות).",
-        "modern_notes": "המודל של HeOCR מבוסס על כוונון נוסף של Rivok Full, ולכן צפוי שהתוצאות יהיו קרובות. שיעור שגיאות תווים מעל 100% פירושו שהמנוע הוסיף טקסט שאינו מופיע בעמוד. נתוני האימון של המנועים האחרים אינם ידועים, וייתכן שהעמודים האלה זמינים ברשת.",
+        "modern_notes": "המודל של HeOCR מבוסס על כוונון נוסף של Rivok Full. שיעור שגיאות תווים מעל 100% פירושו שהמנוע הוסיף טקסט שאינו מופיע בעמוד. נתוני האימון של המנועים האחרים אינם ידועים, וייתכן שהעמודים האלה זמינים ברשת.",
     },
 }
 
@@ -497,7 +491,7 @@ def open_results(t, data, public_pages, api_rows, hosted=None):
         count = views["all"][key]["carriers"]
         if count:
             captures.append((key, f"{label} ({count})", capture_notes[key]))
-    # No finding box for P-mod-open (owner, 2026-11-28): the table rows speak for themselves.
+    # No verdict boxes on this page (owner, 2026-11-28): the tables and their highlights speak for themselves.
     winner = best_modern_model(data)
     columns = ("cer", "wer", "numbers")
     panel_id = "p-mod-open"
@@ -535,20 +529,12 @@ def historical_results(t, data):
                          "note": note, "cells": text_score_cells(row[view])})
         tables[view, "pooled"] = result_table(t, f"{panel_id}-{view}-pooled", label, columns, rows)
 
-    model = next(row for row in data["readers"] if row["id"].startswith("heocr-"))
-
-    def model_cer(view):
-        return percentage(Fraction(model[view]["edits"], model[view]["chars"]))
-
-    finding = e(t["historical_result"]).format(model=f'<bdi>{e(MODEL_NAMES.get(model["id"], model["name"]))}</bdi>',
-                                              all_cer=model_cer("all"), filtered_cer=model_cer("filtered"))
     return "".join([
         f'<article class="benchmark-result" id="p-hist-open"><h3><bdi>{e(data["dataset"])}</bdi></h3>',
         benchmark_metadata(t, [("page_count", data["leaves"]), ("region_count", data["regions"]),
                                ("reference_count", data["reference_lines"])]),
         f'<p class="benchmark-intro">{e(t["historical_intro"])}</p>',
         f'<p class="note">{e(t["primary_cer"])}</p>',
-        f'<p class="benchmark-finding">{finding}</p>',
         score_panel(t, panel_id, views, (("pooled", "", ""),), tables, view_label=t["evaluation_view"],
                     alternatives=views[1][1]),
         f'<p class="note benchmark-footnote">{e(t["historical_numbers_note"])}</p>',
@@ -570,11 +556,6 @@ def pbyh_results(t, data):
         rows.append({"name": name or row["label"], "ours": candidate, "model_url": url,
                      "cells": text_score_cells(row)})
     table = result_table(t, f"{panel_id}-pooled", t["pbyh_title"], ("cer", "wer"), rows)
-    model = next(row for row in data["readers"]
-                 if row["status"] == "scored" and row["id"].startswith("heocr-") and row["paired"] is None)
-    label = PBYH_NAMES.get(model["id"], (None, None))[0] or model["label"]
-    finding = e(t["pbyh_finding"]).format(model=f'<bdi>{e(label)}</bdi>',
-                                         cer=percentage(Fraction(model["edits"], model["chars"])))
     notes = [t["pbyh_masked"].format(masked=data["masked_lines"]), t["pbyh_refs"], t["pbyh_paired"]]
     if any(row["status"] == "not_run" for row in data["readers"]):
         notes.append(t["not_run_reason"])
@@ -585,7 +566,6 @@ def pbyh_results(t, data):
                                ("scored_lines", data["scored_lines"])]),
         f'<p class="benchmark-intro">{e(t["pbyh_intro"])}</p>',
         f'<p class="note">{e(t["primary_cer"])}</p>',
-        f'<p class="benchmark-finding">{finding}</p>',
         table,
         "".join(f'<p class="note">{e(note)}</p>' for note in notes),
         "</article>\n",
@@ -603,13 +583,6 @@ def pointed_results(t, data):
         rows.append({"name": "Google Drive built-in OCR", "note": t["not_run"],
                      "cells": [(None, "")] * len(columns)})
     table = result_table(t, "pby-h-pointed-scores-pooled", t["pointed_title"], columns, rows)
-    by_lane = {row["lane"]: row for row in data["rows"]}
-    model = next(row for row in data["rows"] if row["candidate"])
-    finding = e(t["pointed_finding"]).format(
-        model=f'<bdi>{e(MODEL_NAMES.get(model["lane"], model["reader"]))}</bdi>', cer=percentage(Fraction(model["cer"])),
-        docai=percentage(Fraction(by_lane["google-docai"]["cer"])),
-        vision=percentage(Fraction(by_lane["google-vision"]["cer"])),
-        v11=percentage(Fraction(by_lane["heocr-v1-1"]["cer"])))
     notes = [t["pointed_editions"], t["pbyh_masked"].format(masked=data["masked_lines"]),
              t["pointed_higher"], t["pointed_paired"]]
     if data["drive_not_run"]:
@@ -621,7 +594,6 @@ def pointed_results(t, data):
                                ("scored_lines", data["lines"] - data["masked_lines"])]),
         f'<p class="benchmark-intro">{e(t["pointed_intro"])}</p>',
         f'<p class="note">{e(t["pointed_primary"])}</p>',
-        f'<p class="benchmark-finding">{finding}</p>',
         table,
         "".join(f'<p class="note">{e(note)}</p>' for note in notes),
         "</article>\n",
