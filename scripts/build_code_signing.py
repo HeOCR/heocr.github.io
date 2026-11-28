@@ -89,7 +89,7 @@ def page(lang: str) -> str:
     for heading, paragraphs in t["sections"]:
         w.append(f"<section>\n<h2>{e(heading)}</h2>\n" + "".join(f"<p>{p}</p>\n" for p in paragraphs) + "</section>\n")
     w.append("</main>\n")
-    w.append(shell.footer([f'<p><a href="{REPO}">HeOCR/heocr-desktop</a> · <a href="./">HeOCR</a></p>']))
+    w.append(shell.footer([f'<p><a href="{REPO}">HeOCR/heocr-desktop</a> · <a href="./">HeOCR</a></p>'], lang))
     w.append(shell.tail(lang))
     return "".join(w)
 

@@ -454,7 +454,7 @@ def page(lang: str, R: dict, catalog: dict) -> str:
     w(f'<section id="licence">\n<h2>{e(t["licence_h"])}</h2>\n<p>{t["licence_p"]}</p>\n</section>\n')
     w("</main>\n")
     w(shell.footer([f"<p>{t['footer']}</p>",
-                    f'<p><a href="{R["repository"]}">HeOCR/htext</a> · <a href="{json_href}">corpora.json</a> · <a href="./">HeOCR</a></p>']))
+                    f'<p><a href="{R["repository"]}">HeOCR/htext</a> · <a href="{json_href}">corpora.json</a> · <a href="./">HeOCR</a></p>'], lang))
     w(shell.tail(lang))
     return "".join(out)
 

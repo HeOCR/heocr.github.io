@@ -184,7 +184,7 @@ def page(lang: str) -> str:
         + f'<section id="apps">\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n'
           f'<p><a href="code-signing.html">{text["code_signing"]}</a> · <a href="privacy.html">{text["privacy"]}</a></p>\n</section>\n'
         + "</main>\n"
-        + shell.footer([f'<p><a href="code-signing.html">{text["code_signing"]}</a></p>'])
+        + shell.footer([f'<p><a href="code-signing.html">{text["code_signing"]}</a></p>'], lang)
         + shell.tail(lang)
     )
 

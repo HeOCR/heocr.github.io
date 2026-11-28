@@ -413,7 +413,7 @@ def page(data: dict, lang: str) -> str:
         '<main id="main" class="wrap home">\n',
         catalog(data, lang, summary=False), "\n",
         "</main>\n",
-        shell.footer(['<p><a href="rights.html">' + shell.STR[lang]["nav"]["rights"] + '</a> · <a href="./">HeOCR</a></p>']),
+        shell.footer(['<p><a href="rights.html">' + shell.STR[lang]["nav"]["rights"] + '</a> · <a href="./">HeOCR</a></p>'], lang),
         shell.tail(lang),
     ])
 
