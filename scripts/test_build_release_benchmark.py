@@ -169,6 +169,32 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertIn(f'href="{builder.POINTED_MODEL}"', ours)
             self.assertNotIn("benchmark-fraction", panel)
 
+    def test_combined_table_comes_first_and_lists_only_readers_in_two_sets(self):
+        import build_benchmarks as site
+        from fractions import Fraction
+        historical = json.loads(site.HISTORICAL_V01.read_bytes())
+        pbyh = release.load_pbyh(site.PBYH_V0, site.PBYH_V0_SHA256)
+        pointed = release.load_pbyh_pointed(site.PBYH_POINTED, site.PBYH_POINTED_SHA256)
+        data = release.load(site.PUBLISHED_V0, site.PUBLISHED_V0_SHA256)
+        for lang, t in builder.T.items():
+            output = builder.page(lang, data, historical=historical, pbyh=pbyh, pointed=pointed)
+            self.assertLess(output.index('id="summary"'), output.index('id="open"'))
+            summary = output.split('id="summary"', 1)[1].split("</section>", 1)[0]
+            self.assertIn(t["summary_line"], summary)
+            self.assertIn(t["summary_hosted"], summary)
+            for anchor in ("p-mod-open", "p-hist-open", "pby-h-open", "pby-h-pointed"):
+                self.assertIn(f'<a href="#{anchor}">', summary)
+            for absent in ("Kraken", "Qwen", "Google Drive", "PaddleOCR (CUDA)"):
+                self.assertNotIn(absent, summary)
+            rows = re.findall(r"<tr[^>]*><th scope=\"row\">.*?</tr>", summary)
+            self.assertIn("HeOCR", rows[0])
+            google = next(row for row in rows if "Google Cloud Vision" in row)
+            self.assertIn("—<sup>*</sup>", google)
+            # Every number is one the per-set tables show.
+            tables = output.split('</section>', 1)[1]
+            for value in re.findall(r"<bdi dir=\"ltr\">([\d.]+%)</bdi>", summary):
+                self.assertIn(f'<bdi dir="ltr">{value}</bdi>', tables)
+
     def test_reader_classification_fails_closed(self):
         for name, kind in (("Tesseract heb best", "open"), ("Tessdata Fast Hebrew", "open"), ("Rivok Lite", "open"),
                            ("Rivok PaddleOCR", "open"), ("Kraken 7.2 (generic recognizer)", "open"),

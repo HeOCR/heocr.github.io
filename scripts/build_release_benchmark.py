@@ -63,6 +63,10 @@ T = {
         "scope_pending": "The public dataset scope is pending source-rights review. The figures use the registered scope.",
         "published": "The public dataset includes {public} of the {registered} scored pages. The figures use the registered scope.",
         "numbers": "Numbers missed",
+        "summary_title": "Combined results by test set",
+        "summary_line": "Character error rate per test set; lower is better. Full detail in the tables below.",
+        "summary_heocr": "HeOCR (best model for the set)",
+        "summary_hosted": "Hosted services will be measured on the full set in an upcoming unified run",
         "modern_intro": "Official gazettes, legal notices and other public documents in modern unpointed Hebrew.",
         "phone_matched_note": "Two different phones photographed the same {pages} pages; results are pooled.",
         "modern_capture_design": "A scanner and two phones captured the same {matched} printed pages, scored against the same text for each page. Other images come from archives or publishers’ PDFs.",
@@ -153,6 +157,10 @@ T = {
         "scope_pending": "היקף מערך הנתונים הציבורי ייקבע לאחר בדיקת זכויות המקור. התוצאות מחושבות לפי הקבוצה הרשומה.",
         "published": "מערך הנתונים הציבורי כולל {public} מתוך {registered} העמודים שהוערכו. התוצאות מחושבות לפי הקבוצה הרשומה.",
         "numbers": "מספרים שלא זוהו",
+        "summary_title": "תוצאות מאוחדות לפי מערך מבחן",
+        "summary_line": "שיעור שגיאות תווים לכל מערך מבחן; נמוך יותר טוב יותר. פירוט מלא בטבלאות שלמטה.",
+        "summary_heocr": "HeOCR (המודל הטוב ביותר לכל מערך)",
+        "summary_hosted": "שירותי Google ושירותים מקוונים יימדדו על כל מערך המבחן בהרצה מאוחדת קרובה",
         "modern_intro": "רשומות, הודעות משפטיות ומסמכים ציבוריים נוספים בדפוס עברי מודרני ללא ניקוד.",
         "phone_matched_note": "שני טלפונים שונים צילמו את אותם {pages} עמודים. התוצאות מחושבות יחד.",
         "modern_capture_design": "אותם {matched} עמודים נסרקו וצולמו בשני טלפונים, וכל התמונות של עמוד נבדקות מול אותו טקסט ייחוס. יתר התמונות באו מארכיונים או מקובצי PDF של הגופים המפרסמים.",
@@ -612,6 +620,136 @@ def pointed_results(t, data):
     ])
 
 
+# Combined table (owner, 2026-11-28): one row per reader seen in at least two sets, from the same rows the per-set
+# tables use. Eval's reader ids differ by set, so each maps to one canonical reader here. The modern set's
+# PaddleOCR (CUDA) is not the same reader as the Rivok PaddleOCR of the other sets, so it keeps its own key.
+SUMMARY_SETS = (("modern", "p-mod-open", "P-mod-open v0"), ("historical", "p-hist-open", "P-hist-open v0.1"),
+                ("pbyh", "pby-h-open", "PBY-H v0"), ("pointed", "pby-h-pointed", "PBY-H v0.1 P"))
+CANON = {
+    "rivok-full": "Rivok Full", "rivok-lite": "Rivok Lite",
+    "tessdata-best": "Tessdata Best Hebrew", "best": "Tessdata Best Hebrew",
+    "tessdata-fast": "Tessdata Fast Hebrew", "fast": "Tessdata Fast Hebrew",
+    "paddle-rivok": "Rivok PaddleOCR",
+    "google-docai": "Google Document AI OCR", "google-docai-ocr": "Google Document AI OCR",
+    "google-vision": "Google Cloud Vision",
+}
+ALIASES = {"paddle": "paddle-rivok"}
+HOSTED_KEYS = ("Google Document AI OCR", "Google Cloud Vision")
+
+
+def summary_sets(data, historical, pbyh, pointed):
+    """Per set: its shown rows as (canonical name, exact CER), and its best HeOCR model as (name, CER)."""
+    sets = {}
+    if data is not None:
+        winner = best_modern_model(data["open"])
+        rows = []
+        heocr = None
+        for row in data["open"]["views"]["filtered"]["pooled"]["readers"]:
+            value = Fraction(row["edits"], row["chars"])
+            if row["reader_id"].startswith("heocr-"):
+                if row["reader_id"] == winner:
+                    heocr = ("HeOCR modern MEASURED v1.0" if winner == MODERN_MODEL_ID else row["reader"], value)
+                continue
+            key = "paddle-cuda" if row["reader_id"] == "paddle" else row["reader_id"]
+            rows.append((CANON.get(key, row["reader"]), value))
+        sets["modern"] = (rows, heocr)
+    if historical is not None:
+        rows, heocr = [], None
+        for row in historical["readers"]:
+            value = Fraction(row["filtered"]["edits"], row["filtered"]["chars"])
+            if row["id"].startswith("heocr-"):
+                if heocr is None or value < heocr[1]:
+                    heocr = (MODEL_NAMES.get(row["id"], row["name"]), value)
+                continue
+            rows.append((CANON.get(ALIASES.get(row["id"], row["id"]), row["name"]), value))
+        sets["historical"] = (rows, heocr)
+    if pbyh is not None:
+        rows, heocr = [], None
+        for row in pbyh["readers"]:
+            if row["status"] != "scored":
+                continue
+            value = Fraction(row["edits"], row["chars"])
+            if row["id"].startswith("heocr-"):
+                if heocr is None or value < heocr[1]:
+                    heocr = (PBYH_NAMES.get(row["id"], (row["label"],))[0], value)
+                continue
+            rows.append((CANON.get(ALIASES.get(row["id"], row["id"]), row["label"]), value))
+        sets["pbyh"] = (rows, heocr)
+    if pointed is not None:
+        rows, heocr = [], None
+        for row in pointed["rows"]:
+            value = Fraction(row["cer"])
+            if row["lane"].startswith("heocr-"):
+                if heocr is None or value < heocr[1]:
+                    heocr = (MODEL_NAMES.get(row["lane"], row["reader"]), value)
+                continue
+            rows.append((CANON.get(ALIASES.get(row["lane"], row["lane"]), row["reader"]), value))
+        sets["pointed"] = (rows, heocr)
+    return sets
+
+
+def summary_table(t, sets):
+    columns = [(key, anchor, label) for key, anchor, label in SUMMARY_SETS if key in sets]
+    if len(columns) < 2:
+        return ""
+    readers = {}
+    for key, *_ in columns:
+        for name, value in sets[key][0]:
+            readers.setdefault(name, {})[key] = value
+    heocr = {key: sets[key][1] for key, *_ in columns if sets[key][1] is not None}
+    # A reader is listed when it is measured in at least two sets; the order follows the per-set tables
+    # (lowest error first in the earliest set that measured it).
+    listed = {name: cells for name, cells in readers.items() if len(cells) >= 2}
+    first = [key for key, *_ in columns]
+    def order(name):
+        k = next(k for k in first if k in listed[name])
+        return first.index(k), listed[name][k], name.casefold()
+
+    ordered = sorted(listed, key=order)
+    # Highlights count every row the set's own table shows, as those tables do.
+    best, best_open = {}, {}
+    for key, *_ in columns:
+        pool = [(name, value) for name, value in sets[key][0]]
+        if key in heocr:
+            pool.append(("HeOCR", heocr[key][1]))
+        best[key] = min((value for _, value in pool), default=None)
+        best_open[key] = min((value for name, value in pool if reader_access.classify(name) == "open"), default=None)
+
+    def cell(key, name, value, model=None):
+        if value is None:
+            mark = "<sup>*</sup>" if key == "modern" and name in HOSTED_KEYS else ""
+            return f'<td class="num">—{mark}</td>'
+        score = percentage(value)
+        if value == best[key]:
+            score = (f'<span class="benchmark-best">{score}'
+                     f'<span class="benchmark-sr-only"> ({e(t["best"])})</span></span>')
+        elif reader_access.classify(name) == "open" and value == best_open[key]:
+            score = (f'<span class="benchmark-best-open">{score}<span class="benchmark-sr-only"> '
+                     f'({e(reader_access.BEST_OPEN[t["lang"]])})</span></span>')
+        small = f'<small class="benchmark-fraction"><bdi>{e(model)}</bdi></small>' if model else ""
+        return f'<td class="num"><strong class="benchmark-score">{score}</strong>{small}</td>'
+
+    heads = "".join(
+        f'<th scope="col"><a href="#{anchor}"><bdi>{e(label)}</bdi></a></th>' for _, anchor, label in columns)
+    own = "".join(cell(key, "HeOCR", heocr[key][1] if key in heocr else None,
+                       heocr[key][0] if key in heocr else None) for key, *_ in columns)
+    body = [f'<tr class="ours"><th scope="row"><bdi>{e(t["summary_heocr"])}</bdi>'
+            f'{reader_access.badge("HeOCR", t["lang"])}</th>{own}</tr>']
+    for name in ordered:
+        body.append(f'<tr><th scope="row"><bdi>{e(name)}</bdi>{reader_access.badge(name, t["lang"])}</th>'
+                    + "".join(cell(key, name, listed[name].get(key)) for key, *_ in columns) + "</tr>")
+    return (
+        '<section id="summary" class="wrap domain">'
+        f'<p class="benchmark-summary-line">{e(t["summary_line"])}</p>'
+        '<div class="tablewrap benchmark-table benchmark-summary">'
+        f'<table><caption class="benchmark-sr-only">{e(t["summary_title"])}</caption>'
+        f'<thead><tr><th scope="col">{e(t["reader"])}</th>{heads}</tr></thead>'
+        f'<tbody>{"".join(body)}</tbody></table></div>'
+        f'<p class="note benchmark-footnote"><sup>*</sup> {e(t["summary_hosted"])}</p>'
+        "</section>\n"
+    )
+
+
 def page(lang, data, public_pages=None, *, historical=None, api_rows=(), pbyh=None, hosted=None, pointed=None):
     t = T[lang]
     toc = []
@@ -639,6 +777,7 @@ def page(lang, data, public_pages=None, *, historical=None, api_rows=(), pbyh=No
         shell.page_head(e(t["title"]), f'<p class="lede">{e(t["lede"])}</p><p>{e(t["reading"])} {link("methodology.html", t["method"])}</p>{preview_note}'
                         + reader_access.legend(lang)),
         shell.toc(lang, toc),
+        summary_table(t, summary_sets(data, historical, pbyh, pointed)),
         f'<section id="open" class="wrap domain"><h2 class="benchmark-sr-only">{e(t["open"])}</h2>',
         "".join(open_panels),
         "</section>\n",
