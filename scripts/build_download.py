@@ -33,6 +33,11 @@ MODEL_RELEASES = (
     ("HeOCR P-hist FULL", "v1.0-full", "phist-full-v10", "full_v10", FULL_MODEL_HUB, "10.5281/zenodo.24582845",
      None, None),
 )
+# The choice compass (site review 2, COPY-07): document type -> model card. Each line states only
+# what that model's held-out table supports. Home (apply_shell.py) lists the same four.
+COMPASS = (("modern-v10", "use_modern", "why_modern"), ("phist-v11", "use_phist", "why_phist"),
+           ("literature-v10", "use_literature", "why_literature"), ("pointed-v10", "use_pointed", "why_pointed"))
+FAMILIES = tuple(next(r for r in MODEL_RELEASES if r[2] == anchor) for anchor, _, _ in COMPASS)
 QUICK_START = (
     "mkdir -p tessdata\n"
     "curl -fL -o tessdata/phist_v2.traineddata \\\n"
@@ -44,8 +49,19 @@ T = {
         "title": "Download HeOCR",
         "models": "OCR models",
         "about": "HeOCR models are available now for modern printed documents (modern v1.0), historical unpointed print (P-hist v1.1), unpointed literary print (literature v1.0) and pointed literary print (pointed v1.0). Apache 2.0.",
+        "compass": "Which model for your document?",
+        "use_modern": "Modern printed document, unpointed",
+        "why_modern": "Evaluated on the P-mod-open v0 held-out set.",
+        "use_phist": "Old book, newspaper or law, unpointed",
+        "why_phist": "Lowest error of every reader we measured on the P-hist-open v0.1 held-out set (C2), Google’s included.",
+        "use_literature": "Literary print, unpointed",
+        "why_literature": "Lowest error on the PBY-H v0 held-out set, statistically level with Rivok Tesseract.",
+        "use_pointed": "Pointed (niqqud) print",
+        "why_pointed": "Lowest error among the open readers we measured, statistically level with Rivok Tesseract Full, on a small set (8 works). Google’s readers are more accurate.",
+        "variants": "MEASURED or FULL?",
+        "variants_text": "MEASURED is the version our published held-out numbers belong to. FULL was also trained on our public test-set pages, so it has no independent score. It may be slightly stronger on similar material; this is not measured.",
         "quick_start": "Quick start",
-        "quick_start_file": "The file for HeOCR P-hist MEASURED v1.1 is named <code>phist_v2.traineddata</code>; the release version is v1.1.",
+        "quick_start_file": "The file for HeOCR P-hist MEASURED v1.1 is named phist_v2.traineddata; the release version is v1.1.",
         "instructions": "With Tesseract 5 and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.",
         "experimental": "HeOCR’s handwriting models are still experimental.",
         "pmod_benchmark": "P-mod-open held-out result",
@@ -58,17 +74,28 @@ T = {
         "pointed": "Pointed (niqqud) literary print. Evaluated on the PBY-H v0.1 pointed held-out set, where Google’s readers score better.",
         "measured_latest": "Best / Latest. Evaluated on the P-hist-open held-out set (C2).",
         "measured_previous": "Previous version. Evaluated on the P-hist-open held-out set (C2).",
-        "full_v10": "Trained with additional data. This variant is unmeasured.",
+        "full_v10": "Also trained on our public test-set pages, so it has no independent score.",
         "apps": "Apps",
-        "full_v11": "Trained with additional data. This variant is unmeasured.",
+        "full_v11": "Also trained on our public test-set pages, so it has no independent score.",
         "coming": "Coming soon",
     },
     "he": {
         "title": "הורדת HeOCR",
         "models": "מודלים לזיהוי תווים",
         "about": "מודלים של HeOCR זמינים להורדה למסמכים מודרניים בדפוס (modern v1.0), לדפוס היסטורי לא מנוקד (P-hist v1.1), לספרות בדפוס לא מנוקד (literature v1.0) ולספרות בדפוס מנוקד (pointed v1.0), ברישיון Apache 2.0.",
+        "compass": "איזה מודל מתאים למסמך שלכם?",
+        "use_modern": "מסמך מודפס מודרני, ללא ניקוד",
+        "why_modern": "נבדק על מערך המבחן P-mod-open v0.",
+        "use_phist": "ספר, עיתון או חוק ישן, ללא ניקוד",
+        "why_phist": "שיעור השגיאות הנמוך ביותר מבין כל המנועים שבדקנו על מערך המבחן P-hist-open v0.1 (C2), כולל אלה של Google.",
+        "use_literature": "ספרות בדפוס, ללא ניקוד",
+        "why_literature": "שיעור השגיאות הנמוך ביותר על מערך המבחן PBY-H v0, שקול סטטיסטית ל־Rivok Tesseract.",
+        "use_pointed": "דפוס מנוקד",
+        "why_pointed": "שיעור השגיאות הנמוך ביותר מבין המנועים הפתוחים שבדקנו, שקול סטטיסטית ל־Rivok Tesseract Full, במערך קטן (8 יצירות). המנועים של Google מדויקים יותר.",
+        "variants": "MEASURED או FULL?",
+        "variants_text": "MEASURED היא הגרסה שאליה שייכות התוצאות שפרסמנו על מערכי המבחן. FULL אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי. ייתכן שהיא מעט חזקה יותר על חומר דומה, אבל זה לא נמדד.",
         "quick_start": "התחלה מהירה",
-        "quick_start_file": "הקובץ של HeOCR P-hist MEASURED v1.1 נקרא <code>phist_v2.traineddata</code>, וגרסת השחרור היא v1.1.",
+        "quick_start_file": "הקובץ של HeOCR P-hist MEASURED v1.1 נקרא phist_v2.traineddata, וגרסת השחרור היא v1.1.",
         "instructions": "התקינו Tesseract 5 ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.",
         "experimental": "המודלים של HeOCR לכתב יד עדיין ניסיוניים.",
         "pmod_benchmark": "תוצאות על מערך המבחן P-mod-open",
@@ -81,9 +108,9 @@ T = {
         "pointed": "ספרות בדפוס מנוקד. נבדק על מערך המבחן המנוקד PBY-H v0.1, שבו המנועים של Google משיגים תוצאות טובות יותר.",
         "measured_latest": "הגרסה הטובה והעדכנית ביותר. נבדקה על מערך המבחן P-hist-open (C2).",
         "measured_previous": "גרסה קודמת. נבדקה על מערך המבחן P-hist-open (C2).",
-        "full_v10": "אומן עם נתונים נוספים. גרסה זו לא נמדדה.",
+        "full_v10": "אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי.",
         "apps": "יישומים",
-        "full_v11": "אומן עם נתונים נוספים. גרסה זו לא נמדדה.",
+        "full_v11": "אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי.",
         "coming": "בקרוב",
     },
 }
@@ -101,6 +128,11 @@ def page(lang: str) -> str:
             f'<div class="row"><a href="{hub}/tree/{version}">Hugging Face</a>'
             f'<a href="https://doi.org/{doi}">Zenodo</a>{benchmark}</div></div>\n'
         )
+    titles = {anchor: f"{title} {version}" for title, version, anchor, *_ in MODEL_RELEASES}
+    compass = "".join(
+        f'<li><strong>{text[use]}:</strong> <a href="#{anchor}"><bdi dir="ltr">{titles[anchor]}</bdi></a>. {text[why]}</li>\n'
+        for anchor, use, why in COMPASS
+    )
     cards = "".join(
         f'<div class="card"><h3>{platform}</h3><p>{text["coming"]}</p></div>\n'
         for platform in ("macOS", "Windows", "Android")
@@ -110,11 +142,13 @@ def page(lang: str) -> str:
         + shell.header(lang, "download")
         + '<main id="main" class="wrap doc">\n'
         + shell.page_head(text["title"], f'<p class="lede">{text["about"]}</p>')
+        + f'<section id="choose">\n<h2>{text["compass"]}</h2>\n<ul class="compass">\n{compass}</ul>\n</section>\n'
         + f'<section id="quick-start">\n<h2>{text["quick_start"]}</h2>\n'
           f'<p>{text["instructions"]}</p>\n'
           f'<pre class="quick-start"><code>{escape(QUICK_START)}</code></pre>\n'
           f'<p class="note">{text["quick_start_file"]}</p>\n</section>\n'
-        + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n</section>\n'
+        + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n'
+          f'<h3 id="variants">{text["variants"]}</h3>\n<p>{text["variants_text"]}</p>\n</section>\n'
         + f'<p>{text["experimental"]} <a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
         + f'<section>\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n</section>\n'
         + "</main>\n"

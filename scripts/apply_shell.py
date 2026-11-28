@@ -22,7 +22,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import shell  # noqa: E402
-from build_datasets import LICENSES, load_catalog, release_links  # noqa: E402
+from build_datasets import LICENSES, load_catalog  # noqa: E402
+from build_download import COMPASS, FAMILIES, T as DOWNLOAD  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 HAND = {"home": "index.html", "rights": "rights.html"}
@@ -30,10 +31,8 @@ HOME = {
     "en": {
         "intro": "Open data and tools for reading Hebrew documents, both printed and handwritten. Every dataset item has its own rights record.",
         "models": "Models and pipeline",
-        "status": "HeOCR P-hist OCR weights are available for historical, unpointed Hebrew print.",
+        "status": "Four HeOCR OCR models for Tesseract 5, one for each kind of printed document.",
         "model_link": "Get the OCR weights",
-        "model_latest": "Best / Latest",
-        "model_previous": "Previous",
         "download": "Download",
         "sources": "The releases use public-domain or openly licensed sources. Each item keeps its source and credit.",
         "wikisource": "Hebrew Wikisource text appears in the training corpora and in line pairs. Releases link to source revisions and record the CC BY-SA terms.",
@@ -41,10 +40,8 @@ HOME = {
     "he": {
         "intro": "נתונים וכלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו.",
         "models": "מודלים וצינור העיבוד",
-        "status": "משקלי HeOCR P-hist לזיהוי דפוס עברי היסטורי לא מנוקד זמינים להורדה.",
+        "status": "ארבעה מודלים של HeOCR לזיהוי תווים עם Tesseract 5, אחד לכל סוג של מסמך מודפס.",
         "model_link": "הורדת משקלי המודל",
-        "model_latest": "הטובה והעדכנית ביותר",
-        "model_previous": "גרסה קודמת",
         "download": "הורדה",
         "sources": "הגרסאות משתמשות במקורות בנחלת הכלל או ברישיון פתוח. כל פריט שומר את המקור ואת הקרדיט שלו.",
         "wikisource": "טקסט מוויקיטקסט העברית מופיע במאגרי האימון ובזוגות השורות. בכל גרסה יש קישורים למקורות ותיעוד של תנאי CC BY-SA.",
@@ -56,14 +53,13 @@ def home_status(lang: str, text: str) -> str:
     t = HOME[lang]
     model = load_catalog()["model"]
     model_licence = html.escape(LICENSES[model["license"]][lang])
-    releases = (
-        (model, t["model_latest"]),
-        ({**model, **model["previous"]}, t["model_previous"]),
-    )
+    # The same four models, in the same order, as the download page's choice compass (COPY-05).
+    d = DOWNLOAD[lang]
     model_links = "".join(
-        f'      <li><bdi dir="ltr">{html.escape(release["version"])}</bdi> '
-        f'{html.escape(label)} · {release_links(release, model=True)}</li>\n'
-        for release, label in releases
+        f'      <li><strong>{html.escape(d[use])}:</strong> <a href="download.html#{anchor}">'
+        f'<bdi dir="ltr">{html.escape(title)} {html.escape(version)}</bdi></a> · '
+        f'<a href="{hub}/tree/{version}">Hugging Face</a> <a href="https://doi.org/{doi}">Zenodo</a></li>\n'
+        for (anchor, use, _), (title, version, _, _, hub, doi, *_) in zip(COMPASS, FAMILIES)
     )
     intro = html.escape(t["intro"])
     text = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{intro}">', text, count=1)

@@ -47,6 +47,15 @@
 <h1><span class="bb" data-tag="h1 · 0.99">הורדת HeOCR</span></h1>
 <p class="lede">מודלים של HeOCR זמינים להורדה למסמכים מודרניים בדפוס (modern v1.0), לדפוס היסטורי לא מנוקד (P-hist v1.1), לספרות בדפוס לא מנוקד (literature v1.0) ולספרות בדפוס מנוקד (pointed v1.0), ברישיון Apache 2.0.</p>
 </div></div>
+<section id="choose">
+<h2>איזה מודל מתאים למסמך שלכם?</h2>
+<ul class="compass">
+<li><strong>מסמך מודפס מודרני, ללא ניקוד:</strong> <a href="#modern-v10"><bdi dir="ltr">HeOCR modern MEASURED v1.0</bdi></a>. נבדק על מערך המבחן P-mod-open v0.</li>
+<li><strong>ספר, עיתון או חוק ישן, ללא ניקוד:</strong> <a href="#phist-v11"><bdi dir="ltr">HeOCR P-hist MEASURED v1.1</bdi></a>. שיעור השגיאות הנמוך ביותר מבין כל המנועים שבדקנו על מערך המבחן P-hist-open v0.1 (C2), כולל אלה של Google.</li>
+<li><strong>ספרות בדפוס, ללא ניקוד:</strong> <a href="#literature-v10"><bdi dir="ltr">HeOCR literature MEASURED v1.0</bdi></a>. שיעור השגיאות הנמוך ביותר על מערך המבחן PBY-H v0, שקול סטטיסטית ל־Rivok Tesseract.</li>
+<li><strong>דפוס מנוקד:</strong> <a href="#pointed-v10"><bdi dir="ltr">HeOCR pointed MEASURED v1.0</bdi></a>. שיעור השגיאות הנמוך ביותר מבין המנועים הפתוחים שבדקנו, שקול סטטיסטית ל־Rivok Tesseract Full, במערך קטן (8 יצירות). המנועים של Google מדויקים יותר.</li>
+</ul>
+</section>
 <section id="quick-start">
 <h2>התחלה מהירה</h2>
 <p>התקינו Tesseract 5 ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.</p>
@@ -54,7 +63,7 @@
 curl -fL -o tessdata/phist_v2.traineddata \
   https://huggingface.co/HeOCR/heocr-p-hist-measured/resolve/v1.1/phist_v2.traineddata
 tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre>
-<p class="note">הקובץ של HeOCR P-hist MEASURED v1.1 נקרא &lt;code&gt;phist_v2.traineddata&lt;/code&gt;, וגרסת השחרור היא v1.1.</p>
+<p class="note">הקובץ של HeOCR P-hist MEASURED v1.1 נקרא phist_v2.traineddata, וגרסת השחרור היא v1.1.</p>
 </section>
 <section id="models">
 <h2>מודלים לזיהוי תווים</h2>
@@ -64,9 +73,11 @@ tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre
 <div class="card" id="pointed-v10"><h3><bdi dir="ltr">HeOCR pointed MEASURED v1.0</bdi></h3><p>ספרות בדפוס מנוקד. נבדק על מערך המבחן המנוקד PBY-H v0.1, שבו המנועים של Google משיגים תוצאות טובות יותר.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-pointed-measured/tree/v1.0">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24620184">Zenodo</a><a href="benchmarks.html#pby-h-pointed">תוצאות על מערך המבחן המנוקד PBY-H</a></div></div>
 <div class="card" id="phist-v11"><h3><bdi dir="ltr">HeOCR P-hist MEASURED v1.1</bdi></h3><p>הגרסה הטובה והעדכנית ביותר. נבדקה על מערך המבחן P-hist-open (C2).</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.1">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24581274">Zenodo</a><a href="benchmarks.html#p-hist-open-scores-filtered-pooled">תוצאות על מערך המבחן P-hist-open (C2)</a></div></div>
 <div class="card" id="phist-v10"><h3><bdi dir="ltr">HeOCR P-hist MEASURED v1.0</bdi></h3><p>גרסה קודמת. נבדקה על מערך המבחן P-hist-open (C2).</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.0">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24578440">Zenodo</a><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/blob/v1.0/README.md#held-out-evaluation-old-printed-hebrew-unpointed">תוצאות על מערך המבחן P-hist-open (C2)</a></div></div>
-<div class="card" id="phist-full-v11"><h3><bdi dir="ltr">HeOCR P-hist FULL v1.1-full</bdi></h3><p>אומן עם נתונים נוספים. גרסה זו לא נמדדה.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-full/tree/v1.1-full">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24586339">Zenodo</a></div></div>
-<div class="card" id="phist-full-v10"><h3><bdi dir="ltr">HeOCR P-hist FULL v1.0-full</bdi></h3><p>אומן עם נתונים נוספים. גרסה זו לא נמדדה.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-full/tree/v1.0-full">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24582845">Zenodo</a></div></div>
+<div class="card" id="phist-full-v11"><h3><bdi dir="ltr">HeOCR P-hist FULL v1.1-full</bdi></h3><p>אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-full/tree/v1.1-full">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24586339">Zenodo</a></div></div>
+<div class="card" id="phist-full-v10"><h3><bdi dir="ltr">HeOCR P-hist FULL v1.0-full</bdi></h3><p>אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-full/tree/v1.0-full">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24582845">Zenodo</a></div></div>
 </div>
+<h3 id="variants">MEASURED או FULL?</h3>
+<p>MEASURED היא הגרסה שאליה שייכות התוצאות שפרסמנו על מערכי המבחן. FULL אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי. ייתכן שהיא מעט חזקה יותר על חומר דומה, אבל זה לא נמדד.</p>
 </section>
 <p>המודלים של HeOCR לכתב יד עדיין ניסיוניים. <a href="benchmarks.html">לכל מדדי ההערכה</a></p>
 <section>
