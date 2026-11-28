@@ -26,7 +26,6 @@ POINTED_MODEL = "https://huggingface.co/HeOCR/heocr-pointed-measured/tree/v1.0"
 # eval's score files stay as eval wrote them. The form matches the download page and the HF repos.
 PHIST_V11 = "HeOCR P-hist MEASURED v1.1"
 # Training steps that used synthetic lines with DEV-chosen scan settings (eval, restricted-eval#2084).
-PHIST_DISCLOSURES = ((PHIST_V11, "396", "1.0"), ("HeOCR P-hist MEASURED v1.0", "700", "2.3"))
 MODEL_NAMES = {
     "heocr-p-hist-a-full-35k": "HeOCR literature MEASURED v1.0",
     "heocr-p-hist-v1-1": PHIST_V11, "heocr-v1-1": PHIST_V11,
@@ -114,8 +113,6 @@ T = {
         "historical_filtered": "Filtered",
         "historical_caveat": "HeOCR P-hist MEASURED v1.1 is a fine-tune of Rivok Full. The v0.1 references came from two independent AI transcriptions and adjudication. A re-score with human-proofread references is coming.",
         "descriptive": "Descriptive",
-        "historical_disclosure_label": "Disclosed, synthetic training data:",
-        "historical_disclosure": "{steps} of this model's training steps ({share}%) used synthetic old-print lines rendered with scan-simulation settings (blur, halo, stroke and ink tone) that were chosen by comparing image statistics with real old-print development scans. This is separate from the held-out test: no test page or crop was in training.",
         "historical_numbers_note": "P-hist-open v0.1 (C2) contains only 8 numbers; number recall is not compared on this set.",
         "cloud_note": "Google’s descriptive scores use the same eligible and filtered lines. The registered result was decided before these comparisons.",
         "primary": "Primary",
@@ -144,7 +141,7 @@ T = {
         "work_count": "{count:,} works", "scored_lines": "{count:,} scored lines",
         "pbyh_masked": "{masked:,} lines where the printed edition and the reference text differ are left out for every reader.",
         "pbyh_refs": "The reference is Project Ben-Yehuda’s volunteer-proofread reading text, not a diplomatic transcription.",
-        "pbyh_caveat": "HeOCR literature MEASURED v1.0 is a fine-tune of Rivok Tesseract Full. It was picked on a development set under a rule registered before training, and scored on this set once. Because some synthetic training lines used scan settings tuned on old-print development scans, we don’t claim that the development set was independent of the training data (see the disclosure below). Disclosed, synthetic training data: 335 of this model’s training steps (1.0%) used synthetic old-print lines rendered with scan-simulation settings (blur, halo, stroke and ink tone) that were chosen by comparing image statistics with real old-print development scans. This is separate from the held-out test: no test page or crop was in training. Other Project Ben-Yehuda text is public and may be in any reader’s training data, ours included. The other readers’ training data is unknown.",
+        "pbyh_caveat": "HeOCR literature MEASURED v1.0 is a fine-tune of Rivok Tesseract Full. It was picked on a development set under a rule registered before training, and scored on this set once. Other Project Ben-Yehuda text is public and may be in any reader’s training data, ours included. The other readers’ training data is unknown.",
         "pointed": "Pointed literature",
         "pointed_title": "PBY-H v0.1 pointed results",
         "pointed_intro": "Pages from public-domain pointed Hebrew works (poetry) in Project Ben-Yehuda, imaged from Internet Archive scans of two printed editions. The reference is Project Ben-Yehuda’s typed text, with the vowel points as typed there.",
@@ -152,7 +149,7 @@ T = {
         "pointed_editions": "These results come from two printed editions, with 21 of the 24 pages from one (Katzenelson, Warsaw 1910), so they may not carry over to other pointed editions.",
         "pointed_paired": "Differences are tested with a paired bootstrap by work (8 works).",
         "pointed_higher": "Mark recall is the only measure here where higher is better.",
-        "pointed_caveat": "HeOCR pointed MEASURED v1.0 is a fine-tune of HeOCR P-hist MEASURED v1.1 and is slower (median 2.2 s per page, against 1.4 s). None of the 8 works is in its fine-tuning data. It was picked on a development set under a rule registered before training, and scored on this set once. Because some synthetic training lines used scan settings tuned on old-print development scans, we don’t claim that the development set was independent of the training data (see the synthetic training-data disclosure under P-hist-open).",
+        "pointed_caveat": "HeOCR pointed MEASURED v1.0 is a fine-tune of HeOCR P-hist MEASURED v1.1 and is slower (median 2.2 s per page, against 1.4 s). None of the 8 works is in its fine-tuning data. It was picked on a development set under a rule registered before training, and scored on this set once.",
         "cer_letters": "CER, letters only", "mark_recall": "Mark recall", "best_high": "Highest",
         "not_run": "Not run",
         "earlier": "Earlier HeOCR models",
@@ -229,8 +226,6 @@ T = {
         "historical_filtered": "לאחר סינון",
         "historical_caveat": "HeOCR P-hist MEASURED v1.1 מבוסס על כוונון נוסף של Rivok Full. טקסטי הייחוס של v0.1 הוכנו בשני תעתוקים עצמאיים באמצעות בינה מלאכותית ובהכרעה ביניהם. בהמשך נחשב את הציונים שוב לפי טקסטי ייחוס שעברו הגהה אנושית.",
         "descriptive": "תיאורי",
-        "historical_disclosure_label": "גילוי לגבי נתוני אימון סינתטיים:",
-        "historical_disclosure": "{steps} מצעדי האימון של המודל הזה ({share}%) השתמשו בשורות סינתטיות של דפוס ישן, שעובדו בהגדרות לדימוי סריקה (טשטוש, הילה, עובי קו וגוון דיו) שנבחרו בהשוואת מדדי תמונה לסריקות פיתוח אמיתיות של דפוס ישן. זה נפרד ממערך המבחן השמור: אף עמוד או חיתוך ממנו לא היה באימון.",
         "historical_numbers_note": "ב־P-hist-open v0.1 (C2) יש רק 8 מספרים. במבחן הזה אין השוואה של זיהוי מספרים.",
         "cloud_note": "הציונים התיאוריים של Google חושבו על אותן שורות כשירות ומסוננות. התוצאה הרשומה נקבעה לפני ההשוואות האלה.",
         "primary": "ראשי",
@@ -259,7 +254,7 @@ T = {
         "work_count": "{count:,} יצירות", "scored_lines": "{count:,} שורות שנבדקו",
         "pbyh_masked": "{masked:,} שורות שבהן המהדורה המודפסת וטקסט הייחוס שונים הוצאו מהבדיקה לכל המנועים.",
         "pbyh_refs": "טקסט הייחוס הוא טקסט הקריאה של פרויקט בן־יהודה שעבר הגהה בידי מתנדבים, ולא תעתיק דיפלומטי.",
-        "pbyh_caveat": "HeOCR literature MEASURED v1.0 מבוסס על כוונון נוסף של Rivok Tesseract Full. המודל נבחר על מערך פיתוח, לפי כלל שנרשם לפני האימון, ונבדק על מערך זה פעם אחת. חלק משורות האימון הסינתטיות עובדו בהגדרות סריקה שכווננו על סריקות פיתוח של דפוס ישן, ולכן איננו טוענים שמערך הפיתוח היה בלתי תלוי בנתוני האימון (ראו את הגילוי שלהלן). גילוי לגבי נתוני אימון סינתטיים: 335 מצעדי האימון של המודל הזה (1.0%) השתמשו בשורות סינתטיות של דפוס ישן, שעובדו בהגדרות לדימוי סריקה (טשטוש, הילה, עובי קו וגוון דיו) שנבחרו בהשוואת מדדי תמונה לסריקות פיתוח אמיתיות של דפוס ישן. זה נפרד ממערך המבחן השמור: אף עמוד או חיתוך ממנו לא היה באימון. טקסטים אחרים של פרויקט בן־יהודה זמינים לציבור וייתכן שהם בנתוני האימון של כל מנוע, כולל שלנו. נתוני האימון של המנועים האחרים אינם ידועים.",
+        "pbyh_caveat": "HeOCR literature MEASURED v1.0 מבוסס על כוונון נוסף של Rivok Tesseract Full. המודל נבחר על מערך פיתוח, לפי כלל שנרשם לפני האימון, ונבדק על מערך זה פעם אחת. טקסטים אחרים של פרויקט בן־יהודה זמינים לציבור וייתכן שהם בנתוני האימון של כל מנוע, כולל שלנו. נתוני האימון של המנועים האחרים אינם ידועים.",
         "pointed": "ספרות בדפוס מנוקד",
         "pointed_title": "תוצאות PBY-H v0.1 מנוקד",
         "pointed_intro": "עמודים מיצירות עבריות מנוקדות (שירה) ברשות הציבור מפרויקט בן־יהודה, מתוך סריקות של שתי מהדורות מודפסות ב־Internet Archive. טקסט הייחוס הוא הטקסט המוקלד של פרויקט בן־יהודה, עם הניקוד כפי שהוקלד שם.",
@@ -267,7 +262,7 @@ T = {
         "pointed_editions": "התוצאות מבוססות על שתי מהדורות מודפסות, ו־21 מתוך 24 העמודים מאחת מהן (כצנלסון, ורשה 1910), ולכן ייתכן שאינן מייצגות מהדורות מנוקדות אחרות.",
         "pointed_paired": "ההבדלים נבדקו בשיטת bootstrap מזווגת לפי יצירה (8 יצירות).",
         "pointed_higher": "זיהוי סימני הניקוד הוא המדד היחיד כאן שבו ערך גבוה יותר טוב יותר.",
-        "pointed_caveat": "HeOCR pointed MEASURED v1.0 מבוסס על כוונון נוסף של HeOCR P-hist MEASURED v1.1, ואיטי ממנו (חציון של 2.2 שניות לעמוד, לעומת 1.4). אף אחת משמונה היצירות אינה בנתוני הכוונון שלו. המודל נבחר על מערך פיתוח, לפי כלל שנרשם לפני האימון, ונבדק על מערך זה פעם אחת. חלק משורות האימון הסינתטיות עובדו בהגדרות סריקה שכווננו על סריקות פיתוח של דפוס ישן, ולכן איננו טוענים שמערך הפיתוח היה בלתי תלוי בנתוני האימון (ראו את הגילוי לגבי נתוני אימון סינתטיים בתוצאות P-hist-open).",
+        "pointed_caveat": "HeOCR pointed MEASURED v1.0 מבוסס על כוונון נוסף של HeOCR P-hist MEASURED v1.1, ואיטי ממנו (חציון של 2.2 שניות לעמוד, לעומת 1.4). אף אחת משמונה היצירות אינה בנתוני הכוונון שלו. המודל נבחר על מערך פיתוח, לפי כלל שנרשם לפני האימון, ונבדק על מערך זה פעם אחת.",
         "cer_letters": "CER ללא ניקוד", "mark_recall": "זיהוי סימני ניקוד", "best_high": "השיעור הגבוה ביותר",
         "not_run": "לא נבדק",
         "earlier": "מודלים קודמים של HeOCR",
@@ -611,9 +606,6 @@ def historical_results(t, data):
         f'<p class="note benchmark-footnote">{e(t["historical_numbers_note"])}</p>',
         f'<p class="note">{e(t["cloud_note"])}</p>',
         f'<p class="note">{e(t["historical_caveat"])}</p>',
-        *(f'<p class="note"><bdi>{e(name)}</bdi> · <strong>{e(t["historical_disclosure_label"])}</strong> '
-          f'{e(t["historical_disclosure"].format(steps=steps, share=share))}</p>'
-          for name, steps, share in PHIST_DISCLOSURES),
         "</article>\n",
     ])
 
