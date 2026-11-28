@@ -49,16 +49,10 @@ T = {
         "capture": "Capture type",
         "alternatives": "Other views and captures",
         "all_images": "All ({count})",
-        "modern_views": (
-            ("filtered", "Verified, no known training overlap (recommended)",
-             "Scores words and characters in independently verified reference text, excluding known project training overlap and known public exposure."),
-            ("all", "All reference text", "Scores every word and character in the benchmark’s reference text."),
-        ),
-        "historical_views": (
-            ("filtered", "No known training-text overlap (recommended)",
-             "Scores {filtered} lines of AI-reviewed reference text after removing known training-text overlap."),
-            ("all", "All reference text", "Scores every eligible line in the reference text ({eligible} of {total} lines)."),
-        ),
+        # The text-view toggle (owner, 2026-11-28): two short pills and one sentence on the same line.
+        "modern_views": (("filtered", "Text unseen by readers (recommended)", ""), ("all", "All text", "")),
+        "historical_views": (("filtered", "Text unseen by readers (recommended)", ""), ("all", "All text", "")),
+        "view_explain": "The recommended view leaves out passages that may have appeared in a reader’s training, so the comparison is fair.",
         "modern_model_note": "Modern unpointed print",
         "historical_model_note": "Historical unpointed print",
         "api_capture": "Images scored",
@@ -144,16 +138,9 @@ T = {
         "capture": "סוג תמונה",
         "alternatives": "תוצאות לפי טקסט או סוג תמונה",
         "all_images": "הכול ({count})",
-        "modern_views": (
-            ("filtered", "טקסט מאומת ללא חפיפה ידועה לאימון (מומלץ)",
-             "בודקים מילים ותווים מטקסט ייחוס שאומת באופן עצמאי, אחרי הסרת חפיפה ידועה עם נתוני האימון של הפרויקט וטקסט שנחשף לציבור."),
-            ("all", "כל טקסט הייחוס", "בודקים את כל המילים והתווים בטקסט הייחוס של המבחן."),
-        ),
-        "historical_views": (
-            ("filtered", "ללא חפיפה ידועה לטקסט האימון (מומלץ)",
-             "בודקים {filtered} שורות מטקסט הייחוס שהוכן באמצעות בינה מלאכותית, לאחר הסרת חפיפה ידועה עם טקסט האימון."),
-            ("all", "כל טקסט הייחוס", "בודקים את כל השורות הכשירות בטקסט הייחוס ({eligible} מתוך {total})."),
-        ),
+        "modern_views": (("filtered", "טקסט שהמנועים לא ראו (מומלץ)", ""), ("all", "כל הטקסט", "")),
+        "historical_views": (("filtered", "טקסט שהמנועים לא ראו (מומלץ)", ""), ("all", "כל הטקסט", "")),
+        "view_explain": "בתצוגה המומלצת מוציאים קטעים שאולי הופיעו באימון של אחד המנועים, כדי שההשוואה תהיה הוגנת.",
         "modern_model_note": "לדפוס מודרני ללא ניקוד",
         "historical_model_note": "לדפוס היסטורי ללא ניקוד",
         "api_capture": "תמונות שנבדקו",
@@ -321,7 +308,7 @@ def disclosure(summary, content, *, identifier=None, group=None):
             f'<div class="benchmark-details-body">{content}</div></details>\n')
 
 
-def radio_group(panel_id, dimension, legend, options):
+def radio_group(panel_id, dimension, legend, options, note=""):
     items = []
     for i, (key, label, _) in enumerate(options):
         checked = " checked" if i == 0 else ""
@@ -329,15 +316,17 @@ def radio_group(panel_id, dimension, legend, options):
             f'<label><input type="radio" name="{panel_id}-{dimension}" '
             f'data-score-{dimension} value="{key}"{checked}><span>{e(label)}</span></label>'
         )
+    note = f'<span class="benchmark-options-note">{e(note)}</span>' if note else ""
     return (f'<fieldset class="benchmark-options"><legend>{e(legend)}</legend>'
-            f'<div class="benchmark-pills">{"".join(items)}</div></fieldset>')
+            f'<div class="benchmark-pills">{"".join(items)}</div>{note}</fieldset>')
 
 
 def score_panel(t, panel_id, views, captures, tables, *, view_label, alternatives):
     """Render the default and native disclosures from the same score tables."""
     first_view = views[0][0]
     first_capture = captures[0][0]
-    controls = [radio_group(panel_id, "view", view_label, views)]
+    explain = t["view_explain"] if any(key == "filtered" for key, *_ in views) else ""
+    controls = [radio_group(panel_id, "view", view_label, views, explain)]
     if len(captures) > 1:
         controls.append(radio_group(panel_id, "capture", t["capture"], captures))
     notes = []
@@ -362,7 +351,7 @@ def score_panel(t, panel_id, views, captures, tables, *, view_label, alternative
                 table = disclosure(capture_label, explanation + table, group=f"{panel_id}-{view}-captures")
             options.append(table)
         if options and len(captures) > 1:
-            explanation = f'<p class="note">{e(note)}</p>'
+            explanation = f'<p class="note">{e(note)}</p>' if note else ""
             fallback.append(disclosure(title, explanation + "".join(options), identifier=f"{panel_id}-{view}"))
         elif options:
             explanation = f'<p class="note">{e(note)}</p>' if note else ""
@@ -373,7 +362,8 @@ def score_panel(t, panel_id, views, captures, tables, *, view_label, alternative
         "".join(notes),
         '<p class="benchmark-sr-only" role="status" data-score-status></p>',
         f'<div data-score-active>{tables[first_view, first_capture]}</div>',
-        disclosure(alternatives, "".join(fallback), identifier=f"{panel_id}-alternatives"),
+        disclosure(alternatives, (f'<p class="note">{e(explain)}</p>' if explain else "") + "".join(fallback),
+                   identifier=f"{panel_id}-alternatives"),
         '</div>\n',
     ])
 
