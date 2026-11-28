@@ -25,6 +25,8 @@ POINTED_MODEL = "https://huggingface.co/HeOCR/heocr-pointed-measured/tree/v1.0"
 # One public name per model (site review 2, FIX-05 / COPY-11), keyed by eval's reader id or lane, so
 # eval's score files stay as eval wrote them. The form matches the download page and the HF repos.
 PHIST_V11 = "HeOCR P-hist MEASURED v1.1"
+# Training steps that used synthetic lines with DEV-chosen scan settings (eval, restricted-eval#2084).
+PHIST_DISCLOSURES = ((PHIST_V11, "396", "1.0"), ("HeOCR P-hist MEASURED v1.0", "700", "2.3"))
 MODEL_NAMES = {
     "heocr-p-hist-a-full-35k": "HeOCR literature MEASURED v1.0",
     "heocr-p-hist-v1-1": PHIST_V11, "heocr-v1-1": PHIST_V11,
@@ -112,6 +114,8 @@ T = {
         "historical_filtered": "Filtered",
         "historical_caveat": "HeOCR P-hist MEASURED v1.1 is a fine-tune of Rivok Full. The v0.1 references came from two independent AI transcriptions and adjudication. A re-score with human-proofread references is coming.",
         "descriptive": "Descriptive",
+        "historical_disclosure_label": "Disclosed, synthetic training data:",
+        "historical_disclosure": "{steps} of this model's training steps ({share}%) used synthetic old-print lines rendered with scan-simulation settings (blur, halo, stroke and ink tone) that were chosen by comparing image statistics with real old-print development scans. This is separate from the held-out test: no test page or crop was in training.",
         "historical_numbers_note": "P-hist-open v0.1 (C2) contains only 8 numbers; number recall is not compared on this set.",
         "cloud_note": "Google’s descriptive scores use the same eligible and filtered lines. The registered result was decided before these comparisons.",
         "primary": "Primary",
@@ -225,6 +229,8 @@ T = {
         "historical_filtered": "לאחר סינון",
         "historical_caveat": "HeOCR P-hist MEASURED v1.1 מבוסס על כוונון נוסף של Rivok Full. טקסטי הייחוס של v0.1 הוכנו בשני תעתוקים עצמאיים באמצעות בינה מלאכותית ובהכרעה ביניהם. בהמשך נחשב את הציונים שוב לפי טקסטי ייחוס שעברו הגהה אנושית.",
         "descriptive": "תיאורי",
+        "historical_disclosure_label": "גילוי לגבי נתוני אימון סינתטיים:",
+        "historical_disclosure": "{steps} מצעדי האימון של המודל הזה ({share}%) השתמשו בשורות סינתטיות של דפוס ישן, שעובדו בהגדרות לדימוי סריקה (טשטוש, הילה, עובי קו וגוון דיו) שנבחרו בהשוואת מדדי תמונה לסריקות פיתוח אמיתיות של דפוס ישן. זה נפרד ממערך המבחן השמור: אף עמוד או חיתוך ממנו לא היה באימון.",
         "historical_numbers_note": "ב־P-hist-open v0.1 (C2) יש רק 8 מספרים. במבחן הזה אין השוואה של זיהוי מספרים.",
         "cloud_note": "הציונים התיאוריים של Google חושבו על אותן שורות כשירות ומסוננות. התוצאה הרשומה נקבעה לפני ההשוואות האלה.",
         "primary": "ראשי",
@@ -605,6 +611,9 @@ def historical_results(t, data):
         f'<p class="note benchmark-footnote">{e(t["historical_numbers_note"])}</p>',
         f'<p class="note">{e(t["cloud_note"])}</p>',
         f'<p class="note">{e(t["historical_caveat"])}</p>',
+        *(f'<p class="note"><bdi>{e(name)}</bdi> · <strong>{e(t["historical_disclosure_label"])}</strong> '
+          f'{e(t["historical_disclosure"].format(steps=steps, share=share))}</p>'
+          for name, steps, share in PHIST_DISCLOSURES),
         "</article>\n",
     ])
 
