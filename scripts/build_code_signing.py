@@ -27,11 +27,11 @@ T = {
     "en": {
         "title": "Code signing policy",
         "desc": "How the HeOCR desktop app for macOS and Windows is built and signed.",
-        "lede": "For the HeOCR desktop app for macOS and Windows, which is in development.",
+        "lede": "For the HeOCR desktop app for macOS and Windows.",
         "sections": [
             ("Status", [
-                f"The app is not released yet. To hear when it is, watch <a href=\"{REPO}\">HeOCR/heocr-desktop</a> on GitHub "
-                f"(Watch → Custom → Releases), or see its <a href=\"{RELEASES}\">releases page</a>.",
+                f"Version 0.3.0 is available from the <a href=\"{RELEASES}\">releases page</a>. The macOS app is signed "
+                "and notarized; the Windows installer is not yet code-signed.",
             ]),
             ("What is signed", [
                 "Only installers built by GitHub Actions from the public source are signed, and each signing is approved by hand.",
@@ -53,11 +53,11 @@ T = {
     "he": {
         "title": "מדיניות חתימת קוד",
         "desc": "איך נבנית ונחתמת אפליקציית HeOCR למחשב, ל־macOS ול־Windows.",
-        "lede": "לאפליקציית HeOCR למחשב, ל־macOS ול־Windows, שנמצאת בפיתוח.",
+        "lede": "לאפליקציית HeOCR למחשב, ל־macOS ול־Windows.",
         "sections": [
             ("מצב", [
-                f"האפליקציה עוד לא שוחררה. כדי לדעת כשתשוחרר, עקבו אחרי <a href=\"{REPO}\">HeOCR/heocr-desktop</a> ב־GitHub "
-                f"(Watch ← Custom ← Releases), או ראו את <a href=\"{RELEASES}\">עמוד הגרסאות</a>.",
+                f"גרסה 0.3.0 זמינה ב<a href=\"{RELEASES}\">עמוד הגרסאות</a>. האפליקציה ל־macOS חתומה ומאושרת "
+                "(notarized), והמתקין ל־Windows עוד לא חתום בחתימת קוד.",
             ]),
             ("מה נחתם", [
                 "נחתמים רק מתקינים שנבנו ב־GitHub Actions מקוד המקור הפומבי, וכל חתימה מאושרת ידנית.",

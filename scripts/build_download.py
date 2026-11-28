@@ -53,6 +53,15 @@ PACKAGE_PYPI = f"https://pypi.org/project/heocr/{PACKAGE_VERSION}/"
 PACKAGE_INSTALL = ("pip install heocr\n"
                    "heocr --download-model auto\n"
                    "heocr file.pdf -o out.txt")
+# The desktop release (HeOCR/heocr-desktop v0.3.0): the files and their SHA-256 as attached to the release.
+DESKTOP_VERSION = "0.3.0"
+DESKTOP_REPO = "https://github.com/HeOCR/heocr-desktop"
+DESKTOP_DOWNLOADS = (
+    ("macOS", "desktop_mac", f"HeOCR-{DESKTOP_VERSION}-macos.dmg",
+     "8afa13f0cbf0e7e2dc169ae315c7ce156bad539365a3a425a495d0d9e49cb422"),
+    ("Windows", "desktop_win", f"HeOCR-{DESKTOP_VERSION}-windows-x64.msi",
+     "18cf6be53a0d652527cfdfe40b0b082696d1493cf5aa474217f9bae7bd963136"),
+)
 TESSERACT = "https://github.com/tesseract-ocr/tesseract"
 T = {
     "en": {
@@ -93,6 +102,11 @@ T = {
         "apps": "Apps",
         "full_v11": "Also trained on our public test-set pages, so it has no independent score.",
         "coming": "In development.",
+        "desktop_mac": "For macOS 13 or later, on Apple silicon and Intel. Signed and notarized by Apple.",
+        "desktop_win": "For 64-bit Windows. This installer is not yet code-signed: when SmartScreen warns you, check the file against the SHA-256 below, then click More info and Run anyway.",
+        "desktop_get": "Download {file}",
+        "desktop_about": "The app reads on your computer and sends nothing anywhere. It starts on the modern-documents model; automatic model choice is experimental.",
+        "notes": "Release notes",
         "releases": "Releases on GitHub",
         "code_signing": "Code signing policy",
         "privacy": "Privacy policy",
@@ -135,6 +149,11 @@ T = {
         "apps": "יישומים",
         "full_v11": "אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי.",
         "coming": "בפיתוח.",
+        "desktop_mac": "ל־macOS 13 ומעלה, במחשבי Apple silicon ו־Intel. חתומה ומאושרת (notarized) על ידי Apple.",
+        "desktop_win": "ל־Windows ‏64 ביט. המתקין עוד לא חתום בחתימת קוד: כשתופיע אזהרה של SmartScreen, בדקו את הקובץ מול ה־SHA-256 שלמטה, ואז לחצו על More info ועל Run anyway.",
+        "desktop_get": "הורדת {file}",
+        "desktop_about": "האפליקציה קוראת במחשב שלכם ולא שולחת דבר לשום מקום. היא מתחילה עם המודל למסמכים מודרניים; בחירת מודל אוטומטית היא ניסיונית.",
+        "notes": "הערות הגרסה",
         "releases": "גרסאות ב־GitHub",
         "code_signing": "מדיניות חתימת קוד",
         "privacy": "מדיניות פרטיות",
@@ -160,9 +179,14 @@ def page(lang: str) -> str:
         for anchor, use, why in COMPASS
     )
     cards = "".join(
-        f'<div class="card"><h3>{platform}</h3><p>{text["coming"]}</p>'
-        f'<div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases">{text["releases"]}</a></div></div>\n'
-        for platform in ("macOS", "Windows", "Android")
+        f'<div class="card" id="{platform.lower()}"><h3><bdi dir="ltr">{platform} {DESKTOP_VERSION}</bdi></h3><p>{text[note]}</p>'
+        f'<div class="row"><a href="{DESKTOP_REPO}/releases/download/v{DESKTOP_VERSION}/{name}">'
+        f'{text["desktop_get"].replace("{file}", f"<bdi dir=\"ltr\">{name}</bdi>")}</a></div>'
+        f'<p class="note">SHA-256 <code style="display: block; white-space: normal; word-break: break-all" dir="ltr">{digest}</code></p></div>\n'
+        for platform, note, name, digest in DESKTOP_DOWNLOADS
+    ) + (
+        f'<div class="card"><h3>Android</h3><p>{text["coming"]}</p>'
+        f'<div class="row"><a href="{DESKTOP_REPO}/releases">{text["releases"]}</a></div></div>\n'
     )
     return (
         shell.head(lang, text["title"], text["about"], "download")
@@ -182,6 +206,7 @@ def page(lang: str) -> str:
           f'<p class="note">{text["quick_start_file"]}</p>\n</section>\n'
         + f'<p>{text["experimental"]} <a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
         + f'<section id="apps">\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n'
+          f'<p>{text["desktop_about"]} <a href="{DESKTOP_REPO}/releases/tag/v{DESKTOP_VERSION}">{text["notes"]}</a></p>\n'
           f'<p><a href="code-signing.html">{text["code_signing"]}</a> · <a href="privacy.html">{text["privacy"]}</a></p>\n</section>\n'
         + "</main>\n"
         + shell.footer([f'<p><a href="code-signing.html">{text["code_signing"]}</a></p>'], lang)
