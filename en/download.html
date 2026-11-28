@@ -58,7 +58,7 @@
 </section>
 <section id="quick-start">
 <h2>Quick start</h2>
-<p>With Tesseract 5 and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.</p>
+<p>With <a href="https://github.com/tesseract-ocr/tesseract">Tesseract 5</a> and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.</p>
 <pre class="quick-start"><code>mkdir -p tessdata
 curl -fL -o tessdata/phist_v2.traineddata \
   https://huggingface.co/HeOCR/heocr-p-hist-measured/resolve/v1.1/phist_v2.traineddata
@@ -78,6 +78,15 @@ tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre
 </div>
 <h3 id="variants">MEASURED or FULL?</h3>
 <p>MEASURED is the version our published held-out numbers belong to. FULL was also trained on our public test-set pages, so it has no independent score. It may be slightly stronger on similar material; this is not measured.</p>
+</section>
+<section id="package">
+<h2>For developers: the heocr package</h2>
+<p>heocr reads a whole document (PDF, Word files and scans) and picks the right tool for each part. It is in development: it is not on PyPI and has no release yet.</p>
+<p>Today it installs from GitHub. One explicit download (about 23 MB) then fetches HeOCR’s four measured models, each checked against its pinned SHA-256. After that, --ocr-model auto picks a model for each document and reads offline.</p>
+<pre class="quick-start"><code>pip install git+https://github.com/HeOCR/heocr
+heocr --download-model auto
+heocr page.png --ocr-model auto -o out.txt</code></pre>
+<p><a href="https://github.com/HeOCR/heocr">HeOCR/heocr on GitHub</a></p>
 </section>
 <p>HeOCR’s handwriting models are still experimental. <a href="benchmarks.html">See all benchmarks</a></p>
 <section id="apps">
