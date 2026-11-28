@@ -10,6 +10,7 @@ from pathlib import Path
 
 import benchmark_release_data
 import build_methodology
+import reader_access
 import shell
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +21,7 @@ MODERN_MODEL = "https://huggingface.co/HeOCR/heocr-modern-measured/tree/v1.0"
 MODERN_MODEL_ID = "heocr-modern-capture-1k"
 T = {
     "en": {
+        "lang": "en",
         "title": "HeOCR benchmarks", "lede": "A comparison of Hebrew OCR engines on real documents set aside for testing.",
         "open": "Open held-out sets", "open_text": "Open sets are designed so others can evaluate their readers independently.",
         "closed": "Closed held-out sets", "closed_text": "Closed sets may include private sources. They will also be reported, but cannot be independently reproduced in full.",
@@ -106,6 +108,7 @@ T = {
         "modern_finding": "{model} ties Rivok Full on modern printed documents ({ours} vs {rivok} CER in the recommended view). That is not a win under our registered test. It is clearly better than stock Tesseract.",
     },
     "he": {
+        "lang": "he",
         "title": "מדדי ביצועים של HeOCR", "lede": "השוואה בין מנועי זיהוי טקסט בעברית על מסמכים אמיתיים שנשמרו לבדיקה.",
         "open": "קבוצות פתוחות שהוחזקו בצד", "open_text": "קבוצות פתוחות נועדו לאפשר הערכה עצמאית של מנועי זיהוי.",
         "closed": "קבוצות סגורות שהוחזקו בצד", "closed_text": "קבוצות סגורות עשויות לכלול מקורות פרטיים. גם תוצאותיהן ידווחו, אך לא ניתן לשחזר אותן במלואן באופן עצמאי.",
@@ -218,6 +221,11 @@ def result_table(t, table_id, caption, columns, rows):
         min((row["cells"][i][0] for row in rows if row["cells"][i][0] is not None), default=None)
         for i in range(len(columns))
     ]
+    open_rows = [row for row in rows if reader_access.classify(row["name"]) == "open"]
+    best_open = [
+        min((row["cells"][i][0] for row in open_rows if row["cells"][i][0] is not None), default=None)
+        for i in range(len(columns))
+    ]
     api_labels = {
         "api_all": f'{t["cer"]} · {t["all_positions"]}',
         "api_filtered": f'{t["cer"]} · {t["historical_filtered"]}',
@@ -240,10 +248,12 @@ def result_table(t, table_id, caption, columns, rows):
         label = f'<bdi>{e(row["name"])}</bdi>'
         if row.get("model_url"):
             label = f'<a href="{e(row["model_url"])}">{label}</a>'
+        label += reader_access.badge(row["name"], t["lang"])
+        is_open = reader_access.classify(row["name"]) == "open"
         if marker:
             label += f'<small class="benchmark-reader-note">{e(marker)}</small>'
         cells = []
-        for (value, fraction), lowest in zip(row["cells"], best, strict=True):
+        for (value, fraction), lowest, lowest_open in zip(row["cells"], best, best_open, strict=True):
             if value is None:
                 cells.append('<td class="num">—</td>')
                 continue
@@ -251,6 +261,9 @@ def result_table(t, table_id, caption, columns, rows):
             if value == lowest:
                 score = (f'<span class="benchmark-best">{score}'
                          f'<span class="benchmark-sr-only"> ({e(t["best"])})</span></span>')
+            elif is_open and value == lowest_open:
+                score = (f'<span class="benchmark-best-open">{score}<span class="benchmark-sr-only"> '
+                         f'({e(reader_access.BEST_OPEN[t["lang"]])})</span></span>')
             cells.append(f'<td class="num"><strong class="benchmark-score">{score}</strong>'
                          f'<small class="benchmark-fraction">{fraction}</small></td>')
         row_class = ' class="ours"' if ours else ""
@@ -563,7 +576,8 @@ def page(lang, data, public_pages=None, *, historical=None, api_rows=(), pbyh=No
     return "".join([
         shell.head(lang, e(t["title"]), e(t["lede"]), "bench"), shell.header(lang, "bench"),
         '<main id="main" class="bench benchmark-page">\n',
-        shell.page_head(e(t["title"]), f'<p class="lede">{e(t["lede"])}</p><p>{e(t["reading"])} {link("methodology.html", t["method"])}</p>{preview_note}'),
+        shell.page_head(e(t["title"]), f'<p class="lede">{e(t["lede"])}</p><p>{e(t["reading"])} {link("methodology.html", t["method"])}</p>{preview_note}'
+                        + reader_access.legend(lang)),
         shell.toc(lang, toc),
         f'<section id="open" class="wrap domain"><h2 class="benchmark-sr-only">{e(t["open"])}</h2>',
         "".join(open_panels),
@@ -580,10 +594,13 @@ def page(lang, data, public_pages=None, *, historical=None, api_rows=(), pbyh=No
     ])
 
 
-def write_pages(output_dir, data, public_pages, *, check, historical=None, api_rows=(), pbyh=None, hosted=None):
+def write_pages(output_dir, data, public_pages, *, check, historical=None, api_rows=(), pbyh=None, hosted=None,
+                strict=False):
     stale = []
     for lang in shell.LANGS:
         benchmark = page(lang, data, public_pages, historical=historical, api_rows=api_rows, pbyh=pbyh, hosted=hosted)
+        if strict:
+            reader_access.check_classified(benchmark)
         for key, output in (("bench", benchmark), ("methodology", build_methodology.page(lang))):
             relative = shell.site_path(lang, key)
             path = output_dir / relative

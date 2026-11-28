@@ -55,6 +55,7 @@ def main():
     api_rows = tuple(row for row in leaderboard["rows"] if "diagnostic" in row)
     stale = build_release_benchmark.write_pages(
         ROOT, data, public_pages=31, check=args.check, historical=historical, api_rows=api_rows, pbyh=pbyh, hosted=hosted,
+        strict=True,
     )
     if stale:
         parser.error("Out of date: " + ", ".join(stale) + ". Run python3 scripts/build_benchmarks.py.")

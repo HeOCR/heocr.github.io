@@ -10,6 +10,9 @@ from pathlib import Path
 
 import benchmark_release_data as release
 import build_release_benchmark as builder
+import reader_access
+
+UNKNOWN = '<span class="reader-access" data-access="unknown"></span>'
 
 
 def example():
@@ -95,7 +98,7 @@ class ReleaseBuilderTest(unittest.TestCase):
             output = builder.page(lang, release.validate(raw))
             self.assertEqual(output.count('<tr class="ours">'), 10)
             note = builder.T[lang]["modern_model_note"]
-            self.assertEqual(output.count(f'<th scope="row"><bdi>Example best model</bdi>'
+            self.assertEqual(output.count(f'<th scope="row"><bdi>Example best model</bdi>{UNKNOWN}'
                                           f'<small class="benchmark-reader-note">{note}</small></th>'), 10)
             self.assertNotIn("Example stock pipeline", output)
             self.assertNotIn("Example slower model", output)
@@ -119,6 +122,47 @@ class ReleaseBuilderTest(unittest.TestCase):
         self.assertEqual(table.count('class="benchmark-best"'), 3)
         self.assertIn('<small class="benchmark-fraction"><bdi dir="ltr">3 / 100</bdi></small>', body[0])
         self.assertIn('<td class="num">—</td>', body[1])
+
+    def test_access_badges_and_lowest_open_highlight(self):
+        rows = [
+            {"name": "Google Cloud Vision", "cells": [builder.error_rate(1, 100), builder.error_rate(1, 10)]},
+            {"name": "HeOCR modern MEASURED v1.0", "ours": True,
+             "cells": [builder.error_rate(2, 100), builder.error_rate(1, 10)]},
+            {"name": "Rivok Full", "cells": [builder.error_rate(3, 100), builder.error_rate(2, 10)]},
+            {"name": "Google Drive built-in OCR", "cells": [(None, ""), (None, "")]},
+        ]
+        for lang in builder.T:
+            table = builder.result_table(builder.T[lang], "fixture", "Fixture", ("cer", "wer"), rows)
+            body = re.findall(r'<tr(?: class="ours")?><th scope="row">.*?</tr>', table)
+            self.assertIn('data-access="paid"', body[0])
+            self.assertIn('data-access="open"', body[1])
+            self.assertIn('data-access="free_closed"', body[3])
+            self.assertIn(reader_access.LABEL[lang]["open"], body[1])
+            # CER: the paid reader is lowest overall; HeOCR is lowest among open readers.
+            self.assertRegex(body[0], 'class="benchmark-best"><bdi dir="ltr">1.00%')
+            self.assertRegex(body[1], 'class="benchmark-best-open"><bdi dir="ltr">2.00%')
+            self.assertIn(reader_access.BEST_OPEN[lang], body[1])
+            # WER: an open reader tied for lowest overall gets the overall highlight only.
+            self.assertRegex(body[1], 'class="benchmark-best"><bdi dir="ltr">10.00%')
+            self.assertEqual(table.count('class="benchmark-best-open"'), 1)
+            self.assertNotIn("benchmark-best-open", body[2])
+
+    def test_reader_classification_fails_closed(self):
+        for name, kind in (("Tesseract heb best", "open"), ("Tessdata Fast Hebrew", "open"), ("Rivok Lite", "open"),
+                           ("Rivok PaddleOCR", "open"), ("Kraken 7.2 (generic recognizer)", "open"),
+                           ("PaddleOCR (CUDA)", "open"), ("Qwen3-VL-2B-Instruct MLX 4-bit", "open"),
+                           ("HeOCR old-print v1.1", "open"), ("Google Document AI OCR", "paid"),
+                           ("Gemini (Vertex)", "paid"), ("Claude Haiku 5.5", "paid"),
+                           ("Google Drive built-in OCR", "free_closed")):
+            self.assertEqual(reader_access.classify(name), kind, name)
+        self.assertIsNone(reader_access.classify("Some new reader"))
+        with self.assertRaises(ValueError):
+            reader_access.check_classified(f"<tr><th>Some new reader{UNKNOWN}</th></tr>")
+        for lang in builder.T:
+            legend = reader_access.legend(lang)
+            for kind in reader_access.KINDS:
+                self.assertIn(reader_access.LEGEND[lang][kind], legend)
+            self.assertIn("benchmark-best-open", legend)
 
     def test_historical_has_two_scope_choices_and_labels_api_lanes(self):
         score = {"edits": 2, "chars": 100, "word_edits": 1, "words": 10,
@@ -146,7 +190,8 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertIn(f'<a href="{builder.HISTORICAL_MODEL}"><bdi>Example historical model</bdi></a>', default)
             self.assertIn('<bdi dir="ltr">2 / 8</bdi>', default)
             self.assertIn('<bdi dir="ltr">1 / 10</bdi>', fallback)
-            self.assertIn(f'<bdi>Example historical API</bdi><small class="benchmark-reader-note">{t["descriptive"]}</small>', panel)
+            self.assertIn(f'<bdi>Example historical API</bdi>{UNKNOWN}'
+                          f'<small class="benchmark-reader-note">{t["descriptive"]}</small>', panel)
             self.assertNotIn(t["metric_help"]["numbers"], panel)
             self.assertNotIn('<bdi dir="ltr">1 / 8</bdi>', panel)
             self.assertIn(t["historical_numbers_note"], panel)
