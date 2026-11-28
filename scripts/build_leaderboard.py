@@ -6,13 +6,14 @@ from html import escape as e
 import json
 from pathlib import Path
 
+import reader_access
 import shell
 from benchmark_release_data import PMOD_OPEN_V0_DOI_URL
 from leaderboard_results import (
     API_EXECUTIONS, API_STATUSES, API_TIMING_LABEL, CATEGORIES, DATASET,
     DOCUMENT_TYPES, EFFICIENCY_EXECUTIONS, EFFICIENCY_PLATFORMS,
     READER_TYPES, RESULTS_REPO, STRATA, TYPE_CAPTURES, TYPE_SCOPES, VIEWS,
-    percentage, ranked, validate,
+    cer, percentage, ranked, validate,
 )
 
 SITE = Path(__file__).resolve().parents[1]
@@ -28,7 +29,7 @@ COPY = {
         "results": "נתוני התוצאות", "dataset": "מערך המבחן", "doi": "ציטוט מערך הנתונים (Zenodo DOI)", "submit": "הגשת תוצאות דרך GitHub", "space": "טבלת דירוג ב־Hugging Face",
         "coming": "בקרוב", "view": "תצוגת ציונים", "verified": "אומת", "unverified": "הוגש עצמאית, טרם אומת",
         "columns": ("מנוע זיהוי", "גרסה", "סוג", "רישיון"), "trailing": ("תאריך", "גרסת המעריך", "מצב אימות"),
-        "how": "איך מגישים תוצאות?",
+        "how": "איך מגישים תוצאות?", "best": "שיעור השגיאות הנמוך ביותר",
         "steps": (
             'הריצו את מנוע הזיהוי על <bdi>P-mod-open v0</bdi> והכינו קובץ <bdi>ZIP</bdi> בפורמט <bdi>heocr-bench</bdi>.',
             'פתחו בקשת מיזוג ב־<bdi>GitHub</bdi> עם קובץ התחזיות וקובץ <bdi>JSON</bdi> ובו שם המנוע, גרסה, רישיון, משקולות פתוחות או סגורות, קישור ציבורי וסכום הביקורת של הקובץ.',
@@ -44,7 +45,7 @@ COPY = {
         "results": "Results data", "dataset": "Benchmark dataset", "doi": "Cite the dataset (Zenodo DOI)", "submit": "Submit via GitHub", "space": "Leaderboard on Hugging Face",
         "coming": "Coming", "view": "Score view", "verified": "Verified", "unverified": "Self-submitted, unverified",
         "columns": ("Reader", "Version", "Type", "Licence"), "trailing": ("Date", "Scorer version", "Status"),
-        "how": "How to submit",
+        "how": "How to submit", "best": "Lowest error",
         "steps": (
             'Run your reader on P-mod-open v0 and package the predictions in a <bdi>heocr-bench</bdi> ZIP.',
             'Open a GitHub pull request with the ZIP and a JSON receipt listing the reader, version, licence, open or closed weights, a public link and the ZIP checksum.',
@@ -61,14 +62,34 @@ def table(data, view, lang):
     index = int(lang == "he")
     columns = (*t["columns"], *(s[index] for s in STRATA.values()), *t["trailing"])
     headings = "".join(f'<th scope="col">{e(heading)}</th>' for heading in columns)
+    board = ranked(data, view)
+    values = {row["id"]: [cer(row["views"][view][key]) for key in STRATA] for row in board}
+
+    def lowest(rows):
+        return [min((values[row["id"]][i] for row in rows if values[row["id"]][i] is not None), default=None)
+                for i in range(len(STRATA))]
+
+    best = lowest(board)
+    best_open = lowest([row for row in board if reader_access.classify(row["reader"]) == "open"])
     rows = []
-    for row in ranked(data, view):
+    for row in board:
         category = READER_TYPES[row["type"]] if lang == "he" else row["type"]
         status = t["verified"] if row["verified"] else t["unverified"]
-        metrics = [percentage(row["views"][view][key]) for key in STRATA]
-        cells = (row["version"], category, row["licence"], *metrics, row["date"], row["scorer_version"], status)
-        scores = "".join(f"<td><bdi>{e(value)}</bdi></td>" for value in cells)
-        rows.append(f'<tr><th scope="row"><bdi>{e(row["reader"])}</bdi></th>{scores}</tr>\n')
+        is_open = reader_access.classify(row["reader"]) == "open"
+        metrics = []
+        for value, text, low, low_open in zip(values[row["id"]], (percentage(row["views"][view][key]) for key in STRATA),
+                                              best, best_open, strict=True):
+            cell = f"<bdi>{e(text)}</bdi>"
+            if value is not None and value == low:
+                cell = f'<span class="benchmark-best">{cell}<span class="benchmark-sr-only"> ({e(t["best"])})</span></span>'
+            elif value is not None and is_open and value == low_open:
+                cell = (f'<span class="benchmark-best-open">{cell}<span class="benchmark-sr-only"> '
+                        f'({e(reader_access.BEST_OPEN[lang])})</span></span>')
+            metrics.append(f"<td>{cell}</td>")
+        head = "".join(f"<td><bdi>{e(value)}</bdi></td>" for value in (row["version"], category, row["licence"]))
+        tail = "".join(f"<td><bdi>{e(value)}</bdi></td>" for value in (row["date"], row["scorer_version"], status))
+        rows.append(f'<tr><th scope="row"><bdi>{e(row["reader"])}</bdi>{reader_access.badge(row["reader"], lang)}</th>'
+                    f'{head}{"".join(metrics)}{tail}</tr>\n')
     caption = e(VIEWS[view][index])
     return (
         f'<h3 id="board-{view}">{caption}</h3><div class="tablewrap" role="region" tabindex="0" '
@@ -259,7 +280,8 @@ def page(lang, data):
         links += f' · <a href="#efficiency">{e(EFFICIENCY_COPY[lang]["title"])}</a>'
     if data.get("document_types"):
         links += f' · <a href="#document-types">{e(TYPE_COPY[lang][0])}</a>'
-    intro = f'<p class="lede">{e(t["intro"])}</p><p>{links}</p><p class="note">{e(t["notice"])}</p>'
+    intro = (f'<p class="lede">{e(t["intro"])}</p><p>{links}</p><p class="note">{e(t["notice"])}</p>'
+             + reader_access.legend(lang))
     categories = [(key, f"<bdi>{key}</bdi> · {e(label[index])}", e(t["coming"]) if key != "C1" else None)
                   for key, label in CATEGORIES.items()]
     name = categories[0][1]
@@ -312,6 +334,10 @@ def main():
     for lang in shell.LANGS:
         path = out / shell.site_path(lang, "leaderboard")
         text = page(lang, data)
+        try:
+            reader_access.check_classified(text)
+        except ValueError as exc:
+            parser.error(str(exc))
         if args.check:
             if not path.is_file() or path.read_text(encoding="utf-8") != text:
                 parser.error(f"Stale leaderboard rendering ({lang}).")

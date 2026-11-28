@@ -145,6 +145,20 @@ class LeaderboardTest(unittest.TestCase):
                 self.assertIn("<bdi>0.458222</bdi>", api)
                 self.assertIn("<bdi>4.629431</bdi>", api)
 
+    def test_access_badges_and_lowest_open_on_the_board(self):
+        from leaderboard_results import read_results
+        data = read_results(builder.SITE / "leaderboard/results.json")
+        for lang in ("en", "he"):
+            output = builder.page(lang, data)
+            builder.reader_access.check_classified(output)
+            board = output.split('id="board-filtered"', 1)[1].split("</table>", 1)[0]
+            self.assertIn('data-access="open"', board)
+            self.assertIn("reader-access-legend", output)
+            for row in board.split("<tr>")[2:]:
+                if "benchmark-best-open" in row:
+                    self.assertIn('data-access="open"', row)
+            self.assertGreaterEqual(board.count('class="benchmark-best"'), 1)
+
     def test_missing_baseline_cannot_render(self):
         data = fixture()
         data["rows"].pop()
