@@ -585,7 +585,7 @@
     },
     {
       "id": "HeOCR/hebrew-print-line-pairs",
-      "revision": "dca089016e6cc389997b533cbf5cee4fcc3df2a3",
+      "revision": "8ee6fde3305705c57d035eccde84d60de866b022",
       "group": "real",
       "title": "Hebrew print line pairs",
       "description": {
@@ -622,16 +622,20 @@
         {
           "id": "10.5281/zenodo.24615586",
           "label": "v2-p6"
+        },
+        {
+          "id": "10.5281/zenodo.24631463",
+          "label": "v2-p6.1"
         }
       ],
       "counts": {
         "documents": null,
         "pages": null,
-        "images": 273393,
-        "lines": 273393,
+        "images": 272877,
+        "lines": 272877,
         "words": null,
         "characters": null,
-        "bytes": 6931035636
+        "bytes": 6928419227
       },
       "partial_pages": {
         "count": 352,
