@@ -193,6 +193,9 @@ def page(lang: str) -> str:
         + shell.header(lang, "download")
         + '<main id="main" class="wrap doc">\n'
         + shell.page_head(text["title"], f'<p class="lede">{text["about"]}</p>')
+        + f'<section id="apps">\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n'
+          f'<p>{text["desktop_about"]} <a href="{DESKTOP_REPO}/releases/tag/v{DESKTOP_VERSION}">{text["notes"]}</a></p>\n'
+          f'<p><a href="code-signing.html">{text["code_signing"]}</a> · <a href="privacy.html">{text["privacy"]}</a></p>\n</section>\n'
         + f'<section id="choose">\n<h2>{text["compass"]}</h2>\n<ul class="compass">\n{compass}</ul>\n</section>\n'
         + f'<section id="quick-start">\n<h2>{text["quick_start"]}</h2>\n<p>{text["package_text"]}</p>\n'
           f'<p>{text["package_install"]}</p>\n<pre class="quick-start"><code>{escape(PACKAGE_INSTALL)}</code></pre>\n'
@@ -205,9 +208,6 @@ def page(lang: str) -> str:
           f'<pre class="quick-start"><code>{escape(QUICK_START)}</code></pre>\n'
           f'<p class="note">{text["quick_start_file"]}</p>\n</section>\n'
         + f'<p>{text["experimental"]} <a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
-        + f'<section id="apps">\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n'
-          f'<p>{text["desktop_about"]} <a href="{DESKTOP_REPO}/releases/tag/v{DESKTOP_VERSION}">{text["notes"]}</a></p>\n'
-          f'<p><a href="code-signing.html">{text["code_signing"]}</a> · <a href="privacy.html">{text["privacy"]}</a></p>\n</section>\n'
         + "</main>\n"
         + shell.footer([f'<p><a href="code-signing.html">{text["code_signing"]}</a></p>'], lang)
         + shell.tail(lang)

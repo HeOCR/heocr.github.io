@@ -47,6 +47,16 @@
 <h1><span class="bb" data-tag="h1 · 0.99">הורדת HeOCR</span></h1>
 <p class="lede">מודלים של HeOCR זמינים להורדה למסמכים מודרניים בדפוס (modern v1.0), לדפוס היסטורי לא מנוקד (P-hist v1.1), לספרות בדפוס לא מנוקד (literature v1.0) ולספרות בדפוס מנוקד (pointed v1.0), ברישיון Apache 2.0.</p>
 </div></div>
+<section id="apps">
+<h2>יישומים</h2>
+<div class="grid">
+<div class="card" id="macos"><h3><bdi dir="ltr">macOS 0.3.0</bdi></h3><p>ל־macOS 13 ומעלה, במחשבי Apple silicon ו־Intel. חתומה ומאושרת (notarized) על ידי Apple.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases/download/v0.3.0/HeOCR-0.3.0-macos.dmg">הורדת <bdi dir="ltr">HeOCR-0.3.0-macos.dmg</bdi></a></div><p class="note">SHA-256 <code style="display: block; white-space: normal; word-break: break-all" dir="ltr">8afa13f0cbf0e7e2dc169ae315c7ce156bad539365a3a425a495d0d9e49cb422</code></p></div>
+<div class="card" id="windows"><h3><bdi dir="ltr">Windows 0.3.0</bdi></h3><p>ל־Windows ‏64 ביט. המתקין עוד לא חתום בחתימת קוד: כשתופיע אזהרה של SmartScreen, בדקו את הקובץ מול ה־SHA-256 שלמטה, ואז לחצו על More info ועל Run anyway.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases/download/v0.3.0/HeOCR-0.3.0-windows-x64.msi">הורדת <bdi dir="ltr">HeOCR-0.3.0-windows-x64.msi</bdi></a></div><p class="note">SHA-256 <code style="display: block; white-space: normal; word-break: break-all" dir="ltr">18cf6be53a0d652527cfdfe40b0b082696d1493cf5aa474217f9bae7bd963136</code></p></div>
+<div class="card"><h3>Android</h3><p>בפיתוח.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases">גרסאות ב־GitHub</a></div></div>
+</div>
+<p>האפליקציה קוראת במחשב שלכם ולא שולחת דבר לשום מקום. היא מתחילה עם המודל למסמכים מודרניים; בחירת מודל אוטומטית היא ניסיונית. <a href="https://github.com/HeOCR/heocr-desktop/releases/tag/v0.3.0">הערות הגרסה</a></p>
+<p><a href="code-signing.html">מדיניות חתימת קוד</a> · <a href="privacy.html">מדיניות פרטיות</a></p>
+</section>
 <section id="choose">
 <h2>איזה מודל מתאים למסמך שלכם?</h2>
 <ul class="compass">
@@ -90,16 +100,6 @@ tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre
 <p class="note">הקובץ של HeOCR P-hist MEASURED v1.1 נקרא phist_v2.traineddata, וגרסת השחרור היא v1.1.</p>
 </section>
 <p>המודלים של HeOCR לכתב יד עדיין ניסיוניים. <a href="benchmarks.html">לכל מדדי ההערכה</a></p>
-<section id="apps">
-<h2>יישומים</h2>
-<div class="grid">
-<div class="card" id="macos"><h3><bdi dir="ltr">macOS 0.3.0</bdi></h3><p>ל־macOS 13 ומעלה, במחשבי Apple silicon ו־Intel. חתומה ומאושרת (notarized) על ידי Apple.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases/download/v0.3.0/HeOCR-0.3.0-macos.dmg">הורדת <bdi dir="ltr">HeOCR-0.3.0-macos.dmg</bdi></a></div><p class="note">SHA-256 <code style="display: block; white-space: normal; word-break: break-all" dir="ltr">8afa13f0cbf0e7e2dc169ae315c7ce156bad539365a3a425a495d0d9e49cb422</code></p></div>
-<div class="card" id="windows"><h3><bdi dir="ltr">Windows 0.3.0</bdi></h3><p>ל־Windows ‏64 ביט. המתקין עוד לא חתום בחתימת קוד: כשתופיע אזהרה של SmartScreen, בדקו את הקובץ מול ה־SHA-256 שלמטה, ואז לחצו על More info ועל Run anyway.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases/download/v0.3.0/HeOCR-0.3.0-windows-x64.msi">הורדת <bdi dir="ltr">HeOCR-0.3.0-windows-x64.msi</bdi></a></div><p class="note">SHA-256 <code style="display: block; white-space: normal; word-break: break-all" dir="ltr">18cf6be53a0d652527cfdfe40b0b082696d1493cf5aa474217f9bae7bd963136</code></p></div>
-<div class="card"><h3>Android</h3><p>בפיתוח.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases">גרסאות ב־GitHub</a></div></div>
-</div>
-<p>האפליקציה קוראת במחשב שלכם ולא שולחת דבר לשום מקום. היא מתחילה עם המודל למסמכים מודרניים; בחירת מודל אוטומטית היא ניסיונית. <a href="https://github.com/HeOCR/heocr-desktop/releases/tag/v0.3.0">הערות הגרסה</a></p>
-<p><a href="code-signing.html">מדיניות חתימת קוד</a> · <a href="privacy.html">מדיניות פרטיות</a></p>
-</section>
 </main>
 <footer class="site-footer">
 <div class="wrap foot">

@@ -47,6 +47,16 @@
 <h1><span class="bb" data-tag="h1 · 0.99">Download HeOCR</span></h1>
 <p class="lede">HeOCR models are available now for modern printed documents (modern v1.0), historical unpointed print (P-hist v1.1), unpointed literary print (literature v1.0) and pointed literary print (pointed v1.0). Apache 2.0.</p>
 </div></div>
+<section id="apps">
+<h2>Apps</h2>
+<div class="grid">
+<div class="card" id="macos"><h3><bdi dir="ltr">macOS 0.3.0</bdi></h3><p>For macOS 13 or later, on Apple silicon and Intel. Signed and notarized by Apple.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases/download/v0.3.0/HeOCR-0.3.0-macos.dmg">Download <bdi dir="ltr">HeOCR-0.3.0-macos.dmg</bdi></a></div><p class="note">SHA-256 <code style="display: block; white-space: normal; word-break: break-all" dir="ltr">8afa13f0cbf0e7e2dc169ae315c7ce156bad539365a3a425a495d0d9e49cb422</code></p></div>
+<div class="card" id="windows"><h3><bdi dir="ltr">Windows 0.3.0</bdi></h3><p>For 64-bit Windows. This installer is not yet code-signed: when SmartScreen warns you, check the file against the SHA-256 below, then click More info and Run anyway.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases/download/v0.3.0/HeOCR-0.3.0-windows-x64.msi">Download <bdi dir="ltr">HeOCR-0.3.0-windows-x64.msi</bdi></a></div><p class="note">SHA-256 <code style="display: block; white-space: normal; word-break: break-all" dir="ltr">18cf6be53a0d652527cfdfe40b0b082696d1493cf5aa474217f9bae7bd963136</code></p></div>
+<div class="card"><h3>Android</h3><p>In development.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases">Releases on GitHub</a></div></div>
+</div>
+<p>The app reads on your computer and sends nothing anywhere. It starts on the modern-documents model; automatic model choice is experimental. <a href="https://github.com/HeOCR/heocr-desktop/releases/tag/v0.3.0">Release notes</a></p>
+<p><a href="code-signing.html">Code signing policy</a> · <a href="privacy.html">Privacy policy</a></p>
+</section>
 <section id="choose">
 <h2>Which model for your document?</h2>
 <ul class="compass">
@@ -90,16 +100,6 @@ tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre
 <p class="note">The file for HeOCR P-hist MEASURED v1.1 is named phist_v2.traineddata; the release version is v1.1.</p>
 </section>
 <p>HeOCR’s handwriting models are still experimental. <a href="benchmarks.html">See all benchmarks</a></p>
-<section id="apps">
-<h2>Apps</h2>
-<div class="grid">
-<div class="card" id="macos"><h3><bdi dir="ltr">macOS 0.3.0</bdi></h3><p>For macOS 13 or later, on Apple silicon and Intel. Signed and notarized by Apple.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases/download/v0.3.0/HeOCR-0.3.0-macos.dmg">Download <bdi dir="ltr">HeOCR-0.3.0-macos.dmg</bdi></a></div><p class="note">SHA-256 <code style="display: block; white-space: normal; word-break: break-all" dir="ltr">8afa13f0cbf0e7e2dc169ae315c7ce156bad539365a3a425a495d0d9e49cb422</code></p></div>
-<div class="card" id="windows"><h3><bdi dir="ltr">Windows 0.3.0</bdi></h3><p>For 64-bit Windows. This installer is not yet code-signed: when SmartScreen warns you, check the file against the SHA-256 below, then click More info and Run anyway.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases/download/v0.3.0/HeOCR-0.3.0-windows-x64.msi">Download <bdi dir="ltr">HeOCR-0.3.0-windows-x64.msi</bdi></a></div><p class="note">SHA-256 <code style="display: block; white-space: normal; word-break: break-all" dir="ltr">18cf6be53a0d652527cfdfe40b0b082696d1493cf5aa474217f9bae7bd963136</code></p></div>
-<div class="card"><h3>Android</h3><p>In development.</p><div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases">Releases on GitHub</a></div></div>
-</div>
-<p>The app reads on your computer and sends nothing anywhere. It starts on the modern-documents model; automatic model choice is experimental. <a href="https://github.com/HeOCR/heocr-desktop/releases/tag/v0.3.0">Release notes</a></p>
-<p><a href="code-signing.html">Code signing policy</a> · <a href="privacy.html">Privacy policy</a></p>
-</section>
 </main>
 <footer class="site-footer">
 <div class="wrap foot">
