@@ -116,7 +116,7 @@ def page(lang: str) -> str:
           f'<p class="note">{text["quick_start_file"]}</p>\n</section>\n'
         + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n</section>\n'
         + f'<p>{text["experimental"]} <a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
-        + f'<section>\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n</section>\n'
+        + f'<section id="apps">\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n</section>\n'
         + "</main>\n"
         + shell.footer([])
         + shell.tail(lang)

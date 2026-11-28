@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HeOCR</title>
-<meta name="description" content="Open data and tools for reading Hebrew documents, both printed and handwritten. Every dataset item has its own rights record.">
+<meta name="description" content="HeOCR is an open project for getting Hebrew text out of any document: PDF and Office files, web pages, scans and photos. The code, the models and the data are open, and the tools run on your own computer or phone.">
 <!-- shell:head -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HeOCR">
 <meta property="og:title" content="HeOCR">
-<meta property="og:description" content="Open data and tools for reading Hebrew documents, both printed and handwritten. Every dataset item has its own rights record.">
+<meta property="og:description" content="HeOCR is an open project for getting Hebrew text out of any document: PDF and Office files, web pages, scans and photos. The code, the models and the data are open, and the tools run on your own computer or phone.">
 <meta property="og:url" content="https://heocr.org/en/">
 <meta property="og:image" content="https://heocr.org/og-image-en-1200x630.png">
 <meta property="og:image:width" content="1200">
@@ -48,26 +48,34 @@
 <!-- /shell:header -->
 <div class="home-hero band gridband">
 <div class="wrap">
-<p class="he">זיהוי טקסט עברי, פתוח לכולם</p>
+<p class="he" lang="he" dir="rtl">טקסט עברי מכל מסמך</p>
 <h1><span class="bb" data-tag="h1 · 0.99">HeOCR</span></h1>
-<p class="lede">Open data and tools for reading Hebrew documents, both printed and handwritten. Every dataset item has its own rights record.</p>
+<p class="lede">HeOCR is an open project for getting Hebrew text out of any document: PDF and Office files, web pages, scans and photos. The code, the models and the data are open, and the tools run on your own computer or phone.</p>
 <div class="links">
+      <a class="btn primary" href="download.html">Download</a>
+      <a class="btn" href="benchmarks.html">Benchmarks</a>
       <a class="btn" href="https://github.com/HeOCR">GitHub</a>
-      <a class="btn" href="https://huggingface.co/HeOCR">Hugging Face</a>
-      <a class="btn" href="https://zenodo.org/communities/heocr">Zenodo</a>
-      <a class="btn" href="download.html">Download</a>
-      <a class="btn primary" href="benchmarks.html">Benchmarks</a>
-      <a class="btn" href="rights.html">Rights &amp; takedown</a>
     </div>
-<div class="flow" aria-label="How the parts fit together">
-      <span class="step">Public-domain scans &amp; text</span> →
-      <span class="step">Generators</span> →
-      <span class="step">Datasets</span> →
-      <span class="step">Trained models</span>
-    </div>
+<div class="flow" aria-label="How the parts fit together"><span class="step">Open scans &amp; text</span> → <span class="step">Generators</span> → <span class="step">Datasets</span> → <span class="step">Trained models</span> → <span class="step">Tools &amp; apps</span></div>
 </div>
 </div>
 <main id="main" class="wrap home">
+
+  <section id="start">
+    <h2>How to use HeOCR</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>No code: the desktop app</h3>
+        <p>An offline app for macOS and Windows that reads Hebrew documents on your own computer, without uploading them. In development.</p>
+        <p><a href="download.html#apps">Follow its release</a></p>
+      </div>
+      <div class="card">
+        <h3>For developers and researchers</h3>
+        <p>Run the models directly in Tesseract 5, or try the heocr Python package, which is in development.</p>
+        <p><a href="download.html#quick-start">Quick start</a></p>
+      </div>
+    </div>
+  </section>
 
   <section id="models">
     <h2>Models and pipeline</h2>
@@ -316,30 +324,49 @@
   </section>
 
   <section id="tools">
-    <h2>Generators &amp; pipelines</h2>
-    <p class="sub">The code that builds the datasets and trains the models. All of it is MIT-licensed.</p>
+    <h2>Code</h2>
+    <h3>Tools</h3>
     <div class="grid">
       <div class="card">
-        <h3><a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a></h3>
-        <p>Synthetic Hebrew page generator. It renders printed and handwriting-style pages, with line annotations and right-to-left metadata, from CC0 training text and open fonts.</p>
-        <div class="meta"><span>Python</span><span>MIT</span><span>text CC0</span></div>
+        <h3><a href="https://github.com/HeOCR/heocr">heocr</a></h3>
+        <p>Python package and CLI: Hebrew text out of PDFs, Office files, web pages, scans and photos.</p>
       </div>
       <div class="card">
-        <h3><a href="https://github.com/HeOCR/hletterscriptgen">hletterscriptgen</a></h3>
-        <p>Extracts per-writer letter sets from HASH scans and human-reviewed glyph annotations.</p>
-        <div class="meta"><span>Python</span><span>MIT</span></div>
-      </div>
-      <div class="card">
-        <h3><a href="https://github.com/HeOCR/hocrgen">hocrgen</a></h3>
-        <p>Dataset operations and release checks: acquisition, rights, review, deduplication, splits, benchmarks and export to the public datasets.</p>
-        <div class="meta"><span>Python</span><span>MIT</span></div>
-      </div>
-      <div class="card">
-        <h3><a href="https://github.com/HeOCR/heocr-engine">heocr-engine</a></h3>
-        <p>Training, evaluation and release code for the models above, plus a local Tesseract baseline with a reproducible prediction format.</p>
-        <div class="meta"><span>Python</span><span>kraken</span></div>
+        <h3><a href="https://github.com/HeOCR/heocr-desktop">heocr-desktop</a></h3>
+        <p>HeOCR&#x27;s apps for Mac, Windows and Android: Hebrew text out of documents, fully offline.</p>
       </div>
     </div>
+    <h3>Models and data</h3>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/heocr-engine">heocr-engine</a></h3>
+        <p>The models: training and packaging Hebrew OCR models.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/htext">htext</a></h3>
+        <p>Public-domain and openly licensed Hebrew text, for training Hebrew OCR.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a></h3>
+        <p>A generator of synthetic Hebrew OCR training data: lines and pages.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hdocsyngen">hdocsyngen</a></h3>
+        <p>A generator of synthetic Hebrew documents: Office files and PDFs, with exact structure.</p>
+      </div>
+    </div>
+    <h3>Review and infrastructure</h3>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/heocr-review">heocr-review</a></h3>
+        <p>Check and correct Hebrew text against page scans, line by line.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/heocr-compute">heocr-compute</a></h3>
+        <p>Runs HeOCR&#x27;s training jobs on rented machines: open data only, within a budget.</p>
+      </div>
+    </div>
+    <p class="sub">Want to help? Open an issue or a pull request in any of the repositories.</p>
   </section>
 
   <section id="code-signing">
