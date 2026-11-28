@@ -133,7 +133,6 @@ T = {
         "not_run_reason": "Google Drive’s built-in OCR was not run: its API refused Hebrew as an OCR language.",
         "pbyh_paired": "Differences are tested with a paired bootstrap by work (12 works).",
         "modern_notes": "HeOCR’s model is a fine-tune of Rivok Full, so a near-tie with it is expected. A CER above 100% means the reader inserted text that is not on the page. The other readers’ training data is unknown, and these pages may be on the public web.",
-        "modern_finding": "{model} ties Rivok Full on modern printed documents ({ours} vs {rivok} CER in the recommended view). That is not a win under our registered test. It is clearly better than stock Tesseract.",
     },
     "he": {
         "lang": "he",
@@ -232,7 +231,6 @@ T = {
         "not_run_reason": "זיהוי הטקסט המובנה של Google Drive לא נבדק: הממשק שלו דחה עברית כשפת זיהוי.",
         "pbyh_paired": "ההבדלים נבדקו בשיטת bootstrap מזווגת לפי יצירה (12 יצירות).",
         "modern_notes": "המודל של HeOCR מבוסס על כוונון נוסף של Rivok Full, ולכן צפוי שהתוצאות יהיו קרובות. שיעור שגיאות תווים מעל 100% פירושו שהמנוע הוסיף טקסט שאינו מופיע בעמוד. נתוני האימון של המנועים האחרים אינם ידועים, וייתכן שהעמודים האלה זמינים ברשת.",
-        "modern_finding": "{model} שקול ל־Rivok Full במסמכים מודפסים מודרניים ({ours} לעומת {rivok} שגיאות תווים בתצוגה המומלצת). לפי המבחן הרשום זה אינו ניצחון. הוא טוב בבירור מ־Tesseract הרגיל.",
     },
 }
 
@@ -499,14 +497,8 @@ def open_results(t, data, public_pages, api_rows, hosted=None):
         count = views["all"][key]["carriers"]
         if count:
             captures.append((key, f"{label} ({count})", capture_notes[key]))
+    # No finding box for P-mod-open (owner, 2026-11-28): the table rows speak for themselves.
     winner = best_modern_model(data)
-    pooled = {row["reader_id"]: row for row in views["filtered"]["pooled"]["readers"]}
-    if winner is not None and "rivok-full" in pooled:
-        cer = lambda r: percentage(Fraction(pooled[r]["edits"], pooled[r]["chars"]))  # noqa: E731
-        name = modern_rows(t, views["filtered"]["pooled"], winner)
-        name = next(r["name"] for r in name if r.get("ours"))
-        out.append('<p class="benchmark-finding">' + e(t["modern_finding"]).format(
-            model=f'<bdi>{e(name)}</bdi>', ours=cer(winner), rivok=cer("rivok-full")) + "</p>")
     columns = ("cer", "wer", "numbers")
     panel_id = "p-mod-open"
     tables = {
