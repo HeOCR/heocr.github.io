@@ -22,8 +22,17 @@ MODERN_MODEL_ID = "heocr-modern-capture-1k"
 LITERATURE_MODEL = "https://huggingface.co/HeOCR/heocr-literature-measured/tree/v1.0"
 POINTED_MODEL = "https://huggingface.co/HeOCR/heocr-pointed-measured/tree/v1.0"
 # Public names for eval's PBY-H lanes (restricted-eval#1969 public rows).
-PBYH_NAMES = {"heocr-p-hist-a-full-35k": ("HeOCR literature-measured v1.0", LITERATURE_MODEL),
-              "heocr-p-hist-v1-1": (None, HISTORICAL_MODEL)}
+# One public name per model (site review 2, FIX-05 / COPY-11), keyed by eval's reader id or lane, so
+# eval's score files stay as eval wrote them. The form matches the download page and the HF repos.
+PHIST_V11 = "HeOCR P-hist MEASURED v1.1"
+MODEL_NAMES = {
+    "heocr-p-hist-a-full-35k": "HeOCR literature MEASURED v1.0",
+    "heocr-p-hist-v1-1": PHIST_V11, "heocr-v1-1": PHIST_V11 + " (previous)",
+    "heocr-v1-0": "HeOCR P-hist MEASURED v1.0",
+    "heocr-arm-c-pointed-60k": "HeOCR pointed MEASURED v1.0",
+}
+PBYH_NAMES = {"heocr-p-hist-a-full-35k": (MODEL_NAMES["heocr-p-hist-a-full-35k"], LITERATURE_MODEL),
+              "heocr-p-hist-v1-1": (PHIST_V11 + " (previous)", HISTORICAL_MODEL)}
 POINTED_URLS = {"heocr-arm-c-pointed-60k": POINTED_MODEL, "heocr-v1-1": HISTORICAL_MODEL}
 HIGHER_BETTER = {"mark_recall"}
 T = {
@@ -95,9 +104,9 @@ T = {
         "historical_intro": "Public-domain scans of pre-modern Hebrew print without vowel marks. The benchmark scores selected regions of the scanned pages.",
         "all_positions": "All positions",
         "historical_filtered": "Filtered",
-        "historical_caveat": "HeOCR P-hist v1.1 is a fine-tune of Rivok Full. The v0.1 references came from two independent AI transcriptions and adjudication. A re-score with human-proofread references is coming.",
+        "historical_caveat": "HeOCR P-hist MEASURED v1.1 is a fine-tune of Rivok Full. The v0.1 references came from two independent AI transcriptions and adjudication. A re-score with human-proofread references is coming.",
         "descriptive": "Descriptive",
-        "historical_numbers_note": "C2 contains only 8 numbers; number recall is not compared on this set.",
+        "historical_numbers_note": "P-hist-open v0.1 (C2) contains only 8 numbers; number recall is not compared on this set.",
         "cloud_note": "Google’s descriptive scores use the same eligible and filtered lines. The registered result was decided before these comparisons.",
         "primary": "Primary",
         "best": "Lowest error",
@@ -107,18 +116,18 @@ T = {
         "pbyh_intro": "Pages from public-domain Hebrew literary works in Project Ben-Yehuda, imaged from scans of the exact printed editions. The text has no vowel marks.",
         "work_count": "{count:,} works", "scored_lines": "{count:,} scored lines",
         "pbyh_masked": "{masked:,} lines where the printed edition and the reference text differ are left out for every reader.",
-        "pbyh_finding": "{model} ({cer} CER) has the lowest error on this set. It is better than Google Cloud Vision (narrowly), Google Document AI, Tesseract and Rivok PaddleOCR, and statistically level with Rivok Tesseract Lite, Rivok Tesseract Full and our previous model, HeOCR old-print v1.1. This is not a registered state-of-the-art result.",
+        "pbyh_finding": "{model} ({cer} CER) has the lowest error on this set. It is better than Google Cloud Vision (narrowly), Google Document AI, Tesseract and Rivok PaddleOCR, and statistically level with Rivok Tesseract Lite, Rivok Tesseract Full and our previous model, HeOCR P-hist MEASURED v1.1. This is not a registered state-of-the-art result.",
         "pbyh_refs": "The reference is Project Ben-Yehuda’s volunteer-proofread reading text, not a diplomatic transcription.",
-        "pbyh_caveat": "HeOCR literature-measured v1.0 is a fine-tune of Rivok Tesseract Full and is level with it here. It was selected on a separate development set and scored on this set once. Other Project Ben-Yehuda text is public and may be in any reader’s training data, ours included. The other readers’ training data is unknown.",
+        "pbyh_caveat": "HeOCR literature MEASURED v1.0 is a fine-tune of Rivok Tesseract Full and is level with it here. It was selected on a separate development set and scored on this set once. Other Project Ben-Yehuda text is public and may be in any reader’s training data, ours included. The other readers’ training data is unknown.",
         "pointed": "Pointed literature",
         "pointed_title": "PBY-H v0.1 pointed results",
         "pointed_intro": "Pages from public-domain pointed Hebrew works (poetry) in Project Ben-Yehuda, imaged from Internet Archive scans of two printed editions. The reference is Project Ben-Yehuda’s typed text, with the vowel points as typed there.",
         "pointed_primary": "The primary metric is page character error rate (CER) with vowel points kept.",
-        "pointed_finding": "Google leads on this set: Google Document AI ({docai} CER) and Google Cloud Vision ({vision}). {model} ({cer}) is better than our previous model, HeOCR old-print v1.1 ({v11}), and statistically level with Rivok Tesseract Full. Its gain over v1.1 is in the vowel points: on letters alone the two are level. This is not a registered state-of-the-art result.",
+        "pointed_finding": "Google leads on this set: Google Document AI ({docai} CER) and Google Cloud Vision ({vision}). {model} ({cer}) is better than our previous model, HeOCR P-hist MEASURED v1.1 ({v11}), and statistically level with Rivok Tesseract Full. Its gain over v1.1 is in the vowel points: on letters alone the two are level. This is not a registered state-of-the-art result.",
         "pointed_editions": "These results come from two printed editions, with 21 of the 24 pages from one (Katzenelson, Warsaw 1910), so they may not carry over to other pointed editions.",
         "pointed_paired": "Differences are tested with a paired bootstrap by work (8 works).",
         "pointed_higher": "Mark recall is the only measure here where higher is better.",
-        "pointed_caveat": "HeOCR pointed-measured v1.0 is a fine-tune of HeOCR old-print v1.1 and is slower (median 2.2 s per page, against 1.4 s). None of the 8 works is in its fine-tuning data. It was selected on a separate development set and scored on this set once.",
+        "pointed_caveat": "HeOCR pointed MEASURED v1.0 is a fine-tune of HeOCR P-hist MEASURED v1.1 and is slower (median 2.2 s per page, against 1.4 s). None of the 8 works is in its fine-tuning data. It was selected on a separate development set and scored on this set once.",
         "cer_letters": "CER, letters only", "mark_recall": "Mark recall", "best_high": "Highest",
         "not_run": "Not run",
         "not_run_reason": "Google Drive’s built-in OCR was not run: its API refused Hebrew as an OCR language.",
@@ -194,9 +203,9 @@ T = {
         "historical_intro": "סריקות ברשות הציבור של דפוס עברי ישן ללא ניקוד. המבחן בודק את הטקסט באזורים שנבחרו מתוך העמודים הסרוקים.",
         "all_positions": "כל המיקומים",
         "historical_filtered": "לאחר סינון",
-        "historical_caveat": "HeOCR P-hist v1.1 מבוסס על כוונון נוסף של Rivok Full. טקסטי הייחוס של v0.1 הוכנו בשני תעתוקים עצמאיים באמצעות בינה מלאכותית ובהכרעה ביניהם. בהמשך נחשב את הציונים שוב לפי טקסטי ייחוס שעברו הגהה אנושית.",
+        "historical_caveat": "HeOCR P-hist MEASURED v1.1 מבוסס על כוונון נוסף של Rivok Full. טקסטי הייחוס של v0.1 הוכנו בשני תעתוקים עצמאיים באמצעות בינה מלאכותית ובהכרעה ביניהם. בהמשך נחשב את הציונים שוב לפי טקסטי ייחוס שעברו הגהה אנושית.",
         "descriptive": "תיאורי",
-        "historical_numbers_note": "ב־C2 יש רק 8 מספרים. במבחן הזה אין השוואה של זיהוי מספרים.",
+        "historical_numbers_note": "ב־P-hist-open v0.1 (C2) יש רק 8 מספרים. במבחן הזה אין השוואה של זיהוי מספרים.",
         "cloud_note": "הציונים התיאוריים של Google חושבו על אותן שורות כשירות ומסוננות. התוצאה הרשומה נקבעה לפני ההשוואות האלה.",
         "primary": "ראשי",
         "best": "שיעור השגיאות הנמוך ביותר",
@@ -206,18 +215,18 @@ T = {
         "pbyh_intro": "עמודים מיצירות ספרות עבריות ברשות הציבור מפרויקט בן־יהודה, מתוך סריקות של המהדורות המודפסות עצמן. הטקסט אינו מנוקד.",
         "work_count": "{count:,} יצירות", "scored_lines": "{count:,} שורות שנבדקו",
         "pbyh_masked": "{masked:,} שורות שבהן המהדורה המודפסת וטקסט הייחוס שונים הוצאו מהבדיקה לכל המנועים.",
-        "pbyh_finding": "ל־{model} ({cer} שגיאות תווים) שיעור השגיאות הנמוך ביותר במערך הזה. הוא טוב מ־Google Cloud Vision (בהפרש קטן), מ־Google Document AI, מ־Tesseract ומ־Rivok PaddleOCR, ושקול סטטיסטית ל־Rivok Tesseract Lite, ל־Rivok Tesseract Full ולמודל הקודם שלנו, HeOCR old-print v1.1. זו אינה תוצאה רשומה של ביצועי שיא.",
+        "pbyh_finding": "ל־{model} ({cer} שגיאות תווים) שיעור השגיאות הנמוך ביותר במערך הזה. הוא טוב מ־Google Cloud Vision (בהפרש קטן), מ־Google Document AI, מ־Tesseract ומ־Rivok PaddleOCR, ושקול סטטיסטית ל־Rivok Tesseract Lite, ל־Rivok Tesseract Full ולמודל הקודם שלנו, HeOCR P-hist MEASURED v1.1. זו אינה תוצאה רשומה של ביצועי שיא.",
         "pbyh_refs": "טקסט הייחוס הוא טקסט הקריאה של פרויקט בן־יהודה שעבר הגהה בידי מתנדבים, ולא תעתיק דיפלומטי.",
-        "pbyh_caveat": "HeOCR literature-measured v1.0 מבוסס על כוונון נוסף של Rivok Tesseract Full, ושקול לו כאן. המודל נבחר על מערך פיתוח נפרד ונבדק על מערך זה פעם אחת. טקסטים אחרים של פרויקט בן־יהודה זמינים לציבור וייתכן שהם בנתוני האימון של כל מנוע, כולל שלנו. נתוני האימון של המנועים האחרים אינם ידועים.",
+        "pbyh_caveat": "HeOCR literature MEASURED v1.0 מבוסס על כוונון נוסף של Rivok Tesseract Full, ושקול לו כאן. המודל נבחר על מערך פיתוח נפרד ונבדק על מערך זה פעם אחת. טקסטים אחרים של פרויקט בן־יהודה זמינים לציבור וייתכן שהם בנתוני האימון של כל מנוע, כולל שלנו. נתוני האימון של המנועים האחרים אינם ידועים.",
         "pointed": "ספרות בדפוס מנוקד",
         "pointed_title": "תוצאות PBY-H v0.1 מנוקד",
         "pointed_intro": "עמודים מיצירות עבריות מנוקדות (שירה) ברשות הציבור מפרויקט בן־יהודה, מתוך סריקות של שתי מהדורות מודפסות ב־Internet Archive. טקסט הייחוס הוא הטקסט המוקלד של פרויקט בן־יהודה, עם הניקוד כפי שהוקלד שם.",
         "pointed_primary": "המדד הראשי הוא שיעור שגיאות התווים בעמוד (CER) כולל ניקוד.",
-        "pointed_finding": "Google מובילה במערך הזה: Google Document AI ({docai} שגיאות תווים) ו־Google Cloud Vision ({vision}). {model} ({cer}) טוב מהמודל הקודם שלנו, HeOCR old-print v1.1 ({v11}), ושקול סטטיסטית ל־Rivok Tesseract Full. השיפור לעומת v1.1 הוא בניקוד: באותיות בלבד השניים שקולים. זו אינה תוצאה רשומה של ביצועי שיא.",
+        "pointed_finding": "Google מובילה במערך הזה: Google Document AI ({docai} שגיאות תווים) ו־Google Cloud Vision ({vision}). {model} ({cer}) טוב מהמודל הקודם שלנו, HeOCR P-hist MEASURED v1.1 ({v11}), ושקול סטטיסטית ל־Rivok Tesseract Full. השיפור לעומת v1.1 הוא בניקוד: באותיות בלבד השניים שקולים. זו אינה תוצאה רשומה של ביצועי שיא.",
         "pointed_editions": "התוצאות מבוססות על שתי מהדורות מודפסות, ו־21 מתוך 24 העמודים מאחת מהן (כצנלסון, ורשה 1910), ולכן ייתכן שאינן מייצגות מהדורות מנוקדות אחרות.",
         "pointed_paired": "ההבדלים נבדקו בשיטת bootstrap מזווגת לפי יצירה (8 יצירות).",
         "pointed_higher": "זיהוי סימני הניקוד הוא המדד היחיד כאן שבו ערך גבוה יותר טוב יותר.",
-        "pointed_caveat": "HeOCR pointed-measured v1.0 מבוסס על כוונון נוסף של HeOCR old-print v1.1, ואיטי ממנו (חציון של 2.2 שניות לעמוד, לעומת 1.4). אף אחת משמונה היצירות אינה בנתוני הכוונון שלו. המודל נבחר על מערך פיתוח נפרד ונבדק על מערך זה פעם אחת.",
+        "pointed_caveat": "HeOCR pointed MEASURED v1.0 מבוסס על כוונון נוסף של HeOCR P-hist MEASURED v1.1, ואיטי ממנו (חציון של 2.2 שניות לעמוד, לעומת 1.4). אף אחת משמונה היצירות אינה בנתוני הכוונון שלו. המודל נבחר על מערך פיתוח נפרד ונבדק על מערך זה פעם אחת.",
         "cer_letters": "CER ללא ניקוד", "mark_recall": "זיהוי סימני ניקוד", "best_high": "השיעור הגבוה ביותר",
         "not_run": "לא נבדק",
         "not_run_reason": "זיהוי הטקסט המובנה של Google Drive לא נבדק: הממשק שלו דחה עברית כשפת זיהוי.",
@@ -346,7 +355,9 @@ def score_panel(t, panel_id, views, captures, tables, *, view_label, alternative
             notes.append(f'<p class="note benchmark-capture-note" data-score-capture-note="{capture}"{hidden}>{e(note)}</p>')
     fallback = []
     for view, title, note in views:
-        if note:
+        # A note that only repeats its own pill's label is left out (site review 2, FIX-04): the pill
+        # already says it, and the table's caption names it for screen readers.
+        if note and note != title:
             hidden = "" if view == first_view else " hidden"
             notes.append(f'<p class="note benchmark-view-note" data-score-note="{view}"{hidden}>{e(note)}</p>')
         options = []
@@ -528,7 +539,7 @@ def historical_results(t, data):
             ours = row["id"].startswith("heocr-")
             note = t["historical_model_note"] if ours else t["descriptive"] if row["descriptive"] else None
             model_url = HISTORICAL_MODEL if row["id"] == "heocr-p-hist-v1-1" else None
-            rows.append({"name": row["name"], "ours": ours, "model_url": model_url,
+            rows.append({"name": MODEL_NAMES.get(row["id"], row["name"]), "ours": ours, "model_url": model_url,
                          "note": note, "cells": text_score_cells(row[view])})
         tables[view, "pooled"] = result_table(t, f"{panel_id}-{view}-pooled", label, columns, rows)
 
@@ -537,7 +548,7 @@ def historical_results(t, data):
     def model_cer(view):
         return percentage(Fraction(model[view]["edits"], model[view]["chars"]))
 
-    finding = e(t["historical_result"]).format(model=f'<bdi>{e(model["name"])}</bdi>',
+    finding = e(t["historical_result"]).format(model=f'<bdi>{e(MODEL_NAMES.get(model["id"], model["name"]))}</bdi>',
                                               all_cer=model_cer("all"), filtered_cer=model_cer("filtered"))
     return "".join([
         f'<article class="benchmark-result" id="p-hist-open"><h3><bdi>{e(data["dataset"])}</bdi></h3>',
@@ -593,7 +604,8 @@ def pointed_results(t, data):
     columns = ("cer", "cer_letters", "wer", "mark_recall")
     rows = []
     for row in data["rows"]:
-        rows.append({"name": row["reader"], "ours": row["candidate"], "model_url": POINTED_URLS.get(row["lane"]),
+        rows.append({"name": MODEL_NAMES.get(row["lane"], row["reader"]), "ours": row["candidate"],
+                     "model_url": POINTED_URLS.get(row["lane"]),
                      "cells": [(Fraction(row[key]), "") for key in columns]})
     if data["drive_not_run"]:
         rows.append({"name": "Google Drive built-in OCR", "note": t["not_run"],
@@ -602,7 +614,7 @@ def pointed_results(t, data):
     by_lane = {row["lane"]: row for row in data["rows"]}
     model = next(row for row in data["rows"] if row["candidate"])
     finding = e(t["pointed_finding"]).format(
-        model=f'<bdi>{e(model["reader"])}</bdi>', cer=percentage(Fraction(model["cer"])),
+        model=f'<bdi>{e(MODEL_NAMES.get(model["lane"], model["reader"]))}</bdi>', cer=percentage(Fraction(model["cer"])),
         docai=percentage(Fraction(by_lane["google-docai"]["cer"])),
         vision=percentage(Fraction(by_lane["google-vision"]["cer"])),
         v11=percentage(Fraction(by_lane["heocr-v1-1"]["cer"])))

@@ -154,7 +154,7 @@ class ReleaseBuilderTest(unittest.TestCase):
         for lang, t in builder.T.items():
             output = builder.page(lang, release.validate(example()), pbyh=pbyh, pointed=pointed)
             unpointed = output.split('id="pby-h-open"', 1)[1].split("</article>", 1)[0]
-            self.assertIn(f'<a href="{builder.LITERATURE_MODEL}"><bdi>HeOCR literature-measured v1.0</bdi></a>', unpointed)
+            self.assertIn(f'<a href="{builder.LITERATURE_MODEL}"><bdi>HeOCR literature MEASURED v1.0</bdi></a>', unpointed)
             self.assertNotIn("A-full 35k", output)
             self.assertEqual(unpointed.count('<tr class="ours">'), 1)
             panel = output.split('id="pby-h-pointed"', 1)[1].split("</article>", 1)[0]
@@ -164,7 +164,7 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertIn("Google Document AI OCR", rows[0])
             # Mark recall: highest wins overall (Document AI), and the open highlight goes to HeOCR pointed.
             self.assertIn(f'91.46%</bdi><span class="benchmark-sr-only"> ({t["best_high"]})', rows[0])
-            ours = next(row for row in rows if "HeOCR pointed-measured v1.0" in row)
+            ours = next(row for row in rows if "HeOCR pointed MEASURED v1.0" in row)
             self.assertIn(f'80.09%</bdi><span class="benchmark-sr-only"> ({reader_access.BEST_OPEN_HIGH[lang]})', ours)
             self.assertIn(f'href="{builder.POINTED_MODEL}"', ours)
             self.assertNotIn("benchmark-fraction", panel)
@@ -173,7 +173,7 @@ class ReleaseBuilderTest(unittest.TestCase):
         for name, kind in (("Tesseract heb best", "open"), ("Tessdata Fast Hebrew", "open"), ("Rivok Lite", "open"),
                            ("Rivok PaddleOCR", "open"), ("Kraken 7.2 (generic recognizer)", "open"),
                            ("PaddleOCR (CUDA)", "open"), ("Qwen3-VL-2B-Instruct MLX 4-bit", "open"),
-                           ("HeOCR old-print v1.1", "open"), ("Google Document AI OCR", "paid"),
+                           ("HeOCR P-hist MEASURED v1.1 (previous)", "open"), ("Google Document AI OCR", "paid"),
                            ("Gemini (Vertex)", "paid"), ("Claude Haiku 5.5", "paid"),
                            ("Google Drive built-in OCR", "free_closed")):
             self.assertEqual(reader_access.classify(name), kind, name)
@@ -209,7 +209,7 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertEqual(fallback.count('<tr class="ours">'), 1)
             self.assertIn('id="p-hist-open-scores-filtered-pooled"', default)
             self.assertIn('id="p-hist-open-scores-all-pooled"', fallback)
-            self.assertIn(f'<a href="{builder.HISTORICAL_MODEL}"><bdi>Example historical model</bdi></a>', default)
+            self.assertIn(f'<a href="{builder.HISTORICAL_MODEL}"><bdi>HeOCR P-hist MEASURED v1.1</bdi></a>', default)
             self.assertIn('<bdi dir="ltr">2 / 8</bdi>', default)
             self.assertIn('<bdi dir="ltr">1 / 10</bdi>', fallback)
             self.assertIn(f'<bdi>Example historical API</bdi>{UNKNOWN}'
