@@ -585,12 +585,12 @@
     },
     {
       "id": "HeOCR/hebrew-print-line-pairs",
-      "revision": "be8f68ef74e0f79e4896e5887ee1d2455528811e",
+      "revision": "dca089016e6cc389997b533cbf5cee4fcc3df2a3",
       "group": "real",
       "title": "Hebrew print line pairs",
       "description": {
-        "en": "Scanned Hebrew print with aligned transcriptions from books, Vilna Talmud regions and historical periodicals.",
-        "he": "שורות מדפוס עברי סרוק לצד תעתיקים תואמים, מספרים, מתלמוד וילנה ומכתבי עת היסטוריים."
+        "en": "Scanned Hebrew print, unpointed and pointed, with aligned transcriptions from books, the Vilna Talmud and historical periodicals. Gemara text: Hebrew Wikisource contributors via Sefaria (CC BY-SA 4.0).",
+        "he": "שורות מדפוס עברי סרוק, מנוקד ולא מנוקד, לצד תעתיקים תואמים, מספרים, מתלמוד וילנה ומכתבי עת היסטוריים. טקסט הגמרא: תורמי ויקיטקסט העברית דרך ספריא (CC BY-SA 4.0)."
       },
       "license": "cc-by-sa-4.0",
       "access": "public",
@@ -618,16 +618,20 @@
         {
           "id": "10.5281/zenodo.24600092",
           "label": "v2-p4"
+        },
+        {
+          "id": "10.5281/zenodo.24615586",
+          "label": "v2-p6"
         }
       ],
       "counts": {
         "documents": null,
         "pages": null,
-        "images": 142003,
-        "lines": 142003,
+        "images": 273393,
+        "lines": 273393,
         "words": null,
         "characters": null,
-        "bytes": 3881268428
+        "bytes": 6931035636
       },
       "partial_pages": {
         "count": 352,
