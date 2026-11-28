@@ -23,6 +23,10 @@ HOSTED_56_SHA256 = "deb3ef1174df5982ba607e4b53b76a3557a3594acddfdb84b258a5f07979
 # PUBLIC_ROW_PBYH_V0_LITERATURE.md 5bbb479e; score #1942, registration #1941 on set #1880).
 PBYH_V0 = ROOT / "benchmarks" / "pby-h-v0-arm-a-public-scores.json"
 PBYH_V0_SHA256 = "6f13131433e6db5e91db1492130cb68e1a03be1d0b17cfabe5e5bf454c51f724"
+# PBY-H v1 unpointed stratum, approved draft rows (eval, HeOCR/heocr-restricted-eval PR 2046,
+# PUBLIC_ROW_PBYH_V1_U.md 6b390c31): version B decides, sealed version A beside it. The pointed stratum is held.
+PBYH_V1 = ROOT / "benchmarks" / "pby-h-v1-unpointed-public-scores.json"
+PBYH_V1_SHA256 = "b1290164ee555af304f9c1c364f70314925cb670e2b1c347c93457ffb858a23e"
 # PBY-H v0.1 stratum P (pointed) rows with HeOCR pointed-measured v1.0 (eval restricted-eval#1969,
 # PUBLIC_ROW_PBYH_V01_POINTED.md 5793fe47; score #1964, registration #1958 on set #1898).
 PBYH_POINTED = ROOT / "benchmarks" / "pby-h-v01-arm-c-public-scores.json"
@@ -53,7 +57,8 @@ def main():
             raise ValueError("Historical aggregate SHA-256 mismatch")
         historical = json.loads(historical_raw)
         leaderboard = leaderboard_results.read_results(LEADERBOARD)
-        pbyh = benchmark_release_data.load_pbyh(PBYH_V0, PBYH_V0_SHA256)
+        pbyh_v0 = benchmark_release_data.load_pbyh(PBYH_V0, PBYH_V0_SHA256)
+        pbyh = benchmark_release_data.load_pbyh_v1(PBYH_V1, PBYH_V1_SHA256)
         pointed = benchmark_release_data.load_pbyh_pointed(PBYH_POINTED, PBYH_POINTED_SHA256)
         hosted = benchmark_release_data.load_hosted(HOSTED_56, HOSTED_56_SHA256)
     except (OSError, ValueError) as exc:
@@ -61,7 +66,7 @@ def main():
     api_rows = tuple(row for row in leaderboard["rows"] if "diagnostic" in row)
     stale = build_release_benchmark.write_pages(
         ROOT, data, public_pages=31, check=args.check, historical=historical, api_rows=api_rows, pbyh=pbyh, hosted=hosted,
-        strict=True, pointed=pointed,
+        strict=True, pointed=pointed, pbyh_v0=pbyh_v0,
     )
     if stale:
         parser.error("Out of date: " + ", ".join(stale) + ". Run python3 scripts/build_benchmarks.py.")
