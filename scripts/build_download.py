@@ -45,13 +45,14 @@ QUICK_START = (
     "tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3"
 )
 # The heocr package from PyPI (lead, 2026-11-28: heocr 0.3.0 release). `--download-model auto` fetches the four
-# measured models once (sha256 checked); `--ocr-model auto` then routes each document among them, offline.
+# measured models once (sha256 checked). 0.3.0 reads with heocr_modern_measured by default; `--ocr-model auto`
+# is opt-in and experimental (lead, 2026-11-28).
 PACKAGE_VERSION = "0.3.0"
 PACKAGE_REPO = "https://github.com/HeOCR/heocr"
 PACKAGE_PYPI = f"https://pypi.org/project/heocr/{PACKAGE_VERSION}/"
 PACKAGE_INSTALL = ("pip install heocr\n"
                    "heocr --download-model auto\n"
-                   "heocr file.pdf --ocr-model auto -o out.txt")
+                   "heocr file.pdf -o out.txt")
 TESSERACT = "https://github.com/tesseract-ocr/tesseract"
 T = {
     "en": {
@@ -70,7 +71,8 @@ T = {
         "variants": "MEASURED or FULL?",
         "variants_text": "MEASURED is the version our published held-out numbers belong to. FULL was also trained on our public test-set pages, so it has no independent score. It may be slightly stronger on similar material; this is not measured.",
         "package_text": "The heocr Python package reads a whole document (PDF, Word files and scans) and picks the right tool for each part. It needs Python 3.11 or later, and Tesseract 5 to read scans.",
-        "package_install": "Install it from PyPI, then download HeOCR’s four measured models once (about 23 MB; each is checked against its pinned SHA-256). After that, --ocr-model auto picks a model for each document and reads offline.",
+        "package_install": "Install it from PyPI, then download HeOCR’s four measured models once (about 23 MB; each is checked against its pinned SHA-256). It then reads offline, with HeOCR modern MEASURED v1.0 by default.",
+        "package_models": "For other print, choose the model: --ocr-model old-print, modern-literature or pointed. --ocr-model auto chooses for each document; it is experimental.",
         "package_repo": "HeOCR/heocr on GitHub",
         "quick_start": "Quick start",
         "advanced": "Advanced: use the traineddata directly",
@@ -111,7 +113,8 @@ T = {
         "variants": "MEASURED או FULL?",
         "variants_text": "MEASURED היא הגרסה שאליה שייכות התוצאות שפרסמנו על מערכי המבחן. FULL אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי. ייתכן שהיא מעט חזקה יותר על חומר דומה, אבל זה לא נמדד.",
         "package_text": "חבילת הפייתון heocr קוראת מסמך שלם (PDF, קובצי Word וסריקות) ובוחרת את הכלי המתאים לכל חלק בו. היא דורשת Python 3.11 ומעלה, ו־Tesseract 5 לקריאת סריקות.",
-        "package_install": "התקינו אותה מ־PyPI, ואז הורידו פעם אחת את ארבעת המודלים המדודים של HeOCR (כ־23 MB; כל אחד נבדק מול ה־SHA-256 הקבוע שלו). מאז, ‎--ocr-model auto בוחר מודל לכל מסמך וקורא בלי אינטרנט.",
+        "package_install": "התקינו אותה מ־PyPI, ואז הורידו פעם אחת את ארבעת המודלים המדודים של HeOCR (כ־23 MB; כל אחד נבדק מול ה־SHA-256 הקבוע שלו). מאז היא קוראת בלי אינטרנט, וכברירת מחדל עם HeOCR modern MEASURED v1.0.",
+        "package_models": "לדפוס מסוג אחר בחרו מודל: ‎--ocr-model old-print, ‏modern-literature או pointed. ‏‎--ocr-model auto בוחר מודל לכל מסמך, והוא ניסיוני.",
         "package_repo": "HeOCR/heocr ב־GitHub",
         "quick_start": "התחלה מהירה",
         "advanced": "מתקדם: שימוש ישיר בקובצי traineddata",
@@ -169,6 +172,7 @@ def page(lang: str) -> str:
         + f'<section id="choose">\n<h2>{text["compass"]}</h2>\n<ul class="compass">\n{compass}</ul>\n</section>\n'
         + f'<section id="quick-start">\n<h2>{text["quick_start"]}</h2>\n<p>{text["package_text"]}</p>\n'
           f'<p>{text["package_install"]}</p>\n<pre class="quick-start"><code>{escape(PACKAGE_INSTALL)}</code></pre>\n'
+          f'<p>{text["package_models"]}</p>\n'
           f'<p><a href="{PACKAGE_PYPI}">PyPI</a> · <a href="{PACKAGE_REPO}">{text["package_repo"]}</a></p>\n</section>\n'
         + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n'
           f'<h3 id="variants">{text["variants"]}</h3>\n<p>{text["variants_text"]}</p>\n</section>\n'
