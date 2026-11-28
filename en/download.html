@@ -58,12 +58,13 @@
 </section>
 <section id="quick-start">
 <h2>Quick start</h2>
-<p>With <a href="https://github.com/tesseract-ocr/tesseract">Tesseract 5</a> and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.</p>
-<pre class="quick-start"><code>mkdir -p tessdata
-curl -fL -o tessdata/phist_v2.traineddata \
-  https://huggingface.co/HeOCR/heocr-p-hist-measured/resolve/v1.1/phist_v2.traineddata
-tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre>
-<p class="note">The file for HeOCR P-hist MEASURED v1.1 is named phist_v2.traineddata; the release version is v1.1.</p>
+<p>The heocr Python package reads a whole document (PDF, Word files and scans) and picks the right tool for each part. It needs Python 3.11 or later, and Tesseract 5 to read scans.</p>
+<p>Install it from PyPI, then download HeOCR’s four measured models once (about 23 MB; each is checked against its pinned SHA-256). It then reads offline, with the default modern-print model.</p>
+<pre class="quick-start"><code>pip install heocr
+heocr --download-model auto
+heocr file.pdf -o out.txt</code></pre>
+<p>For other print, choose the model: --ocr-model old-print, modern-literature or pointed. --ocr-model auto chooses for each document; it is experimental.</p>
+<p><a href="https://pypi.org/project/heocr/0.3.0/">PyPI</a> · <a href="https://github.com/HeOCR/heocr">HeOCR/heocr on GitHub</a></p>
 </section>
 <section id="models">
 <h2>OCR models</h2>
@@ -79,14 +80,14 @@ tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre
 <h3 id="variants">MEASURED or FULL?</h3>
 <p>MEASURED is the version our published held-out numbers belong to. FULL was also trained on our public test-set pages, so it has no independent score. It may be slightly stronger on similar material; this is not measured.</p>
 </section>
-<section id="package">
-<h2>For developers: the heocr package</h2>
-<p>heocr reads a whole document (PDF, Word files and scans) and picks the right tool for each part. It is in development: it is not on PyPI and has no release yet.</p>
-<p>Today it installs from GitHub. One explicit download (about 23 MB) then fetches HeOCR’s four measured models, each checked against its pinned SHA-256. After that, --ocr-model auto picks a model for each document and reads offline.</p>
-<pre class="quick-start"><code>pip install git+https://github.com/HeOCR/heocr
-heocr --download-model auto
-heocr page.png --ocr-model auto -o out.txt</code></pre>
-<p><a href="https://github.com/HeOCR/heocr">HeOCR/heocr on GitHub</a></p>
+<section id="tesseract">
+<h2>Advanced: use the traineddata directly</h2>
+<p>With <a href="https://github.com/tesseract-ocr/tesseract">Tesseract 5</a> and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.</p>
+<pre class="quick-start"><code>mkdir -p tessdata
+curl -fL -o tessdata/phist_v2.traineddata \
+  https://huggingface.co/HeOCR/heocr-p-hist-measured/resolve/v1.1/phist_v2.traineddata
+tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre>
+<p class="note">The file for HeOCR P-hist MEASURED v1.1 is named phist_v2.traineddata; the release version is v1.1.</p>
 </section>
 <p>HeOCR’s handwriting models are still experimental. <a href="benchmarks.html">See all benchmarks</a></p>
 <section id="apps">

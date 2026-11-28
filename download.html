@@ -58,12 +58,13 @@
 </section>
 <section id="quick-start">
 <h2>התחלה מהירה</h2>
-<p>התקינו <a href="https://github.com/tesseract-ocr/tesseract">Tesseract 5</a> ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.</p>
-<pre class="quick-start"><code>mkdir -p tessdata
-curl -fL -o tessdata/phist_v2.traineddata \
-  https://huggingface.co/HeOCR/heocr-p-hist-measured/resolve/v1.1/phist_v2.traineddata
-tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre>
-<p class="note">הקובץ של HeOCR P-hist MEASURED v1.1 נקרא phist_v2.traineddata, וגרסת השחרור היא v1.1.</p>
+<p>חבילת הפייתון heocr קוראת מסמך שלם (PDF, קובצי Word וסריקות) ובוחרת את הכלי המתאים לכל חלק בו. היא דורשת Python 3.11 ומעלה, ו־Tesseract 5 לקריאת סריקות.</p>
+<p>התקינו אותה מ־PyPI, ואז הורידו פעם אחת את ארבעת המודלים המדודים של HeOCR (כ־23 MB; כל אחד נבדק מול ה־SHA-256 הקבוע שלו). מאז היא קוראת בלי אינטרנט, עם מודל ברירת המחדל לדפוס מודרני.</p>
+<pre class="quick-start"><code>pip install heocr
+heocr --download-model auto
+heocr file.pdf -o out.txt</code></pre>
+<p>לדפוס מסוג אחר בחרו מודל: ‎--ocr-model old-print, ‏modern-literature או pointed. ‏‎--ocr-model auto בוחר מודל לכל מסמך, והוא ניסיוני.</p>
+<p><a href="https://pypi.org/project/heocr/0.3.0/">PyPI</a> · <a href="https://github.com/HeOCR/heocr">HeOCR/heocr ב־GitHub</a></p>
 </section>
 <section id="models">
 <h2>מודלים לזיהוי תווים</h2>
@@ -79,14 +80,14 @@ tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre
 <h3 id="variants">MEASURED או FULL?</h3>
 <p>MEASURED היא הגרסה שאליה שייכות התוצאות שפרסמנו על מערכי המבחן. FULL אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי. ייתכן שהיא מעט חזקה יותר על חומר דומה, אבל זה לא נמדד.</p>
 </section>
-<section id="package">
-<h2>למפתחים: החבילה heocr</h2>
-<p>heocr קוראת מסמך שלם (PDF, קובצי Word וסריקות) ובוחרת את הכלי המתאים לכל חלק בו. החבילה בפיתוח: היא עוד לא ב־PyPI ואין לה גרסה משוחררת.</p>
-<p>בינתיים אפשר להתקין אותה מ־GitHub. אחר כך הורדה מפורשת אחת (כ־23 MB) מביאה את ארבעת המודלים המדודים של HeOCR, וכל אחד מהם נבדק מול ה־SHA-256 הקבוע שלו. מאז, ‎--ocr-model auto בוחר מודל לכל מסמך וקורא בלי אינטרנט.</p>
-<pre class="quick-start"><code>pip install git+https://github.com/HeOCR/heocr
-heocr --download-model auto
-heocr page.png --ocr-model auto -o out.txt</code></pre>
-<p><a href="https://github.com/HeOCR/heocr">HeOCR/heocr ב־GitHub</a></p>
+<section id="tesseract">
+<h2>מתקדם: שימוש ישיר בקובצי traineddata</h2>
+<p>התקינו <a href="https://github.com/tesseract-ocr/tesseract">Tesseract 5</a> ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.</p>
+<pre class="quick-start"><code>mkdir -p tessdata
+curl -fL -o tessdata/phist_v2.traineddata \
+  https://huggingface.co/HeOCR/heocr-p-hist-measured/resolve/v1.1/phist_v2.traineddata
+tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre>
+<p class="note">הקובץ של HeOCR P-hist MEASURED v1.1 נקרא phist_v2.traineddata, וגרסת השחרור היא v1.1.</p>
 </section>
 <p>המודלים של HeOCR לכתב יד עדיין ניסיוניים. <a href="benchmarks.html">לכל מדדי ההערכה</a></p>
 <section id="apps">

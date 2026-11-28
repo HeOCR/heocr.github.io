@@ -50,7 +50,7 @@ HOME = {
         "start": "How to use HeOCR",
         "start_cards": (
             ("No code: the desktop app", "An offline app for macOS and Windows that reads Hebrew documents on your own computer, without uploading them. In development.", "download.html#apps", "Follow its release"),
-            ("For developers and researchers", "Run the models directly in Tesseract 5, or try the heocr Python package, which is in development.", "download.html#quick-start", "Quick start"),
+            ("For developers and researchers", "Install heocr from PyPI (pip install heocr), download the four models once, and read PDFs, Word files and scans. Or use the models directly in Tesseract 5.", "download.html#quick-start", "Quick start"),
         ),
         "code": "Code",
         "groups": (
@@ -98,7 +98,7 @@ HOME = {
         "start": "איך משתמשים ב־HeOCR",
         "start_cards": (
             ("בלי קוד: אפליקציה למחשב", "אפליקציה ל־macOS ול־Windows שקוראת מסמכים בעברית במחשב שלכם, בלי אינטרנט ובלי להעלות אותם לשום מקום. בפיתוח.", "download.html#apps", "מעקב אחרי השחרור"),
-            ("למפתחים ולחוקרים", "הריצו את המודלים ישירות ב־Tesseract 5, או נסו את חבילת הפייתון heocr, שנמצאת בפיתוח.", "download.html#quick-start", "התחלה מהירה"),
+            ("למפתחים ולחוקרים", "התקינו את heocr מ־PyPI ‏(pip install heocr), הורידו פעם אחת את ארבעת המודלים, וקראו קובצי PDF, קובצי Word וסריקות. אפשר גם להשתמש במודלים ישירות ב־Tesseract 5.", "download.html#quick-start", "התחלה מהירה"),
         ),
         "code": "קוד",
         "groups": (
