@@ -44,13 +44,14 @@ QUICK_START = (
     f"  {MODEL_HUB}/resolve/{QUICK_START_VERSION}/phist_v2.traineddata\n"
     "tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3"
 )
-# The heocr package as it installs today (site review 2, ARCH-03 / COPY-08), checked 2026-11-28 at heocr
-# af7acf0 (heocr#264): not on PyPI, no release. A GitHub install plus `--download-model auto` fetches the four
-# measured models (sha256 checked); `--ocr-model auto` then reads offline. Without it, stock heb reads.
+# The heocr package from PyPI (lead, 2026-11-28: heocr 0.3.0 release). `--download-model auto` fetches the four
+# measured models once (sha256 checked); `--ocr-model auto` then routes each document among them, offline.
+PACKAGE_VERSION = "0.3.0"
 PACKAGE_REPO = "https://github.com/HeOCR/heocr"
-PACKAGE_INSTALL = (f"pip install git+{PACKAGE_REPO}\n"
+PACKAGE_PYPI = f"https://pypi.org/project/heocr/{PACKAGE_VERSION}/"
+PACKAGE_INSTALL = ("pip install heocr\n"
                    "heocr --download-model auto\n"
-                   "heocr page.png --ocr-model auto -o out.txt")
+                   "heocr file.pdf --ocr-model auto -o out.txt")
 TESSERACT = "https://github.com/tesseract-ocr/tesseract"
 T = {
     "en": {
@@ -68,11 +69,11 @@ T = {
         "why_pointed": "Lowest error among the open readers we measured, statistically level with Rivok Tesseract Full, on a small set (8 works). Google’s readers are more accurate.",
         "variants": "MEASURED or FULL?",
         "variants_text": "MEASURED is the version our published held-out numbers belong to. FULL was also trained on our public test-set pages, so it has no independent score. It may be slightly stronger on similar material; this is not measured.",
-        "package": "For developers: the heocr package",
-        "package_text": "heocr reads a whole document (PDF, Word files and scans) and picks the right tool for each part. It is in development: it is not on PyPI and has no release yet.",
-        "package_install": "Today it installs from GitHub. One explicit download (about 23 MB) then fetches HeOCR’s four measured models, each checked against its pinned SHA-256. After that, --ocr-model auto picks a model for each document and reads offline.",
+        "package_text": "The heocr Python package reads a whole document (PDF, Word files and scans) and picks the right tool for each part. It needs Python 3.11 or later, and Tesseract 5 to read scans.",
+        "package_install": "Install it from PyPI, then download HeOCR’s four measured models once (about 23 MB; each is checked against its pinned SHA-256). After that, --ocr-model auto picks a model for each document and reads offline.",
         "package_repo": "HeOCR/heocr on GitHub",
         "quick_start": "Quick start",
+        "advanced": "Advanced: use the traineddata directly",
         "quick_start_file": "The file for HeOCR P-hist MEASURED v1.1 is named phist_v2.traineddata; the release version is v1.1.",
         "instructions": "With Tesseract 5 and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.",
         "experimental": "HeOCR’s handwriting models are still experimental.",
@@ -109,11 +110,11 @@ T = {
         "why_pointed": "שיעור השגיאות הנמוך ביותר מבין המנועים הפתוחים שבדקנו, שקול סטטיסטית ל־Rivok Tesseract Full, במערך קטן (8 יצירות). המנועים של Google מדויקים יותר.",
         "variants": "MEASURED או FULL?",
         "variants_text": "MEASURED היא הגרסה שאליה שייכות התוצאות שפרסמנו על מערכי המבחן. FULL אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי. ייתכן שהיא מעט חזקה יותר על חומר דומה, אבל זה לא נמדד.",
-        "package": "למפתחים: החבילה heocr",
-        "package_text": "heocr קוראת מסמך שלם (PDF, קובצי Word וסריקות) ובוחרת את הכלי המתאים לכל חלק בו. החבילה בפיתוח: היא עוד לא ב־PyPI ואין לה גרסה משוחררת.",
-        "package_install": "בינתיים אפשר להתקין אותה מ־GitHub. אחר כך הורדה מפורשת אחת (כ־23 MB) מביאה את ארבעת המודלים המדודים של HeOCR, וכל אחד מהם נבדק מול ה־SHA-256 הקבוע שלו. מאז, ‎--ocr-model auto בוחר מודל לכל מסמך וקורא בלי אינטרנט.",
+        "package_text": "חבילת הפייתון heocr קוראת מסמך שלם (PDF, קובצי Word וסריקות) ובוחרת את הכלי המתאים לכל חלק בו. היא דורשת Python 3.11 ומעלה, ו־Tesseract 5 לקריאת סריקות.",
+        "package_install": "התקינו אותה מ־PyPI, ואז הורידו פעם אחת את ארבעת המודלים המדודים של HeOCR (כ־23 MB; כל אחד נבדק מול ה־SHA-256 הקבוע שלו). מאז, ‎--ocr-model auto בוחר מודל לכל מסמך וקורא בלי אינטרנט.",
         "package_repo": "HeOCR/heocr ב־GitHub",
         "quick_start": "התחלה מהירה",
+        "advanced": "מתקדם: שימוש ישיר בקובצי traineddata",
         "quick_start_file": "הקובץ של HeOCR P-hist MEASURED v1.1 נקרא phist_v2.traineddata, וגרסת השחרור היא v1.1.",
         "instructions": "התקינו Tesseract 5 ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.",
         "experimental": "המודלים של HeOCR לכתב יד עדיין ניסיוניים.",
@@ -166,15 +167,15 @@ def page(lang: str) -> str:
         + '<main id="main" class="wrap doc">\n'
         + shell.page_head(text["title"], f'<p class="lede">{text["about"]}</p>')
         + f'<section id="choose">\n<h2>{text["compass"]}</h2>\n<ul class="compass">\n{compass}</ul>\n</section>\n'
-        + f'<section id="quick-start">\n<h2>{text["quick_start"]}</h2>\n'
+        + f'<section id="quick-start">\n<h2>{text["quick_start"]}</h2>\n<p>{text["package_text"]}</p>\n'
+          f'<p>{text["package_install"]}</p>\n<pre class="quick-start"><code>{escape(PACKAGE_INSTALL)}</code></pre>\n'
+          f'<p><a href="{PACKAGE_PYPI}">PyPI</a> · <a href="{PACKAGE_REPO}">{text["package_repo"]}</a></p>\n</section>\n'
+        + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n'
+          f'<h3 id="variants">{text["variants"]}</h3>\n<p>{text["variants_text"]}</p>\n</section>\n'
+        + f'<section id="tesseract">\n<h2>{text["advanced"]}</h2>\n'
           f'<p>{text["instructions"].replace("Tesseract 5", f'<a href="{TESSERACT}">Tesseract 5</a>', 1)}</p>\n'
           f'<pre class="quick-start"><code>{escape(QUICK_START)}</code></pre>\n'
           f'<p class="note">{text["quick_start_file"]}</p>\n</section>\n'
-        + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n'
-          f'<h3 id="variants">{text["variants"]}</h3>\n<p>{text["variants_text"]}</p>\n</section>\n'
-        + f'<section id="package">\n<h2>{text["package"]}</h2>\n<p>{text["package_text"]}</p>\n'
-          f'<p>{text["package_install"]}</p>\n<pre class="quick-start"><code>{escape(PACKAGE_INSTALL)}</code></pre>\n'
-          f'<p><a href="{PACKAGE_REPO}">{text["package_repo"]}</a></p>\n</section>\n'
         + f'<p>{text["experimental"]} <a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
         + f'<section id="apps">\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n'
           f'<p><a href="code-signing.html">{text["code_signing"]}</a> · <a href="privacy.html">{text["privacy"]}</a></p>\n</section>\n'
