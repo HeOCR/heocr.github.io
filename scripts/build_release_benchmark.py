@@ -16,6 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 e = html.escape
 DATASET = "https://huggingface.co/datasets/HeOCR/p-mod-open-v0"
 HISTORICAL_MODEL = "https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.1"
+MODERN_MODEL = "https://huggingface.co/HeOCR/heocr-modern-measured/tree/v1.0"
+MODERN_MODEL_ID = "heocr-modern-capture-1k"
 T = {
     "en": {
         "title": "HeOCR benchmarks", "lede": "A comparison of Hebrew OCR engines on real documents set aside for testing.",
@@ -40,7 +42,7 @@ T = {
             ("all", "All reference text", "Scores every eligible line in the reference text ({eligible} of {total} lines)."),
         ),
         "historical_result": "{model} led the registered comparators in both views, with {all_cer} CER across all eligible text and {filtered_cer} after filtering.",
-        "modern_model_note": "(experimental, not released)",
+        "modern_model_note": "Modern unpointed print",
         "historical_model_note": "Historical unpointed print",
         "api_capture": "Images scored",
         "api_alternatives": "Results for artwork-masked images",
@@ -126,7 +128,7 @@ T = {
             ("all", "כל טקסט הייחוס", "בודקים את כל השורות הכשירות בטקסט הייחוס ({eligible} מתוך {total})."),
         ),
         "historical_result": "{model} הוביל בשתי ההשוואות שנרשמו מראש עם {all_cer} שגיאות תווים בכל הטקסט הכשיר ו־{filtered_cer} לאחר סינון.",
-        "modern_model_note": "(ניסיוני, טרם פורסם)",
+        "modern_model_note": "לדפוס מודרני ללא ניקוד",
         "historical_model_note": "לדפוס היסטורי ללא ניקוד",
         "api_capture": "תמונות שנבדקו",
         "api_alternatives": "תוצאות לתמונות שבהן הוסתרו סמלים",
@@ -354,8 +356,8 @@ def modern_rows(t, group, winner):
         cells = [*text_score_cells(row), error_rate(row["missed_numbers"], row["ref_numbers"])]
         result = {"name": row["reader"], "cells": cells}
         if reader == winner:
-            if reader == "heocr-modern-1":
-                result["name"] = "HeOCR Modern v1"
+            if reader == MODERN_MODEL_ID:
+                result.update(name="HeOCR modern MEASURED v1.0", model_url=MODERN_MODEL)
             result.update(ours=True, note=t["modern_model_note"])
         rows.append(result)
     return rows
