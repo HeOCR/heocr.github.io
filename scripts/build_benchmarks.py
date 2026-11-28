@@ -19,9 +19,14 @@ PUBLISHED_V0_SHA256 = "98e8db900e77ef9bc05edab39c66c1fc04f8dc676cbb36f357d0e7e54
 # Hosted readers on the 56 original-equivalent C1 inputs (eval #1937, build_hosted_scores.py 05283760); Shay approved.
 HOSTED_56 = ROOT / "benchmarks" / "c1-hosted-56-public-scores.json"
 HOSTED_56_SHA256 = "deb3ef1174df5982ba607e4b53b76a3557a3594acddfdb84b258a5f0797901c2"
-# PBY-H v0 stratum U public rows (eval #1937; score receipt #1895, registration #1880).
-PBYH_V0 = ROOT / "benchmarks" / "pby-h-v0-public-scores.json"
-PBYH_V0_SHA256 = "264d77050f162dd1dcf913494df79a66099658122a446e1180ef9e2a180133c6"
+# PBY-H v0 stratum U public rows with HeOCR literature-measured v1.0 (eval restricted-eval#1969,
+# PUBLIC_ROW_PBYH_V0_LITERATURE.md 5bbb479e; score #1942, registration #1941 on set #1880).
+PBYH_V0 = ROOT / "benchmarks" / "pby-h-v0-arm-a-public-scores.json"
+PBYH_V0_SHA256 = "6f13131433e6db5e91db1492130cb68e1a03be1d0b17cfabe5e5bf454c51f724"
+# PBY-H v0.1 stratum P (pointed) rows with HeOCR pointed-measured v1.0 (eval restricted-eval#1969,
+# PUBLIC_ROW_PBYH_V01_POINTED.md 5793fe47; score #1964, registration #1958 on set #1898).
+PBYH_POINTED = ROOT / "benchmarks" / "pby-h-v01-arm-c-public-scores.json"
+PBYH_POINTED_SHA256 = "360f8bcfcc3be59c7caa8a361f723ca43413b7d326605cc65525038a5ed706f9"
 
 # Counted once per source page from the published manifest at HF revision
 # 54d637d0. Manifest SHA-256 f173417a49f960f8bdd2bf9950a9e676d2070aeb6d6a3b0066887af6a11190.
@@ -49,13 +54,14 @@ def main():
         historical = json.loads(historical_raw)
         leaderboard = leaderboard_results.read_results(LEADERBOARD)
         pbyh = benchmark_release_data.load_pbyh(PBYH_V0, PBYH_V0_SHA256)
+        pointed = benchmark_release_data.load_pbyh_pointed(PBYH_POINTED, PBYH_POINTED_SHA256)
         hosted = benchmark_release_data.load_hosted(HOSTED_56, HOSTED_56_SHA256)
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
     api_rows = tuple(row for row in leaderboard["rows"] if "diagnostic" in row)
     stale = build_release_benchmark.write_pages(
         ROOT, data, public_pages=31, check=args.check, historical=historical, api_rows=api_rows, pbyh=pbyh, hosted=hosted,
-        strict=True,
+        strict=True, pointed=pointed,
     )
     if stale:
         parser.error("Out of date: " + ", ".join(stale) + ". Run python3 scripts/build_benchmarks.py.")

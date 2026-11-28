@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Download HeOCR</title>
-<meta name="description" content="HeOCR P-hist v1.1 is available now for historical, unpointed Hebrew print. Apache 2.0.">
+<meta name="description" content="HeOCR models are available now for historical unpointed print (P-hist v1.1), unpointed literary print (literature v1.0) and pointed literary print (pointed v1.0). Apache 2.0.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Noto+Sans+Hebrew:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HeOCR">
 <meta property="og:title" content="Download HeOCR">
-<meta property="og:description" content="HeOCR P-hist v1.1 is available now for historical, unpointed Hebrew print. Apache 2.0.">
+<meta property="og:description" content="HeOCR models are available now for historical unpointed print (P-hist v1.1), unpointed literary print (literature v1.0) and pointed literary print (pointed v1.0). Apache 2.0.">
 <meta property="og:url" content="https://heocr.org/en/download.html">
 <meta property="og:image" content="https://heocr.org/og-image-en-1200x630.png">
 <meta property="og:image:width" content="1200">
@@ -45,7 +45,7 @@
 <main id="main" class="wrap doc">
 <div class="band gridband"><div class="wrap page-head">
 <h1><span class="bb" data-tag="h1 · 0.99">Download HeOCR</span></h1>
-<p class="lede">HeOCR P-hist v1.1 is available now for historical, unpointed Hebrew print. Apache 2.0.</p>
+<p class="lede">HeOCR models are available now for historical unpointed print (P-hist v1.1), unpointed literary print (literature v1.0) and pointed literary print (pointed v1.0). Apache 2.0.</p>
 </div></div>
 <section id="quick-start">
 <h2>Quick start</h2>
@@ -58,6 +58,8 @@ tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre
 <section id="models">
 <h2>OCR models</h2>
 <div class="grid">
+<div class="card" id="literature-v10"><h3><bdi dir="ltr">HeOCR literature MEASURED v1.0</bdi></h3><p>Unpointed literary print. Evaluated on the PBY-H v0 held-out set.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-literature-measured/tree/v1.0">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24620176">Zenodo</a><a href="benchmarks.html#pby-h-open">PBY-H held-out result</a></div></div>
+<div class="card" id="pointed-v10"><h3><bdi dir="ltr">HeOCR pointed MEASURED v1.0</bdi></h3><p>Pointed (niqqud) literary print. Evaluated on the PBY-H v0.1 pointed held-out set, where Google’s readers score better.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-pointed-measured/tree/v1.0">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24620184">Zenodo</a><a href="benchmarks.html#pby-h-pointed">PBY-H pointed held-out result</a></div></div>
 <div class="card" id="phist-v11"><h3><bdi dir="ltr">HeOCR P-hist MEASURED v1.1</bdi></h3><p>Best / Latest. Evaluated on the C2 held-out set.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.1">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24581274">Zenodo</a><a href="benchmarks.html#p-hist-open-scores-filtered-pooled">C2 held-out result</a></div></div>
 <div class="card" id="phist-v10"><h3><bdi dir="ltr">HeOCR P-hist MEASURED v1.0</bdi></h3><p>Previous version. Evaluated on the C2 held-out set.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.0">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24578440">Zenodo</a><a href="https://huggingface.co/HeOCR/heocr-p-hist-measured/blob/v1.0/README.md#held-out-evaluation-old-printed-hebrew-unpointed">C2 held-out result</a></div></div>
 <div class="card" id="phist-full-v11"><h3><bdi dir="ltr">HeOCR P-hist FULL v1.1-full</bdi></h3><p>Trained with additional data. This variant is unmeasured.</p><div class="row"><a href="https://huggingface.co/HeOCR/heocr-p-hist-full/tree/v1.1-full">Hugging Face</a><a href="https://doi.org/10.5281/zenodo.24586339">Zenodo</a></div></div>

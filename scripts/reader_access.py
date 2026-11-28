@@ -28,20 +28,21 @@ LEGEND = {
         "open": "open-source code or open weights that run locally at no cost.",
         "free_closed": "a hosted service available at no charge; code and weights are not published.",
         "paid": "a hosted cloud service billed per use.",
-        "best": "lowest error in the column.",
-        "best_open": "lowest error among open readers, where that is not also the lowest overall.",
+        "best": "best score in the column (lowest error, or highest mark recall).",
+        "best_open": "best score among open readers, where that is not also the best overall.",
     },
     "he": {
         "title": "סוגי מנועים",
         "open": "קוד פתוח או משקולות פתוחות, שאפשר להריץ באופן מקומי ללא תשלום.",
         "free_closed": "שירות מקוון ללא תשלום. הקוד והמשקולות אינם מפורסמים.",
         "paid": "שירות ענן מקוון בתשלום לפי שימוש.",
-        "best": "שיעור השגיאות הנמוך ביותר בעמודה.",
-        "best_open": "שיעור השגיאות הנמוך ביותר בין המנועים הפתוחים, כשהוא אינו גם הנמוך ביותר בעמודה.",
+        "best": "התוצאה הטובה ביותר בעמודה (שיעור השגיאות הנמוך ביותר, או זיהוי הניקוד הגבוה ביותר).",
+        "best_open": "התוצאה הטובה ביותר בין המנועים הפתוחים, כשהיא אינה גם הטובה ביותר בעמודה.",
     },
 }
 BEST_OPEN = {"en": "Lowest error among open readers", "he": "שיעור השגיאות הנמוך ביותר בין המנועים הפתוחים"}
-SWATCH = {"en": ("Lowest", "Lowest open"), "he": ("הנמוך ביותר", "הנמוך בין הפתוחים")}
+BEST_OPEN_HIGH = {"en": "Highest among open readers", "he": "השיעור הגבוה ביותר בין המנועים הפתוחים"}
+SWATCH = {"en": ("Best", "Best open"), "he": ("הטוב ביותר", "הטוב בין הפתוחים")}
 
 
 def classify(name):

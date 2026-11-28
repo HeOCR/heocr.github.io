@@ -192,7 +192,10 @@ def load_pbyh(path: Path, sha256: str):
         count(data[key], key, minimum=0)
     readers = [pbyh_reader(row) for row in data["readers"]]
     scored = [row for row in readers if row["status"] == "scored"]
-    require(sum(row["id"].startswith("heocr-") for row in scored) == 1, "one HeOCR row")
+    require(sum(row["id"].startswith("heocr-") and row["paired"] is None for row in scored) == 1,
+            "one HeOCR candidate row")
+    require(all(row["paired"] is not None for row in scored if not row["id"].startswith("heocr-")),
+            "PBY-H comparators carry paired bounds")
     require(all(row["chars"] == data["chars"] for row in scored), "PBY-H shared denominator")
     return {key: data[key] for key in ("dataset", "stratum", "pages", "works", "scored_lines", "masked_lines",
                                        "chars")} | {"readers": readers}
@@ -213,3 +216,39 @@ def load(path: Path, sha256: str):
     require(hashlib.sha256(raw).hexdigest() == sha256, "SHA-256")
     data = json.loads(raw, parse_float=Decimal, parse_constant=reject_constant, object_pairs_hook=unique_keys)
     return validate(data)
+
+
+PBYH_POINTED_SCHEMA = "heocr.benchmark.pbyh.v01.pointed"
+
+
+def rate(value, label, *, upper=Decimal(5)):
+    require(isinstance(value, Decimal) and Decimal(0) <= value <= upper, label)
+    return value
+
+
+def load_pbyh_pointed(path: Path, sha256: str):
+    """PBY-H v0.1 pointed rows (eval restricted-eval#1969): rates only, one HeOCR candidate."""
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == sha256, "PBY-H pointed SHA-256")
+    data = json.loads(raw, parse_float=Decimal, parse_constant=reject_constant, object_pairs_hook=unique_keys)
+    require(isinstance(data, dict) and data.get("schema") == PBYH_POINTED_SCHEMA, "PBY-H pointed schema")
+    scope = data["scope"]
+    for key in ("pages", "works", "lines", "masked_lines"):
+        count(scope[key], key, minimum=0)
+    candidate = data["candidate"]["name"]
+    rows = []
+    for row in data["rows"]:
+        require(isinstance(row.get("reader"), str) and 0 < len(row["reader"]) <= 96, "pointed reader")
+        require(isinstance(row.get("lane"), str) and re.fullmatch(r"[A-Za-z0-9_.-]+", row["lane"]), "pointed lane")
+        rows.append({
+            "reader": row["reader"], "lane": row["lane"],
+            "cer": rate(row["cer_kept"], "pointed CER"), "cer_letters": rate(row["cer_consonantal"], "letters CER"),
+            "wer": rate(row["wer_kept"], "pointed WER"), "mark_recall": rate(row["mark_recall"], "mark recall", upper=Decimal(1)),
+            "candidate": row["candidate_relative_change"] is None,
+        })
+    require(sum(row["candidate"] for row in rows) == 1, "one pointed candidate")
+    require(next(row for row in rows if row["candidate"])["reader"] == candidate, "pointed candidate name")
+    require(len({row["lane"] for row in rows}) == len(rows), "unique pointed lanes")
+    return {"pages": scope["pages"], "works": scope["works"], "lines": scope["lines"],
+            "masked_lines": scope["masked_lines"], "drive_not_run": "not run" in str(data.get("drive", "")),
+            "rows": rows}
