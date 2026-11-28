@@ -29,22 +29,76 @@ ROOT = Path(__file__).resolve().parents[1]
 HAND = {"home": "index.html", "rights": "rights.html"}
 HOME = {
     "en": {
-        "intro": "Open data and tools for reading Hebrew documents, both printed and handwritten. Every dataset item has its own rights record.",
+        "intro": "HeOCR is an open project for getting Hebrew text out of any document: PDF and Office files, web pages, scans and photos. The code, the models and the data are open, and the tools run on your own computer or phone.",
         "models": "Models and pipeline",
         "status": "Four HeOCR OCR models for Tesseract 5, one for each kind of printed document.",
         "model_link": "Get the OCR weights",
         "download": "Download",
         "sources": "The releases use public-domain or openly licensed sources. Each item keeps its source and credit.",
         "wikisource": "Hebrew Wikisource text appears in the training corpora and in line pairs. Releases link to source revisions and record the CC BY-SA terms.",
+        "tagline": "Hebrew text out of any document",
+        "bench": "Benchmarks",
+        "flow_aria": "How the parts fit together",
+        "flow": ("Open scans &amp; text", "Generators", "Datasets", "Trained models", "Tools &amp; apps"),
+        "start": "How to use HeOCR",
+        "start_cards": (
+            ("No code: the desktop app", "An offline app for macOS and Windows that reads Hebrew documents on your own computer, without uploading them. In development.", "download.html#apps", "Follow its release"),
+            ("For developers and researchers", "Run the models directly in Tesseract 5, or try the heocr Python package, which is in development.", "download.html#quick-start", "Quick start"),
+        ),
+        "code": "Code",
+        "groups": (
+            ("Tools", (
+                ("heocr", "Python package and CLI: Hebrew text out of PDFs, Office files, web pages, scans and photos."),
+                ("heocr-desktop", "HeOCR's apps for Mac, Windows and Android: Hebrew text out of documents, fully offline."),
+            )),
+            ("Models and data", (
+                ("heocr-engine", "The models: training and packaging Hebrew OCR models."),
+                ("htext", "Public-domain and openly licensed Hebrew text, for training Hebrew OCR."),
+                ("hocrsyngen", "A generator of synthetic Hebrew OCR training data: lines and pages."),
+                ("hdocsyngen", "A generator of synthetic Hebrew documents: Office files and PDFs, with exact structure."),
+            )),
+            ("Review and infrastructure", (
+                ("heocr-review", "Check and correct Hebrew text against page scans, line by line."),
+                ("heocr-compute", "Runs HeOCR's training jobs on rented machines: open data only, within a budget."),
+            )),
+        ),
+        "help": "Want to help? Open an issue or a pull request in any of the repositories.",
     },
     "he": {
-        "intro": "נתונים וכלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו.",
+        "intro": "HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים, והכלים רצים על המחשב או הטלפון שלכם.",
         "models": "מודלים וצינור העיבוד",
         "status": "ארבעה מודלים של HeOCR לזיהוי תווים עם Tesseract 5, אחד לכל סוג של מסמך מודפס.",
         "model_link": "הורדת משקלי המודל",
         "download": "הורדה",
         "sources": "הגרסאות משתמשות במקורות בנחלת הכלל או ברישיון פתוח. כל פריט שומר את המקור ואת הקרדיט שלו.",
         "wikisource": "טקסט מוויקיטקסט העברית מופיע במאגרי האימון ובזוגות השורות. בכל גרסה יש קישורים למקורות ותיעוד של תנאי CC BY-SA.",
+        "tagline": "טקסט עברי מכל מסמך",
+        "bench": "מדדי ביצועים",
+        "flow_aria": "איך החלקים מתחברים",
+        "flow": ("סריקות וטקסטים פתוחים", "מחוללים", "מאגרי נתונים", "מודלים מאומנים", "כלים ויישומים"),
+        "start": "איך משתמשים ב־HeOCR",
+        "start_cards": (
+            ("בלי קוד: אפליקציה למחשב", "אפליקציה ל־macOS ול־Windows שקוראת מסמכים בעברית במחשב שלכם, בלי אינטרנט ובלי להעלות אותם לשום מקום. בפיתוח.", "download.html#apps", "מעקב אחרי השחרור"),
+            ("למפתחים ולחוקרים", "הריצו את המודלים ישירות ב־Tesseract 5, או נסו את חבילת הפייתון heocr, שנמצאת בפיתוח.", "download.html#quick-start", "התחלה מהירה"),
+        ),
+        "code": "קוד",
+        "groups": (
+            ("כלים", (
+                ("heocr", "חבילת פייתון וכלי שורת פקודה: טקסט עברי מקובצי PDF, אופיס, דפי אינטרנט, סריקות וצילומים."),
+                ("heocr-desktop", "האפליקציות של HeOCR למק, לווינדוס ולאנדרואיד: טקסט עברי ממסמכים, בלי אינטרנט."),
+            )),
+            ("מודלים ונתונים", (
+                ("heocr-engine", "המודלים: אימון ואריזה של מודלי זיהוי טקסט עברי."),
+                ("htext", "טקסט עברי בנחלת הכלל וברישיון פתוח, לאימון OCR בעברית."),
+                ("hocrsyngen", "מחולל נתונים סינתטיים לאימון זיהוי טקסט עברי: שורות ועמודים."),
+                ("hdocsyngen", "מחולל מסמכים סינתטיים בעברית: קובצי Office ו-PDF, עם מבנה מדויק."),
+            )),
+            ("בדיקה ותשתית", (
+                ("heocr-review", "בודקים ומתקנים טקסט עברי מול סריקות של דפים, שורה אחר שורה."),
+                ("heocr-compute", "מריץ את עבודות האימון של HeOCR על מכונות שכורות: מידע פתוח בלבד, בתוך תקציב."),
+            )),
+        ),
+        "help": "רוצים לעזור? פתחו issue או pull request באחד המאגרים.",
     },
 }
 
@@ -64,12 +118,6 @@ def home_status(lang: str, text: str) -> str:
     intro = html.escape(t["intro"])
     text = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{intro}">', text, count=1)
     text = re.sub(r'<p class="lede">.*?</p>', f'<p class="lede">{intro}</p>', text, count=1, flags=re.S)
-    text = re.sub(
-        r'(<a class="btn" href="download.html">)[^<]*(</a>)',
-        lambda match: match[1] + html.escape(t["download"]) + match[2],
-        text,
-        count=1,
-    )
     text = re.sub(
         r'^  <section id="models">.*?^  </section>',
         lambda _: (
@@ -99,6 +147,54 @@ def home_status(lang: str, text: str) -> str:
     )
 
 
+ORG = "https://github.com/HeOCR"
+
+
+def home_layout(lang: str, text: str) -> str:
+    """The home hero, "How to use" and code sections (site review 2, COPY-02/03/04/06, ARCH-02 §1).
+
+    The tagline, intro, repo groups, one-liners and "Want to help?" line are the owner-approved wording of
+    the GitHub organisation profile (HeOCR/.github profile/README.md), so the site and GitHub say the same.
+    """
+    t = HOME[lang]
+    tag = (f'<p class="he" lang="he" dir="rtl">{HOME["he"]["tagline"]}</p>' if lang == "en"
+           else f'<p class="tag">{t["tagline"]}</p>')
+    arrow = " ← " if lang == "he" else " → "
+    flow = arrow.join(f'<span class="step">{step}</span>' for step in t["flow"])
+    hero = (
+        '<div class="home-hero band gridband">\n<div class="wrap">\n'
+        f'{tag}\n<h1><span class="bb" data-tag="h1 · 0.99">HeOCR</span></h1>\n'
+        f'<p class="lede">{html.escape(t["intro"])}</p>\n'
+        '<div class="links">\n'
+        f'      <a class="btn primary" href="download.html">{html.escape(t["download"])}</a>\n'
+        f'      <a class="btn" href="benchmarks.html">{html.escape(t["bench"])}</a>\n'
+        f'      <a class="btn" href="{ORG}">GitHub</a>\n'
+        '    </div>\n'
+        f'<div class="flow" aria-label="{t["flow_aria"]}">{flow}</div>\n'
+        '</div>\n</div>\n'
+    )
+    text = re.sub(r'<div class="home-hero band gridband">.*?</div>\n</div>\n(?=<main)', lambda _: hero, text, count=1, flags=re.S)
+    cards = "".join(
+        f'      <div class="card">\n        <h3>{html.escape(title)}</h3>\n        <p>{html.escape(body)}</p>\n'
+        f'        <p><a href="{href}">{html.escape(label)}</a></p>\n      </div>\n'
+        for title, body, href, label in t["start_cards"]
+    )
+    start = (f'\n  <section id="start">\n    <h2>{html.escape(t["start"])}</h2>\n'
+             f'    <div class="grid">\n{cards}    </div>\n  </section>\n')
+    text = re.sub(r'(<main id="main" class="wrap home">\n)(?:\n  <section id="start">.*?^  </section>\n)?',
+                  lambda m: m[1] + start, text, count=1, flags=re.M | re.S)
+    groups = "".join(
+        f'    <h3>{html.escape(group)}</h3>\n    <div class="grid">\n'
+        + "".join(f'      <div class="card">\n        <h3><a href="{ORG}/{repo}">{repo}</a></h3>\n'
+                  f'        <p>{html.escape(line)}</p>\n      </div>\n' for repo, line in repos)
+        + '    </div>\n'
+        for group, repos in t["groups"]
+    )
+    code = (f'  <section id="tools">\n    <h2>{html.escape(t["code"])}</h2>\n{groups}'
+            f'    <p class="sub">{html.escape(t["help"])}</p>\n  </section>')
+    return re.sub(r'^  <section id="tools">.*?^  </section>', lambda _: code, text, count=1, flags=re.M | re.S)
+
+
 def block(name: str, body: str) -> str:
     return f"<!-- shell:{name} -->\n{body.rstrip()}\n<!-- /shell:{name} -->"
 
@@ -106,6 +202,7 @@ def block(name: str, body: str) -> str:
 def render(page: str, lang: str, text: str) -> str:
     if page == "home":
         text = home_status(lang, text)
+        text = home_layout(lang, text)
     title = re.search(r"<title>(.*?)</title>", text, re.S).group(1)
     desc = re.search(r'<meta name="description" content="(.*?)">', text)
     desc = desc.group(1) if desc else None

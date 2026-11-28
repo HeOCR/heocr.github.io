@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HeOCR בעברית</title>
-<meta name="description" content="נתונים וכלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו.">
+<meta name="description" content="HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים, והכלים רצים על המחשב או הטלפון שלכם.">
 <!-- shell:head -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HeOCR">
 <meta property="og:title" content="HeOCR בעברית">
-<meta property="og:description" content="נתונים וכלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו.">
+<meta property="og:description" content="HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים, והכלים רצים על המחשב או הטלפון שלכם.">
 <meta property="og:url" content="https://heocr.org/">
 <meta property="og:image" content="https://heocr.org/og-image-he-1200x630.png">
 <meta property="og:image:width" content="1200">
@@ -48,26 +48,34 @@
 <!-- /shell:header -->
 <div class="home-hero band gridband">
 <div class="wrap">
-<p class="tag" lang="en" dir="ltr">Hebrew OCR, open to all</p>
+<p class="tag">טקסט עברי מכל מסמך</p>
 <h1><span class="bb" data-tag="h1 · 0.99">HeOCR</span></h1>
-<p class="lede">נתונים וכלים פתוחים לקריאת מסמכים בעברית, מודפסים וכתובים ביד. לכל פריט במאגרי הנתונים יש רשומת זכויות משלו.</p>
+<p class="lede">HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים, והכלים רצים על המחשב או הטלפון שלכם.</p>
 <div class="links">
+      <a class="btn primary" href="download.html">הורדה</a>
+      <a class="btn" href="benchmarks.html">מדדי ביצועים</a>
       <a class="btn" href="https://github.com/HeOCR">GitHub</a>
-      <a class="btn" href="https://huggingface.co/HeOCR">Hugging Face</a>
-      <a class="btn" href="https://zenodo.org/communities/heocr">Zenodo</a>
-      <a class="btn" href="download.html">הורדה</a>
-      <a class="btn primary" href="benchmarks.html">מדדי ביצועים</a>
-      <a class="btn" href="rights.html">זכויות והסרה</a>
     </div>
-<div class="flow" aria-label="איך החלקים מתחברים">
-      <span class="step">סריקות וטקסטים בנחלת הכלל</span> ←
-      <span class="step">מחוללים</span> ←
-      <span class="step">מאגרי נתונים</span> ←
-      <span class="step">מודלים מאומנים</span>
-    </div>
+<div class="flow" aria-label="איך החלקים מתחברים"><span class="step">סריקות וטקסטים פתוחים</span> ← <span class="step">מחוללים</span> ← <span class="step">מאגרי נתונים</span> ← <span class="step">מודלים מאומנים</span> ← <span class="step">כלים ויישומים</span></div>
 </div>
 </div>
 <main id="main" class="wrap home">
+
+  <section id="start">
+    <h2>איך משתמשים ב־HeOCR</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>בלי קוד: אפליקציה למחשב</h3>
+        <p>אפליקציה ל־macOS ול־Windows שקוראת מסמכים בעברית במחשב שלכם, בלי אינטרנט ובלי להעלות אותם לשום מקום. בפיתוח.</p>
+        <p><a href="download.html#apps">מעקב אחרי השחרור</a></p>
+      </div>
+      <div class="card">
+        <h3>למפתחים ולחוקרים</h3>
+        <p>הריצו את המודלים ישירות ב־Tesseract 5, או נסו את חבילת הפייתון heocr, שנמצאת בפיתוח.</p>
+        <p><a href="download.html#quick-start">התחלה מהירה</a></p>
+      </div>
+    </div>
+  </section>
 
   <section id="models">
     <h2>מודלים וצינור העיבוד</h2>
@@ -318,30 +326,49 @@
   </section>
 
   <section id="tools">
-    <h2>מחוללים וצינורות עבודה</h2>
-    <p class="sub">הקוד שבונה את מאגרי הנתונים ומאמן את המודלים. כולו ברישיון MIT.</p>
+    <h2>קוד</h2>
+    <h3>כלים</h3>
     <div class="grid">
       <div class="card">
-        <h3><a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a></h3>
-        <p>מחולל עמודים סינתטיים בעברית. מפיק עמודים מודפסים ובסגנון כתב יד, עם תיוג שורות ומטא־דאטה של כיווניות מימין לשמאל, מטקסט אימון ב־CC0 ומגופנים פתוחים.</p>
-        <div class="meta"><span>Python</span><span>MIT</span><span>טקסט CC0</span></div>
+        <h3><a href="https://github.com/HeOCR/heocr">heocr</a></h3>
+        <p>חבילת פייתון וכלי שורת פקודה: טקסט עברי מקובצי PDF, אופיס, דפי אינטרנט, סריקות וצילומים.</p>
       </div>
       <div class="card">
-        <h3><a href="https://github.com/HeOCR/hletterscriptgen">hletterscriptgen</a></h3>
-        <p>מחלץ ערכות אותיות לכל כותב מסריקות HASH ומתיוגי אותיות שנבדקו בידי אדם.</p>
-        <div class="meta"><span>Python</span><span>MIT</span></div>
-      </div>
-      <div class="card">
-        <h3><a href="https://github.com/HeOCR/hocrgen">hocrgen</a></h3>
-        <p>ניהול מאגרי הנתונים ובדיקות השחרור: איסוף, זכויות, בדיקה ידנית, הסרת כפילויות, חלוקות, מבחני השוואה וייצוא למאגרים הציבוריים.</p>
-        <div class="meta"><span>Python</span><span>MIT</span></div>
-      </div>
-      <div class="card">
-        <h3><a href="https://github.com/HeOCR/heocr-engine">heocr-engine</a></h3>
-        <p>קוד האימון, ההערכה והשחרור של המודלים שלמעלה, וגם בסיס השוואה מקומי של Tesseract עם פורמט תחזיות שאפשר לשחזר.</p>
-        <div class="meta"><span>Python</span><span>kraken</span></div>
+        <h3><a href="https://github.com/HeOCR/heocr-desktop">heocr-desktop</a></h3>
+        <p>האפליקציות של HeOCR למק, לווינדוס ולאנדרואיד: טקסט עברי ממסמכים, בלי אינטרנט.</p>
       </div>
     </div>
+    <h3>מודלים ונתונים</h3>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/heocr-engine">heocr-engine</a></h3>
+        <p>המודלים: אימון ואריזה של מודלי זיהוי טקסט עברי.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/htext">htext</a></h3>
+        <p>טקסט עברי בנחלת הכלל וברישיון פתוח, לאימון OCR בעברית.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hocrsyngen">hocrsyngen</a></h3>
+        <p>מחולל נתונים סינתטיים לאימון זיהוי טקסט עברי: שורות ועמודים.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/hdocsyngen">hdocsyngen</a></h3>
+        <p>מחולל מסמכים סינתטיים בעברית: קובצי Office ו-PDF, עם מבנה מדויק.</p>
+      </div>
+    </div>
+    <h3>בדיקה ותשתית</h3>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/heocr-review">heocr-review</a></h3>
+        <p>בודקים ומתקנים טקסט עברי מול סריקות של דפים, שורה אחר שורה.</p>
+      </div>
+      <div class="card">
+        <h3><a href="https://github.com/HeOCR/heocr-compute">heocr-compute</a></h3>
+        <p>מריץ את עבודות האימון של HeOCR על מכונות שכורות: מידע פתוח בלבד, בתוך תקציב.</p>
+      </div>
+    </div>
+    <p class="sub">רוצים לעזור? פתחו issue או pull request באחד המאגרים.</p>
   </section>
 
   <section id="code-signing">
