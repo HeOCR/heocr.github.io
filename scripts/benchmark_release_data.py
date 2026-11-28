@@ -252,3 +252,45 @@ def load_pbyh_pointed(path: Path, sha256: str):
     return {"pages": scope["pages"], "works": scope["works"], "lines": scope["lines"],
             "masked_lines": scope["masked_lines"], "drive_not_run": "not run" in str(data.get("drive", "")),
             "rows": rows}
+
+
+PBYH_V1_SCHEMA = "heocr.benchmark.pbyh.v1.unpointed"
+
+
+def percent(value, label):
+    require(isinstance(value, str) and re.fullmatch(r"\d{1,3}\.\d{2}", value), label)
+    return Decimal(value)
+
+
+def load_pbyh_v1(path: Path, sha256: str):
+    """PBY-H v1 unpointed rows (approved draft, restricted-eval PR 2046): version B decides, version A is beside it.
+
+    Values are the draft's rounded percentages, stored as text so they are never re-rounded."""
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == sha256, "PBY-H v1 SHA-256")
+    data = json.loads(raw, parse_float=Decimal, parse_constant=reject_constant, object_pairs_hook=unique_keys)
+    require(isinstance(data, dict) and data.get("schema") == PBYH_V1_SCHEMA, "PBY-H v1 schema")
+    for key in ("pages", "works", "books", "lines", "masked_lines"):
+        count(data[key], key, minimum=1)
+    require(data["masked_lines"] < data["lines"], "PBY-H v1 masked lines")
+    readers = []
+    for row in data["readers"]:
+        require(isinstance(row.get("id"), str) and re.fullmatch(r"[A-Za-z0-9_.-]+", row["id"]), "pbyh v1 reader id")
+        require(isinstance(row.get("label"), str) and 0 < len(row["label"]) <= 96, "pbyh v1 reader label")
+        require(row.get("status") in ("scored", "not_run") and isinstance(row.get("heocr"), bool), "pbyh v1 status")
+        if row["status"] == "not_run":
+            require(isinstance(row.get("reason"), str) and row["reason"], "pbyh v1 not-run reason")
+            readers.append({"id": row["id"], "label": row["label"], "status": "not_run", "heocr": row["heocr"]})
+            continue
+        item = {"id": row["id"], "label": row["label"], "status": "scored", "heocr": row["heocr"],
+                "cer_b": percent(row["cer_b"], "pbyh v1 CER B"), "cer_a": percent(row["cer_a"], "pbyh v1 CER A"),
+                "a_pages": row.get("cer_a_pages")}
+        for key in ("ci_work", "ci_book"):
+            lo, hi = (percent(x, f"pbyh v1 {key}") for x in row[key])
+            require(lo <= item["cer_b"] <= hi, f"pbyh v1 {key} brackets the rate")
+            item[key] = (row[key][0], row[key][1])
+        require(item["a_pages"] is None or count(item["a_pages"], "pbyh v1 pages", minimum=1) is None, "pbyh v1 A pages")
+        readers.append(item)
+    require(len({row["id"] for row in readers}) == len(readers), "unique pbyh v1 readers")
+    return {key: data[key] for key in ("dataset", "pages", "works", "books", "lines", "masked_lines")} | {
+        "readers": readers}

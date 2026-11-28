@@ -542,6 +542,8 @@ pre code { background: none; padding: 0; white-space: pre; }
   font-size: var(--fs-micro);
   padding: 2px 9px;
 }
+/* Visually hidden labels are absolutely positioned: the scroll box must contain them, or a wide table scrolls the page. */
+.benchmark-table { position: relative; }
 .benchmark-table :is(th, td) { padding: 8px 12px; }
 .benchmark-table thead th {
   min-width: 0;

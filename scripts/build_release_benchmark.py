@@ -33,6 +33,13 @@ MODEL_NAMES = {
 }
 PBYH_NAMES = {"heocr-p-hist-a-full-35k": (MODEL_NAMES["heocr-p-hist-a-full-35k"], LITERATURE_MODEL),
               "heocr-p-hist-v1-1": (PHIST_V11, HISTORICAL_MODEL)}
+# PBY-H v1 unpointed rows (approved draft, restricted-eval PR 2046): public name and model page per eval reader id.
+PBYH_V1_NAMES = {
+    "heocr-literature-measured-v1-0": ("HeOCR literature MEASURED v1.0", LITERATURE_MODEL),
+    "heocr-pointed-measured-v1-0": ("HeOCR pointed MEASURED v1.0", POINTED_MODEL),
+    "heocr-old-print-v1-1": (PHIST_V11, HISTORICAL_MODEL),
+    "heocr-old-print-v1-0": ("HeOCR P-hist MEASURED v1.0", None),
+}
 POINTED_URLS = {"heocr-arm-c-pointed-60k": POINTED_MODEL, "heocr-v1-1": HISTORICAL_MODEL}
 HIGHER_BETTER = {"mark_recall"}
 T = {
@@ -89,6 +96,8 @@ T = {
             "api_all": "Character edits divided by the number of reference characters in all reference text.",
             "api_filtered": "Character edits divided by the number of reference characters kept after filtering.",
             "cer_letters": "Character error rate after removing vowel points and cantillation marks (U+0591–U+05C7) from both the reference and the output.",
+            "cer_b": "Corrected result, the one that decides: character edits divided by reference characters, pooled over pages, after the failures of our own test harness were fixed.",
+            "cer_a": "First result, before the harness was fixed: same measure. Google Document AI’s figure is on the 94 pages it returned.",
             "mark_recall": "Share of the reference’s vowel points and other marks that the reader reproduces on the right letter. Higher is better.",
         },
         "closed_nav": "Closed sets",
@@ -110,6 +119,23 @@ T = {
         "reader": "Reader", "cer": "CER", "wer": "Word error",
         "pbyh": "Modern unpointed literature",
         "pbyh_title": "PBY-H v0 results",
+        "pbyh_v0_history": "Earlier version: PBY-H v0",
+        "pbyh_v0_note": "PBY-H v0 figures keep vowel marks and cantillation on both sides, so they are not comparable with the v1 figures above, which remove them.",
+        "pbyh_v1_title": "PBY-H v1 results",
+        "pbyh_v1_intro": "Pages from public-domain Hebrew works in Project Ben-Yehuda, from printed books imaged from Internet Archive or Wikimedia Commons scans of the exact editions. The text has no vowel marks, and vowel marks and cantillation are removed from both sides before scoring. Held-out results only.",
+        "book_count": "{count:,} printed books",
+        "cer_b": "CER, corrected (B)", "cer_a": "CER, first run (A)",
+        "interval_work": "95% interval by work: ", "interval_book": "by printed book: ", "on_pages": "on {count} pages",
+        "pbyh_v1_runs": "Two results are shown. In the first run (A), all four HeOCR versions returned nothing on one page and Google Document AI returned nothing on two. Both were failures of our own test harness: it blocked a call the HeOCR software makes while reading a table cell, and its time limit cut Document AI off. After seeing A, we wrote a rule for deciding whether a failure was ours, applied it, fixed the harness and re-ran only those six page readings. The corrected result (B) is the one that counts.",
+        "pbyh_v1_intervals": "Intervals are 95%, from resampling works (28; the registered test) and, separately, printed books (12; the more cautious check). Pooled page CER, vowel marks and cantillation removed from both sides.",
+        "pbyh_v1_notes_title": "Read this with the figures",
+        "pbyh_v1_notes": (
+            "Version B decides. The rule for deciding whether a failure was ours was written after we had seen A, so B is not blind.",
+            "One page drives Project Ben-Yehuda’s bar (outdo both Tesseract best and Google, with both upper bounds below zero): with that page removed for every reader, no HeOCR version meets it.",
+            "Intervals by printed book (12 books) are wider than by work (28 works), and resampled by printed book the bar is not met.",
+            "Google’s figures are dominated by two-column reading order. On the four pages of one two-column work, Google’s readers find 84–94% of the reference words, yet their CER is 62–76% (first run); the likely cause is that they return the text in a different order from the reference. We judged this from word counts, without looking at the pages, so these figures do not measure Google’s character accuracy there.",
+            "We tested four HeOCR versions, with no correction for testing several.",
+        ),
         "pbyh_intro": "Pages from public-domain Hebrew literary works in Project Ben-Yehuda, imaged from scans of the exact printed editions. The text has no vowel marks.",
         "work_count": "{count:,} works", "scored_lines": "{count:,} scored lines",
         "pbyh_masked": "{masked:,} lines where the printed edition and the reference text differ are left out for every reader.",
@@ -183,6 +209,8 @@ T = {
             "api_all": "מספר השינויים בתווים, חלקי מספר התווים בכל טקסט הייחוס.",
             "api_filtered": "מספר השינויים בתווים, חלקי מספר התווים בטקסט הייחוס שנותר לאחר סינון.",
             "cer_letters": "שיעור שגיאות התווים לאחר הסרת סימני הניקוד והטעמים (U+0591–U+05C7) גם מטקסט הייחוס וגם מתוצאת הזיהוי.",
+            "cer_b": "התוצאה המתוקנת, שקובעת: מספר השינויים בתווים חלקי מספר תווי הייחוס, מצטבר לפי עמודים, לאחר תיקון הכשלים של מערך הבדיקה שלנו.",
+            "cer_a": "התוצאה הראשונה, לפני תיקון מערך הבדיקה: אותו מדד. הנתון של Google Document AI הוא על 94 העמודים שהחזיר.",
             "mark_recall": "שיעור סימני הניקוד והסימנים האחרים בטקסט הייחוס שהמנוע שחזר על האות הנכונה. ככל שהשיעור גבוה יותר, התוצאה טובה יותר.",
         },
         "closed_nav": "קבוצות סגורות",
@@ -204,6 +232,23 @@ T = {
         "reader": "מנוע זיהוי", "cer": "CER", "wer": "שגיאות מילים",
         "pbyh": "ספרות בדפוס מודרני ללא ניקוד",
         "pbyh_title": "תוצאות PBY-H v0",
+        "pbyh_v0_history": "גרסה קודמת: PBY-H v0",
+        "pbyh_v0_note": "נתוני PBY-H v0 כוללים סימני ניקוד וטעמים בשני הצדדים, ולכן אינם ברי השוואה לנתוני v1 שלמעלה, שמהם הוסרו.",
+        "pbyh_v1_title": "תוצאות PBY-H v1",
+        "pbyh_v1_intro": "עמודים מיצירות עבריות ברשות הציבור מפרויקט בן־יהודה, מתוך ספרים מודפסים שצולמו מסריקות Internet Archive או Wikimedia Commons של המהדורות עצמן. הטקסט אינו מנוקד, ולפני הניקוד הוסרו סימני ניקוד וטעמים משני הצדדים. תוצאות על מערך מבחן שהוחזק בצד בלבד.",
+        "book_count": "{count:,} ספרים מודפסים",
+        "cer_b": "CER, מתוקן (B)", "cer_a": "CER, ההרצה הראשונה (A)",
+        "interval_work": "רווח סמך 95% לפי יצירה: ", "interval_book": "לפי ספר מודפס: ", "on_pages": "על {count} עמודים",
+        "pbyh_v1_runs": "מוצגות שתי תוצאות. בהרצה הראשונה (A) כל ארבע גרסאות HeOCR לא החזירו דבר בעמוד אחד, ו־Google Document AI לא החזיר דבר בשני עמודים. שני הכשלים היו כשלים של מערך הבדיקה שלנו: הוא חסם קריאה שתוכנת HeOCR מבצעת בעת קריאת תא בטבלה, ומגבלת הזמן שלו קטעה את Document AI. אחרי שראינו את A כתבנו כלל להכרעה אם כשל הוא שלנו, החלנו אותו, תיקנו את מערך הבדיקה והרצנו מחדש רק את ששת קריאות העמודים האלה. התוצאה המתוקנת (B) היא זו שקובעת.",
+        "pbyh_v1_intervals": "הרווחים הם 95%, מדגימה חוזרת של יצירות (28; המבחן הרשום) ובנפרד של ספרים מודפסים (12; הבדיקה הזהירה יותר). CER מצטבר לפי עמוד, כשסימני ניקוד וטעמים הוסרו משני הצדדים.",
+        "pbyh_v1_notes_title": "יש לקרוא זאת יחד עם הנתונים",
+        "pbyh_v1_notes": (
+            "גרסה B קובעת. הכלל להכרעה אם כשל הוא שלנו נכתב אחרי שראינו את A, ולכן B אינה עיוורת.",
+            "עמוד אחד מכריע את הרף של פרויקט בן־יהודה (עדיפות על Tesseract best ועל Google, עם שני הגבולות העליונים מתחת לאפס): כשהעמוד מוסר עבור כל המנועים, אף גרסת HeOCR אינה עומדת בו.",
+            "הרווחים לפי ספר מודפס (12 ספרים) רחבים מהרווחים לפי יצירה (28 יצירות), ובדגימה חוזרת לפי ספר מודפס הרף אינו מתקיים.",
+            "הנתונים של Google נשלטים על ידי סדר הקריאה בעמודים דו־טוריים. בארבעת העמודים של יצירה דו־טורית אחת מנועי Google מוצאים 84–94% ממילות הייחוס, ובכל זאת ה־CER שלהם הוא 62–76% (בהרצה הראשונה); ככל הנראה הם מחזירים את הטקסט בסדר שונה מזה של הייחוס. קבענו זאת לפי ספירת מילים, בלי להסתכל בעמודים, ולכן נתונים אלה אינם מודדים את דיוק התווים של Google שם.",
+            "בדקנו ארבע גרסאות HeOCR, בלי תיקון לריבוי הבדיקות.",
+        ),
         "pbyh_intro": "עמודים מיצירות ספרות עבריות ברשות הציבור מפרויקט בן־יהודה, מתוך סריקות של המהדורות המודפסות עצמן. הטקסט אינו מנוקד.",
         "work_count": "{count:,} יצירות", "scored_lines": "{count:,} שורות שנבדקו",
         "pbyh_masked": "{masked:,} שורות שבהן המהדורה המודפסת וטקסט הייחוס שונים הוצאו מהבדיקה לכל המנועים.",
@@ -564,8 +609,46 @@ def historical_results(t, data):
     ])
 
 
-def pbyh_results(t, data):
+def pbyh_v1_results(t, data):
     panel_id = "pby-h-open-scores"
+    columns = ("cer_b", "cer_a")
+    rows = []
+    for row in data["readers"]:
+        if row["status"] == "not_run":
+            rows.append({"name": row["label"], "note": t["not_run"], "cells": [(None, "")] * len(columns)})
+            continue
+        name, url = PBYH_V1_NAMES.get(row["id"], (row["label"], None))
+        low_w, high_w = row["ci_work"]
+        low_b, high_b = row["ci_book"]
+        interval = (f'{e(t["interval_work"])}{numbers(f"{low_w}–{high_w}")}<br>'
+                    f'{e(t["interval_book"])}{numbers(f"{low_b}–{high_b}")}')
+        first = f'<br>{e(t["on_pages"].format(count=row["a_pages"]))}' if row["a_pages"] else ""
+        rows.append({"name": name, "ours": row["heocr"] and row["id"] == data["readers"][0]["id"], "model_url": url,
+                     "heocr": row["heocr"],
+                     "cells": [(Fraction(row["cer_b"]) / 100, interval), (Fraction(row["cer_a"]) / 100, first)]})
+    table = best_heocr_table(t, f"{panel_id}-pooled", t["pbyh_v1_title"], columns, rows)
+    notes = [t["pbyh_v1_runs"], t["pbyh_v1_intervals"], t["pbyh_masked"].format(masked=data["masked_lines"]),
+             t["pbyh_refs"]]
+    if any(row["status"] == "not_run" for row in data["readers"]):
+        notes.append(t["not_run_reason"])
+    footnotes = "".join(f"<li>{e(note)}</li>" for note in t["pbyh_v1_notes"])
+    return "".join([
+        f'<article class="benchmark-result" id="pby-h-open"><h3><bdi>{e(t["pbyh_v1_title"])}</bdi></h3>',
+        benchmark_metadata(t, [("page_count", data["pages"]), ("work_count", data["works"]),
+                               ("book_count", data["books"]),
+                               ("scored_lines", data["lines"] - data["masked_lines"])]),
+        f'<p class="benchmark-intro">{e(t["pbyh_v1_intro"])}</p>',
+        f'<p class="note">{e(t["primary_cer"])}</p>',
+        table,
+        "".join(f'<p class="note">{e(note)}</p>' for note in notes),
+        f'<div class="note benchmark-footnotes"><p><strong>{e(t["pbyh_v1_notes_title"])}</strong></p><ol>{footnotes}</ol></div>',
+        "</article>\n",
+    ])
+
+
+def pbyh_results(t, data):
+    """PBY-H v0, kept as history under the v1 results."""
+    panel_id = "pby-h-v0-scores"
     rows = []
     for row in data["readers"]:
         if row["status"] == "not_run":
@@ -576,12 +659,12 @@ def pbyh_results(t, data):
         rows.append({"name": name or row["label"], "ours": candidate, "model_url": url,
                      "heocr": row["id"].startswith("heocr-"), "cells": text_score_cells(row)})
     table = best_heocr_table(t, f"{panel_id}-pooled", t["pbyh_title"], ("cer", "wer"), rows)
-    notes = [t["pbyh_masked"].format(masked=data["masked_lines"]), t["pbyh_refs"], t["pbyh_paired"]]
+    notes = [t["pbyh_v0_note"], t["pbyh_masked"].format(masked=data["masked_lines"]), t["pbyh_refs"], t["pbyh_paired"]]
     if any(row["status"] == "not_run" for row in data["readers"]):
         notes.append(t["not_run_reason"])
     notes.append(t["pbyh_caveat"])
     return "".join([
-        f'<article class="benchmark-result" id="pby-h-open"><h3><bdi>{e(t["pbyh_title"])}</bdi></h3>',
+        f'<article class="benchmark-result" id="pby-h-v0"><h3><bdi>{e(t["pbyh_title"])}</bdi></h3>',
         benchmark_metadata(t, [("page_count", data["pages"]), ("work_count", data["works"]),
                                ("scored_lines", data["scored_lines"])]),
         f'<p class="benchmark-intro">{e(t["pbyh_intro"])}</p>',
@@ -624,7 +707,7 @@ def pointed_results(t, data):
 # tables use. Eval's reader ids differ by set, so each maps to one canonical reader here. The modern set's
 # PaddleOCR (CUDA) is not the same reader as the Rivok PaddleOCR of the other sets, so it keeps its own key.
 SUMMARY_SETS = (("modern", "p-mod-open", "P-mod-open v0"), ("historical", "p-hist-open", "P-hist-open v0.1"),
-                ("pbyh", "pby-h-open", "PBY-H v0"), ("pointed", "pby-h-pointed", "PBY-H v0.1 P"))
+                ("pbyh", "pby-h-open", "PBY-H v1 (B)"), ("pointed", "pby-h-pointed", "PBY-H v0.1 P"))
 CANON = {
     "rivok-full": "Rivok Full", "rivok-lite": "Rivok Lite",
     "tessdata-best": "Tessdata Best Hebrew", "best": "Tessdata Best Hebrew",
@@ -668,10 +751,10 @@ def summary_sets(data, historical, pbyh, pointed):
         for row in pbyh["readers"]:
             if row["status"] != "scored":
                 continue
-            value = Fraction(row["edits"], row["chars"])
-            if row["id"].startswith("heocr-"):
+            value = Fraction(row["cer_b"]) / 100
+            if row["heocr"]:
                 if heocr is None or value < heocr[1]:
-                    heocr = (PBYH_NAMES.get(row["id"], (row["label"],))[0], value)
+                    heocr = (PBYH_V1_NAMES.get(row["id"], (row["label"],))[0], value)
                 continue
             rows.append((CANON.get(ALIASES.get(row["id"], row["id"]), row["label"]), value))
         sets["pbyh"] = (rows, heocr)
@@ -750,7 +833,8 @@ def summary_table(t, sets):
     )
 
 
-def page(lang, data, public_pages=None, *, historical=None, api_rows=(), pbyh=None, hosted=None, pointed=None):
+def page(lang, data, public_pages=None, *, historical=None, api_rows=(), pbyh=None, hosted=None, pointed=None,
+         pbyh_v0=None):
     t = T[lang]
     toc = []
     open_panels = []
@@ -762,7 +846,9 @@ def page(lang, data, public_pages=None, *, historical=None, api_rows=(), pbyh=No
         open_panels.append(historical_results(t, historical))
     if pbyh is not None:
         toc.append(("pby-h-open", e(t["pbyh"]), None))
-        open_panels.append(pbyh_results(t, pbyh))
+        open_panels.append(pbyh_v1_results(t, pbyh))
+        if pbyh_v0 is not None:
+            open_panels.append(disclosure(t["pbyh_v0_history"], pbyh_results(t, pbyh_v0), identifier="pby-h-v0-history"))
     if pointed is not None:
         toc.append(("pby-h-pointed", e(t["pointed"]), None))
         open_panels.append(pointed_results(t, pointed))
@@ -794,11 +880,11 @@ def page(lang, data, public_pages=None, *, historical=None, api_rows=(), pbyh=No
 
 
 def write_pages(output_dir, data, public_pages, *, check, historical=None, api_rows=(), pbyh=None, hosted=None,
-                strict=False, pointed=None):
+                strict=False, pointed=None, pbyh_v0=None):
     stale = []
     for lang in shell.LANGS:
         benchmark = page(lang, data, public_pages, historical=historical, api_rows=api_rows, pbyh=pbyh, hosted=hosted,
-                         pointed=pointed)
+                         pointed=pointed, pbyh_v0=pbyh_v0)
         if strict:
             reader_access.check_classified(benchmark)
         for key, output in (("bench", benchmark), ("methodology", build_methodology.page(lang))):

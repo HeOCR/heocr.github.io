@@ -149,14 +149,17 @@ class ReleaseBuilderTest(unittest.TestCase):
 
     def test_published_pbyh_rows_name_the_candidate_and_rank_mark_recall_upward(self):
         import build_benchmarks as site
-        pbyh = release.load_pbyh(site.PBYH_V0, site.PBYH_V0_SHA256)
+        pbyh = release.load_pbyh_v1(site.PBYH_V1, site.PBYH_V1_SHA256)
+        pbyh_v0 = release.load_pbyh(site.PBYH_V0, site.PBYH_V0_SHA256)
         pointed = release.load_pbyh_pointed(site.PBYH_POINTED, site.PBYH_POINTED_SHA256)
         for lang, t in builder.T.items():
-            output = builder.page(lang, release.validate(example()), pbyh=pbyh, pointed=pointed)
+            output = builder.page(lang, release.validate(example()), pbyh=pbyh, pointed=pointed, pbyh_v0=pbyh_v0)
             unpointed = output.split('id="pby-h-open"', 1)[1].split("</article>", 1)[0]
             self.assertIn(f'<a href="{builder.LITERATURE_MODEL}"><bdi>HeOCR literature MEASURED v1.0</bdi></a>', unpointed)
             self.assertNotIn("A-full 35k", output)
             self.assertEqual(unpointed.count('<tr class="ours">'), 1)
+            self.assertEqual(output.count('id="pby-h-open"'), 1)
+            self.assertIn('id="pby-h-v0"', output)
             panel = output.split('id="pby-h-pointed"', 1)[1].split("</article>", 1)[0]
             self.assertIn(f'<a href="#pby-h-pointed">{t["pointed"]}</a>', output)
             self.assertIn(t["pointed_editions"], panel)
@@ -169,15 +172,72 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertIn(f'href="{builder.POINTED_MODEL}"', ours)
             self.assertNotIn("benchmark-fraction", panel)
 
+    def test_pbyh_v1_numbers_equal_the_approved_draft(self):
+        """Figures from PUBLIC_ROW_PBYH_V1_U.md (restricted-eval PR 2046, draft 6b390c31): CER B, CER A, intervals."""
+        import build_benchmarks as site
+        draft = {
+            "HeOCR literature MEASURED v1.0": ("3.85", "5.26", "2.82–5.23", "2.39–5.85"),
+            "HeOCR pointed MEASURED v1.0": ("3.88", "5.29", "2.84–5.32", "2.36–5.43"),
+            "HeOCR P-hist MEASURED v1.1": ("4.07", "5.47", "3.02–5.42", "2.54–6.05"),
+            "Rivok Tesseract Lite": ("4.15", "4.15", "3.15–5.59", "2.79–6.24"),
+            "HeOCR P-hist MEASURED v1.0": ("4.39", "5.79", "3.20–5.93", "2.67–6.63"),
+            "Rivok Tesseract Full": ("4.57", "4.57", "3.49–6.10", "3.07–6.50"),
+            "Tesseract heb best": ("7.18", "7.18", "5.85–9.06", "5.49–10.19"),
+            "Tesseract heb fast": ("7.45", "7.45", "6.17–9.19", "5.91–10.50"),
+            "Google Cloud Vision": ("12.68", "12.68", "4.00–25.17", "3.85–30.29"),
+            "Google Document AI OCR": ("13.30", "9.19", "4.67–25.82", "4.46–30.66"),
+            "Rivok PaddleOCR": ("16.91", "16.91", "8.22–29.06", "7.91–33.78"),
+        }
+        data = release.load_pbyh_v1(site.PBYH_V1, site.PBYH_V1_SHA256)
+        self.assertEqual((data["pages"], data["works"], data["books"], data["lines"], data["masked_lines"]),
+                         (96, 28, 12, 3537, 465))
+        loaded = {builder.PBYH_V1_NAMES.get(r["id"], (r["label"],))[0]: r for r in data["readers"]
+                  if r["status"] == "scored"}
+        self.assertEqual(set(loaded), set(draft))
+        for name, (b, a, work, book) in draft.items():
+            row = loaded[name]
+            self.assertEqual((str(row["cer_b"]), str(row["cer_a"])), (b, a), name)
+            self.assertEqual(("–".join(row["ci_work"]), "–".join(row["ci_book"])), (work, book), name)
+        self.assertEqual(loaded["Google Document AI OCR"]["a_pages"], 94)
+        self.assertEqual([r["id"] for r in data["readers"] if r["status"] == "not_run"], ["google-drive"])
+        for lang, t in builder.T.items():
+            output = builder.page(lang, release.validate(example()), pbyh=data)
+            article = output.split('id="pby-h-open"', 1)[1].split("</article>", 1)[0]
+            self.assertEqual(len(t["pbyh_v1_notes"]), 5)
+            for note in t["pbyh_v1_notes"]:
+                self.assertIn(builder.e(note), article)
+            for value in ("3.85%", "5.26%", "4.15%", "4.57%", "7.18%", "12.68%", "13.30%"):
+                self.assertIn(f'<bdi dir="ltr">{value}</bdi>', article)
+            # The held pointed stratum has no figure here, and no verdict box.
+            self.assertNotIn("benchmark-verdict", article)
+            self.assertNotIn("pointed results", article)
+
+    def test_combined_table_pbyh_column_is_v1_version_b(self):
+        import build_benchmarks as site
+        pbyh = release.load_pbyh_v1(site.PBYH_V1, site.PBYH_V1_SHA256)
+        data = release.load(site.PUBLISHED_V0, site.PUBLISHED_V0_SHA256)
+        historical = json.loads(site.HISTORICAL_V01.read_bytes())
+        for lang in builder.T:
+            output = builder.page(lang, data, historical=historical, pbyh=pbyh)
+            summary = output.split('id="summary"', 1)[1].split("</section>", 1)[0]
+            rows = re.findall(r"<tr[^>]*><th scope=\"row\">.*?</tr>", summary)
+            self.assertIn("PBY-H v1 (B)", summary)
+            self.assertIn("3.85%", rows[0])
+            self.assertIn("HeOCR literature MEASURED v1.0", rows[0])
+            for name, value in (("Rivok Lite", "4.15%"), ("Rivok Full", "4.57%"), ("Tessdata Best Hebrew", "7.18%"),
+                                ("Google Cloud Vision", "12.68%"), ("Google Document AI OCR", "13.30%")):
+                self.assertIn(value, next(row for row in rows if name in row))
+
     def test_combined_table_comes_first_and_lists_only_readers_in_two_sets(self):
         import build_benchmarks as site
         from fractions import Fraction
         historical = json.loads(site.HISTORICAL_V01.read_bytes())
-        pbyh = release.load_pbyh(site.PBYH_V0, site.PBYH_V0_SHA256)
+        pbyh = release.load_pbyh_v1(site.PBYH_V1, site.PBYH_V1_SHA256)
+        pbyh_v0 = release.load_pbyh(site.PBYH_V0, site.PBYH_V0_SHA256)
         pointed = release.load_pbyh_pointed(site.PBYH_POINTED, site.PBYH_POINTED_SHA256)
         data = release.load(site.PUBLISHED_V0, site.PUBLISHED_V0_SHA256)
         for lang, t in builder.T.items():
-            output = builder.page(lang, data, historical=historical, pbyh=pbyh, pointed=pointed)
+            output = builder.page(lang, data, historical=historical, pbyh=pbyh, pointed=pointed, pbyh_v0=pbyh_v0)
             self.assertLess(output.index('id="summary"'), output.index('id="open"'))
             summary = output.split('id="summary"', 1)[1].split("</section>", 1)[0]
             self.assertIn(t["summary_line"], summary)
