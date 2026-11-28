@@ -474,14 +474,27 @@ pre code { background: none; padding: 0; white-space: pre; }
 .benchmark-details-body { padding: 12px 14px; }
 .benchmark-details-body > :last-child { margin-block-end: 0; }
 .benchmark-footnote { margin-block-start: 10px; }
-.benchmark-options { border: 0; margin: 0 0 12px; min-inline-size: 0; padding: 0; }
-.benchmark-options legend {
+/* The score toggles (owner, 2026-11-28): label, pills and explanation on one compact line that wraps
+   only when it must. The legend floats so it lays out as an ordinary flex item. */
+.benchmark-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  border: 0;
+  margin: 0 0 8px;
+  min-inline-size: 0;
   padding: 0;
-  font-size: var(--fs-micro);
-  font-weight: 700;
-  margin-block-end: 5px;
+  font-size: 0.82rem;
 }
-.benchmark-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+.benchmark-options legend {
+  float: inline-start;
+  padding: 0;
+  font-size: 1em;
+  font-weight: 700;
+}
+.benchmark-pills { display: flex; flex-wrap: wrap; gap: 4px; }
+.benchmark-options-note { flex: 1 1 18em; min-width: 0; color: var(--muted); font-size: 1em; line-height: 1.4; }
 .benchmark-pills label { position: relative; display: inline-flex; }
 .benchmark-pills input {
   position: absolute;
@@ -493,14 +506,14 @@ pre code { background: none; padding: 0; white-space: pre; }
 .benchmark-pills span {
   display: flex;
   align-items: center;
-  min-height: 38px;
-  padding: 6px 11px;
+  min-height: 30px;
+  padding: 2px 9px;
   border: 1px solid var(--line-strong);
   border-radius: 1.5rem;
   color: var(--text);
-  font-size: var(--fs-small);
+  font-size: 1em;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.3;
   cursor: pointer;
 }
 .benchmark-pills label:hover span { border-color: var(--accent); }
@@ -648,7 +661,7 @@ pre code { background: none; padding: 0; white-space: pre; }
   .benchmark-table td { font-size: 0.74rem; white-space: normal; }
   .benchmark-score { font-size: 0.95rem; }
   .benchmark-fraction { font-size: 0.66rem; }
-  .benchmark-pills span { min-height: 44px; }
+  .benchmark-pills span { min-height: 36px; }  /* compact, still a comfortable touch target */
   .benchmark-table :is(.benchmark-best, .benchmark-best-open) { padding-inline: 2px; }
   .benchmark-table-wide th:first-child { width: 27%; }
   .benchmark-table-wide :is(th, td) { padding-inline: 3px; }
