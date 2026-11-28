@@ -1,0 +1,43 @@
+{
+  "schema": "heocr.site-demo.v1",
+  "purpose": "Home page illustration (site review 2, ARCH-02 §2). Not a measurement.",
+  "image": {
+    "path": "demo/seferehilatmoshe00bria-n0100-crop6.png",
+    "sha256": "781599253584c872106f76b32523cf146511367df4c6b784092fc7d63ceaf1a7",
+    "px": [
+      935,
+      410
+    ],
+    "crop_of": "seferehilatmoshe00bria-n0100 (2189x3039, sha256 02b6bc0dc391bbb2bd37145b4fd82ab6d98b02ca31cd503f430d2997ebbc479a), box 1040,584,1975,994"
+  },
+  "source": {
+    "title": "Sefer ehilat Mosheh",
+    "creator": "Moses Eliakim Briah (d. 1825)",
+    "printed": "Lublin, 1906",
+    "scan": "University of Toronto, on the Internet Archive",
+    "url": "https://archive.org/details/seferehilatmoshe00bria/page/n100",
+    "licence": "Public domain (US: published 1906; Israel: author d. 1825)"
+  },
+  "clearance": {
+    "by": "clean[claude/claude-code#shay-macbook-m4]@heocr/opensource",
+    "date": "2026-11-28",
+    "receipt_sha256": "75b788257ffe22f90797ea12ddce2a6c65d863cfc269315d1ba2e46db448b8c7",
+    "verdict": "0 hits in training lineage, DEV rosters, test and evaluation sets, reservations, synthetic pools and held media"
+  },
+  "model": {
+    "name": "HeOCR P-hist MEASURED v1.1",
+    "file": "phist_v2.traineddata",
+    "sha256": "d30f49a830390e90177240b55515c3ba4cd2646250dc34799bc2b4963f3fddd8",
+    "url": "https://huggingface.co/HeOCR/heocr-p-hist-measured/tree/v1.1"
+  },
+  "command": "tesseract seferehilatmoshe00bria-n0100-crop6.png - -l phist_v2 --tessdata-dir ./tessdata --psm 6",
+  "tesseract": "5.5.3",
+  "output": [
+    "שירות. ותיבת נ\"י גי' מ' ומורה ענ מנכות",
+    "(חסר שורה) וע\"ד שאמר הה\"ק אאמו\"ר",
+    "זצלה\"ה על מה דאיתא בגמרא. שאמרו",
+    "שמעי' ואבטליון להכה\"ג ויתין בני עממיא",
+    "לשלם דעבדין עובדיהו דאהרן וכו' דידוע",
+    "כה\"ג ההוא לא הי' במדריגה זו לעשות"
+  ]
+}

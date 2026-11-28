@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
 import re
 import sys
 from pathlib import Path
@@ -69,6 +70,12 @@ HOME = {
             )),
         ),
         "help": "Want to help? Open an issue or a pull request in any of the repositories.",
+        "demo": "What it looks like",
+        "demo_caption": "Six lines of rabbinic print from Sefer ehilat Mosheh (Lublin, 1906; public domain), as scanned by the University of Toronto for the Internet Archive. Beside them, the text HeOCR P-hist MEASURED v1.1 read, unedited, mistakes included.",
+        "demo_note": "An illustration, not a measurement. The page is in none of our training, development or test sets.",
+        "demo_alt": "A scanned strip of six lines of Hebrew rabbinic print",
+        "demo_source": "The page on the Internet Archive",
+        "demo_model": "The model",
     },
     "he": {
         "intro": "HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים, והכלים רצים על המחשב או הטלפון שלכם.",
@@ -111,6 +118,12 @@ HOME = {
             )),
         ),
         "help": "רוצים לעזור? פתחו issue או pull request באחד המאגרים.",
+        "demo": "איך זה נראה",
+        "demo_caption": "שש שורות בדפוס רבני מתוך Sefer ehilat Mosheh (לובלין, 1906; נחלת הכלל), בסריקה של אוניברסיטת טורונטו עבור Internet Archive. לצידן הטקסט ש־HeOCR P-hist MEASURED v1.1 קרא, כמו שהוא, עם הטעויות.",
+        "demo_note": "המחשה, לא מדידה. העמוד אינו באף אחד ממערכי האימון, הפיתוח או המבחן שלנו.",
+        "demo_alt": "רצועה סרוקה של שש שורות בדפוס רבני עברי",
+        "demo_source": "העמוד ב־Internet Archive",
+        "demo_model": "המודל",
     },
 }
 
@@ -184,6 +197,33 @@ def home_status(lang: str, text: str) -> str:
 ORG = "https://github.com/HeOCR"
 
 
+DEMO = ROOT / "demo" / "demo.json"
+
+
+def demo_section(lang: str) -> str:
+    """A cleared public-domain strip and what a released model read on it (site review 2, ARCH-02 §2).
+
+    demo/demo.json records the source, the clearance receipt, the model, the command and the output; the
+    image must still be the cleared file. Captioned as an illustration: no metric."""
+    import hashlib
+
+    t, demo = HOME[lang], json.loads(DEMO.read_text(encoding="utf-8"))
+    image = demo["image"]
+    if hashlib.sha256((ROOT / image["path"]).read_bytes()).hexdigest() != image["sha256"]:
+        raise SystemExit(f"{image['path']} is not the cleared demo image")
+    width, height = image["px"]
+    lines = "".join(f"        <p>{html.escape(line)}</p>\n" for line in demo["output"])
+    return (
+        f'\n  <section id="demo">\n    <h2>{html.escape(t["demo"])}</h2>\n    <div class="grid">\n'
+        f'      <div class="card">\n        <img src="{shell.prefix(lang)}{image["path"]}" width="{width}" height="{height}" '
+        f'alt="{html.escape(t["demo_alt"])}" style="width: 100%; height: auto">\n      </div>\n'
+        f'      <div class="card" lang="he" dir="rtl">\n{lines}      </div>\n    </div>\n'
+        f'    <p class="sub">{html.escape(t["demo_caption"])}</p>\n'
+        f'    <p class="sub">{html.escape(t["demo_note"])} <a href="{demo["source"]["url"]}">{html.escape(t["demo_source"])}</a> · '
+        f'<a href="{demo["model"]["url"]}">{html.escape(t["demo_model"])}</a></p>\n  </section>\n'
+    )
+
+
 def home_layout(lang: str, text: str) -> str:
     """The home hero, "How to use" and code sections (site review 2, COPY-02/03/04/06, ARCH-02 §1).
 
@@ -215,8 +255,9 @@ def home_layout(lang: str, text: str) -> str:
     )
     start = (f'\n  <section id="start">\n    <h2>{html.escape(t["start"])}</h2>\n'
              f'    <div class="grid">\n{cards}    </div>\n  </section>\n')
-    text = re.sub(r'(<main id="main" class="wrap home">\n)(?:\n  <section id="start">.*?^  </section>\n)?',
-                  lambda m: m[1] + start, text, count=1, flags=re.M | re.S)
+    text = re.sub(r'(<main id="main" class="wrap home">\n)(?:\n  <section id="demo">.*?^  </section>\n)?'
+                  r'(?:\n  <section id="start">.*?^  </section>\n)?',
+                  lambda m: m[1] + demo_section(lang) + start, text, count=1, flags=re.M | re.S)
     groups = "".join(
         f'    <h3>{html.escape(group)}</h3>\n    <div class="grid">\n'
         + "".join(f'      <div class="card">\n        <h3><a href="{ORG}/{repo}">{repo}</a></h3>\n'
