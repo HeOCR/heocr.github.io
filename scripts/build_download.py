@@ -14,9 +14,12 @@ MODEL_HUB = "https://huggingface.co/HeOCR/heocr-p-hist-measured"
 FULL_MODEL_HUB = "https://huggingface.co/HeOCR/heocr-p-hist-full"
 LITERATURE_HUB = "https://huggingface.co/HeOCR/heocr-literature-measured"
 POINTED_HUB = "https://huggingface.co/HeOCR/heocr-pointed-measured"
+MODERN_HUB = "https://huggingface.co/HeOCR/heocr-modern-measured"
 QUICK_START_VERSION = "v1.1"
 # (title, version, anchor, description key, hub, Zenodo DOI, held-out result link, result label key)
 MODEL_RELEASES = (
+    ("HeOCR modern MEASURED", "v1.0", "modern-v10", "modern", MODERN_HUB, "10.5281/zenodo.24615080",
+     "benchmarks.html#p-mod-open", "pmod_benchmark"),
     ("HeOCR literature MEASURED", "v1.0", "literature-v10", "literature", LITERATURE_HUB, "10.5281/zenodo.24620176",
      "benchmarks.html#pby-h-open", "pbyh_benchmark"),
     ("HeOCR pointed MEASURED", "v1.0", "pointed-v10", "pointed", POINTED_HUB, "10.5281/zenodo.24620184",
@@ -40,11 +43,12 @@ T = {
     "en": {
         "title": "Download HeOCR",
         "models": "OCR models",
-        "about": "HeOCR models are available now for historical unpointed print (P-hist v1.1), unpointed literary print (literature v1.0) and pointed literary print (pointed v1.0). Apache 2.0.",
+        "about": "HeOCR models are available now for modern printed documents (modern v1.0), historical unpointed print (P-hist v1.1), unpointed literary print (literature v1.0) and pointed literary print (pointed v1.0). Apache 2.0.",
         "quick_start": "Quick start",
         "instructions": "With Tesseract 5 and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.",
-        "experimental": "HeOCR’s modern print and handwriting models are still experimental.",
-        "modern_results": "Modern print benchmark",
+        "experimental": "HeOCR’s handwriting models are still experimental.",
+        "pmod_benchmark": "P-mod-open held-out result",
+        "modern": "Modern unpointed printed documents. Evaluated on the P-mod-open v0 held-out set.",
         "benchmarks": "See all benchmarks",
         "model_benchmark": "C2 held-out result",
         "pbyh_benchmark": "PBY-H held-out result",
@@ -61,11 +65,12 @@ T = {
     "he": {
         "title": "הורדת HeOCR",
         "models": "מודלים לזיהוי תווים",
-        "about": "מודלים של HeOCR זמינים להורדה לדפוס היסטורי לא מנוקד (P-hist v1.1), לספרות בדפוס לא מנוקד (literature v1.0) ולספרות בדפוס מנוקד (pointed v1.0), ברישיון Apache 2.0.",
+        "about": "מודלים של HeOCR זמינים להורדה למסמכים מודרניים בדפוס (modern v1.0), לדפוס היסטורי לא מנוקד (P-hist v1.1), לספרות בדפוס לא מנוקד (literature v1.0) ולספרות בדפוס מנוקד (pointed v1.0), ברישיון Apache 2.0.",
         "quick_start": "התחלה מהירה",
         "instructions": "התקינו Tesseract 5 ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.",
-        "experimental": "המודלים של HeOCR לדפוס מודרני ולכתב יד עדיין ניסיוניים.",
-        "modern_results": "מדד ההערכה לדפוס מודרני",
+        "experimental": "המודלים של HeOCR לכתב יד עדיין ניסיוניים.",
+        "pmod_benchmark": "תוצאות על מערך המבחן P-mod-open",
+        "modern": "מסמכים מודרניים בדפוס לא מנוקד. נבדק על מערך המבחן P-mod-open v0.",
         "benchmarks": "לכל מדדי ההערכה",
         "model_benchmark": "תוצאות על מערך המבחן C2",
         "pbyh_benchmark": "תוצאות על מערך המבחן PBY-H",
@@ -107,8 +112,7 @@ def page(lang: str) -> str:
           f'<p>{text["instructions"]}</p>\n'
           f'<pre class="quick-start"><code>{escape(QUICK_START)}</code></pre>\n</section>\n'
         + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n</section>\n'
-        + f'<p>{text["experimental"]} <a href="benchmarks.html#p-mod-open">{text["modern_results"]}</a> · '
-          f'<a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
+        + f'<p>{text["experimental"]} <a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
         + f'<section>\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n</section>\n'
         + "</main>\n"
         + shell.footer([])
