@@ -557,18 +557,18 @@
     },
     {
       "id": "HeOCR/trn-phpack1-phone-captures",
-      "revision": "593f8e7e96f2be0fb687276db51e716ff5d4fdd3",
+      "revision": "36e637c49340582df624be42ad2359d2543e6c1e",
       "group": "real",
       "title": "TRN-PHPACK1",
       "description": {
-        "en": "Training crops and page views from two phones photographing the same Hebrew print pack.",
-        "he": "תצלומי עמודים וחיתוכי שורות לאימון, משני טלפונים שצילמו את אותה ערכת דפים מודפסת בעברית."
+        "en": "Training crops and page views from two phones photographing the same Hebrew print pack. Version 2 flags labels that do not match their pixels; the line count is the default set, which leaves them out.",
+        "he": "תצלומי עמודים וחיתוכי שורות לאימון, משני טלפונים שצילמו את אותה ערכת דפים מודפסת בעברית. גרסה 2 מסמנת תוויות שאינן תואמות את התמונה; מניין השורות הוא של מערך ברירת המחדל, שאינו כולל אותן."
       },
       "license": "cc0-1.0",
       "access": "public",
       "dois": [
         {
-          "id": "10.5281/zenodo.24572310",
+          "id": "10.5281/zenodo.24633582",
           "label": "A+B"
         }
       ],
@@ -576,10 +576,10 @@
         "documents": null,
         "pages": 60,
         "images": 7911,
-        "lines": 7633,
+        "lines": 6714,
         "words": null,
         "characters": null,
-        "bytes": 2805934079
+        "bytes": 2817613910
       },
       "partial_pages": null
     },
