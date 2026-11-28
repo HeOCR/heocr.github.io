@@ -27,12 +27,12 @@ POINTED_MODEL = "https://huggingface.co/HeOCR/heocr-pointed-measured/tree/v1.0"
 PHIST_V11 = "HeOCR P-hist MEASURED v1.1"
 MODEL_NAMES = {
     "heocr-p-hist-a-full-35k": "HeOCR literature MEASURED v1.0",
-    "heocr-p-hist-v1-1": PHIST_V11, "heocr-v1-1": PHIST_V11 + " (previous)",
+    "heocr-p-hist-v1-1": PHIST_V11, "heocr-v1-1": PHIST_V11,
     "heocr-v1-0": "HeOCR P-hist MEASURED v1.0",
     "heocr-arm-c-pointed-60k": "HeOCR pointed MEASURED v1.0",
 }
 PBYH_NAMES = {"heocr-p-hist-a-full-35k": (MODEL_NAMES["heocr-p-hist-a-full-35k"], LITERATURE_MODEL),
-              "heocr-p-hist-v1-1": (PHIST_V11 + " (previous)", HISTORICAL_MODEL)}
+              "heocr-p-hist-v1-1": (PHIST_V11, HISTORICAL_MODEL)}
 POINTED_URLS = {"heocr-arm-c-pointed-60k": POINTED_MODEL, "heocr-v1-1": HISTORICAL_MODEL}
 HIGHER_BETTER = {"mark_recall"}
 T = {
@@ -121,6 +121,8 @@ T = {
         "pointed_caveat": "HeOCR pointed MEASURED v1.0 is a fine-tune of HeOCR P-hist MEASURED v1.1 and is slower (median 2.2 s per page, against 1.4 s). None of the 8 works is in its fine-tuning data. It was selected on a separate development set and scored on this set once.",
         "cer_letters": "CER, letters only", "mark_recall": "Mark recall", "best_high": "Highest",
         "not_run": "Not run",
+        "earlier": "Earlier HeOCR models",
+        "earlier_note": "Shown for reference. Highlights in the table above count only the readers shown there.",
         "not_run_reason": "Google Drive’s built-in OCR was not run: its API refused Hebrew as an OCR language.",
         "pbyh_paired": "Differences are tested with a paired bootstrap by work (12 works).",
         "modern_notes": "HeOCR’s model is a fine-tune of Rivok Full. A CER above 100% means the reader inserted text that is not on the page. The other readers’ training data is unknown, and these pages may be on the public web.",
@@ -209,6 +211,8 @@ T = {
         "pointed_caveat": "HeOCR pointed MEASURED v1.0 מבוסס על כוונון נוסף של HeOCR P-hist MEASURED v1.1, ואיטי ממנו (חציון של 2.2 שניות לעמוד, לעומת 1.4). אף אחת משמונה היצירות אינה בנתוני הכוונון שלו. המודל נבחר על מערך פיתוח נפרד ונבדק על מערך זה פעם אחת.",
         "cer_letters": "CER ללא ניקוד", "mark_recall": "זיהוי סימני ניקוד", "best_high": "השיעור הגבוה ביותר",
         "not_run": "לא נבדק",
+        "earlier": "מודלים קודמים של HeOCR",
+        "earlier_note": "לעיון בלבד. הסימונים בטבלה שלמעלה מחושבים רק על המנועים שמוצגים בה.",
         "not_run_reason": "זיהוי הטקסט המובנה של Google Drive לא נבדק: הממשק שלו דחה עברית כשפת זיהוי.",
         "pbyh_paired": "ההבדלים נבדקו בשיטת bootstrap מזווגת לפי יצירה (12 יצירות).",
         "modern_notes": "המודל של HeOCR מבוסס על כוונון נוסף של Rivok Full. שיעור שגיאות תווים מעל 100% פירושו שהמנוע הוסיף טקסט שאינו מופיע בעמוד. נתוני האימון של המנועים האחרים אינם ידועים, וייתכן שהעמודים האלה זמינים ברשת.",
@@ -230,7 +234,7 @@ def error_rate(edits, denominator):
     return Fraction(edits, denominator), numbers(f"{edits:,} / {denominator:,}")
 
 
-def result_table(t, table_id, caption, columns, rows):
+def result_table(t, table_id, caption, columns, rows, *, highlight=True):
     # Use exact ratios so display rounding cannot change the order or winners.
     def order(row):
         value = row["cells"][0][0]
@@ -241,9 +245,9 @@ def result_table(t, table_id, caption, columns, rows):
         i = columns.index(column)
         return pick((row["cells"][i][0] for row in candidates if row["cells"][i][0] is not None), default=None)
 
-    best = [extreme(column, rows) for column in columns]
+    best = [extreme(column, rows) if highlight else None for column in columns]
     open_rows = [row for row in rows if reader_access.classify(row["name"]) == "open"]
-    best_open = [extreme(column, open_rows) for column in columns]
+    best_open = [extreme(column, open_rows) if highlight else None for column in columns]
     api_labels = {
         "api_all": f'{t["cer"]} · {t["all_positions"]}',
         "api_filtered": f'{t["cer"]} · {t["historical_filtered"]}',
@@ -294,6 +298,24 @@ def result_table(t, table_id, caption, columns, rows):
         f'<thead><tr><th scope="col">{e(t["reader"])}</th>{"".join(headers)}</tr></thead>'
         f'<tbody>{"".join(body)}</tbody></table></div>\n'
     )
+
+
+def best_heocr_table(t, table_id, caption, columns, rows):
+    """A score table that shows only our best HeOCR row (owner, 2026-11-28).
+
+    Rows marked ``heocr`` compete on the primary measure (the first column); the lowest stays in the table,
+    and the others go to a collapsed "Earlier HeOCR models" block under it, without highlights. The
+    table's best-in-column and best-open marks are computed over the rows it shows."""
+    scored = [row for row in rows if row.get("heocr") and row["cells"][0][0] is not None]
+    best = min(scored, key=lambda row: row["cells"][0][0], default=None)
+    shown = [row for row in rows if not row.get("heocr") or row is best]
+    earlier = [{**row, "ours": False} for row in rows if row.get("heocr") and row is not best]
+    out = result_table(t, table_id, caption, columns, shown)
+    if earlier:
+        out += disclosure(t["earlier"], f'<p class="note">{e(t["earlier_note"])}</p>'
+                          + result_table(t, f"{table_id}-earlier", t["earlier"], columns, earlier, highlight=False),
+                          identifier=f"{table_id}-earlier-models")
+    return out
 
 
 def link(target, label):
@@ -544,8 +566,8 @@ def pbyh_results(t, data):
         candidate = row["id"].startswith("heocr-") and row["paired"] is None
         name, url = PBYH_NAMES.get(row["id"], (None, None))
         rows.append({"name": name or row["label"], "ours": candidate, "model_url": url,
-                     "cells": text_score_cells(row)})
-    table = result_table(t, f"{panel_id}-pooled", t["pbyh_title"], ("cer", "wer"), rows)
+                     "heocr": row["id"].startswith("heocr-"), "cells": text_score_cells(row)})
+    table = best_heocr_table(t, f"{panel_id}-pooled", t["pbyh_title"], ("cer", "wer"), rows)
     notes = [t["pbyh_masked"].format(masked=data["masked_lines"]), t["pbyh_refs"], t["pbyh_paired"]]
     if any(row["status"] == "not_run" for row in data["readers"]):
         notes.append(t["not_run_reason"])
@@ -567,12 +589,12 @@ def pointed_results(t, data):
     rows = []
     for row in data["rows"]:
         rows.append({"name": MODEL_NAMES.get(row["lane"], row["reader"]), "ours": row["candidate"],
-                     "model_url": POINTED_URLS.get(row["lane"]),
+                     "model_url": POINTED_URLS.get(row["lane"]), "heocr": row["lane"].startswith("heocr-"),
                      "cells": [(Fraction(row[key]), "") for key in columns]})
     if data["drive_not_run"]:
         rows.append({"name": "Google Drive built-in OCR", "note": t["not_run"],
                      "cells": [(None, "")] * len(columns)})
-    table = result_table(t, "pby-h-pointed-scores-pooled", t["pointed_title"], columns, rows)
+    table = best_heocr_table(t, "pby-h-pointed-scores-pooled", t["pointed_title"], columns, rows)
     notes = [t["pointed_editions"], t["pbyh_masked"].format(masked=data["masked_lines"]),
              t["pointed_higher"], t["pointed_paired"]]
     if data["drive_not_run"]:
