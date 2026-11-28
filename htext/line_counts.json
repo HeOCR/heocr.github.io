@@ -1,0 +1,138 @@
+{
+  "schema": "htext_line_counts.v1",
+  "updated": "2026-11-27",
+  "rule": "per repository: sum over live releases (not withdrawn, not superseded) of every published file, pointed and unpointed counted separately; the Israel + US variant (a subset) is left out",
+  "total": {
+    "lines": 80206311,
+    "unpointed": 76773908,
+    "pointed": 3432403
+  },
+  "repositories": {
+    "HeOCR/htext-gutenberg": {
+      "lines": 5316,
+      "unpointed": 5315,
+      "pointed": 1,
+      "by_subset": {
+        "niqqud": 1,
+        "plain": 5315
+      },
+      "releases": [
+        "gutenberg-v1"
+      ]
+    },
+    "HeOCR/htext-knesset-laws": {
+      "lines": 223617,
+      "unpointed": 223617,
+      "pointed": 0,
+      "by_subset": {
+        "plain": 223617
+      },
+      "releases": [
+        "knesset-laws-v2"
+      ]
+    },
+    "HeOCR/htext-knesset-plenary": {
+      "lines": 31318214,
+      "unpointed": 31318214,
+      "pointed": 0,
+      "by_subset": {
+        "ocr_layer": 10521382,
+        "transcription": 20796832
+      },
+      "releases": [
+        "knesset-plenary-v1"
+      ]
+    },
+    "HeOCR/htext-pby": {
+      "lines": 13610209,
+      "unpointed": 11937498,
+      "pointed": 1672711,
+      "by_subset": {
+        "niqqud": 1672711,
+        "plain": 11937498
+      },
+      "releases": [
+        "pby-v3.1"
+      ]
+    },
+    "HeOCR/htext-sefaria": {
+      "lines": 29058826,
+      "unpointed": 28051562,
+      "pointed": 1007264,
+      "by_subset": {
+        "niqqud": 1007264,
+        "plain": 28051562
+      },
+      "releases": [
+        "sefaria-v1",
+        "sefaria-v2-cc0",
+        "sefaria-v3.1-cc0"
+      ]
+    },
+    "HeOCR/htext-sefaria-by": {
+      "lines": 1409213,
+      "unpointed": 1205667,
+      "pointed": 203546,
+      "by_subset": {
+        "niqqud": 203546,
+        "plain": 1205667
+      },
+      "releases": [
+        "sefaria-v2-by",
+        "sefaria-v3-by"
+      ]
+    },
+    "HeOCR/htext-sefaria-by-sa": {
+      "lines": 591087,
+      "unpointed": 554281,
+      "pointed": 36806,
+      "by_subset": {
+        "niqqud": 36806,
+        "plain": 554281
+      },
+      "releases": [
+        "sefaria-v3-by-sa"
+      ]
+    },
+    "HeOCR/htext-tanakh": {
+      "lines": 115320,
+      "unpointed": 57637,
+      "pointed": 57683,
+      "by_subset": {
+        "niqqud": 57683,
+        "plain": 57637
+      },
+      "releases": [
+        "tanakh-v1.1"
+      ]
+    },
+    "HeOCR/htext-tsel-haolam": {
+      "lines": 2408,
+      "unpointed": 2408,
+      "pointed": 0,
+      "by_subset": {
+        "niqqud": 0,
+        "plain": 2408
+      },
+      "releases": [
+        "tsel-haolam-v1"
+      ]
+    },
+    "HeOCR/htext-wikisource": {
+      "lines": 3872101,
+      "unpointed": 3417709,
+      "pointed": 454392,
+      "by_subset": {
+        "niqqud": 454392,
+        "plain": 3417709
+      },
+      "releases": [
+        "wikisource-v1",
+        "wikisource-v2",
+        "wikisource-v3",
+        "wikisource-v4",
+        "wikisource-v5"
+      ]
+    }
+  }
+}
