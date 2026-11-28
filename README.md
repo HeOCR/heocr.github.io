@@ -76,8 +76,13 @@ new version, add or update its entry in `corpora.json`, or refresh an existing e
 ```
 python3 scripts/build_htext.py --import-card pby path/to/htext/data/pby/v1/corpus_card.json
 python3 scripts/build_htext.py           # writes both pages (standard library only)
-python3 scripts/build_htext.py --check   # fails if a committed page does not match corpora.json
+python3 scripts/build_htext.py --check   # fails if a committed page or htext/line_counts.json does not match corpora.json
 ```
+
+The builder also writes `htext/line_counts.json`: the one line-count rule for htext, shared with the home page and
+datasets. Per HF repository (`repositories["HeOCR/htext-…"]`): `lines`, `unpointed`, `pointed`, `by_subset` and
+`releases`, summed over live releases and leaving out the Israel + US subset variant. Other builders should read
+htext counts from there.
 
 ### Benchmark release staging
 

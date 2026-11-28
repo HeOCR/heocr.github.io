@@ -9,6 +9,12 @@ Standard library only. The markup follows the "Bounding Box" design (design/bran
 site.css and the shell is scripts/shell.py, as on every page.
 When htext publishes a corpus or a new version, add or update its entry in corpora.json (counts come from the
 corpus card in HeOCR/htext, data/<corpus>/<version>/corpus_card.json), then rebuild.
+
+Line counts follow one rule, shared with index.html and datasets (FIX-03, site review 2): a repository's lines are
+the sum over its live releases (not withdrawn, not superseded by a later release's `previous`) of every published
+file, pointed and unpointed counted separately, leaving out the Israel + US variant (a subset of the Israel files).
+The builder writes the result to htext/line_counts.json (`repositories[<HF repo id>]`: lines, unpointed, pointed,
+by_subset, releases); --check fails if it is stale. Other page builders should read the counts from there.
 """
 from __future__ import annotations
 
@@ -21,12 +27,15 @@ import shell  # noqa: E402  (head, header, footer: one source for every page)
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "htext" / "corpora.json"
+COUNTS = ROOT / "htext" / "line_counts.json"
 
 T = {
     "en": {
         "title": "htext",
         "desc": "htext: openly licensed Hebrew text for training Hebrew OCR, in three releases (CC0, CC BY, CC BY-SA), with a rights record for every entry.",
-        "lede": "Openly licensed Hebrew text for training HeOCR's recognizers, cut into lines, plain and with niqqud: public-domain text first, and attribution and share-alike text in their own releases. Every work or document carries its own rights record: its status in Israel and in the US, its licence and its credit line. htext is published as three releases, one per licence, so you can pick the terms you need; the core release is CC0 and can be used without conditions.",
+        "lede_strong": "Open Hebrew text for training OCR recognizers.",
+        "lede_pointer": "Looking to extract text from a file or an image? Go to the <a href=\"download.html\">download page</a>. This page is for people who build or train models.",
+        "lede": "htext holds {lines} lines of Hebrew text, plain and with niqqud. Every work or document carries its own rights record: its status in Israel and in the US, its licence and its credit line. htext is published as three releases, one per licence (CC0, CC BY, CC BY-SA), so you can pick the terms you need; the core release, htext-cc0, can be used without conditions.",
         "updated": "Updated {d}. Figures come from each corpus card and are rebuilt from <a href=\"{json}\">corpora.json</a>.",
         "toc": [("releases", "Releases"), ("what", "What htext is"), ("corpora", "Corpora"), ("rights", "Rights"), ("use", "Download and use"),
                 ("credit", "Credit"), ("licence", "Licence")],
@@ -48,12 +57,13 @@ T = {
         "c_in": "Release",
         "planned_h": "Planned sources",
         "planned_p": "Sources being prepared. Each is published only after its rights are checked entry by entry.",
+        "repo_lines": "{n} lines ({u} unpointed + {p} pointed)", "repo_lines_plain": "{n} lines", "repo_versions": "{k} versions", "repo_latest": "latest {t}", "count_rule": "Line counts add up every live version of a repository, pointed and unpointed lines counted separately; the Israel + US variant is a subset and is not added. index.html uses the same counts.",
         "c_source": "Source", "c_release": "Release", "c_card": "Corpus card", "c_prev": "Earlier version", "c_issues": "known issues", "c_withdrawn": "withdrawn {d}: its files overlapped HeOCR's evaluation text", "c_status_withdrawn": "withdrawn", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "all versions", "c_hf": "Hugging Face", "c_hf_filtered": "Corrected check: zero shared 6-grams across 16 evaluation pools for these exact text files", "c_hf_same": "the same files as the GitHub release", "c_works": "{w} of {c} catalogue works have lines in this corpus; {u} also in the Israel + US variant.",
         "th_file": "File", "th_variant": "Variant", "th_subset": "Subset", "th_lines": "Lines", "th_works": "Works", "th_laws": "Laws", "th_books": "Books", "th_size": "Size",
         "th_pages": "Articles", "th_sittings": "Sittings",
         "c_privacy": "The private-name filter removed {lines} lines before publication.",
         "c_laws": "{w} of {c} laws in the catalogue have lines in this corpus.",
-        "c_books": "All {w} books have lines in this corpus, in both forms. The pointed and plain files hold the same verses, so the totals above count them once.",
+        "c_books": "All {w} books have lines in this corpus, in both forms. The pointed and plain files hold the same verses; the totals count both files, shown as pointed and unpointed parts.",
         "c_quality": {"transcription": "Text: transcribed by people.",
                       "ocr_layer": "Text: the OCR layer of the scans, filtered against a lexicon. An eye check of {k} random lines against the scans found an error in {l} ({lr}) and {ww} wrong words of {sw} ({wr})."},
         "total": "Total",
@@ -73,7 +83,7 @@ T = {
         "use_gen": "Use a file as training text for hocrsyngen, which records it as <code>external:sha256:&lt;hex&gt;</code>:",
         "use_build": "Or rebuild a corpus from its source: each corpus has a build guide in the repository, for example <a href=\"{doc}\">the PBY guide</a>.",
         "credit_h": "Credit",
-        "credit_p": "Follow the attribution terms for CC BY and CC BY-SA material. For CC0 material, HeOCR also asks that you carry these acknowledgements into dataset or model cards:",
+        "credit_p": "Follow the attribution terms for CC BY and CC BY-SA material. For CC0 material, HeOCR also asks that you carry these acknowledgements into dataset or model cards. Each source is listed once; the NOTICE and edition files of every version are linked after its credit line.",
         "licence_h": "Licence",
         "licence_p": "Each release carries its own licence, listed under <a href=\"#releases\">Releases</a>; the CC BY and CC BY-SA terms bind the source text. HeOCR's own processing and metadata, meaning the rights and line indexes, exclusion lists, cards and checksums, are dedicated to the public domain under <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a> in every release, as far as they can be separated from the text. The builder code is under the <a href=\"https://github.com/HeOCR/htext/blob/main/LICENSE\">MIT licence</a>.",
         "footer": "Created by <a href=\"http://www.shaypalachy.com/\">Shay Palachy Affek</a> and the HeOCR maintainers.",
@@ -82,7 +92,9 @@ T = {
     "he": {
         "title": "htext",
         "desc": "htext: טקסט עברי ברישיונות פתוחים לאימון OCR עברי, בשלוש גרסאות (CC0,‏ CC BY,‏ CC BY-SA), עם רישום זכויות לכל פריט.",
-        "lede": "טקסט עברי ברישיונות פתוחים לאימון מנועי הזיהוי של HeOCR, חתוך לשורות, עם ניקוד ובלעדיו: בראש ובראשונה טקסט בנחלת הכלל, וטקסט בייחוס ובשיתוף זהה בגרסאות נפרדות. לכל יצירה או מסמך יש רישום זכויות משלו: מעמדו בישראל ובארה\"ב, הרישיון שלו ושורת הקרדיט שלו. htext מתפרסם בשלוש גרסאות, אחת לכל רישיון, כדי שתוכלו לבחור את התנאים שמתאימים לכם; גרסת הליבה היא CC0 ואפשר להשתמש בה בלי תנאים.",
+        "lede_strong": "טקסט עברי פתוח לאימון מנועי זיהוי תווים (OCR).",
+        "lede_pointer": "מחפשים לחלץ טקסט מקובץ או מתמונה? עברו ל<a href=\"download.html\">עמוד ההורדה</a>. העמוד הזה מיועד למי שבונה או מאמן מודלים.",
+        "lede": "htext מרכז {lines} שורות טקסט עברי, עם ניקוד ובלעדיו. לכל יצירה או מסמך יש רישום זכויות משלו: מעמדו בישראל ובארה\"ב, הרישיון שלו ושורת הקרדיט שלו. htext מתפרסם בשלוש גרסאות, אחת לכל רישיון (CC0,‏ CC BY,‏ CC BY-SA), כדי שתוכלו לבחור את התנאים שמתאימים לכם; גרסת הליבה, htext-cc0, ניתנת לשימוש בלי תנאים.",
         "updated": "עודכן ב־{d}. המספרים לקוחים מכרטיס כל מאגר ונבנים מחדש מתוך <a href=\"{json}\">corpora.json</a>.",
         "toc": [("releases", "גרסאות"), ("what", "מה זה htext"), ("corpora", "מאגרים"), ("rights", "זכויות"), ("use", "הורדה ושימוש"),
                 ("credit", "קרדיט"), ("licence", "רישיון")],
@@ -104,12 +116,13 @@ T = {
         "c_in": "גרסת htext",
         "planned_h": "מקורות מתוכננים",
         "planned_p": "מקורות בהכנה. כל אחד מתפרסם רק אחרי שזכויותיו נבדקו פריט אחר פריט.",
+        "repo_lines": "{n} שורות ({u} ללא ניקוד + {p} מנוקדות)", "repo_lines_plain": "{n} שורות", "repo_versions": "{k} גרסאות", "repo_latest": "אחרונה: {t}", "count_rule": "מספרי השורות מחברים את כל הגרסאות הפעילות של כל מאגר, ושורות מנוקדות ולא מנוקדות נספרות בנפרד; גרסת ישראל + ארה\"ב היא תת־קבוצה ואינה נוספת. דף הבית משתמש באותם מספרים.",
         "c_source": "מקור", "c_release": "גרסה", "c_card": "כרטיס המאגר", "c_prev": "גרסה קודמת", "c_issues": "בעיות ידועות", "c_withdrawn": "הוסרה ב־{d}: הקבצים שלה חפפו לטקסט ההערכה של HeOCR", "c_status_withdrawn": "הוסר", "c_zenodo": "Zenodo (DOI)", "c_zenodo_all": "כל הגרסאות", "c_hf": "Hugging Face", "c_hf_filtered": "בבדיקה המתוקנת נמצאו אפס רצפים משותפים של שש מילים מול 16 מאגרי הערכה, עבור קובצי הטקסט האלה", "c_hf_same": "אותם קבצים כמו בגרסה ב־GitHub", "c_works": "ל־{w} מתוך {c} יצירות בקטלוג יש שורות במאגר; ל־{u} מהן גם בגרסת ישראל + ארה\"ב.",
         "th_file": "קובץ", "th_variant": "גרסה", "th_subset": "סוג", "th_lines": "שורות", "th_works": "יצירות", "th_laws": "חוקים", "th_books": "ספרים", "th_size": "גודל",
         "th_pages": "ערכים", "th_sittings": "ישיבות",
         "c_privacy": "מסנן השמות של אנשים פרטיים הסיר {lines} שורות לפני הפרסום.",
         "c_laws": "ל־{w} מתוך {c} חוקים בקטלוג יש שורות במאגר.",
-        "c_books": "לכל {w} הספרים יש שורות במאגר, בשתי הצורות. שני הקבצים, המנוקד והלא־מנוקד, מכילים את אותם פסוקים, ולכן הסיכומים למעלה סופרים אותם פעם אחת.",
+        "c_books": "לכל {w} הספרים יש שורות במאגר, בשתי הצורות. שני הקבצים, המנוקד והלא־מנוקד, מכילים את אותם פסוקים; הסיכומים סופרים את שני הקבצים, ומציגים בנפרד את החלק המנוקד ואת החלק הלא־מנוקד.",
         "c_quality": {"transcription": "טקסט: הוקלד בידי אנשים.",
                       "ocr_layer": "טקסט: שכבת ה־OCR של הסריקות, מסוננת מול מילון. בבדיקה בעין של {k} שורות אקראיות מול הסריקות נמצאה טעות ב־{l} ({lr}), ו־{ww} מילים שגויות מתוך {sw} ({wr})."},
         "total": "סה\"כ",
@@ -129,7 +142,7 @@ T = {
         "use_gen": "השתמשו בקובץ כטקסט אימון ל־hocrsyngen, שמתעד אותו כ־<code>external:sha256:&lt;hex&gt;</code>:",
         "use_build": "או בנו מאגר מחדש מהמקור: לכל מאגר יש מדריך בנייה במאגר הקוד, למשל <a href=\"{doc}\">המדריך של פרויקט בן־יהודה</a>.",
         "credit_h": "קרדיט",
-        "credit_p": "יש לפעול לפי תנאי הייחוס של רישיונות CC BY ו־CC BY-SA. גם בשימוש בחומר ברישיון CC0, ‏HeOCR מבקש לציין את הקרדיט בכרטיס מאגר הנתונים או המודל:",
+        "credit_p": "יש לפעול לפי תנאי הייחוס של רישיונות CC BY ו־CC BY-SA. גם בשימוש בחומר ברישיון CC0, ‏HeOCR מבקש לציין את הקרדיט בכרטיס מאגר הנתונים או המודל. כל מקור מופיע פעם אחת; קובצי ה־NOTICE והמהדורות של כל גרסה מקושרים אחרי שורת הקרדיט שלה.",
         "licence_h": "רישיון",
         "licence_p": "לכל גרסה יש רישיון משלה, כמפורט תחת <a href=\"#releases\">גרסאות</a>; תנאי CC BY ו־CC BY-SA חלים על טקסט המקור. העיבוד והמטא־דאטה של HeOCR, כלומר אינדקסי הזכויות והשורות, רשימות ההחרגה, הכרטיסים וסיכומי הביקורת, מוקדשים לנחלת הכלל ברישיון <a href=\"https://creativecommons.org/publicdomain/zero/1.0/deed.he\">CC0 1.0</a> בכל הגרסאות, ככל שאפשר להפריד אותם מהטקסט. קוד הבנייה ברישיון <a href=\"https://github.com/HeOCR/htext/blob/main/LICENSE\">MIT</a>.",
         "footer": "נוצר בידי <a href=\"http://www.shaypalachy.com/\">שי פלצ'י אפק</a> ומתחזקי HeOCR.",
@@ -236,7 +249,14 @@ def corpus_version(c: dict, rel: dict, lang: str) -> str:
     return "".join(out)
 
 
-def source_card(versions: list[dict], rel: dict, lang: str) -> str:
+def repo_line(r: dict, lang: str) -> str:
+    t = T[lang]
+    if r["pointed"] and r["unpointed"]:
+        return t["repo_lines"].format(n=n(r["lines"]), u=n(r["unpointed"]), p=n(r["pointed"]))
+    return t["repo_lines_plain"].format(n=n(r["lines"]))
+
+
+def source_card(versions: list[dict], rel: dict, lang: str, counts: dict) -> str:
     t = T[lang]
     versions = sorted(
         versions,
@@ -248,17 +268,19 @@ def source_card(versions: list[dict], rel: dict, lang: str) -> str:
     latest = {}
     for c in versions:
         if not c.get("withdrawn"):
-            latest.setdefault((c.get("series"), c["htext_release"]), c)
+            latest.setdefault(repo_of(c), c)
 
     versions_label = e(t["versions"])
     out = [f'<article class="card source-card"><h3>{e(title)}</h3>\n']
-    for c in latest.values():
-        release = c["release"]
+    for repo, c in latest.items():
+        r = counts["repositories"][repo]
         label = e(rel[c["htext_release"]]["licence"]["name"])
-        lines = sum(f["lines"] for f in full_files([c]))
-        out.append(f'<p class="source-release"><a href="{e(release["url"])}"><bdi dir="ltr">'
-                   f'{e(release["tag"])}</bdi></a> · {label} · <bdi dir="ltr">{n(lines)}</bdi> '
-                   f'{e(t["stat_lines"])}</p>\n')
+        name = repo.split("/", 1)[-1]
+        link = f'https://huggingface.co/datasets/{repo}' if "/" in repo else c["release"]["url"]
+        k = len(r["releases"])
+        more = (f' · {e(t["repo_versions"].format(k=k))}, {e(t["repo_latest"].format(t=c["release"]["tag"]))}' if k > 1 else "")
+        out.append(f'<p class="source-release"><a href="{e(link)}"><bdi dir="ltr">{e(name)}</bdi></a> · {label} · '
+                   f'{repo_line(r, lang)}{more}</p>\n')
     out.append(f'<details class="versions"><summary>{versions_label}</summary>\n')
     out.extend(f'<div class="source-version">\n{corpus_version(c, rel, lang)}</div>\n'
                for c in versions)
@@ -270,6 +292,43 @@ def full_files(corpora: list[dict]) -> list[dict]:
     # The IL+US variant and alternate forms repeat text.
     return [f for c in corpora for f in c["files"]
             if f.get("variant") != "il_us" and not f.get("same_text_as")]
+
+
+def grouped(corpora: list[dict]) -> list[list[dict]]:
+    groups: dict[str, list[dict]] = {}
+    for c in corpora:
+        groups.setdefault(c.get("source_group", c["id"]), []).append(c)
+    return [sorted(g, key=lambda c: (c["release"]["date"], tuple(map(int, re.findall(r"\d+", c["version"])))), reverse=True)
+            for g in groups.values()]
+
+
+def repo_of(c: dict) -> str:
+    return c.get("hf", {}).get("repo") or c["id"]
+
+
+def line_counts(R: dict) -> dict:
+    """The one line-count rule (see the module docstring), per repository and in total."""
+    live = [c for c in R["corpora"] if not c.get("withdrawn")]
+    superseded = {p["tag"] for c in live for p in c.get("previous", [])}
+    repos: dict[str, dict] = {}
+    for c in live:
+        if c["release"]["tag"] in superseded:
+            continue
+        r = repos.setdefault(repo_of(c), {"lines": 0, "unpointed": 0, "pointed": 0, "by_subset": {}, "releases": []})
+        r["releases"].append(c["release"]["tag"])
+        for f in c["files"]:
+            if f.get("variant") == "il_us":
+                continue
+            r["lines"] += f["lines"]
+            r["pointed" if f["subset"] == "niqqud" else "unpointed"] += f["lines"]
+            r["by_subset"][f["subset"]] = r["by_subset"].get(f["subset"], 0) + f["lines"]
+    for r in repos.values():
+        r["by_subset"] = dict(sorted(r["by_subset"].items()))
+    total = {k: sum(r[k] for r in repos.values()) for k in ("lines", "unpointed", "pointed")}
+    return {"schema": "htext_line_counts.v1", "updated": R["updated"],
+            "rule": "per repository: sum over live releases (not withdrawn, not superseded) of every published file, "
+                    "pointed and unpointed counted separately; the Israel + US variant (a subset) is left out",
+            "total": total, "repositories": dict(sorted(repos.items()))}
 
 
 def tier_cards(releases: list[dict], catalog: dict, lang: str) -> str:
@@ -305,16 +364,19 @@ def page(lang: str, R: dict, catalog: dict) -> str:
     json_href = f"{pre}htext/corpora.json"
     C = R["corpora"]
     live = [c for c in C if not c.get("withdrawn")]
+    counts = line_counts(R)
     out = []
     w = out.append
     w(shell.head(lang, e(t["title"]), e(t["desc"]), "htext"))
     w(shell.header(lang, "htext"))
-    w(shell.page_head(e(t["title"]), f'<p class="lede">{t["lede"]}</p>\n'
+    w(shell.page_head(e(t["title"]), f'<p class="lede"><b>{e(t["lede_strong"])}</b></p>\n'
+                                      f'<p class="note">{t["lede_pointer"]}</p>\n'
+                                      f'<p class="lede">{e(t["lede"].format(lines=n(counts["total"]["lines"])))}</p>\n'
                                       f'<p class="note">{t["updated"].format(d=e(R["updated"]), json=json_href)}</p>'))
     w(shell.toc(lang, [(i, e(h), None) for i, h in t["toc"]]))
     w('<main id="main" class="wrap doc ht">\n')
     files = full_files(live)
-    lines = sum(f["lines"] for f in files)
+    lines = counts["total"]["lines"]
     bytes_ = sum(f["bytes"] for f in files)
     works = sum(c.get("works_in_corpus", 0) for c in live)
     all_works_known = all("works_in_corpus" in c for c in live)
@@ -339,8 +401,9 @@ def page(lang: str, R: dict, catalog: dict) -> str:
         sources.setdefault(c.get("source_group", c["id"]), []).append(c)
     w('<div class="source-list">\n')
     for versions in sources.values():
-        w(source_card(versions, rel, lang))
+        w(source_card(versions, rel, lang, counts))
     w('</div>\n')
+    w(f'<p class="note">{e(t["count_rule"])}</p>\n')
     if R.get("planned"):
         w(f'<h3 id="planned">{e(t["planned_h"])}</h3>\n<p>{e(t["planned_p"])}</p>\n<ul class="facts">\n')
         for p in R["planned"]:
@@ -352,8 +415,16 @@ def page(lang: str, R: dict, catalog: dict) -> str:
     for p in t["rights_p"]:
         w(f"<p>{p}</p>\n")
     w('<ul class="facts">\n')
-    for c in live:
-        w(f'<li><b>{e(c["source"]["name"][lang])}</b>: {e(c["rights_basis"][lang])}</li>\n')
+    for group in grouped(live):
+        bases: dict[str, list[str]] = {}
+        for c in group:
+            bases.setdefault(c["rights_basis"][lang], []).append(c["release"]["tag"])
+        name = e(group[0]["source"]["name"][lang])
+        if len(bases) == 1:
+            w(f'<li><b>{name}</b>: {e(next(iter(bases)))}</li>\n')
+        else:
+            w(f'<li><b>{name}</b>\n<ul>\n' + "".join(
+                f'<li><bdi dir="ltr">{e(", ".join(tags))}</bdi>: {e(text)}</li>\n' for text, tags in bases.items()) + "</ul></li>\n")
     w("</ul>\n</section>\n")
     # --- 4. Use
     first = next((c for c in live if c["release"]["url"].startswith("https://github.com/")), live[0])
@@ -367,11 +438,17 @@ def page(lang: str, R: dict, catalog: dict) -> str:
     w(f'<p>{t["use_build"].format(doc="https://github.com/HeOCR/htext/blob/main/docs/pby_corpus.md")}</p>\n</section>\n')
     # --- 5. Credit
     w(f'<section id="credit">\n<h2>{e(t["credit_h"])}</h2>\n<p>{e(t["credit_p"])}</p>\n')
-    for c in live:
-        if c.get("credit"):
-            w(f'<p class="credit">Credit: <a href="{e(c["credit"]["url"])}">{e(c["credit"]["text"]["en"])}</a>'
-              + (f' · קרדיט: <a href="{e(c["credit"]["url"])}">{e(c["credit"]["text"]["he"])}</a>' if lang == "he" else "")
-              + "</p>\n")
+    for group in grouped([c for c in live if c.get("credit")]):
+        texts: dict[tuple, list[tuple]] = {}
+        for c in group:
+            texts.setdefault((c["credit"]["text"]["en"], c["credit"]["text"]["he"]), []).append((c["release"]["tag"], c["credit"]["url"]))
+        w(f'<div class="credit-source"><h3>{e(group[0]["source"]["name"][lang])}</h3>\n')
+        for (en_text, he_text), links in texts.items():
+            notices = " · ".join(f'<a href="{e(u)}"><bdi dir="ltr">{e(tag)}</bdi></a>' for tag, u in links)
+            w(f'<p class="credit">Credit: {e(en_text)}'
+              + (f' · קרדיט: {e(he_text)}' if lang == "he" else "")
+              + f' ({notices})</p>\n')
+        w('</div>\n')
     w("</section>\n")
     # --- 6. Licence
     w(f'<section id="licence">\n<h2>{e(t["licence_h"])}</h2>\n<p>{t["licence_p"]}</p>\n</section>\n')
@@ -421,6 +498,12 @@ def main():
         import_card(R, a.import_card[0], Path(a.import_card[1]))
         DATA.write_text(json.dumps(R, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     stale = []
+    counts_text = json.dumps(line_counts(R), ensure_ascii=False, indent=2) + "\n"
+    if a.check:
+        if not COUNTS.exists() or COUNTS.read_text(encoding="utf-8") != counts_text:
+            stale.append(str(COUNTS.relative_to(ROOT)))
+    else:
+        COUNTS.write_text(counts_text, encoding="utf-8")
     catalog = load_catalog()
     for lang, path in (("he", ROOT / "htext.html"), ("en", ROOT / "en" / "htext.html")):
         s = page(lang, R, catalog)
