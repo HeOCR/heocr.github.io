@@ -59,7 +59,7 @@
 <section id="quick-start">
 <h2>Quick start</h2>
 <p>The heocr Python package reads a whole document (PDF, Word files and scans) and picks the right tool for each part. It needs Python 3.11 or later, and Tesseract 5 to read scans.</p>
-<p>Install it from PyPI, then download HeOCR’s four measured models once (about 23 MB; each is checked against its pinned SHA-256). It then reads offline, with HeOCR modern MEASURED v1.0 by default.</p>
+<p>Install it from PyPI, then download HeOCR’s four measured models once (about 23 MB; each is checked against its pinned SHA-256). It then reads offline, with the default modern-print model.</p>
 <pre class="quick-start"><code>pip install heocr
 heocr --download-model auto
 heocr file.pdf -o out.txt</code></pre>

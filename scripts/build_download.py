@@ -45,7 +45,7 @@ QUICK_START = (
     "tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3"
 )
 # The heocr package from PyPI (lead, 2026-11-28: heocr 0.3.0 release). `--download-model auto` fetches the four
-# measured models once (sha256 checked). 0.3.0 reads with heocr_modern_measured by default; `--ocr-model auto`
+# measured models once (sha256 checked). 0.3.0's CLI default is a modern-print model (not named on the site); `--ocr-model auto`
 # is opt-in and experimental (lead, 2026-11-28).
 PACKAGE_VERSION = "0.3.0"
 PACKAGE_REPO = "https://github.com/HeOCR/heocr"
@@ -71,7 +71,7 @@ T = {
         "variants": "MEASURED or FULL?",
         "variants_text": "MEASURED is the version our published held-out numbers belong to. FULL was also trained on our public test-set pages, so it has no independent score. It may be slightly stronger on similar material; this is not measured.",
         "package_text": "The heocr Python package reads a whole document (PDF, Word files and scans) and picks the right tool for each part. It needs Python 3.11 or later, and Tesseract 5 to read scans.",
-        "package_install": "Install it from PyPI, then download HeOCR’s four measured models once (about 23 MB; each is checked against its pinned SHA-256). It then reads offline, with HeOCR modern MEASURED v1.0 by default.",
+        "package_install": "Install it from PyPI, then download HeOCR’s four measured models once (about 23 MB; each is checked against its pinned SHA-256). It then reads offline, with the default modern-print model.",
         "package_models": "For other print, choose the model: --ocr-model old-print, modern-literature or pointed. --ocr-model auto chooses for each document; it is experimental.",
         "package_repo": "HeOCR/heocr on GitHub",
         "quick_start": "Quick start",
@@ -113,7 +113,7 @@ T = {
         "variants": "MEASURED או FULL?",
         "variants_text": "MEASURED היא הגרסה שאליה שייכות התוצאות שפרסמנו על מערכי המבחן. FULL אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי. ייתכן שהיא מעט חזקה יותר על חומר דומה, אבל זה לא נמדד.",
         "package_text": "חבילת הפייתון heocr קוראת מסמך שלם (PDF, קובצי Word וסריקות) ובוחרת את הכלי המתאים לכל חלק בו. היא דורשת Python 3.11 ומעלה, ו־Tesseract 5 לקריאת סריקות.",
-        "package_install": "התקינו אותה מ־PyPI, ואז הורידו פעם אחת את ארבעת המודלים המדודים של HeOCR (כ־23 MB; כל אחד נבדק מול ה־SHA-256 הקבוע שלו). מאז היא קוראת בלי אינטרנט, וכברירת מחדל עם HeOCR modern MEASURED v1.0.",
+        "package_install": "התקינו אותה מ־PyPI, ואז הורידו פעם אחת את ארבעת המודלים המדודים של HeOCR (כ־23 MB; כל אחד נבדק מול ה־SHA-256 הקבוע שלו). מאז היא קוראת בלי אינטרנט, עם מודל ברירת המחדל לדפוס מודרני.",
         "package_models": "לדפוס מסוג אחר בחרו מודל: ‎--ocr-model old-print, ‏modern-literature או pointed. ‏‎--ocr-model auto בוחר מודל לכל מסמך, והוא ניסיוני.",
         "package_repo": "HeOCR/heocr ב־GitHub",
         "quick_start": "התחלה מהירה",
