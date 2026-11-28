@@ -77,7 +77,10 @@ T = {
         "full_v10": "Also trained on our public test-set pages, so it has no independent score.",
         "apps": "Apps",
         "full_v11": "Also trained on our public test-set pages, so it has no independent score.",
-        "coming": "Coming soon",
+        "coming": "In development.",
+        "releases": "Releases on GitHub",
+        "code_signing": "Code signing policy",
+        "privacy": "Privacy policy",
     },
     "he": {
         "title": "הורדת HeOCR",
@@ -111,7 +114,10 @@ T = {
         "full_v10": "אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי.",
         "apps": "יישומים",
         "full_v11": "אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי.",
-        "coming": "בקרוב",
+        "coming": "בפיתוח.",
+        "releases": "גרסאות ב־GitHub",
+        "code_signing": "מדיניות חתימת קוד",
+        "privacy": "מדיניות פרטיות",
     },
 }
 
@@ -134,7 +140,8 @@ def page(lang: str) -> str:
         for anchor, use, why in COMPASS
     )
     cards = "".join(
-        f'<div class="card"><h3>{platform}</h3><p>{text["coming"]}</p></div>\n'
+        f'<div class="card"><h3>{platform}</h3><p>{text["coming"]}</p>'
+        f'<div class="row"><a href="https://github.com/HeOCR/heocr-desktop/releases">{text["releases"]}</a></div></div>\n'
         for platform in ("macOS", "Windows", "Android")
     )
     return (
@@ -150,9 +157,10 @@ def page(lang: str) -> str:
         + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n'
           f'<h3 id="variants">{text["variants"]}</h3>\n<p>{text["variants_text"]}</p>\n</section>\n'
         + f'<p>{text["experimental"]} <a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
-        + f'<section id="apps">\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n</section>\n'
+        + f'<section id="apps">\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n'
+          f'<p><a href="code-signing.html">{text["code_signing"]}</a> · <a href="privacy.html">{text["privacy"]}</a></p>\n</section>\n'
         + "</main>\n"
-        + shell.footer([])
+        + shell.footer([f'<p><a href="code-signing.html">{text["code_signing"]}</a></p>'])
         + shell.tail(lang)
     )
 
