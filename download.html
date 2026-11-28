@@ -82,8 +82,10 @@ tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre
 <section id="package">
 <h2>למפתחים: החבילה heocr</h2>
 <p>heocr קוראת מסמך שלם (PDF, קובצי Word וסריקות) ובוחרת את הכלי המתאים לכל חלק בו. החבילה בפיתוח: היא עוד לא ב־PyPI ואין לה גרסה משוחררת.</p>
-<p>בינתיים אפשר להתקין אותה מ־GitHub. ההתקנה הזו קוראת עם המודל הרגיל heb של Tesseract, לא עם המודלים של HeOCR, ומציינת זאת בפלט.</p>
-<pre class="quick-start"><code>pip install git+https://github.com/HeOCR/heocr</code></pre>
+<p>בינתיים אפשר להתקין אותה מ־GitHub. אחר כך הורדה מפורשת אחת (כ־23 MB) מביאה את ארבעת המודלים המדודים של HeOCR, וכל אחד מהם נבדק מול ה־SHA-256 הקבוע שלו. מאז, ‎--ocr-model auto בוחר מודל לכל מסמך וקורא בלי אינטרנט.</p>
+<pre class="quick-start"><code>pip install git+https://github.com/HeOCR/heocr
+heocr --download-model auto
+heocr page.png --ocr-model auto -o out.txt</code></pre>
 <p><a href="https://github.com/HeOCR/heocr">HeOCR/heocr ב־GitHub</a></p>
 </section>
 <p>המודלים של HeOCR לכתב יד עדיין ניסיוניים. <a href="benchmarks.html">לכל מדדי ההערכה</a></p>

@@ -44,10 +44,13 @@ QUICK_START = (
     f"  {MODEL_HUB}/resolve/{QUICK_START_VERSION}/phist_v2.traineddata\n"
     "tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3"
 )
-# The heocr package as it installs today (site review 2, ARCH-03 / COPY-08), checked 2026-11-28:
-# not on PyPI, no GitHub release; the GitHub build reads with stock heb and records bundled_model_unavailable.
+# The heocr package as it installs today (site review 2, ARCH-03 / COPY-08), checked 2026-11-28 at heocr
+# af7acf0 (heocr#264): not on PyPI, no release. A GitHub install plus `--download-model auto` fetches the four
+# measured models (sha256 checked); `--ocr-model auto` then reads offline. Without it, stock heb reads.
 PACKAGE_REPO = "https://github.com/HeOCR/heocr"
-PACKAGE_INSTALL = f"pip install git+{PACKAGE_REPO}"
+PACKAGE_INSTALL = (f"pip install git+{PACKAGE_REPO}\n"
+                   "heocr --download-model auto\n"
+                   "heocr page.png --ocr-model auto -o out.txt")
 TESSERACT = "https://github.com/tesseract-ocr/tesseract"
 T = {
     "en": {
@@ -67,7 +70,7 @@ T = {
         "variants_text": "MEASURED is the version our published held-out numbers belong to. FULL was also trained on our public test-set pages, so it has no independent score. It may be slightly stronger on similar material; this is not measured.",
         "package": "For developers: the heocr package",
         "package_text": "heocr reads a whole document (PDF, Word files and scans) and picks the right tool for each part. It is in development: it is not on PyPI and has no release yet.",
-        "package_install": "Today it installs from GitHub. That build reads with stock Tesseract heb, not HeOCR’s models, and says so in its output.",
+        "package_install": "Today it installs from GitHub. One explicit download (about 23 MB) then fetches HeOCR’s four measured models, each checked against its pinned SHA-256. After that, --ocr-model auto picks a model for each document and reads offline.",
         "package_repo": "HeOCR/heocr on GitHub",
         "quick_start": "Quick start",
         "quick_start_file": "The file for HeOCR P-hist MEASURED v1.1 is named phist_v2.traineddata; the release version is v1.1.",
@@ -108,7 +111,7 @@ T = {
         "variants_text": "MEASURED היא הגרסה שאליה שייכות התוצאות שפרסמנו על מערכי המבחן. FULL אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי. ייתכן שהיא מעט חזקה יותר על חומר דומה, אבל זה לא נמדד.",
         "package": "למפתחים: החבילה heocr",
         "package_text": "heocr קוראת מסמך שלם (PDF, קובצי Word וסריקות) ובוחרת את הכלי המתאים לכל חלק בו. החבילה בפיתוח: היא עוד לא ב־PyPI ואין לה גרסה משוחררת.",
-        "package_install": "בינתיים אפשר להתקין אותה מ־GitHub. ההתקנה הזו קוראת עם המודל הרגיל heb של Tesseract, לא עם המודלים של HeOCR, ומציינת זאת בפלט.",
+        "package_install": "בינתיים אפשר להתקין אותה מ־GitHub. אחר כך הורדה מפורשת אחת (כ־23 MB) מביאה את ארבעת המודלים המדודים של HeOCR, וכל אחד מהם נבדק מול ה־SHA-256 הקבוע שלו. מאז, ‎--ocr-model auto בוחר מודל לכל מסמך וקורא בלי אינטרנט.",
         "package_repo": "HeOCR/heocr ב־GitHub",
         "quick_start": "התחלה מהירה",
         "quick_start_file": "הקובץ של HeOCR P-hist MEASURED v1.1 נקרא phist_v2.traineddata, וגרסת השחרור היא v1.1.",
