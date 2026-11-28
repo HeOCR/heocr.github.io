@@ -28,6 +28,7 @@ PAGES = {
     "htext": "htext.html",
     "rights": "rights.html",
     "download": "download.html",
+    "datasets": "datasets.html",
     "privacy": "privacy.html",  # linked from the Download page, not in the header
 }
 LINKED_PAGES = PAGES | {"methodology": "methodology.html", "leaderboard": "leaderboard.html"}
@@ -40,16 +41,18 @@ def site_path(lang: str, page: str) -> str:
     return LANG_DIR[lang] + LINKED_PAGES[page]
 
 
-NAV = ("bench", "htext", "download", "rights")
+NAV = ("download", "bench", "datasets", "htext", "rights")  # site review 2, ARCH-01
 
 STR = {
     "en": {
-        "nav": {"bench": "Benchmarks", "htext": "htext", "download": "Download", "rights": "Rights &amp; takedown"},
+        "nav": {"download": "Download", "bench": "Benchmarks", "datasets": "Datasets", "htext": "Text corpora",
+                "rights": "Rights &amp; takedown"},
         "nav_aria": "Site", "lang_aria": "Language / שפה", "theme": "Night mode",
         "skip": "Skip to content", "toc_aria": "On this page", "lang_name": "English",
     },
     "he": {
-        "nav": {"bench": "מדדי ביצועים", "htext": "htext", "download": "הורדה", "rights": "זכויות והסרה"},
+        "nav": {"download": "הורדה", "bench": "מדדי ביצועים", "datasets": "מאגרי נתונים", "htext": "מאגרי טקסט",
+                "rights": "זכויות והסרה"},
         "nav_aria": "ניווט באתר", "lang_aria": "שפה / Language", "theme": "מצב לילה",
         "skip": "דילוג לתוכן", "toc_aria": "בעמוד זה", "lang_name": "עברית",
     },

@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OLD_DIR = "he"
 DESIGN_DIR = Path("design/brand-handover/site")
 DESIGN_PAGES = ("home", "bench", "htext")
+NEW_PAGES = {"datasets"}  # added after the he/ move: no old URL to redirect
 TEXT = {"he": "העמוד עבר. אם לא עברתם אוטומטית, ", "en": "This page moved. If you are not redirected, "}
 LINK = {"he": "הקישור לעמוד החדש", "en": "open the updated page"}
 
@@ -41,6 +42,7 @@ def main() -> None:
     redirects = {
         Path(OLD_DIR) / name: (key, "he", "../" + ("" if key == "home" else name))
         for key, name in shell.PAGES.items()
+        if key not in NEW_PAGES
     }
     for key in DESIGN_PAGES:
         name = shell.PAGES[key]

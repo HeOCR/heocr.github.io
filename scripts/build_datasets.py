@@ -1,4 +1,9 @@
-"""Refresh the bilingual homepage catalog from pinned release metadata."""
+"""Build the dataset catalog page (datasets.html, en/datasets.html) and the home page's summary of it,
+from pinned release metadata.
+
+Site review 2, ARCH-01: the full catalog moved from the home page to its own page; home keeps the totals,
+one card per group and a link to the catalog.
+"""
 
 from __future__ import annotations
 
@@ -7,11 +12,16 @@ from html import escape
 import json
 from pathlib import Path
 import re
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import shell  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "datasets" / "catalog.json"
 HOME = {"he": ROOT / "index.html", "en": ROOT / "en" / "index.html"}
+PAGE = {"he": ROOT / "datasets.html", "en": ROOT / "en" / "datasets.html"}
 SECTION = re.compile(r'^  <section id="datasets"[^>]*>.*?^  </section>', re.M | re.S)
 GROUPS = {
     "real": {"en": "Real image data", "he": "תמונות ממסמכים אמיתיים"},
@@ -39,6 +49,9 @@ COPY = {
         "legacy": "Also on GitHub",
         "hash": "Archive of scanned Hebrew handwriting",
         "glyphs": "Cropped Hebrew handwriting glyphs",
+        "desc": "HeOCR's open datasets for Hebrew OCR: real document images, text corpora, synthetic training data and benchmarks, each with its rights.",
+        "group_count": "{n} datasets",
+        "full": "The full catalog",
     },
     "he": {
         "title": "מאגרי נתונים",
@@ -59,6 +72,9 @@ COPY = {
         "legacy": "מאגרים נוספים ב־GitHub",
         "hash": "ארכיון סריקות של כתבי יד בעברית",
         "glyphs": "חיתוכי אותיות עבריות בכתב יד",
+        "desc": "מאגרי הנתונים הפתוחים של HeOCR לזיהוי טקסט עברי: תמונות ממסמכים אמיתיים, מאגרי טקסט, נתוני אימון סינתטיים ומאגרי הערכה, כל אחד עם הזכויות שלו.",
+        "group_count": "{n} מאגרים",
+        "full": "לקטלוג המלא",
     },
 }
 LICENSES = {
@@ -306,7 +322,7 @@ def collection_section(
     return lines
 
 
-def render(data: dict, lang: str, text: str) -> str:
+def catalog(data: dict, lang: str, *, summary: bool) -> str:
     t = COPY[lang]
     entries = data["datasets"]
     by_id = {row["id"]: row for row in entries}
@@ -319,20 +335,34 @@ def render(data: dict, lang: str, text: str) -> str:
     ]
     totals = " · ".join(statistic(name, count, lang) for name, count in fields if count is not None)
     date = f'<bdi dir="ltr">{escape(data["as_of"])}</bdi>'
-    lines = [
-        '  <section id="datasets">',
-        f'    <h2>{escape(t["title"])}</h2>',
+    head = [
         f'    <p class="sub">{escape(t["source"]).replace("{date}", date)}</p>',
         f'    <p class="catalog-totals"><strong>{totals}</strong></p>',
-        f'    <p class="sub">{escape(t["coverage"])}</p>',
     ]
+    if summary:
+        cards = []
+        for key, group in GROUPS.items():
+            status = (f' <span class="status">{escape(t["experimental"])}</span>' if key == "synthetic" else "")
+            count = sum(1 for row in entries if row["group"] == key)
+            cards.extend([
+                '      <div class="card">',
+                f'        <h3><a href="datasets.html#{key}">{escape(group[lang])}</a>{status}</h3>',
+                f'        <p>{escape(t["group_count"]).replace("{n}", number(count))}</p>',
+                '      </div>',
+            ])
+        return "\n".join([
+            '  <section id="datasets">', f'    <h2>{escape(t["title"])}</h2>', *head,
+            '    <div class="grid">', *cards, '    </div>',
+            f'    <p><a href="datasets.html">{escape(t["full"])}</a></p>', '  </section>',
+        ])
+    lines = ['  <section id="datasets">', *head, f'    <p class="sub">{escape(t["coverage"])}</p>']
     for key, group in GROUPS.items():
         title = escape(group[lang])
         if key == "synthetic":
-            lines.append(f'    <h3>{title} <span class="status">{escape(t["experimental"])}</span></h3>')
+            lines.append(f'    <h3 id="{key}">{title} <span class="status">{escape(t["experimental"])}</span></h3>')
             lines.append(f'    <p class="sub">{escape(t["synthetic_note"])}</p>')
         else:
-            lines.append(f'    <h3>{title}</h3>')
+            lines.append(f'    <h3 id="{key}">{title}</h3>')
         rows = [row for row in entries if row["group"] == key]
         if slots := data["collections"].get(key):
             components = [
@@ -353,10 +383,30 @@ def render(data: dict, lang: str, text: str) -> str:
         '    </ul>',
         '  </section>',
     ])
-    new, replaced = SECTION.subn(lambda _: "\n".join(lines), text)
+    return "\n".join(lines)
+
+
+def render(data: dict, lang: str, text: str) -> str:
+    """The home page with its dataset summary refreshed."""
+    new, replaced = SECTION.subn(lambda _: catalog(data, lang, summary=True), text)
     if replaced != 1:
         raise ValueError(f"Expected one existing dataset section for {lang}")
     return new
+
+
+def page(data: dict, lang: str) -> str:
+    """datasets.html: the full catalog on the site shell."""
+    t = COPY[lang]
+    return "".join([
+        shell.head(lang, escape(t["title"]), escape(t["desc"]), "datasets"),
+        shell.header(lang, "datasets"),
+        shell.page_head(escape(t["title"]), f'<p class="lede">{escape(t["desc"])}</p>'),
+        '<main id="main" class="wrap home">\n',
+        catalog(data, lang, summary=False), "\n",
+        "</main>\n",
+        shell.footer(['<p><a href="rights.html">' + shell.STR[lang]["nav"]["rights"] + '</a> · <a href="./">HeOCR</a></p>']),
+        shell.tail(lang),
+    ])
 
 
 def main() -> None:
@@ -365,16 +415,17 @@ def main() -> None:
     args = parser.parse_args()
     data = load_catalog()
     stale = []
-    for language, path in HOME.items():
-        current = path.read_text(encoding="utf-8")
-        expected = render(data, language, current)
+    outputs = [(path, render(data, language, path.read_text(encoding="utf-8"))) for language, path in HOME.items()]
+    outputs += [(path, page(data, language)) for language, path in PAGE.items()]
+    for path, expected in outputs:
+        current = path.read_text(encoding="utf-8") if path.exists() else None
         if expected != current:
             if args.check:
                 stale.append(str(path.relative_to(ROOT)))
             else:
                 path.write_text(expected, encoding="utf-8")
     if stale:
-        raise SystemExit("Stale dataset sections: " + ", ".join(stale))
+        raise SystemExit("Stale dataset pages: " + ", ".join(stale))
 
 
 if __name__ == "__main__":
