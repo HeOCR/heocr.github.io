@@ -33,8 +33,8 @@ HOME = {
     "en": {
         "intro": "HeOCR is an open project for getting Hebrew text out of any document: PDF and Office files, web pages, scans and photos. The code, the models and the data are open, and the tools run on your own computer or phone.",
         "apps": "Desktop app",
-        "apps_text": "HeOCR for macOS and Windows is in development. To hear when it is out, watch HeOCR/heocr-desktop on GitHub (Watch → Custom → Releases).",
-        "apps_releases": "Releases",
+        "apps_text": "HeOCR 0.3.0 is available for macOS and Windows. The Windows installer is not yet code-signed. The Android app is in development.",
+        "apps_releases": "Download the app",
         "code_signing": "Code signing policy",
         "privacy": "Privacy policy",
         "rights_link": "Rights &amp; takedown",
@@ -50,7 +50,7 @@ HOME = {
         "flow": ("Open scans &amp; text", "Generators", "Datasets", "Trained models", "Tools &amp; apps"),
         "start": "How to use HeOCR",
         "start_cards": (
-            ("No code: the desktop app", "An offline app for macOS and Windows that reads Hebrew documents on your own computer, without uploading them. In development.", "download.html#apps", "Follow its release"),
+            ("No code: the desktop app", "An offline app for macOS and Windows that reads Hebrew documents on your own computer, without uploading them. The Windows installer is not yet code-signed.", "download.html#apps", "Download the app"),
             ("For developers and researchers", "Install heocr from PyPI (pip install heocr), download the four models once, and read PDFs, Word files and scans. Or use the models directly in Tesseract 5.", "download.html#quick-start", "Quick start"),
         ),
         "code": "Code",
@@ -81,8 +81,8 @@ HOME = {
     "he": {
         "intro": "HeOCR הוא פרויקט פתוח להוצאת טקסט עברי מכל מסמך: קובצי PDF ואופיס, דפי אינטרנט, סריקות וצילומים. הקוד, המודלים והנתונים פתוחים, והכלים רצים על המחשב או הטלפון שלכם.",
         "apps": "אפליקציה למחשב",
-        "apps_text": "HeOCR ל־macOS ול־Windows נמצאת בפיתוח. כדי לדעת כשתצא, עקבו אחרי HeOCR/heocr-desktop ב־GitHub (Watch ← Custom ← Releases).",
-        "apps_releases": "גרסאות",
+        "apps_text": "HeOCR 0.3.0 זמינה ל־macOS ול־Windows. המתקין ל־Windows עוד לא חתום בחתימת קוד. אפליקציית Android בפיתוח.",
+        "apps_releases": "הורדת האפליקציה",
         "code_signing": "מדיניות חתימת קוד",
         "privacy": "מדיניות פרטיות",
         "rights_link": "זכויות והסרה",
@@ -98,7 +98,7 @@ HOME = {
         "flow": ("סריקות וטקסטים פתוחים", "מחוללים", "מאגרי נתונים", "מודלים מאומנים", "כלים ויישומים"),
         "start": "איך משתמשים ב־HeOCR",
         "start_cards": (
-            ("בלי קוד: אפליקציה למחשב", "אפליקציה ל־macOS ול־Windows שקוראת מסמכים בעברית במחשב שלכם, בלי אינטרנט ובלי להעלות אותם לשום מקום. בפיתוח.", "download.html#apps", "מעקב אחרי השחרור"),
+            ("בלי קוד: אפליקציה למחשב", "אפליקציה ל־macOS ול־Windows שקוראת מסמכים בעברית במחשב שלכם, בלי אינטרנט ובלי להעלות אותם לשום מקום. המתקין ל־Windows עוד לא חתום בחתימת קוד.", "download.html#apps", "הורדת האפליקציה"),
             ("למפתחים ולחוקרים", "התקינו את heocr מ־PyPI ‏(pip install heocr), הורידו פעם אחת את ארבעת המודלים, וקראו קובצי PDF, קובצי Word וסריקות. אפשר גם להשתמש במודלים ישירות ב־Tesseract 5.", "download.html#quick-start", "התחלה מהירה"),
         ),
         "code": "קוד",
@@ -167,14 +167,13 @@ def home_status(lang: str, text: str) -> str:
     )
     # The code-signing policy has its own page (site review 2, ARCH-04 / COPY-10); home keeps a short
     # apps section in its place, and the footer links to the policy.
-    desktop = "https://github.com/HeOCR/heocr-desktop"
     text = re.sub(
         r'^  <section id="(?:code-signing|apps)">.*?^  </section>',
         lambda _: (
             '  <section id="apps">\n'
             f'    <h2>{html.escape(t["apps"])}</h2>\n'
             f'    <p class="sub">{html.escape(t["apps_text"])}</p>\n'
-            f'    <p><a href="{desktop}/releases">{html.escape(t["apps_releases"])}</a> · '
+            f'    <p><a href="download.html#apps">{html.escape(t["apps_releases"])}</a> · '
             f'<a href="code-signing.html">{html.escape(t["code_signing"])}</a> · '
             f'<a href="privacy.html">{html.escape(t["privacy"])}</a></p>\n'
             '  </section>'
