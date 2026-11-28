@@ -606,6 +606,7 @@ pre code { background: none; padding: 0; white-space: pre; }
   border-radius: var(--radius-sm);
   padding: 2px 4px;
 }
+.benchmark-best, .benchmark-best-open { white-space: nowrap; }
 .benchmark-best-open {
   outline: 2px solid var(--accent);
   outline-offset: -2px;
@@ -649,6 +650,10 @@ pre code { background: none; padding: 0; white-space: pre; }
   .benchmark-fraction { font-size: 0.66rem; }
   .benchmark-pills span { min-height: 44px; }
   .benchmark-table :is(.benchmark-best, .benchmark-best-open) { padding-inline: 2px; }
+  .benchmark-table-wide th:first-child { width: 27%; }
+  .benchmark-table-wide :is(th, td) { padding-inline: 3px; }
+  .benchmark-table-wide thead th { font-size: 0.68rem; }
+  .benchmark-table-wide .benchmark-score { font-size: 0.76rem; }
   .benchmark-table .reader-access { display: table; margin-inline-start: 0; margin-block-start: 3px; }
   .benchmark-details-body { padding: 9px; }
 }

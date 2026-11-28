@@ -1,0 +1,149 @@
+{
+ "bootstrap": {
+  "cluster": "work",
+  "draws": 2000,
+  "seed": 0,
+  "upper": "one-sided 97.5%"
+ },
+ "candidate": {
+  "model_sha256": "55440680250a183c875211ae18d5b502cccfe761ef3fbd9121a1fda236418bdb",
+  "name": "HeOCR pointed-measured v1.0",
+  "variant": "MEASURED"
+ },
+ "drive": "not run (the Drive API refused Hebrew as an OCR language, HTTP 400)",
+ "interval_limitation": "Work-level intervals understate uncertainty about other pointed editions.",
+ "label": "on two book editions, 21 of 24 pages from one (Katzenelson 1910)",
+ "registration_pr": 1958,
+ "rows": [
+  {
+   "candidate_consonantal_relative_change": 0.709372,
+   "candidate_consonantal_upper_97_5": 1.438856,
+   "candidate_relative_change": 0.830293,
+   "candidate_upper_97_5": 1.444889,
+   "cer_consonantal": 0.097953,
+   "cer_kept": 0.094951,
+   "lane": "google-docai",
+   "mark_recall": 0.91456,
+   "reader": "Google Document AI OCR",
+   "wer_kept": 0.406867
+  },
+  {
+   "candidate_consonantal_relative_change": 0.621533,
+   "candidate_consonantal_upper_97_5": 1.162308,
+   "candidate_relative_change": 0.797503,
+   "candidate_upper_97_5": 1.289595,
+   "cer_consonantal": 0.103259,
+   "cer_kept": 0.096683,
+   "lane": "google-vision",
+   "mark_recall": 0.912301,
+   "reader": "Google Cloud Vision",
+   "wer_kept": 0.433047
+  },
+  {
+   "candidate_consonantal_relative_change": null,
+   "candidate_consonantal_upper_97_5": null,
+   "candidate_relative_change": null,
+   "candidate_upper_97_5": null,
+   "cer_consonantal": 0.167439,
+   "cer_kept": 0.173788,
+   "lane": "heocr-arm-c-pointed-60k",
+   "mark_recall": 0.800876,
+   "reader": "HeOCR pointed-measured v1.0",
+   "wer_kept": 0.367811
+  },
+  {
+   "candidate_consonantal_relative_change": -0.015354,
+   "candidate_consonantal_upper_97_5": 0.010396,
+   "candidate_relative_change": -0.090884,
+   "candidate_upper_97_5": -0.064509,
+   "cer_consonantal": 0.17005,
+   "cer_kept": 0.191161,
+   "lane": "heocr-v1-1",
+   "mark_recall": 0.768112,
+   "reader": "HeOCR old-print v1.1 (previous)",
+   "wer_kept": 0.444206
+  },
+  {
+   "candidate_consonantal_relative_change": -0.100859,
+   "candidate_consonantal_upper_97_5": 0.255605,
+   "candidate_relative_change": -0.094118,
+   "candidate_upper_97_5": 0.177393,
+   "cer_consonantal": 0.186221,
+   "cer_kept": 0.191843,
+   "lane": "rivok-full",
+   "mark_recall": 0.771642,
+   "reader": "Rivok Tesseract Full",
+   "wer_kept": 0.48412
+  },
+  {
+   "candidate_consonantal_relative_change": -0.051527,
+   "candidate_consonantal_upper_97_5": -0.037875,
+   "candidate_relative_change": -0.121984,
+   "candidate_upper_97_5": -0.097491,
+   "cer_consonantal": 0.176535,
+   "cer_kept": 0.197932,
+   "lane": "heocr-v1-0",
+   "mark_recall": 0.754837,
+   "reader": "HeOCR old-print v1.0",
+   "wer_kept": 0.46867
+  },
+  {
+   "candidate_consonantal_relative_change": -0.152961,
+   "candidate_consonantal_upper_97_5": 0.102313,
+   "candidate_relative_change": -0.25729,
+   "candidate_upper_97_5": -0.119609,
+   "cer_consonantal": 0.197675,
+   "cer_kept": 0.233991,
+   "lane": "rivok-lite",
+   "mark_recall": 0.67321,
+   "reader": "Rivok Tesseract Lite",
+   "wer_kept": 0.61073
+  },
+  {
+   "candidate_consonantal_relative_change": -0.330189,
+   "candidate_consonantal_upper_97_5": -0.162491,
+   "candidate_relative_change": -0.587414,
+   "candidate_upper_97_5": -0.514303,
+   "cer_consonantal": 0.249979,
+   "cer_kept": 0.421216,
+   "lane": "fast",
+   "mark_recall": 0.252507,
+   "reader": "Tesseract heb fast",
+   "wer_kept": 1.048498
+  },
+  {
+   "candidate_consonantal_relative_change": -0.34063,
+   "candidate_consonantal_upper_97_5": -0.1844,
+   "candidate_relative_change": -0.614282,
+   "candidate_upper_97_5": -0.542475,
+   "cer_consonantal": 0.253938,
+   "cer_kept": 0.450556,
+   "lane": "best",
+   "mark_recall": 0.169609,
+   "reader": "Tesseract heb best",
+   "wer_kept": 1.055365
+  },
+  {
+   "candidate_consonantal_relative_change": 0.038662,
+   "candidate_consonantal_upper_97_5": 0.330383,
+   "candidate_relative_change": -0.627391,
+   "candidate_upper_97_5": -0.542267,
+   "cer_consonantal": 0.161206,
+   "cer_kept": 0.466408,
+   "lane": "paddle",
+   "mark_recall": 0.0,
+   "reader": "Rivok PaddleOCR",
+   "wer_kept": 1.083262
+  }
+ ],
+ "schema": "heocr.benchmark.pbyh.v01.pointed",
+ "scope": {
+  "lines": 460,
+  "masked_lines": 69,
+  "pages": 24,
+  "works": 8
+ },
+ "set": "PBY-H v0.1, stratum P (pointed)",
+ "source_pr": 1964,
+ "source_score_result_sha256": "a0eb05e56159f04b6d9863c1631663289750f9e17c59ec90c83ad91118c1e9c4"
+}

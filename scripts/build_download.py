@@ -12,14 +12,23 @@ import shell
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_HUB = "https://huggingface.co/HeOCR/heocr-p-hist-measured"
 FULL_MODEL_HUB = "https://huggingface.co/HeOCR/heocr-p-hist-full"
+LITERATURE_HUB = "https://huggingface.co/HeOCR/heocr-literature-measured"
+POINTED_HUB = "https://huggingface.co/HeOCR/heocr-pointed-measured"
 QUICK_START_VERSION = "v1.1"
+# (title, version, anchor, description key, hub, Zenodo DOI, held-out result link, result label key)
 MODEL_RELEASES = (
-    ("MEASURED", QUICK_START_VERSION, "phist-v11", "measured_latest", MODEL_HUB, "10.5281/zenodo.24581274",
-     "benchmarks.html#p-hist-open-scores-filtered-pooled"),
-    ("MEASURED", "v1.0", "phist-v10", "measured_previous", MODEL_HUB, "10.5281/zenodo.24578440",
-     f"{MODEL_HUB}/blob/v1.0/README.md#held-out-evaluation-old-printed-hebrew-unpointed"),
-    ("FULL", "v1.1-full", "phist-full-v11", "full_v11", FULL_MODEL_HUB, "10.5281/zenodo.24586339", None),
-    ("FULL", "v1.0-full", "phist-full-v10", "full_v10", FULL_MODEL_HUB, "10.5281/zenodo.24582845", None),
+    ("HeOCR literature MEASURED", "v1.0", "literature-v10", "literature", LITERATURE_HUB, "10.5281/zenodo.24620176",
+     "benchmarks.html#pby-h-open", "pbyh_benchmark"),
+    ("HeOCR pointed MEASURED", "v1.0", "pointed-v10", "pointed", POINTED_HUB, "10.5281/zenodo.24620184",
+     "benchmarks.html#pby-h-pointed", "pointed_benchmark"),
+    ("HeOCR P-hist MEASURED", QUICK_START_VERSION, "phist-v11", "measured_latest", MODEL_HUB, "10.5281/zenodo.24581274",
+     "benchmarks.html#p-hist-open-scores-filtered-pooled", "model_benchmark"),
+    ("HeOCR P-hist MEASURED", "v1.0", "phist-v10", "measured_previous", MODEL_HUB, "10.5281/zenodo.24578440",
+     f"{MODEL_HUB}/blob/v1.0/README.md#held-out-evaluation-old-printed-hebrew-unpointed", "model_benchmark"),
+    ("HeOCR P-hist FULL", "v1.1-full", "phist-full-v11", "full_v11", FULL_MODEL_HUB, "10.5281/zenodo.24586339",
+     None, None),
+    ("HeOCR P-hist FULL", "v1.0-full", "phist-full-v10", "full_v10", FULL_MODEL_HUB, "10.5281/zenodo.24582845",
+     None, None),
 )
 QUICK_START = (
     "mkdir -p tessdata\n"
@@ -31,13 +40,17 @@ T = {
     "en": {
         "title": "Download HeOCR",
         "models": "OCR models",
-        "about": "HeOCR P-hist v1.1 is available now for historical, unpointed Hebrew print. Apache 2.0.",
+        "about": "HeOCR models are available now for historical unpointed print (P-hist v1.1), unpointed literary print (literature v1.0) and pointed literary print (pointed v1.0). Apache 2.0.",
         "quick_start": "Quick start",
         "instructions": "With Tesseract 5 and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.",
         "experimental": "HeOCR’s modern print and handwriting models are still experimental.",
         "modern_results": "Modern print benchmark",
         "benchmarks": "See all benchmarks",
         "model_benchmark": "C2 held-out result",
+        "pbyh_benchmark": "PBY-H held-out result",
+        "pointed_benchmark": "PBY-H pointed held-out result",
+        "literature": "Unpointed literary print. Evaluated on the PBY-H v0 held-out set.",
+        "pointed": "Pointed (niqqud) literary print. Evaluated on the PBY-H v0.1 pointed held-out set, where Google’s readers score better.",
         "measured_latest": "Best / Latest. Evaluated on the C2 held-out set.",
         "measured_previous": "Previous version. Evaluated on the C2 held-out set.",
         "full_v10": "Trained with additional data. This variant is unmeasured.",
@@ -48,13 +61,17 @@ T = {
     "he": {
         "title": "הורדת HeOCR",
         "models": "מודלים לזיהוי תווים",
-        "about": "HeOCR P-hist v1.1 זמין להורדה לדפוס עברי היסטורי לא מנוקד, ברישיון Apache 2.0.",
+        "about": "מודלים של HeOCR זמינים להורדה לדפוס היסטורי לא מנוקד (P-hist v1.1), לספרות בדפוס לא מנוקד (literature v1.0) ולספרות בדפוס מנוקד (pointed v1.0), ברישיון Apache 2.0.",
         "quick_start": "התחלה מהירה",
         "instructions": "התקינו Tesseract 5 ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.",
         "experimental": "המודלים של HeOCR לדפוס מודרני ולכתב יד עדיין ניסיוניים.",
         "modern_results": "מדד ההערכה לדפוס מודרני",
         "benchmarks": "לכל מדדי ההערכה",
         "model_benchmark": "תוצאות על מערך המבחן C2",
+        "pbyh_benchmark": "תוצאות על מערך המבחן PBY-H",
+        "pointed_benchmark": "תוצאות על מערך המבחן המנוקד PBY-H",
+        "literature": "ספרות בדפוס לא מנוקד. נבדק על מערך המבחן PBY-H v0.",
+        "pointed": "ספרות בדפוס מנוקד. נבדק על מערך המבחן המנוקד PBY-H v0.1, שבו המנועים של Google משיגים תוצאות טובות יותר.",
         "measured_latest": "הגרסה הטובה והעדכנית ביותר. נבדקה על מערך המבחן C2.",
         "measured_previous": "גרסה קודמת. נבדקה על מערך המבחן C2.",
         "full_v10": "אומן עם נתונים נוספים. גרסה זו לא נמדדה.",
@@ -68,11 +85,11 @@ T = {
 def page(lang: str) -> str:
     text = {key: escape(value) for key, value in T[lang].items()}
     model_cards = []
-    for variant, version, anchor, description, hub, doi, result in MODEL_RELEASES:
-        benchmark = (f'<a href="{result}">{text["model_benchmark"]}</a>'
+    for title, version, anchor, description, hub, doi, result, result_label in MODEL_RELEASES:
+        benchmark = (f'<a href="{result}">{text[result_label]}</a>'
                      if result else "")
         model_cards.append(
-            f'<div class="card" id="{anchor}"><h3><bdi dir="ltr">HeOCR P-hist {variant} {version}</bdi></h3>'
+            f'<div class="card" id="{anchor}"><h3><bdi dir="ltr">{title} {version}</bdi></h3>'
             f'<p>{text[description]}</p>'
             f'<div class="row"><a href="{hub}/tree/{version}">Hugging Face</a>'
             f'<a href="https://doi.org/{doi}">Zenodo</a>{benchmark}</div></div>\n'

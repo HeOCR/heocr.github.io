@@ -147,6 +147,28 @@ class ReleaseBuilderTest(unittest.TestCase):
             self.assertEqual(table.count('class="benchmark-best-open"'), 1)
             self.assertNotIn("benchmark-best-open", body[2])
 
+    def test_published_pbyh_rows_name_the_candidate_and_rank_mark_recall_upward(self):
+        import build_benchmarks as site
+        pbyh = release.load_pbyh(site.PBYH_V0, site.PBYH_V0_SHA256)
+        pointed = release.load_pbyh_pointed(site.PBYH_POINTED, site.PBYH_POINTED_SHA256)
+        for lang, t in builder.T.items():
+            output = builder.page(lang, release.validate(example()), pbyh=pbyh, pointed=pointed)
+            unpointed = output.split('id="pby-h-open"', 1)[1].split("</article>", 1)[0]
+            self.assertIn(f'<a href="{builder.LITERATURE_MODEL}"><bdi>HeOCR literature-measured v1.0</bdi></a>', unpointed)
+            self.assertNotIn("A-full 35k", output)
+            self.assertEqual(unpointed.count('<tr class="ours">'), 1)
+            panel = output.split('id="pby-h-pointed"', 1)[1].split("</article>", 1)[0]
+            self.assertIn(f'<a href="#pby-h-pointed">{t["pointed"]}</a>', output)
+            self.assertIn(t["pointed_editions"], panel)
+            rows = re.findall(r'<tr(?: class="ours")?><th scope="row">.*?</tr>', panel)
+            self.assertIn("Google Document AI OCR", rows[0])
+            # Mark recall: highest wins overall (Document AI), and the open highlight goes to HeOCR pointed.
+            self.assertIn(f'91.46%</bdi><span class="benchmark-sr-only"> ({t["best_high"]})', rows[0])
+            ours = next(row for row in rows if "HeOCR pointed-measured v1.0" in row)
+            self.assertIn(f'80.09%</bdi><span class="benchmark-sr-only"> ({reader_access.BEST_OPEN_HIGH[lang]})', ours)
+            self.assertIn(f'href="{builder.POINTED_MODEL}"', ours)
+            self.assertNotIn("benchmark-fraction", panel)
+
     def test_reader_classification_fails_closed(self):
         for name, kind in (("Tesseract heb best", "open"), ("Tessdata Fast Hebrew", "open"), ("Rivok Lite", "open"),
                            ("Rivok PaddleOCR", "open"), ("Kraken 7.2 (generic recognizer)", "open"),
