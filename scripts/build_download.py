@@ -44,6 +44,11 @@ QUICK_START = (
     f"  {MODEL_HUB}/resolve/{QUICK_START_VERSION}/phist_v2.traineddata\n"
     "tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3"
 )
+# The heocr package as it installs today (site review 2, ARCH-03 / COPY-08), checked 2026-11-28:
+# not on PyPI, no GitHub release; the GitHub build reads with stock heb and records bundled_model_unavailable.
+PACKAGE_REPO = "https://github.com/HeOCR/heocr"
+PACKAGE_INSTALL = f"pip install git+{PACKAGE_REPO}"
+TESSERACT = "https://github.com/tesseract-ocr/tesseract"
 T = {
     "en": {
         "title": "Download HeOCR",
@@ -60,6 +65,10 @@ T = {
         "why_pointed": "Lowest error among the open readers we measured, statistically level with Rivok Tesseract Full, on a small set (8 works). Google’s readers are more accurate.",
         "variants": "MEASURED or FULL?",
         "variants_text": "MEASURED is the version our published held-out numbers belong to. FULL was also trained on our public test-set pages, so it has no independent score. It may be slightly stronger on similar material; this is not measured.",
+        "package": "For developers: the heocr package",
+        "package_text": "heocr reads a whole document (PDF, Word files and scans) and picks the right tool for each part. It is in development: it is not on PyPI and has no release yet.",
+        "package_install": "Today it installs from GitHub. That build reads with stock Tesseract heb, not HeOCR’s models, and says so in its output.",
+        "package_repo": "HeOCR/heocr on GitHub",
         "quick_start": "Quick start",
         "quick_start_file": "The file for HeOCR P-hist MEASURED v1.1 is named phist_v2.traineddata; the release version is v1.1.",
         "instructions": "With Tesseract 5 and curl installed, save your page as page.png and run these commands in the same directory. The result is written to out.txt.",
@@ -97,6 +106,10 @@ T = {
         "why_pointed": "שיעור השגיאות הנמוך ביותר מבין המנועים הפתוחים שבדקנו, שקול סטטיסטית ל־Rivok Tesseract Full, במערך קטן (8 יצירות). המנועים של Google מדויקים יותר.",
         "variants": "MEASURED או FULL?",
         "variants_text": "MEASURED היא הגרסה שאליה שייכות התוצאות שפרסמנו על מערכי המבחן. FULL אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי. ייתכן שהיא מעט חזקה יותר על חומר דומה, אבל זה לא נמדד.",
+        "package": "למפתחים: החבילה heocr",
+        "package_text": "heocr קוראת מסמך שלם (PDF, קובצי Word וסריקות) ובוחרת את הכלי המתאים לכל חלק בו. החבילה בפיתוח: היא עוד לא ב־PyPI ואין לה גרסה משוחררת.",
+        "package_install": "בינתיים אפשר להתקין אותה מ־GitHub. ההתקנה הזו קוראת עם המודל הרגיל heb של Tesseract, לא עם המודלים של HeOCR, ומציינת זאת בפלט.",
+        "package_repo": "HeOCR/heocr ב־GitHub",
         "quick_start": "התחלה מהירה",
         "quick_start_file": "הקובץ של HeOCR P-hist MEASURED v1.1 נקרא phist_v2.traineddata, וגרסת השחרור היא v1.1.",
         "instructions": "התקינו Tesseract 5 ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.",
@@ -151,11 +164,14 @@ def page(lang: str) -> str:
         + shell.page_head(text["title"], f'<p class="lede">{text["about"]}</p>')
         + f'<section id="choose">\n<h2>{text["compass"]}</h2>\n<ul class="compass">\n{compass}</ul>\n</section>\n'
         + f'<section id="quick-start">\n<h2>{text["quick_start"]}</h2>\n'
-          f'<p>{text["instructions"]}</p>\n'
+          f'<p>{text["instructions"].replace("Tesseract 5", f'<a href="{TESSERACT}">Tesseract 5</a>', 1)}</p>\n'
           f'<pre class="quick-start"><code>{escape(QUICK_START)}</code></pre>\n'
           f'<p class="note">{text["quick_start_file"]}</p>\n</section>\n'
         + f'<section id="models">\n<h2>{text["models"]}</h2>\n<div class="grid">\n{"".join(model_cards)}</div>\n'
           f'<h3 id="variants">{text["variants"]}</h3>\n<p>{text["variants_text"]}</p>\n</section>\n'
+        + f'<section id="package">\n<h2>{text["package"]}</h2>\n<p>{text["package_text"]}</p>\n'
+          f'<p>{text["package_install"]}</p>\n<pre class="quick-start"><code>{escape(PACKAGE_INSTALL)}</code></pre>\n'
+          f'<p><a href="{PACKAGE_REPO}">{text["package_repo"]}</a></p>\n</section>\n'
         + f'<p>{text["experimental"]} <a href="benchmarks.html">{text["benchmarks"]}</a></p>\n'
         + f'<section id="apps">\n<h2>{text["apps"]}</h2>\n<div class="grid">\n{cards}</div>\n'
           f'<p><a href="code-signing.html">{text["code_signing"]}</a> · <a href="privacy.html">{text["privacy"]}</a></p>\n</section>\n'

@@ -58,7 +58,7 @@
 </section>
 <section id="quick-start">
 <h2>התחלה מהירה</h2>
-<p>התקינו Tesseract 5 ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.</p>
+<p>התקינו <a href="https://github.com/tesseract-ocr/tesseract">Tesseract 5</a> ו־curl, שמרו את העמוד בשם page.png והריצו את הפקודות מאותה תיקייה. התוצאה תישמר בקובץ out.txt.</p>
 <pre class="quick-start"><code>mkdir -p tessdata
 curl -fL -o tessdata/phist_v2.traineddata \
   https://huggingface.co/HeOCR/heocr-p-hist-measured/resolve/v1.1/phist_v2.traineddata
@@ -78,6 +78,13 @@ tesseract page.png out -l phist_v2 --tessdata-dir ./tessdata --psm 3</code></pre
 </div>
 <h3 id="variants">MEASURED או FULL?</h3>
 <p>MEASURED היא הגרסה שאליה שייכות התוצאות שפרסמנו על מערכי המבחן. FULL אומנה גם על עמודים ממערכי המבחן הפומביים שלנו, ולכן אין לה ציון בלתי תלוי. ייתכן שהיא מעט חזקה יותר על חומר דומה, אבל זה לא נמדד.</p>
+</section>
+<section id="package">
+<h2>למפתחים: החבילה heocr</h2>
+<p>heocr קוראת מסמך שלם (PDF, קובצי Word וסריקות) ובוחרת את הכלי המתאים לכל חלק בו. החבילה בפיתוח: היא עוד לא ב־PyPI ואין לה גרסה משוחררת.</p>
+<p>בינתיים אפשר להתקין אותה מ־GitHub. ההתקנה הזו קוראת עם המודל הרגיל heb של Tesseract, לא עם המודלים של HeOCR, ומציינת זאת בפלט.</p>
+<pre class="quick-start"><code>pip install git+https://github.com/HeOCR/heocr</code></pre>
+<p><a href="https://github.com/HeOCR/heocr">HeOCR/heocr ב־GitHub</a></p>
 </section>
 <p>המודלים של HeOCR לכתב יד עדיין ניסיוניים. <a href="benchmarks.html">לכל מדדי ההערכה</a></p>
 <section id="apps">
